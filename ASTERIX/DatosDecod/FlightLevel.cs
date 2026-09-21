@@ -4,19 +4,17 @@ using System.Text;
 
 namespace DatosDecod48
 {
-    public class Mode3
+    public class FlightLevel
     {
-        public int V { get; set; }
+        public int V {  get; set; }
         public int G { get; set; }
-        public int L { get; set; }
-        public string reply { get; set; }
+        public double FL { get; set; }
 
-        public Mode3()
+        public FlightLevel()
         {
             this.V = -1;
             this.G = -1;
-            this.L = -1;
-            this.reply = "";
+            this.FL = -1;
         }
     }
 }
