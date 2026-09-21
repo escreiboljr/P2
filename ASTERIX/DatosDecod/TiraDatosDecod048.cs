@@ -55,7 +55,7 @@ namespace DatosDecod
             this.DataSourceID[0] = SAC;
             this.DataSourceID[1] = SIC;
         }
-
+        //bcjcbdcbj
 
         public void DecodeTimeOfDayFromBits(List<int> listaBits)
         {
