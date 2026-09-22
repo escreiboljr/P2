@@ -57,7 +57,7 @@ namespace DatosDecod
             return result;
         }
 
-        public List<int> ByteToBits(byte b)
+        public static List<int> ByteToBits(byte b)
         {
             List<int> bits = new List<int>(8);
 

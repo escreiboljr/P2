@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DatosDecod21\DatosDecod21.csproj" />
+    <ProjectReference Include="..\DatosDecod\DatosDecod48.csproj" />
+  </ItemGroup>
+
 </Project>
