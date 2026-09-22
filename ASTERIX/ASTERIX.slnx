@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="DatosBinario/DatosBinario.csproj" />
+  <Project Path="DatosBinario/Archivos.csproj" />
   <Project Path="DatosDecod/DatosDecod48.csproj" />
   <Project Path="DatosDecod21/DatosDecod21.csproj" />
   <Project Path="PruebasDeFunciones/PruebasDeFunciones.csproj" />
