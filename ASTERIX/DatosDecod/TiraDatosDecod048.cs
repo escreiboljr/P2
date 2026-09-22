@@ -257,7 +257,7 @@ namespace DatosDecod
             byte b2 = ColaBytes.Dequeue();
             byte b3 = ColaBytes.Dequeue();
             
-            List<byte> a = new List<byte>();
+            List<byte> a = new List<byte> { b1,b2,b3};
             List<int> listaBits = JoinBytesToBits(a);
             this.AircrftAddrs = listaBits;
         }
@@ -364,7 +364,7 @@ namespace DatosDecod
             byte b1 = ColaBytes.Dequeue();
             byte b2 = ColaBytes.Dequeue();
 
-            List<byte> list = new List<byte>();
+            List<byte> list = new List<byte> { b1,b2};
             List<int> listaBits = JoinBytesToBits(list);
 
             this.TrckStatus.CNF = listaBits[0];         // Primer octeto
@@ -387,7 +387,7 @@ namespace DatosDecod
             byte b1 = ColaBytes.Dequeue();
             byte b2 = ColaBytes.Dequeue();
 
-            List<byte> list = new List<byte>();
+            List<byte> list = new List<byte> { b1,b2};
             List<int> listaBits = JoinBytesToBits(list);
 
             this.CommACAScapability.COM = string.Join("", listaBits.GetRange(0, 3));
