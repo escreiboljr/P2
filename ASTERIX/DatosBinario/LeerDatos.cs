@@ -6,6 +6,7 @@ namespace Archvios
 {
     public class LeerDatos
     {
+        //preuba2
         public List<Mensaje> DatosProcesados(string nombreArchivo)
         {
             List<Mensaje> listaTiras = new List<Mensaje>();
