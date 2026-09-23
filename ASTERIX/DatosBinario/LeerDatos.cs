@@ -4,10 +4,8 @@ using DatosDecod21;
 
 namespace Archvios
 {
-    //preuba1
     public class LeerDatos
     {
-        //preuba2
         public List<Mensaje> DatosProcesados(string nombreArchivo)
         {
             List<Mensaje> listaTiras = new List<Mensaje>();
