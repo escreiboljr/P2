@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DatosBinario\Archivos.csproj" />
     <ProjectReference Include="..\DatosDecod\DatosDecod48.csproj" />
   </ItemGroup>
 

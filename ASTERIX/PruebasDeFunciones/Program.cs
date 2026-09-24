@@ -1,25 +1,56 @@
-﻿using DatosDecod;
+﻿using System;
+using System.Collections.Generic;
+using Archivos;
+using Archvios;      // Tu namespace
+using DatosDecod;
+using DatosDecod21;    // Donde está TiraDatosDecod048
 
-
-/*TiraDatosDecod048 p48 = new TiraDatosDecod048();
-List<int> listaBits = new List<int>() { 0, 0, 1, 1, 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2 };
-p48.DecDataSourceID(listaBits);
-Console.WriteLine(p48.DataSourceID[0] + " " + p48.DataSourceID[1]);
-*/
-
-using (FileStream fs = new FileStream("asterix_radar.ast", FileMode.Open, FileAccess.Read))
+namespace PruebasDeFunciones
 {
-    byte[] buffer = new byte[4096]; // 4 KB por bloque
-    int leidos;
-
-    while ((leidos = fs.Read(buffer, 0, buffer.Length)) > 0)
+    internal class Program
     {
-        for (int i = 0; i < leidos; i++)
+        static void Main(string[] args)
         {
-            byte b = buffer[i];
-            // Procesar cada byte aquí
+            // Ruta del archivo CAT048
+
+            string rutaArchivo = @"C:\Users\user\Desktop\P2\ASTERIX\PruebasDeFunciones\bin\Debug\net10.0\asterix_radar.ast"; // cámbiala
+
+            // Crear lector
+            LeerDatos lector = new LeerDatos();
+
+            // Procesar archivo
+            List<Mensaje> mensajes = lector.DatosProcesados(rutaArchivo);
+
+            // Mostrar solo los 10 primeros mensajes
+            int maxMensajes = Math.Min(10, mensajes.Count);
+
+            for (int i = 0; i < maxMensajes; i++)
+            {
+                var msg = mensajes[i];
+                var td = msg.tira as TiraDatosDecod048;
+                if (td == null)
+                    continue;
+
+                Console.WriteLine($"===== MENSAJE CAT048 #{i + 1} =====");
+
+                // Aquí imprime propiedades reales de tu clase TiraDatosDecod048
+                // Ajusta los nombres según tu clase
+
+                // Ejemplos típicos (cámbialos por los tuyos):
+                // Console.WriteLine($"Data Source ID: {td48.DataSourceID}");
+                // Console.WriteLine($"Time Of Day: {td48.TimeOfDay}");
+                // Console.WriteLine($"Track Number: {td48.TrackNumber}");
+                // Console.WriteLine($"Aircraft Address: {td48.AircraftAddress}");
+                // Console.WriteLine($"Aircraft ID: {td48.AircraftID}");
+                // Console.WriteLine($"Mode 3/A: {td48.Mode3A}");
+                // Console.WriteLine($"Position X: {td48.PosX}");
+                // Console.WriteLine($"Position Y: {td48.PosY}");
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("Fin de la prueba CAT21. Pulsa una tecla para salir.");
+            Console.ReadKey();
         }
     }
 }
-
-

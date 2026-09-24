@@ -12,6 +12,7 @@ namespace Archvios
             List<Mensaje> listaTiras = new List<Mensaje>();
             Queue<byte> cola = new Queue<byte>();
 
+            // 1. Cargar TODO el archivo en la cola principal
             using (FileStream fs = new FileStream(nombreArchivo, FileMode.Open, FileAccess.Read))
             {
                 byte[] buffer = new byte[4096];
@@ -24,20 +25,37 @@ namespace Archvios
                 }
             }
 
+            // 2. Procesar mensaje por mensaje
             while (cola.Count > 0)
             {
+                // --- VALIDACIÓN: ¿hay al menos 3 bytes para categoría + longitud?
+                if (cola.Count < 3)
+                    break; // archivo corrupto o mensaje incompleto
+
                 byte categoria = cola.Dequeue();
 
                 byte lenMSB = cola.Dequeue();
                 byte lenLSB = cola.Dequeue();
                 int longitud = (lenMSB << 8) | lenLSB;
 
-                byte[] mensajeBytes = new byte[longitud - 3];
-                for (int i = 0; i < mensajeBytes.Length; i++)
+                // --- VALIDACIÓN: ¿hay suficientes bytes para el mensaje?
+                int bytesMensaje = longitud - 3;
+
+                if (bytesMensaje < 0)
+                    throw new Exception($"Longitud inválida: {longitud}");
+
+                if (cola.Count < bytesMensaje)
+                    throw new Exception($"Mensaje incompleto: se esperaban {bytesMensaje} bytes pero solo quedan {cola.Count}");
+
+                // 3. Extraer SOLO los bytes del mensaje
+                byte[] mensajeBytes = new byte[bytesMensaje];
+                for (int i = 0; i < bytesMensaje; i++)
                     mensajeBytes[i] = cola.Dequeue();
 
+                // 4. Crear cola del mensaje
                 Queue<byte> colaMensaje = new Queue<byte>(mensajeBytes);
 
+                // 5. Decodificar según categoría
                 if (categoria == 48)
                 {
                     var tira48 = DecodificarCAT048(colaMensaje);
@@ -48,10 +66,15 @@ namespace Archvios
                     var tira21 = DecodificarCAT021(colaMensaje);
                     listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21 });
                 }
+                else
+                {
+                    // Categoría desconocida → ignorar
+                }
             }
 
             return listaTiras;
         }
+
 
         private static readonly Dictionary<int, Action<Queue<byte>, TiraDatosDecod048>> decoders =
     new Dictionary<int, Action<Queue<byte>, TiraDatosDecod048>>
@@ -409,18 +432,18 @@ namespace Archvios
                 { 42, (q, td) =>
                     {
                         int contador = 0;
-                        foreach(byte b in q)
+                        while (q.Count > 0)
                         {
-                            bool seguir = true;
+                            byte b = q.Dequeue();
                             List<int> listaBits = td.ByteToBits(b);
                             int fx = listaBits[7];
-                            listaBits.Remove(7);
+                            listaBits.RemoveAt(7);
                             foreach (int bit in listaBits)
                             {
                                 if (bit == 1)
                                 {contador++; }
                             }
-                            if (seguir == false)
+                            if (fx == 0)
                             {
                                 break;
                             }
@@ -429,6 +452,7 @@ namespace Archvios
                         while (j<contador)
                         {
                             q.Dequeue();
+                            j ++;
                         }
                     }
                 },
