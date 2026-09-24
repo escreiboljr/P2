@@ -12,7 +12,6 @@ namespace Archvios
             List<Mensaje> listaTiras = new List<Mensaje>();
             Queue<byte> cola = new Queue<byte>();
 
-            // 1. Cargar TODO el archivo en la cola principal
             using (FileStream fs = new FileStream(nombreArchivo, FileMode.Open, FileAccess.Read))
             {
                 byte[] buffer = new byte[4096];
@@ -20,60 +19,61 @@ namespace Archvios
 
                 while ((leidos = fs.Read(buffer, 0, buffer.Length)) > 0)
                 {
+                    // Añadir bloque a la cola principal
                     for (int i = 0; i < leidos; i++)
                         cola.Enqueue(buffer[i]);
+
+                    // Intentar procesar mensajes mientras haya suficientes bytes
+                    ProcesarMensajes(cola, listaTiras);
                 }
             }
 
-            // 2. Procesar mensaje por mensaje
-            while (cola.Count > 0)
-            {
-                // --- VALIDACIÓN: ¿hay al menos 3 bytes para categoría + longitud?
-                if (cola.Count < 3)
-                    break; // archivo corrupto o mensaje incompleto
-
-                byte categoria = cola.Dequeue();
-
-                byte lenMSB = cola.Dequeue();
-                byte lenLSB = cola.Dequeue();
-                int longitud = (lenMSB << 8) | lenLSB;
-
-                // --- VALIDACIÓN: ¿hay suficientes bytes para el mensaje?
-                int bytesMensaje = longitud - 3;
-
-                if (bytesMensaje < 0)
-                    throw new Exception($"Longitud inválida: {longitud}");
-
-                if (cola.Count < bytesMensaje)
-                    throw new Exception($"Mensaje incompleto: se esperaban {bytesMensaje} bytes pero solo quedan {cola.Count}");
-
-                // 3. Extraer SOLO los bytes del mensaje
-                byte[] mensajeBytes = new byte[bytesMensaje];
-                for (int i = 0; i < bytesMensaje; i++)
-                    mensajeBytes[i] = cola.Dequeue();
-
-                // 4. Crear cola del mensaje
-                Queue<byte> colaMensaje = new Queue<byte>(mensajeBytes);
-
-                // 5. Decodificar según categoría
-                if (categoria == 48)
-                {
-                    var tira48 = DecodificarCAT048(colaMensaje);
-                    listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48 });
-                }
-                else if (categoria == 21)
-                {
-                    var tira21 = DecodificarCAT021(colaMensaje);
-                    listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21 });
-                }
-                else
-                {
-                    // Categoría desconocida → ignorar
-                }
-            }
+            // Procesar lo que quede al final
+            ProcesarMensajes(cola, listaTiras);
 
             return listaTiras;
         }
+        private void ProcesarMensajes(Queue<byte> cola, List<Mensaje> listaTiras)
+    {
+        while (true)
+        {
+            // ¿Hay al menos CAT + LEN?
+            if (cola.Count < 3)
+                return;
+
+            byte[] cabecera = cola.Take(3).ToArray();
+            int longitud = (cabecera[1] << 8) | cabecera[2];
+            int bytesMensaje = longitud - 3;
+
+            // ¿Hay suficientes bytes para el mensaje completo?
+            if (cola.Count < longitud)
+                return; // mensaje partido → esperar más datos
+
+            // Extraer CAT + LEN
+            byte categoria = cola.Dequeue();
+            cola.Dequeue(); // MSB
+            cola.Dequeue(); // LSB
+
+            // Extraer el mensaje completo
+            byte[] mensajeBytes = new byte[bytesMensaje];
+            for (int i = 0; i < bytesMensaje; i++)
+                mensajeBytes[i] = cola.Dequeue();
+
+            Queue<byte> colaMensaje = new Queue<byte>(mensajeBytes);
+
+            // Decodificar
+            if (categoria == 48)
+            {
+                var tira48 = DecodificarCAT048(colaMensaje);
+                listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48 });
+            }
+            else if (categoria == 21)
+            {
+                var tira21 = DecodificarCAT021(colaMensaje);
+                listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21 });
+            }
+        }
+    }
 
         private void SkipUnknownFRN(Queue<byte> q)
         {
@@ -141,18 +141,17 @@ namespace Archvios
                 List<int> bits = TiraDatosDecod048.ByteToBits(octInfo);
 
                 if (bits[7] == 1)
-                    q.Dequeue();
-
-                if (bits[1] == 1)
-                {
-                    q.Dequeue(); q.Dequeue(); q.Dequeue();
-                    q.Dequeue(); q.Dequeue(); q.Dequeue();
-                    q.Dequeue();
-                }
+                   { q.Dequeue(); }
 
                 if (bits[0] == 1)
                 {
                     q.Dequeue();
+                    q.Dequeue();
+                }
+                if (bits[1] == 1)
+                {
+                    q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    q.Dequeue(); q.Dequeue(); q.Dequeue();
                     q.Dequeue();
                 }
             }

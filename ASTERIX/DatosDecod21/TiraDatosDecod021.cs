@@ -193,24 +193,33 @@
         public void DecodeTargetReportDescriptor(Queue<byte> data)
         {
             byte b1 = data.Dequeue();
-            byte b2 = data.Dequeue();
-            byte b3 = data.Dequeue();
-
-            List<byte> listaB = new List<byte> { b1,b2,b3};
-            List<int> listaBits = JoinBytesToBits(listaB);
+            List<int> listaBits = ByteToBits(b1);
 
             this.TargetRep.ATP = string.Join("", listaBits.GetRange(0, 3));
             this.TargetRep.ARC = string.Join("", listaBits.GetRange(3, 2));
             this.TargetRep.RC = listaBits[5];
             this.TargetRep.RAB = listaBits[6];
-            if (listaBits[7]==1)
+            if (listaBits[7] == 1)
             {
-                this.TargetRep.DCR = listaBits[8];
-                this.TargetRep.GBS = listaBits[9];
-                this.TargetRep.SIM = listaBits[10];
-                this.TargetRep.TST = listaBits[11];
-                this.TargetRep.SAA = listaBits[12];
-                this.TargetRep.CL = string.Join("", listaBits.GetRange(13, 2 ));
+                b1 = data.Dequeue();
+                listaBits = ByteToBits(b1);
+                this.TargetRep.DCR = listaBits[0];
+                this.TargetRep.GBS = listaBits[1];
+                this.TargetRep.SIM = listaBits[2];
+                this.TargetRep.TST = listaBits[3];
+                this.TargetRep.SAA = listaBits[4];
+                this.TargetRep.CL = string.Join("", listaBits.GetRange(5, 2));
+                if (listaBits[7] == 1)
+                {
+                    b1 = data.Dequeue();
+                    listaBits = ByteToBits(b1);
+                    this.TargetRep.IPC = listaBits[2];
+                    this.TargetRep.NOGO = listaBits[3];
+                    this.TargetRep.CPR = listaBits[4];
+                    this.TargetRep.LDPJ = listaBits[5];
+                    this.TargetRep.RCF = listaBits[6];
+                }
+
             }
         }
         public void DecodeReservedExp(Queue<byte> cola)
