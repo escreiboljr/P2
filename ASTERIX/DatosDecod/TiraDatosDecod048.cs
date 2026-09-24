@@ -11,6 +11,7 @@ namespace DatosDecod
         public double TimeOfDay { get; set; }
         public TargetReportDescriptor TargetRep { get; set; }
         public List<double> PosSlantPolarCoord { get; set; }
+        public List<double> PositionCorrectedLatLonAlt { get; set; }
         public Mode3 mode3 { get; set; }
         public FlightLevel FL {  get; set; }
         public RadarPlotCharacteristics RadarPlot { get; set; }
@@ -34,6 +35,7 @@ namespace DatosDecod
             this.TimeOfDay = -1;
             this.TargetRep = new TargetReportDescriptor();
             this.PosSlantPolarCoord = new List<double> { 0, 0 };
+            this.PositionCorrectedLatLonAlt = new List<double> { 0, 0, 0 };
             this.mode3 = new Mode3();
             this.FL = new FlightLevel();
             this.RadarPlot = new RadarPlotCharacteristics();
@@ -121,6 +123,25 @@ namespace DatosDecod
             this.PosSlantPolarCoord[1] = thetaDeg;
         }
 
+        public void ConvertToWGS84(double radarLat, double radarLon)
+        {
+            double rhoNM = this.PosSlantPolarCoord[0];
+            double thetaDeg = this.PosSlantPolarCoord[1];
+
+            double rho_m = rhoNM * 1852.0;
+            double theta_rad = thetaDeg * Math.PI / 180.0;
+
+            double X = rho_m * Math.Sin(theta_rad);
+            double Y = rho_m * Math.Cos(theta_rad);
+
+            double R = 6378137.0;
+            double lat = radarLat + (Y / R) * (180.0 / Math.PI);
+            double lon = radarLon + (X / (R * Math.Cos(radarLat * Math.PI / 180.0))) * (180.0 / Math.PI);
+
+            this.PositionCorrectedLatLonAlt[0] = lat;
+            this.PositionCorrectedLatLonAlt[1] = lon;
+        }
+
         public void DecodeTargetRep(Queue<byte> ColaBytes)    //preguntar lo del third extent
         {
             byte b = ColaBytes.Dequeue();
@@ -194,6 +215,33 @@ namespace DatosDecod
             }
             double FL = suma * 0.25;
             this.FL.FL = FL;
+
+            //a partir de aqui es la correccion, hay que revisar q este bien
+
+            double altitudFt = FL * 100.0;
+            double qnhActual = 1013.25;
+            double ultimoQNH = 1013.25;
+
+            if (altitudFt >= 6000)
+            {
+                this.PositionCorrectedLatLonAlt[2] = altitudFt;
+                return;
+            }
+            if (qnhActual >= 1013.0 && qnhActual <= 1013.5)
+            {
+                this.PositionCorrectedLatLonAlt[2] = altitudFt;
+                return;
+            }
+            bool pareceSTD = (altitudFt % 100 == 0);
+            if (pareceSTD)
+            {
+                double corr = (ultimoQNH - 1013.25) * 30.0;
+                this.PositionCorrectedLatLonAlt[2] = altitudFt + corr;
+                return;
+            }
+            double correccion = (qnhActual - 1013.25) * 30.0;
+            this.PositionCorrectedLatLonAlt[2] = altitudFt + correccion;
+
         }
         private int TwosComplementToInt(byte b)    //esta funcion es para el decodeRadarPlot
         {

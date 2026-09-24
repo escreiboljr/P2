@@ -65,8 +65,14 @@ namespace Archvios
             if (categoria == 48)
             {
                 var tira48 = DecodificarCAT048(colaMensaje);
-                listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48 });
-            }
+                    if (tira48.PositionCorrectedLatLonAlt[0] > 40.99 &&
+                        tira48.PositionCorrectedLatLonAlt[0] < 41.7 &&
+                        tira48.PositionCorrectedLatLonAlt[1] > 1.5 &&
+                        tira48.PositionCorrectedLatLonAlt[1] < 2.6)
+                    {
+                        listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48 });
+                    }
+                }
             else if (categoria == 21)
             {
                 var tira21 = DecodificarCAT021(colaMensaje);
@@ -87,8 +93,13 @@ namespace Archvios
         { 1,  (q, td) => td.DecDataSourceID(q) },
         { 2,  (q, td) => td.DecodeTimeOfDayFromBits(q) },
         { 3,  (q, td) => td.DecodeTargetRep(q) },
-        { 4,  (q, td) => td.DecodePosSlantPolarCoord(q) },
-        { 5, (q, td) => td.DecodeMode3A(q) },
+        { 4, (q, td) =>
+            {
+                td.DecodePosSlantPolarCoord(q);
+                td.ConvertToWGS84(41.297, 2.083);
+            }
+        },
+        { 5, (q, td)  => td.DecodeMode3A(q) },
         { 6,  (q, td) => td.DecodeFL(q) },
         { 7,  (q, td) => td.DecodeRadarPlot(q) },
         { 8,  (q, td) => td.DecodeAircraftAddress(q) },
