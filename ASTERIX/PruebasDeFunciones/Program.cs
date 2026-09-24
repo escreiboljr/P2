@@ -13,7 +13,7 @@ namespace PruebasDeFunciones
         {
             // Ruta del archivo CAT048
 
-            string rutaArchivo = @"C:\Users\user\Desktop\P2\ASTERIX\PruebasDeFunciones\bin\Debug\net10.0\asterix_radar.ast"; // cámbiala
+            string rutaArchivo = @"C:\Users\user\Desktop\P2\ASTERIX\PruebasDeFunciones\bin\Debug\net10.0\asterix_adsb.ast"; // cámbiala
 
             // Crear lector
             LeerDatos lector = new LeerDatos();
@@ -27,7 +27,7 @@ namespace PruebasDeFunciones
             for (int i = 0; i < maxMensajes; i++)
             {
                 var msg = mensajes[i];
-                var td = msg.tira as TiraDatosDecod048;
+                var td = msg.tira as TiraDatosDecod021;
                 if (td == null)
                     continue;
 

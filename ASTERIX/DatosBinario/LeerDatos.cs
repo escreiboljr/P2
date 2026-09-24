@@ -75,6 +75,11 @@ namespace Archvios
             return listaTiras;
         }
 
+        private void SkipUnknownFRN(Queue<byte> q)
+        {
+            while (q.Count > 0)
+                q.Dequeue();
+        }
 
         private static readonly Dictionary<int, Action<Queue<byte>, TiraDatosDecod048>> decoders =
     new Dictionary<int, Action<Queue<byte>, TiraDatosDecod048>>
@@ -83,8 +88,8 @@ namespace Archvios
         { 2,  (q, td) => td.DecodeTimeOfDayFromBits(q) },
         { 3,  (q, td) => td.DecodeTargetRep(q) },
         { 4,  (q, td) => td.DecodePosSlantPolarCoord(q) },
-        { 51, (q, td) => td.DecodeMode3A(q) },
-        { 6,  (q, td) => td.DecDataSourceID(q) },
+        { 5, (q, td) => td.DecodeMode3A(q) },
+        { 6,  (q, td) => td.DecodeFL(q) },
         { 7,  (q, td) => td.DecodeRadarPlot(q) },
         { 8,  (q, td) => td.DecodeAircraftAddress(q) },
         { 9,  (q, td) => td.DecodeAircraftID(q) },
@@ -102,7 +107,19 @@ namespace Archvios
                 q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue();
             }
         },
-        { 16, (q, td) => q.Dequeue() },
+        { 16, (q, td) =>
+            {
+                byte b = q.Dequeue();
+                List<int> bits = TiraDatosDecod048.ByteToBits(b);
+
+                // FX = bit 7
+                while (bits[7] == 1)
+                {
+                    b = q.Dequeue();
+                    bits = TiraDatosDecod048.ByteToBits(b);
+                }
+            }
+        },
         { 17, (q, td) =>
             {
                 q.Dequeue(); q.Dequeue();
@@ -154,7 +171,13 @@ namespace Archvios
             {
                 if (decoders.TryGetValue(frn, out var accion))
                     accion(listaBytes, td);
+                else if (frn > 21)
+                {
+                    SkipUnknownFRN(listaBytes);
+                    break;   // ya no hay nada más que decodificar
+                }
             }
+
 
             return td;
         }
@@ -484,6 +507,11 @@ namespace Archvios
             {
                 if (decodersCAT021.TryGetValue(frn, out var accion))
                     accion(listaBytes, td);
+                else if (frn > 48)
+                {
+                    SkipUnknownFRN(listaBytes);
+                    break;   // ya no hay nada más que decodificar
+                }
             }
 
             return td;

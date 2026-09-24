@@ -14,7 +14,7 @@ namespace DatosDecod
         public Mode3 mode3 { get; set; }
         public FlightLevel FL {  get; set; }
         public RadarPlotCharacteristics RadarPlot { get; set; }
-        public List<int> AircrftAddrs { get; set; }
+        public int AircrftAddrs { get; set; }
         public string AircrftIddent { get; set; }
         public class ModeSData
         {
@@ -37,7 +37,7 @@ namespace DatosDecod
             this.mode3 = new Mode3();
             this.FL = new FlightLevel();
             this.RadarPlot = new RadarPlotCharacteristics();
-            this.AircrftAddrs = new List<int>();
+            this.AircrftAddrs = -1;
             this.AircrftIddent = "";
             this.ModeS = new ModeSData();
             this.TrackNum = -1;
@@ -121,39 +121,35 @@ namespace DatosDecod
             this.PosSlantPolarCoord[1] = thetaDeg;
         }
 
-        public void DecodeTargetRep(Queue<byte> ColaBytes)
+        public void DecodeTargetRep(Queue<byte> ColaBytes)    //preguntar lo del third extent
         {
-            byte byte1 = ColaBytes.Dequeue();               // saca los 3 bytes de la cola
-            byte byte2 = ColaBytes.Dequeue();
-            byte byte3 = ColaBytes.Dequeue();
-
-            List<byte> listaByte = new List<byte> { byte1, byte2, byte3 };     // Juntar los bytes en una lista de bits
-            List<int> listaBits = JoinBytesToBits(listaByte);
-
-            this.TargetRep.TYP = string.Join("", listaBits.GetRange(0, 3));         // Primer octeto
+            byte b = ColaBytes.Dequeue();
+            List<int> listaBits = ByteToBits(b);
+            this.TargetRep.TYP = string.Join("", listaBits.GetRange(0, 3));
             this.TargetRep.SIM = listaBits[3];
             this.TargetRep.RDP = listaBits[4];
             this.TargetRep.SPI = listaBits[5];
             this.TargetRep.RAB = listaBits[6];
-
-            if (listaBits[7] == 1)          // FX del primer octeto
+            if (listaBits[7] == 1)
             {
-                this.TargetRep.TST = listaBits[8];          // Segundo octeto
-                this.TargetRep.ERR = listaBits[9];
-                this.TargetRep.XPP = listaBits[10];
-                this.TargetRep.ME = listaBits[11];
-                this.TargetRep.MI = listaBits[12];
-
-                this.TargetRep.FOE_FRI = string.Join("", listaBits.GetRange(13, 2));
-
-                if (listaBits[15] == 1)         // FX del segundo octeto
+                b = ColaBytes.Dequeue();
+                listaBits = ByteToBits(b);
+                this.TargetRep.TST = listaBits[0];
+                this.TargetRep.ERR = listaBits[1];
+                this.TargetRep.XPP = listaBits[2];
+                this.TargetRep.ME = listaBits[3];
+                this.TargetRep.MI = listaBits[4];
+                this.TargetRep.FOE_FRI = string.Join("", listaBits.GetRange(5, 2));
+                if (listaBits[7] == 1)
                 {
-                    this.TargetRep.ADSB_EP = listaBits[16];     // Tercer octeto
-                    this.TargetRep.ADSB_VAL = listaBits[17];
-                    this.TargetRep.SCN_EP = listaBits[18];
-                    this.TargetRep.SCN_VAL = listaBits[19];
-                    this.TargetRep.PAI_EP = listaBits[20];
-                    this.TargetRep.PAI_VAL = listaBits[21];
+                    b = ColaBytes.Dequeue();
+                    listaBits = ByteToBits(b);
+                    this.TargetRep.ADSB_EP = listaBits[0];
+                    this.TargetRep.ADSB_VAL = listaBits[1];
+                    this.TargetRep.SCN_EP = listaBits[2];
+                    this.TargetRep.SCN_VAL = listaBits[3];
+                    this.TargetRep.PAI_EP = listaBits[4];
+                    this.TargetRep.PAI_VAL = listaBits[5];
                 }
             }
         }
@@ -191,7 +187,7 @@ namespace DatosDecod
                 if (listaBits[i+2] == 1)
                 {
                     int potencia = 13 - i;
-                    int valor = 1<<(13-i);
+                    int valor = 1<<(potencia);
                     suma = suma + valor;
                 }
                 i ++;
@@ -256,10 +252,9 @@ namespace DatosDecod
             byte b1 = ColaBytes.Dequeue();
             byte b2 = ColaBytes.Dequeue();
             byte b3 = ColaBytes.Dequeue();
-            
-            List<byte> a = new List<byte> { b1,b2,b3};
-            List<int> listaBits = JoinBytesToBits(a);
-            this.AircrftAddrs = listaBits;
+
+            int raw = (b1 << 16) | (b2 << 8) | b3;
+            this.AircrftAddrs = raw;
         }
 
         private char DecodeCharICAO(int v)
@@ -362,10 +357,7 @@ namespace DatosDecod
         public void DecodeTrackStatus(Queue<byte> ColaBytes)
         {
             byte b1 = ColaBytes.Dequeue();
-            byte b2 = ColaBytes.Dequeue();
-
-            List<byte> list = new List<byte> { b1,b2};
-            List<int> listaBits = JoinBytesToBits(list);
+            List<int> listaBits = ByteToBits(b1);
 
             this.TrckStatus.CNF = listaBits[0];         // Primer octeto
             this.TrckStatus.RAD = string.Join("", listaBits.GetRange(1, 2)); 
@@ -375,10 +367,12 @@ namespace DatosDecod
 
             if (listaBits[7] == 1)          // FX del primer octeto
             {
-                this.TrckStatus.TRE = listaBits[8];          // Segundo octeto
-                this.TrckStatus.GHO = listaBits[9];
-                this.TrckStatus.SUP = listaBits[10];
-                this.TrckStatus.TCC = listaBits[11];
+                b1 = ColaBytes.Dequeue();
+                listaBits = ByteToBits(b1);
+                this.TrckStatus.TRE = listaBits[0];          // Segundo octeto
+                this.TrckStatus.GHO = listaBits[1];
+                this.TrckStatus.SUP = listaBits[2];
+                this.TrckStatus.TCC = listaBits[3];
             }
         }
 
@@ -391,7 +385,7 @@ namespace DatosDecod
             List<int> listaBits = JoinBytesToBits(list);
 
             this.CommACAScapability.COM = string.Join("", listaBits.GetRange(0, 3));
-            this.CommACAScapability.COM = string.Join("", listaBits.GetRange(2, 3));
+            this.CommACAScapability.STAT = string.Join("", listaBits.GetRange(3, 3));
             this.CommACAScapability.SI = listaBits[6];
             this.CommACAScapability.MSSC = listaBits[8];
             this.CommACAScapability.ARC = listaBits[9];
