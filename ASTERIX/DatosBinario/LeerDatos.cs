@@ -1,6 +1,7 @@
 ﻿using Archivos;
 using DatosDecod;
 using DatosDecod21;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Archvios
 {
@@ -135,6 +136,334 @@ namespace Archvios
             return td;
         }
 
+        private static readonly Dictionary<int, Action<Queue<byte>, TiraDatosDecod021>>
+            decodersCAT021 =
+            new Dictionary<int, Action<Queue<byte>, TiraDatosDecod021>>
+            {
+                { 1, (q, td) => td.DecDataSourceID(q) },
+
+                { 2, (q, td) => td.DecodeTargetReportDescriptor(q)},
+
+                { 3, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 4, (q, td) =>
+                    {
+                        q.Dequeue();
+                    }
+                },
+
+                { 5, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 6, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 7, (q, td) => td.DecodePosWGS84HighRes(q) },
+
+                { 8, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 9, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 10, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 11, (q, td) => td.DecodeTargetAddress(q) },
+
+                { 12, (q, td) => td.DecodeTimeReceptionPosition(q) },
+
+                { 13, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 14, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 15, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 16, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 17, (q, td) =>
+                    {
+                        byte b = q.Dequeue();
+                        List<int> listaBits = td.ByteToBits(b);
+                        if (listaBits[7]==1)
+                        {
+                            b = q.Dequeue();
+                            listaBits = td.ByteToBits(b);
+                            if (listaBits[7]==1)
+                            {
+                                b = q.Dequeue();
+                                listaBits = td.ByteToBits(b);
+                                if (listaBits[7]==1)
+                                {
+                                    b = q.Dequeue();
+                                    listaBits = td.ByteToBits(b);
+                                }
+                            }
+                        }
+                    }
+                },
+
+                { 18, (q, td) => q.Dequeue() },
+
+                { 19, (q, td) => td.DecodeMode3A(q) },
+
+                { 20, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 21, (q, td) => td.DecodeFlightLevel(q) },
+
+                { 22, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 23, (q, td) => q.Dequeue() },
+
+                { 24, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 25, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 26, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 27, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 28, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 29, (q, td) => td.DecodeTargetIdentification(q) },
+
+                { 30, (q, td) =>
+                    {
+                        q.Dequeue();
+                    }
+                },
+
+                { 31, (q, td) =>
+                    {
+                        byte b = q.Dequeue();
+                        List<int> listaBits = td.ByteToBits(b);
+                        if (listaBits[7]==1)
+                        {
+                            q.Dequeue();
+                        }
+                        if (listaBits[3]==1)
+                        {
+                            q.Dequeue();
+                        }
+                        if (listaBits[2]==1)
+                        {
+                            q.Dequeue();
+                            q.Dequeue();
+                        }
+                        if (listaBits[1]==1)
+                        {
+                            q.Dequeue();
+                            q.Dequeue() ;
+                        }
+                        if (listaBits[0]==1)
+                        {
+                            q.Dequeue();
+                            q.Dequeue();
+                        }
+                    }
+                },
+
+                { 32, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 33, (q, td) =>
+                    {
+                        q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 34, (q, td) =>            //DUDA --------------------------------------_______________-----__-____________----__--
+                    {
+                        byte b = q.Dequeue();
+                        List<int> listaBits = td.ByteToBits(b);
+                        if (listaBits[7]==1)
+                        {
+                            q.Dequeue();
+                        }
+                        if (listaBits[1]==1)
+                        {
+                            q.Dequeue();
+                        }
+                        if (listaBits[0]==1)
+                        {
+                            q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();
+                            q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();
+                        }
+                    }
+                },
+
+                { 35, (q, td) =>
+                    {
+                        q.Dequeue();
+                    }
+                },
+
+                { 36, (q, td) =>
+                    {
+                        q.Dequeue();
+                    }
+                },
+
+                { 37, (q, td) =>
+                    {
+                        byte b = q.Dequeue();
+                        List<int> listaBits = td.ByteToBits(b);
+                        if (listaBits[7]==1)
+                        {
+                            q.Dequeue();
+                        }
+                    }
+                },
+
+                { 38, (q, td) =>
+                    {
+                        q.Dequeue();
+                    }
+                },
+
+                { 39, (q, td) =>
+                    {
+                        q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();q.Dequeue();
+                        q.Dequeue();
+                    }
+                },
+
+                { 40, (q, td) => // I021/260: 7 bytes
+                    {
+                        q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue(); q.Dequeue();
+                    }
+                },
+
+                { 41, (q, td) =>
+                    {
+                        q.Dequeue();
+                    }
+                },
+
+                { 42, (q, td) =>
+                    {
+                        int contador = 0;
+                        foreach(byte b in q)
+                        {
+                            bool seguir = true;
+                            List<int> listaBits = td.ByteToBits(b);
+                            int fx = listaBits[7];
+                            listaBits.Remove(7);
+                            foreach (int bit in listaBits)
+                            {
+                                if (bit == 1)
+                                {contador++; }
+                            }
+                            if (seguir == false)
+                            {
+                                break;
+                            }
+                        }
+                        int j = 0;
+                        while (j<contador)
+                        {
+                            q.Dequeue();
+                        }
+                    }
+                },
+
+                { 48, (q, td) =>
+                    {
+                        td.DecodeReservedExp(q);
+                    }
+                },
+
+                { 49, (q, td) =>
+                    {
+                        while (q.Count()>0)
+                        {
+                            q.Dequeue();
+                        }
+                    }
+                }
+
+            };
+
+        public TiraDatosDecod021 DecodificarCAT021(Queue<byte> listaBytes)
+        {
+            TiraDatosDecod021 td = new TiraDatosDecod021();
+
+            List<int> listaFRN = SacarFRNpresentes(listaBytes);
+
+            foreach (int frn in listaFRN)
+            {
+                if (decodersCAT021.TryGetValue(frn, out var accion))
+                    accion(listaBytes, td);
+            }
+
+            return td;
+        }
 
         public List<int> SacarFRNpresentes(Queue<byte> ColaBytes)
         {

@@ -2,7 +2,7 @@
 {
     public class TiraDatosDecod021
     {
-         public int DataSourceID { get; set; }
+         public List<byte> DataSourceID { get; set; }
          public TargetReportDescriptor TargetRep { get; set; }
          public double ReservedExpField { get; set; }
          public List<double> PosWGS84HighRes { get; set; }
@@ -14,7 +14,7 @@
 
         public TiraDatosDecod021()
          {
-            this.DataSourceID = -1;
+            this.DataSourceID = new List<byte> { 0, 0 };
             this.TargetRep = new TargetReportDescriptor();
             this.ReservedExpField = -1;
             this.PosWGS84HighRes = new List<double> { 0, 0 };
@@ -25,6 +25,14 @@
             this.TargetIdentification = "";
         }
 
+        public void DecDataSourceID(Queue<byte> ColaBytes)
+        {
+            byte SAC = ColaBytes.Dequeue();
+            byte SIC = ColaBytes.Dequeue();
+
+            this.DataSourceID[0] = SAC;
+            this.DataSourceID[1] = SIC;
+        }
 
         public void DecodePosWGS84HighRes(Queue<byte> ColaBytes)
         {
@@ -203,6 +211,19 @@
                 this.TargetRep.TST = listaBits[11];
                 this.TargetRep.SAA = listaBits[12];
                 this.TargetRep.CL = string.Join("", listaBits.GetRange(13, 2 ));
+            }
+        }
+        public void DecodeReservedExp(Queue<byte> cola)
+        {
+            cola.Dequeue();
+            byte b = cola.Dequeue();
+            List<int> listaBits = ByteToBits(b);
+            if (listaBits[0] ==1)
+            {
+                byte b1 = cola.Dequeue();
+                byte b2 = cola.Dequeue();
+                int raw = (b1 << 8) | b2;
+                this.ReservedExpField = (raw * 0.1)+800;
             }
         }
     }   
