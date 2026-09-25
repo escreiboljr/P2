@@ -14,16 +14,14 @@ namespace Archvios
 
             using (FileStream fs = new FileStream(nombreArchivo, FileMode.Open, FileAccess.Read))
             {
-                byte[] buffer = new byte[4096];
+                byte[] buffer = new byte[8*1024*1024];              //lee 8MB para que no se atasque 
                 int leidos;
 
                 while ((leidos = fs.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    // Añadir bloque a la cola principal
                     for (int i = 0; i < leidos; i++)
-                        cola.Enqueue(buffer[i]);
+                        cola.Enqueue(buffer[i]);            //mete los mensajes en la cola
 
-                    // Intentar procesar mensajes mientras haya suficientes bytes
                     ProcesarMensajes(cola, listaTiras);
                 }
             }
