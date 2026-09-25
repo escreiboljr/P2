@@ -175,19 +175,24 @@ namespace DatosDecod
             }
         }
 
-        public void DecodeMode3A (Queue<byte> ColaBytes)
+        public void DecodeMode3A(Queue<byte> ColaBytes)
         {
-            byte byte1 = ColaBytes.Dequeue();               // leer los 2 bytes de la cola
+            byte byte1 = ColaBytes.Dequeue();
             byte byte2 = ColaBytes.Dequeue();
 
-            List<byte> listaByte = new List<byte> { byte1, byte2};     // Juntar los bytes en una lista de bits
-            List<int> listaBits = JoinBytesToBits(listaByte);
+            List<byte> listaByte = new List<byte> { byte1, byte2 };
+            List<int> bits = JoinBytesToBits(listaByte);
 
-            this.mode3.V = listaBits[0];
-            this.mode3.G = listaBits[1];
-            this.mode3.L = listaBits[2];
-            string reply = string.Join("", listaBits.GetRange(4, 12));
-            this.mode3.reply = reply;
+            this.mode3.V = bits[0];
+            this.mode3.G = bits[1];
+            this.mode3.L = bits[2];
+
+            int A = bits[4] * 1 + bits[5] * 2 + bits[6] * 4;
+            int B = bits[7] * 1 + bits[8] * 2 + bits[9] * 4;
+            int C = bits[10] * 1 + bits[11] * 2 + bits[12] * 4;
+            int D = bits[13] * 1 + bits[14] * 2 + bits[15] * 4;
+
+            this.mode3.reply = $"{A}{B}{C}{D}";
         }
 
         public void DecodeFL(Queue<byte> ColaBytes)

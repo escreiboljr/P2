@@ -8,5 +8,6 @@ namespace Archivos
     {
         public byte categoria {  get; set; }
         public object tira {  get; set; }
+        public bool TransFijo {  get; set; }
     }
 }

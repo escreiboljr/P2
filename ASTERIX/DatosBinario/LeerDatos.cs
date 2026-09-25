@@ -70,13 +70,16 @@ namespace Archvios
                         tira48.PositionCorrectedLatLonAlt[1] > 1.5 &&
                         tira48.PositionCorrectedLatLonAlt[1] < 2.6)
                     {
-                        listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48 });
+                        if (tira48.mode3.reply =="7777")
+                        { listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48, TransFijo=true }); }
+                        else
+                        { listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48, TransFijo = false }); }
                     }
                 }
             else if (categoria == 21)
             {
                 var tira21 = DecodificarCAT021(colaMensaje);
-                listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21 });
+                listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21, TransFijo = false });
             }
         }
     }
