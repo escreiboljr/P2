@@ -74,12 +74,22 @@ namespace Archvios
                         { listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48, TransFijo = false }); }
                     }
                 }
-            else if (categoria == 21)
-            {
-                var tira21 = DecodificarCAT021(colaMensaje);
-                listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21, TransFijo = false });
+                else if (categoria == 21)
+                {
+                    var tira21 = DecodificarCAT021(colaMensaje);
+
+                    if (tira21.TargetRep.GBS == 0)
+                    {
+                        if (tira21.PosWGS84HighRes[0] > 40.9 && //Descartar mensajes de aeronaves que no se encuentren dentro del filtro geográfico
+                            tira21.PosWGS84HighRes[0] < 41.7 &&
+                            tira21.PosWGS84HighRes[1] > 1.5 &&
+                            tira21.PosWGS84HighRes[1] < 2.6)
+                        {
+                            listaTiras.Add(new Mensaje { categoria = categoria, tira = tira21, TransFijo = false });
+                        }
+                    }
+                }
             }
-        }
     }
 
         private void SkipUnknownFRN(Queue<byte> q)
