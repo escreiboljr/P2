@@ -35,7 +35,7 @@ namespace DatosDecod
             this.TimeOfDay = -1;
             this.TargetRep = new TargetReportDescriptor();
             this.PosSlantPolarCoord = new List<double> { 0, 0 };
-            this.PositionCorrectedLatLonAlt = new List<double> { 0, 0, 0 };
+            this.PositionCorrectedLatLonAlt =new List<double> { double.NaN, double.NaN, double.NaN };
             this.mode3 = new Mode3();
             this.FL = new FlightLevel();
             this.RadarPlot = new RadarPlotCharacteristics();
@@ -195,59 +195,33 @@ namespace DatosDecod
             this.mode3.reply = $"{A}{B}{C}{D}";
         }
 
-        public void DecodeFL(Queue<byte> ColaBytes)
+        public void DecodeFL(Queue<byte> colaBytes)
         {
-            byte byte1 = ColaBytes.Dequeue();               // leer los 2 bytes de la cola
-            byte byte2 = ColaBytes.Dequeue();
+            byte b1 = colaBytes.Dequeue();
+            byte b2 = colaBytes.Dequeue();
 
-            List<byte> listaByte = new List<byte> { byte1, byte2 };     // Juntar los bytes en una lista de bits
+            List<byte> listaByte = new List<byte> { b1, b2 };
             List<int> listaBits = JoinBytesToBits(listaByte);
 
             this.FL.V = listaBits[0];
             this.FL.G = listaBits[1];
 
-            int i = 0;
-            double suma = 0;
-            while (i<14)
-            {
-                if (listaBits[i+2] == 1)
-                {
-                    int potencia = 13 - i;
-                    int valor = 1<<(potencia);
-                    suma = suma + valor;
-                }
-                i ++;
-            }
-            double FL = suma * 0.25;
-            this.FL.FL = FL;
+            int raw = ((b1 & 0x3F) << 8) | b2;
 
-            //a partir de aqui es la correccion, hay que revisar q este bien
-
-            double altitudFt = FL * 100.0;
-            double qnhActual = 1013.25;
-            double ultimoQNH = 1013.25;
-
-            if (altitudFt >= 6000)
+            if ((raw & 0x2000) != 0)
             {
-                this.PositionCorrectedLatLonAlt[2] = altitudFt;
-                return;
+                raw = raw - 16384;
             }
-            if (qnhActual >= 1013.0 && qnhActual <= 1013.5)
-            {
-                this.PositionCorrectedLatLonAlt[2] = altitudFt;
-                return;
-            }
-            bool pareceSTD = (altitudFt % 100 == 0);
-            if (pareceSTD)
-            {
-                double corr = (ultimoQNH - 1013.25) * 30.0;
-                this.PositionCorrectedLatLonAlt[2] = altitudFt + corr;
-                return;
-            }
-            double correccion = (qnhActual - 1013.25) * 30.0;
-            this.PositionCorrectedLatLonAlt[2] = altitudFt + correccion;
 
+            double flightLevel = raw * 0.25;
+
+            this.FL.FL = flightLevel;
+
+            double altitudFt = flightLevel * 100.0;
+
+            this.PositionCorrectedLatLonAlt[2] = altitudFt;
         }
+
         private int TwosComplementToInt(byte b)    //esta funcion es para el decodeRadarPlot
         {
             // Si el MSB está a 1 → número negativo

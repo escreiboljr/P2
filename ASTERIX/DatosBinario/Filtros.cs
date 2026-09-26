@@ -40,10 +40,10 @@ namespace Archivos
             {
                 return listaFiltro.Where(x => x.TransFijo == false);
             }
-            private IEnumerable<Mensaje> FiltrarTrayectoria(IEnumerable<Mensaje> listaFiltro, double trayectoria)
+            /*private IEnumerable<Mensaje> FiltrarTrayectoria(IEnumerable<Mensaje> listaFiltro, double trayectoria)
             {
                 
-            }
+            }*/
         }
     }
 }
