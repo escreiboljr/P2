@@ -4,11 +4,13 @@ using DatosDecod;
 using DatosDecod21;
 using Microsoft.VisualBasic;
 using Simulacion;
+using System.Diagnostics;
 
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using System.Data.Entity.Core.Mapping;
 
 namespace GUI_ASTERIX
 {
@@ -25,6 +27,7 @@ namespace GUI_ASTERIX
         {
             InitializeComponent();
             timerSimulacion.Interval = 1000;
+            gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
         }
 
         private void MenuSimulacion_Load(object sender, EventArgs e)
@@ -103,25 +106,25 @@ namespace GUI_ASTERIX
             if (trackBarVelSimulacion.Value == 1)
             {
                 timerSimulacion.Interval = 1000;
-                labelVelocidad.Text = "x1";
+                //labelVelocidad.Text = "x1";
             }
 
             if (trackBarVelSimulacion.Value == 2)
             {
                 timerSimulacion.Interval = 500;
-                labelVelocidad.Text = "x2";
+                //labelVelocidad.Text = "x2";
             }
 
             if (trackBarVelSimulacion.Value == 3)
             {
                 timerSimulacion.Interval = 250;
-                labelVelocidad.Text = "x4";
+                //labelVelocidad.Text = "x4";
             }
 
             if (trackBarVelSimulacion.Value == 4)
             {
                 timerSimulacion.Interval = 125;
-                labelVelocidad.Text = "x8";
+                //labelVelocidad.Text = "x8";
             }
         }
 
@@ -166,7 +169,14 @@ namespace GUI_ASTERIX
 
                 else if (mensaje.categoria == 48)
                 {
+
                     TiraDatosDecod048 mensaje48 = (TiraDatosDecod048)mensaje.tira;
+                    bool trackSinIdentificar = mensaje48.AircrftAddrs == -1 && string.IsNullOrEmpty(mensaje48.AircrftIddent) && mensaje48.TargetRep.TYP == "001";
+
+                    if (mensaje48.TrckStatus.CNF == 1 || trackSinIdentificar)
+                    {
+                        continue;
+                    }
 
                     tiempoMensaje = mensaje48.TimeOfDay;
 
@@ -188,6 +198,20 @@ namespace GUI_ASTERIX
                     }
 
                     esRadar = true;
+                    /*Debug.WriteLine(
+    "ADDR: " + mensaje48.AircrftAddrs +
+    " TRACK: " + mensaje48.TrackNum +
+    " ID: " + mensaje48.AircrftIddent +
+    " FL: " + mensaje48.FL.FL +
+    " TYP: " + mensaje48.TargetRep.TYP +
+    " CNF: " + mensaje48.TrckStatus.CNF +
+    " RAD: " + mensaje48.TrckStatus.RAD +
+    " TRE: " + mensaje48.TrckStatus.TRE +
+    " GHO: " + mensaje48.TrckStatus.GHO +
+    " SUP: " + mensaje48.TrckStatus.SUP +
+    " LAT: " + mensaje48.PositionCorrectedLatLonAlt[0] +
+    " LON: " + mensaje48.PositionCorrectedLatLonAlt[1]
+);*/
                 }
 
 
@@ -208,7 +232,8 @@ namespace GUI_ASTERIX
                         }
                         else if (esRadar && trackNumber != -1)
                         {
-                            if (avion.trackNumber == trackNumber)
+                            if ((avion.direccion == "" || avion.direccion == "-1") &&
+                                avion.trackNumber == trackNumber)
                             {
                                 avionEncontrado = avion;
                                 break;
@@ -251,66 +276,114 @@ namespace GUI_ASTERIX
                     {
                         if (!double.IsNaN(latitud) && !double.IsNaN(longitud))
                         {
-                            avionEncontrado.latitud = latitud;
-                            avionEncontrado.longitud = longitud;
-                        }
+                            bool actualizarPosicion = true;
 
-                        if (!double.IsNaN(altitud))
-                        {
-                            avionEncontrado.altitud = altitud;
-                        }
+                            if (esRadar && avionEncontrado.detectadoADSB)
+                            {
+                                actualizarPosicion = false;
+                            }
 
-                        if (!double.IsNaN(flightLevel))
-                        {
-                            avionEncontrado.flightLevel = flightLevel;
-                        }
+                            if (actualizarPosicion &&
+                                !double.IsNaN(latitud) &&
+                                !double.IsNaN(longitud))
+                            {
+                                if (!double.IsNaN(avionEncontrado.latitud) &&
+                                    !double.IsNaN(avionEncontrado.longitud))
+                                {
+                                    avionEncontrado.rumbo = CalcularRumbo(
+                                        avionEncontrado.latitud,
+                                        avionEncontrado.longitud,
+                                        latitud,
+                                        longitud
+                                    );
+                                }
 
-                        avionEncontrado.ultimoTiempo = tiempoMensaje;
+                                avionEncontrado.latitud = latitud;
+                                avionEncontrado.longitud = longitud;
+                            }
 
-                        if (identificador != "")
-                        {
-                            avionEncontrado.identificador = identificador;
-                        }
+                            if (!double.IsNaN(altitud))
+                            {
+                                avionEncontrado.altitud = altitud;
+                            }
 
-                        if (esADSB)
-                        {
-                            avionEncontrado.ultimoTiempoADSB = tiempoMensaje;
-                            avionEncontrado.detectadoADSB = true;
-                        }
+                            if (!double.IsNaN(flightLevel))
+                            {
+                                avionEncontrado.flightLevel = flightLevel;
+                            }
 
-                        if (esRadar)
-                        {
-                            avionEncontrado.ultimoTiempoRadar = tiempoMensaje;
-                            avionEncontrado.detectadoRadar = true;
+                            avionEncontrado.ultimoTiempo = tiempoMensaje;
+
+                            if (identificador != "")
+                            {
+                                avionEncontrado.identificador = identificador;
+                            }
+
+                            if (esADSB)
+                            {
+                                avionEncontrado.ultimoTiempoADSB = tiempoMensaje;
+                                avionEncontrado.detectadoADSB = true;
+                            }
+
+                            if (esRadar)
+                            {
+                                avionEncontrado.ultimoTiempoRadar = tiempoMensaje;
+                                avionEncontrado.detectadoRadar = true;
+                            }
+                            if (esRadar && trackNumber != -1)
+                            {
+                                avionEncontrado.trackNumber = trackNumber;
+                            }
                         }
                     }
                 }
-            }
 
 
-            for (int i = AvionesActuales.Count - 1; i >= 0; i--)
-            {
-                AvionSimulacion avion = AvionesActuales[i];
-
-                if (avion.ultimoTiempoADSB >= 0 &&
-                    TiempoActual - avion.ultimoTiempoADSB >= 10)
+                for (int i = AvionesActuales.Count - 1; i >= 0; i--)
                 {
-                    avion.detectadoADSB = false;
-                }
+                    AvionSimulacion avion = AvionesActuales[i];
 
-                if (avion.ultimoTiempoRadar >= 0 &&
-                    TiempoActual - avion.ultimoTiempoRadar >= 10)
-                {
-                    avion.detectadoRadar = false;
-                }
+                    if (avion.ultimoTiempoADSB >= 0 &&
+                        TiempoActual - avion.ultimoTiempoADSB >= 10)
+                    {
+                        avion.detectadoADSB = false;
+                    }
 
-                if (TiempoActual - avion.ultimoTiempo >= 10)
-                {
-                    AvionesActuales.RemoveAt(i);
+                    if (avion.ultimoTiempoRadar >= 0 &&
+                        TiempoActual - avion.ultimoTiempoRadar >= 10)
+                    {
+                        avion.detectadoRadar = false;
+                    }
+
+                    if (TiempoActual - avion.ultimoTiempo >= 10)
+                    {
+                        AvionesActuales.RemoveAt(i);
+                    }
                 }
             }
         }
+        private double CalcularRumbo(double lat1, double lon1,double lat2, double lon2)
+        {
+            double lat1Rad = lat1 * Math.PI / 180.0;
+            double lat2Rad = lat2 * Math.PI / 180.0;
+            double diferenciaLon = (lon2 - lon1) * Math.PI / 180.0;
 
+            double y = Math.Sin(diferenciaLon) * Math.Cos(lat2Rad);
+
+            double x =
+                Math.Cos(lat1Rad) * Math.Sin(lat2Rad) -
+                Math.Sin(lat1Rad) * Math.Cos(lat2Rad) *
+                Math.Cos(diferenciaLon);
+
+            double rumbo = Math.Atan2(y, x) * 180.0 / Math.PI;
+
+            if (rumbo < 0)
+            {
+                rumbo += 360;
+            }
+
+            return rumbo;
+        }
         private void BuscarTiempoInicial()
         {
             double primerTiempo = double.MaxValue;
@@ -445,30 +518,33 @@ namespace GUI_ASTERIX
                 if (!double.IsNaN(avion.latitud) &&
                     !double.IsNaN(avion.longitud))
                 {
-                    PointLatLng posicion =
-                        new PointLatLng(avion.latitud, avion.longitud);
+                    PointLatLng posicion = new PointLatLng(avion.latitud, avion.longitud);
 
-                    GMarkerGoogleType tipoMarcador;
+                    Color colorAvion;
 
                     if (avion.detectadoRadar && avion.detectadoADSB)
                     {
-                        tipoMarcador = GMarkerGoogleType.blue_small;
+                        colorAvion = Color.Blue;
                     }
                     else if (avion.detectadoRadar)
                     {
-                        tipoMarcador = GMarkerGoogleType.red_small;
+                        colorAvion = Color.Red;
                     }
                     else
                     {
-                        tipoMarcador = GMarkerGoogleType.green_small;
+                        colorAvion = Color.Green;
                     }
 
-                    GMarkerGoogle marcador =
-                        new GMarkerGoogle(posicion, tipoMarcador);
+                    MarcadorAvion marcador = new MarcadorAvion(posicion,avion.rumbo,colorAvion);
+                    marcador.Tag = avion;
 
-                    marcador.ToolTipText =
-                        avion.identificador +
-                        "\nFL: " + avion.flightLevel;
+                    string fl = "N/A";
+                    if (!double.IsNaN(avion.flightLevel))
+                    {
+                        fl = avion.flightLevel.ToString();
+                    }
+                    marcador.ToolTipText = "\n" + avion.identificador + "\n" + "FL " + fl + "\n" + ObtenerSistema(avion);
+                    marcador.ToolTipMode = MarkerTooltipMode.OnMouseOver;
 
                     capaAviones.Markers.Add(marcador);
                 }
@@ -476,7 +552,50 @@ namespace GUI_ASTERIX
 
             gMapControl1.Refresh();
         }
+        private string ObtenerSistema(AvionSimulacion avion)
+        {
+            if (avion.detectadoRadar && avion.detectadoADSB)
+                return "Radar + ADS-B";
 
+            if (avion.detectadoRadar)
+                return "Radar";
 
+            if (avion.detectadoADSB)
+                return "ADS-B";
+
+            return "";
+        }
+
+        private void GMapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            AvionSimulacion avion = item.Tag as AvionSimulacion;
+
+            if (avion != null)
+            {
+                InformacionAvion ventana = new InformacionAvion();
+                ventana.avion = avion;
+                ventana.Show();
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            if (Reproduciendo == false)
+            {
+                Reproduciendo = true;
+                pictureBox1.Image = Properties.Resources.pausebutton_113576;
+                timerSimulacion.Start();
+            }
+            else if (Reproduciendo == true)
+            {
+                Reproduciendo = false;
+                timerSimulacion.Stop();
+                pictureBox1.Image = Properties.Resources.playbutton_113628;
+            }
+        }
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            AvanzarUnSegundo();
+        }
     }
 }

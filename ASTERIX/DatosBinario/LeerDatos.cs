@@ -68,6 +68,14 @@ namespace Archvios
                         tira48.PositionCorrectedLatLonAlt[1] > 1.5 &&
                         tira48.PositionCorrectedLatLonAlt[1] < 2.6)
                     {
+                        /*Console.WriteLine(
+    "ADDR: " + tira48.AircrftAddrs +
+    " TRACK: " + tira48.TrackNum +
+    " ID: " + tira48.AircrftIddent +
+    " FL: " + tira48.FL.FL +
+    " LAT: " + tira48.PositionCorrectedLatLonAlt[0] +
+    " LON: " + tira48.PositionCorrectedLatLonAlt[1]
+);*/
                         if (tira48.mode3.reply =="7777")
                         { listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48, TransFijo=true }); }
                         else
@@ -107,7 +115,7 @@ namespace Archvios
         { 4, (q, td) =>
             {
                 td.DecodePosSlantPolarCoord(q);
-                td.ConvertToWGS84(41.297, 2.083);
+                td.ConvertToWGS84(41.30070233, 2.10205819);;
             }
         },
         { 5, (q, td)  => td.DecodeMode3A(q) },
