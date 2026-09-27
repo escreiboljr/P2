@@ -14,13 +14,14 @@
         public bool detectadoADSB { get; set; }
         public double flightLevel { get; set; }
         public int trackNumber { get; set; }
+        public double rumbo { get; set; }
 
         public AvionSimulacion()
         {
             identificador = "";
-            latitud = 0;
-            longitud = 0;
-            altitud = 0;
+            latitud = double.NaN;
+            longitud = double.NaN;
+            altitud = double.NaN;
 
             ultimoTiempo = 0;
             ultimoTiempoRadar = -1;
@@ -30,6 +31,8 @@
             detectadoADSB = false;
             flightLevel = double.NaN;
             trackNumber = -1;
+
+            rumbo = 0;
         }
     }
 }
