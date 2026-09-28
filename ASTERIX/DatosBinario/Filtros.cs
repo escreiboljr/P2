@@ -11,20 +11,33 @@ namespace Archivos
         {
             public List<Mensaje> AplicarFiltros(
                 List<Mensaje> listaOriginal,
-                bool usarFiltroCategoria,
+                bool cat48,
+                bool cat21,
                 bool eliminarBlancoPuro,
-                bool eliminarTransponderFijo,
-                int categoria)
+                bool eliminarTransponderFijo)
             {
 
                 IEnumerable<Mensaje> listaFiltrada = listaOriginal;
 
-                if (usarFiltroCategoria)
+                if (cat48 && cat21)
+                {
+                    cat48=false;
+                    cat21=false;
+                }
+
+
+                if (cat48)
                 {
                     listaFiltrada = FiltroCategoria(
-                        listaFiltrada,
-                        categoria);
+                        listaFiltrada, 48);
                 }
+                
+                if (cat21)
+                {
+                    listaFiltrada = FiltroCategoria(
+                        listaFiltrada, 21);
+                }
+
 
                 if (eliminarBlancoPuro)
                 {
@@ -45,6 +58,7 @@ namespace Archivos
             {
                 return listaFiltrada.Where(x=> x.categoria == cat);
             }
+
             //private IEnumerable<Mensaje> FIltroBlancoPuro()
             private IEnumerable<Mensaje> FiltrarBlancoPuro(IEnumerable<Mensaje> listaFiltro)
             {
