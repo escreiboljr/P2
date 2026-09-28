@@ -34,5 +34,29 @@
 
             rumbo = 0;
         }
+        public AvionSimulacion Copiar()
+        {
+            AvionSimulacion copia = new AvionSimulacion();
+
+            copia.direccion = direccion;
+            copia.identificador = identificador;
+
+            copia.latitud = latitud;
+            copia.longitud = longitud;
+            copia.altitud = altitud;
+
+            copia.ultimoTiempo = ultimoTiempo;
+            copia.ultimoTiempoRadar = ultimoTiempoRadar;
+            copia.ultimoTiempoADSB = ultimoTiempoADSB;
+
+            copia.detectadoRadar = detectadoRadar;
+            copia.detectadoADSB = detectadoADSB;
+
+            copia.flightLevel = flightLevel;
+            copia.trackNumber = trackNumber;
+            copia.rumbo = rumbo;
+
+            return copia;
+        }
     }
 }

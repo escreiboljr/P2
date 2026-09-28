@@ -2,15 +2,15 @@ using Archivos;
 using Archvios;
 using DatosDecod;
 using DatosDecod21;
-using Microsoft.VisualBasic;
-using Simulacion;
-using System.Diagnostics;
-
+using DatosDecod48;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using Microsoft.VisualBasic;
+using Simulacion;
 using System.Data.Entity.Core.Mapping;
+using System.Diagnostics;
 
 namespace GUI_ASTERIX
 {
@@ -21,6 +21,8 @@ namespace GUI_ASTERIX
         private List<Mensaje> ListaMensajesFiltrados = new List<Mensaje>();
         //private List<Mensaje> AvionesActuales = new List<Mensaje>();
         private List<AvionSimulacion> AvionesActuales = new List<AvionSimulacion>();
+        private Stack<List<AvionSimulacion>> historialAviones = new Stack<List<AvionSimulacion>>();
+        private Stack<double> historialTiempo = new Stack<double>();
         private bool Reproduciendo = false;
         private GMapOverlay capaAviones;
         public MenuSimulacion()
@@ -89,11 +91,15 @@ namespace GUI_ASTERIX
 
         private void timerSimulacion_Tick(object sender, EventArgs e)
         {
+            historialAviones.Push(CopiarAviones());
+            historialTiempo.Push(TiempoActual);
             AvanzarUnSegundo();
         }
 
         private void AvanzarUnSegundo()
         {
+            historialAviones.Push(CopiarAviones());
+            historialTiempo.Push(TiempoActual);
             TiempoActual = TiempoActual + 1;
             label1.Text = TiempoActual.ToString();
             ActualizarAviones();
@@ -362,7 +368,7 @@ namespace GUI_ASTERIX
                 }
             }
         }
-        private double CalcularRumbo(double lat1, double lon1,double lat2, double lon2)
+        private double CalcularRumbo(double lat1, double lon1, double lat2, double lon2)
         {
             double lat1Rad = lat1 * Math.PI / 180.0;
             double lat2Rad = lat2 * Math.PI / 180.0;
@@ -535,7 +541,7 @@ namespace GUI_ASTERIX
                         colorAvion = Color.Green;
                     }
 
-                    MarcadorAvion marcador = new MarcadorAvion(posicion,avion.rumbo,colorAvion);
+                    MarcadorAvion marcador = new MarcadorAvion(posicion, avion.rumbo, colorAvion);
                     marcador.Tag = avion;
 
                     string fl = "N/A";
@@ -596,6 +602,30 @@ namespace GUI_ASTERIX
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             AvanzarUnSegundo();
+        }
+        private List<AvionSimulacion> CopiarAviones()
+        {
+            List<AvionSimulacion> copia = new List<AvionSimulacion>();
+
+            foreach (AvionSimulacion avion in AvionesActuales)
+            {
+                copia.Add(avion.Copiar());
+            }
+
+            return copia;
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            if (historialAviones.Count > 0)
+            {
+                AvionesActuales = historialAviones.Pop();
+                TiempoActual = historialTiempo.Pop();
+
+                ActualizarMapa();
+
+                label1.Text = TiempoActual.ToString();
+            }
         }
     }
 }

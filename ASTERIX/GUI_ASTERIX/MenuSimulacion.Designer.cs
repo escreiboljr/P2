@@ -34,6 +34,8 @@
             archivoToolStripMenuItem = new ToolStripMenuItem();
             cargaDatosrToolStripMenuItem = new ToolStripMenuItem();
             filtrarToolStripMenuItem = new ToolStripMenuItem();
+            aplicarToolStripMenuItem = new ToolStripMenuItem();
+            limpiarToolStripMenuItem = new ToolStripMenuItem();
             timerSimulacion = new System.Windows.Forms.Timer(components);
             buttonPlay = new Button();
             buttonStop = new Button();
@@ -53,8 +55,6 @@
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
-            aplicarToolStripMenuItem = new ToolStripMenuItem();
-            limpiarToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -94,6 +94,18 @@
             filtrarToolStripMenuItem.Name = "filtrarToolStripMenuItem";
             filtrarToolStripMenuItem.Size = new Size(63, 25);
             filtrarToolStripMenuItem.Text = "Filtrar";
+            // 
+            // aplicarToolStripMenuItem
+            // 
+            aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
+            aplicarToolStripMenuItem.Size = new Size(172, 26);
+            aplicarToolStripMenuItem.Text = "Aplicar filtros";
+            // 
+            // limpiarToolStripMenuItem
+            // 
+            limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
+            limpiarToolStripMenuItem.Size = new Size(172, 26);
+            limpiarToolStripMenuItem.Text = "Limpiar";
             // 
             // timerSimulacion
             // 
@@ -293,18 +305,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 19;
             pictureBox3.TabStop = false;
-            // 
-            // aplicarToolStripMenuItem
-            // 
-            aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
-            aplicarToolStripMenuItem.Size = new Size(180, 26);
-            aplicarToolStripMenuItem.Text = "Aplicar filtros";
-            // 
-            // limpiarToolStripMenuItem
-            // 
-            limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
-            limpiarToolStripMenuItem.Size = new Size(180, 26);
-            limpiarToolStripMenuItem.Text = "Limpiar";
+            pictureBox3.Click += pictureBox3_Click;
             // 
             // MenuSimulacion
             // 
