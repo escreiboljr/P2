@@ -37,20 +37,27 @@
             // labelIdentificador
             // 
             labelIdentificador.AutoSize = true;
-            labelIdentificador.Location = new Point(167, 50);
+            labelIdentificador.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            labelIdentificador.ForeColor = Color.Turquoise;
+            labelIdentificador.Location = new Point(55, 46);
+            labelIdentificador.Margin = new Padding(4, 0, 4, 0);
             labelIdentificador.Name = "labelIdentificador";
-            labelIdentificador.Size = new Size(38, 15);
+            labelIdentificador.Size = new Size(224, 32);
             labelIdentificador.TabIndex = 0;
-            labelIdentificador.Text = "label1";
+            labelIdentificador.Text = "Identificador: N/A";
             // 
             // labelFL
             // 
             labelFL.AutoSize = true;
-            labelFL.Location = new Point(206, 199);
+            labelFL.BackColor = Color.Transparent;
+            labelFL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelFL.ForeColor = Color.WhiteSmoke;
+            labelFL.Location = new Point(55, 78);
+            labelFL.Margin = new Padding(4, 0, 4, 0);
             labelFL.Name = "labelFL";
-            labelFL.Size = new Size(38, 15);
+            labelFL.Size = new Size(171, 28);
             labelFL.TabIndex = 1;
-            labelFL.Text = "label2";
+            labelFL.Text = "Flight Level: N/A";
             // 
             // timerActualizar
             // 
@@ -58,13 +65,16 @@
             // 
             // InformacionAvion
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.FromArgb(18, 28, 45);
+            ClientSize = new Size(468, 214);
             Controls.Add(labelFL);
             Controls.Add(labelIdentificador);
+            ForeColor = Color.WhiteSmoke;
+            Margin = new Padding(4, 5, 4, 5);
             Name = "InformacionAvion";
-            Text = "InformacionAvion";
+            Text = "Información del avión";
             Load += InformacionAvion_Load;
             ResumeLayout(false);
             PerformLayout();

@@ -33,16 +33,30 @@ namespace GUI_ASTERIX
         {
             if (avion != null)
             {
-                labelIdentificador.Text = avion.identificador;
-
-                if (!double.IsNaN(avion.flightLevel))
+                if (!string.IsNullOrWhiteSpace(avion.identificador))
                 {
-                    labelFL.Text = "FL " + avion.flightLevel.ToString();
+                    labelIdentificador.Text =
+                        "Identificador: " + avion.identificador;
                 }
                 else
                 {
-                    labelFL.Text = "N/A";
+                    labelIdentificador.Text = "Identificador: N/A";
                 }
+
+                if (!double.IsNaN(avion.flightLevel))
+                {
+                    labelFL.Text =
+                        "Flight Level: " + avion.flightLevel.ToString("0.##");
+                }
+                else
+                {
+                    labelFL.Text = "Flight Level: N/A";
+                }
+            }
+            else
+            {
+                labelIdentificador.Text = "Identificador: N/A";
+                labelFL.Text = "Flight Level: N/A";
             }
         }
     }
