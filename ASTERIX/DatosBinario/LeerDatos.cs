@@ -539,10 +539,10 @@ namespace Archvios
                 else if (frn > 48)
                 {
                     SkipUnknownFRN(listaBytes);
-                    break;   // ya no hay nada más que decodificar
+                    break;
                 }
             }
-
+            td.CorregirAltitudQNH();
             return td;
         }
 

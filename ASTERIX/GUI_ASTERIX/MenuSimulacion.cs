@@ -165,7 +165,7 @@ namespace GUI_ASTERIX
                     if (!double.IsNaN(mensaje21.FlightLevel))
                     {
                         flightLevel = mensaje21.FlightLevel;
-                        altitud = mensaje21.FlightLevel * 100;
+                        altitud = mensaje21.AltitudCorregida;
                     }
 
                     esADSB = true;
@@ -639,7 +639,10 @@ namespace GUI_ASTERIX
                     ventana.Cat48,
                     ventana.Cat21,
                     ventana.BlancoPuro,
-                    ventana.transFijo
+                    ventana.transFijo,
+                    ventana.FiltrarTrayectoria,
+                    ventana.trayectoriaMin,
+                    ventana.trayectoriaMax
                 );
 
                 // Reiniciamos la simulación

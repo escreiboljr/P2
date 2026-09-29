@@ -15,6 +15,8 @@ namespace GUI_ASTERIX
         bool Ground;
         bool cat48;
         bool cat21;
+        double TrayectoriaMin;
+        double TrayectoriaMax;
 
         public bool BlancoPuro
         {
@@ -36,6 +38,13 @@ namespace GUI_ASTERIX
         {
             get { return cat21; }
         }
+        public double trayectoriaMin
+        { get { return TrayectoriaMin; } }
+        public double trayectoriaMax
+        { get { return TrayectoriaMax; } }
+        bool filtrarTrayectoria { get; set; }
+        public bool FiltrarTrayectoria
+        { get { return  filtrarTrayectoria; }  }
         public FormFiltro()
         {
             InitializeComponent();
@@ -62,6 +71,7 @@ namespace GUI_ASTERIX
             bool Ground = false;
             bool cat21 = checkBoxCat21.Checked;
             bool cat48 = checkBoxCat48.Checked;
+
         }
 
         private void pictureBoxSlideButtonTransFijo_Click(object sender, EventArgs e)
@@ -96,6 +106,36 @@ namespace GUI_ASTERIX
         {
             cat48 = checkBoxCat48.Checked;
             cat21 = checkBoxCat21.Checked;
+
+            if (!string.IsNullOrWhiteSpace(textBox1.Text) &&
+                !string.IsNullOrWhiteSpace(textBoxTrayectoriaMax.Text))
+            {
+                if (double.TryParse(textBox1.Text, out double min) &&
+                    double.TryParse(textBoxTrayectoriaMax.Text, out double max))
+                {
+                    if (min >= 0 && min <= 360 &&
+                        max >= 0 && max <= 360)
+                    {
+                        TrayectoriaMin = min;
+                        TrayectoriaMax = max;
+                        filtrarTrayectoria = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("La trayectoria debe estar entre 0 y 360 grados.");
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Introduce valores válidos para la trayectoria.");
+                    return;
+                }
+            }
+            else
+            {
+                filtrarTrayectoria = false;
+            }
 
             DialogResult = DialogResult.OK;
             Close();

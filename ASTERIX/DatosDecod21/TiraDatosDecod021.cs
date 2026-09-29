@@ -2,15 +2,17 @@
 {
     public class TiraDatosDecod021
     {
-         public List<byte> DataSourceID { get; set; }
-         public TargetReportDescriptor TargetRep { get; set; }
-         public double ReservedExpField { get; set; }
-         public List<double> PosWGS84HighRes { get; set; }
-         public string TargetAddress { get; set; }
-         public double TimeReceptionPosition { get; set; }
-         public string Mode3ACode { get; set; }
-         public double FlightLevel { get; set; }
-         public string TargetIdentification { get; set; }
+        public List<byte> DataSourceID { get; set; }
+        public TargetReportDescriptor TargetRep { get; set; }
+        public double ReservedExpField { get; set; }
+        public List<double> PosWGS84HighRes { get; set; }
+        public string TargetAddress { get; set; }
+        public double TimeReceptionPosition { get; set; }
+        public string Mode3ACode { get; set; }
+        public double FlightLevel { get; set; }
+        public string TargetIdentification { get; set; }
+        public double QNH { get; set; }
+        public double AltitudCorregida { get; set; }
 
         public TiraDatosDecod021()
          {
@@ -23,6 +25,8 @@
             this.Mode3ACode = "";
             this.FlightLevel = double.NaN;
             this.TargetIdentification = "";
+            this.QNH = double.NaN;
+            this.AltitudCorregida = double.NaN;
         }
 
         public void DecDataSourceID(Queue<byte> ColaBytes)
@@ -177,19 +181,6 @@
             return resultado;  // devuelve todos los bits juntos
         }
 
-        public void DecodeBPS(Queue<byte> data)
-        {
-            byte b1 = data.Dequeue();
-            List<int> bits = ByteToBits(b1);
-            if (bits[0] == 1)
-            {
-                byte oct1 = data.Dequeue();
-                byte oct2 = data.Dequeue();
-                int raw = (oct1 << 8) | oct2;
-                double presion = raw * 0.1;
-            }
-        }
-
         public void DecodeTargetReportDescriptor(Queue<byte> data)
         {
             byte b1 = data.Dequeue();
@@ -225,15 +216,53 @@
         public void DecodeReservedExp(Queue<byte> cola)
         {
             cola.Dequeue();
+
             byte b = cola.Dequeue();
             List<int> listaBits = ByteToBits(b);
-            if (listaBits[0] ==1)
+
+            if (listaBits[0] == 1)
             {
                 byte b1 = cola.Dequeue();
                 byte b2 = cola.Dequeue();
+
                 int raw = (b1 << 8) | b2;
-                this.ReservedExpField = (raw * 0.1)+800;
+
+                raw = raw & 0x0FFF;
+
+                this.QNH = (raw * 0.1) + 800.0;
+
+                this.ReservedExpField = this.QNH;
             }
+        }
+        public void CorregirAltitudQNH()
+        {
+            if (double.IsNaN(this.FlightLevel))
+            {
+                this.AltitudCorregida = double.NaN;
+                return;
+            }
+
+            double altitudIndicada = this.FlightLevel * 100.0;
+
+            this.AltitudCorregida = altitudIndicada;
+            if (altitudIndicada >= 6000)
+            {
+                return;
+            }
+            if (double.IsNaN(this.QNH))
+            {
+                return;
+            }
+            if (this.QNH >= 1013.0 && this.QNH <= 1013.5)
+            {
+                return;
+            }
+
+            const double qnhEstandar = 1013.25;
+
+            this.AltitudCorregida =
+                altitudIndicada +
+                (this.QNH - qnhEstandar) * 30.0;
         }
     }   
 }
