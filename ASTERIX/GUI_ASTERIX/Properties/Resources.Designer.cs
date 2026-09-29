@@ -83,6 +83,56 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap images {
+            get {
+                object obj = ResourceManager.GetObject("images", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap large_blue_square_1f7e6 {
+            get {
+                object obj = ResourceManager.GetObject("large-blue-square_1f7e6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap large_green_circle_1f7e2 {
+            get {
+                object obj = ResourceManager.GetObject("large-green-circle_1f7e2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap large_green_circle_1f7e21 {
+            get {
+                object obj = ResourceManager.GetObject("large-green-circle_1f7e21", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap large_green_square_1f7e9 {
+            get {
+                object obj = ResourceManager.GetObject("large-green-square_1f7e9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pausebutton_113576 {
             get {
                 object obj = ResourceManager.GetObject("pausebutton_113576", resourceCulture);
@@ -106,6 +156,26 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap retroceder {
             get {
                 object obj = ResourceManager.GetObject("retroceder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sliderActivado {
+            get {
+                object obj = ResourceManager.GetObject("sliderActivado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sliderApagado {
+            get {
+                object obj = ResourceManager.GetObject("sliderApagado", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

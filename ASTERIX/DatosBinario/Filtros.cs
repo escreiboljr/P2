@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Archivos
 {
-    internal class Filtros
+    public class Filtros
     {
-        public class GestorFiltrosRadar
-        {
             public List<Mensaje> AplicarFiltros(
                 List<Mensaje> listaOriginal,
                 bool cat48,
@@ -72,6 +70,5 @@ namespace Archivos
             {
                 
             }*/
-        }
     }
 }

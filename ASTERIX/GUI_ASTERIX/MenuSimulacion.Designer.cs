@@ -55,12 +55,23 @@
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
+            labelTituloVerde = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            pictureBox4 = new PictureBox();
+            pictureBox5 = new PictureBox();
+            pictureBox6 = new PictureBox();
+            labelTituloAsterix = new Label();
+            guardarEnCSVToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -74,7 +85,7 @@
             // 
             // archivoToolStripMenuItem
             // 
-            archivoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cargaDatosrToolStripMenuItem });
+            archivoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cargaDatosrToolStripMenuItem, guardarEnCSVToolStripMenuItem });
             archivoToolStripMenuItem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             archivoToolStripMenuItem.Size = new Size(75, 25);
@@ -83,8 +94,8 @@
             // cargaDatosrToolStripMenuItem
             // 
             cargaDatosrToolStripMenuItem.Name = "cargaDatosrToolStripMenuItem";
-            cargaDatosrToolStripMenuItem.Size = new Size(163, 26);
-            cargaDatosrToolStripMenuItem.Text = "Carga datos";
+            cargaDatosrToolStripMenuItem.Size = new Size(191, 26);
+            cargaDatosrToolStripMenuItem.Text = "Cargar datos";
             cargaDatosrToolStripMenuItem.Click += cargaDatosrToolStripMenuItem_Click;
             // 
             // filtrarToolStripMenuItem
@@ -98,14 +109,16 @@
             // aplicarToolStripMenuItem
             // 
             aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
-            aplicarToolStripMenuItem.Size = new Size(172, 26);
+            aplicarToolStripMenuItem.Size = new Size(180, 26);
             aplicarToolStripMenuItem.Text = "Aplicar filtros";
+            aplicarToolStripMenuItem.Click += aplicarToolStripMenuItem_Click;
             // 
             // limpiarToolStripMenuItem
             // 
             limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
-            limpiarToolStripMenuItem.Size = new Size(172, 26);
+            limpiarToolStripMenuItem.Size = new Size(180, 26);
             limpiarToolStripMenuItem.Text = "Limpiar";
+            limpiarToolStripMenuItem.Click += limpiarToolStripMenuItem_Click;
             // 
             // timerSimulacion
             // 
@@ -113,7 +126,7 @@
             // 
             // buttonPlay
             // 
-            buttonPlay.Location = new Point(19, 67);
+            buttonPlay.Location = new Point(18, 397);
             buttonPlay.Name = "buttonPlay";
             buttonPlay.Size = new Size(75, 23);
             buttonPlay.TabIndex = 1;
@@ -123,7 +136,7 @@
             // 
             // buttonStop
             // 
-            buttonStop.Location = new Point(133, 67);
+            buttonStop.Location = new Point(132, 397);
             buttonStop.Name = "buttonStop";
             buttonStop.Size = new Size(75, 23);
             buttonStop.TabIndex = 2;
@@ -154,7 +167,7 @@
             // 
             // buttonAvanzar
             // 
-            buttonAvanzar.Location = new Point(19, 106);
+            buttonAvanzar.Location = new Point(18, 426);
             buttonAvanzar.Name = "buttonAvanzar";
             buttonAvanzar.Size = new Size(75, 23);
             buttonAvanzar.TabIndex = 6;
@@ -183,7 +196,7 @@
             // 
             // buttonDataGrid
             // 
-            buttonDataGrid.Location = new Point(91, 421);
+            buttonDataGrid.Location = new Point(133, 426);
             buttonDataGrid.Name = "buttonDataGrid";
             buttonDataGrid.Size = new Size(75, 23);
             buttonDataGrid.TabIndex = 9;
@@ -307,11 +320,95 @@
             pictureBox3.TabStop = false;
             pictureBox3.Click += pictureBox3_Click;
             // 
+            // labelTituloVerde
+            // 
+            labelTituloVerde.AutoSize = true;
+            labelTituloVerde.Location = new Point(117, 187);
+            labelTituloVerde.Name = "labelTituloVerde";
+            labelTituloVerde.Size = new Size(41, 15);
+            labelTituloVerde.TabIndex = 20;
+            labelTituloVerde.Text = "ADS-B";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(117, 214);
+            label2.Name = "label2";
+            label2.Size = new Size(37, 15);
+            label2.TabIndex = 21;
+            label2.Text = "Radar";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(117, 241);
+            label3.Name = "label3";
+            label3.Size = new Size(85, 15);
+            label3.TabIndex = 22;
+            label3.Text = "Radar + ADS-B";
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.large_green_square_1f7e9;
+            pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
+            pictureBox4.Location = new Point(69, 187);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(16, 15);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 23;
+            pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.Image = Properties.Resources.images;
+            pictureBox5.InitialImage = (Image)resources.GetObject("pictureBox5.InitialImage");
+            pictureBox5.Location = new Point(69, 214);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(16, 15);
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox5.TabIndex = 24;
+            pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = Properties.Resources.large_blue_square_1f7e6;
+            pictureBox6.InitialImage = (Image)resources.GetObject("pictureBox6.InitialImage");
+            pictureBox6.Location = new Point(69, 241);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(16, 15);
+            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox6.TabIndex = 25;
+            pictureBox6.TabStop = false;
+            // 
+            // labelTituloAsterix
+            // 
+            labelTituloAsterix.AutoSize = true;
+            labelTituloAsterix.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelTituloAsterix.Location = new Point(69, 75);
+            labelTituloAsterix.Name = "labelTituloAsterix";
+            labelTituloAsterix.Size = new Size(101, 32);
+            labelTituloAsterix.TabIndex = 26;
+            labelTituloAsterix.Text = "ASTERIX";
+            // 
+            // guardarEnCSVToolStripMenuItem
+            // 
+            guardarEnCSVToolStripMenuItem.Name = "guardarEnCSVToolStripMenuItem";
+            guardarEnCSVToolStripMenuItem.Size = new Size(191, 26);
+            guardarEnCSVToolStripMenuItem.Text = "Guardar en CSV";
+            guardarEnCSVToolStripMenuItem.Click += guardarEnCSVToolStripMenuItem_Click;
+            // 
             // MenuSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1391, 700);
+            Controls.Add(labelTituloAsterix);
+            Controls.Add(pictureBox6);
+            Controls.Add(pictureBox5);
+            Controls.Add(pictureBox4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(labelTituloVerde);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
@@ -342,6 +439,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -373,5 +473,13 @@
         private PictureBox pictureBox3;
         private ToolStripMenuItem aplicarToolStripMenuItem;
         private ToolStripMenuItem limpiarToolStripMenuItem;
+        private Label labelTituloVerde;
+        private Label label2;
+        private Label label3;
+        private PictureBox pictureBox4;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox6;
+        private Label labelTituloAsterix;
+        private ToolStripMenuItem guardarEnCSVToolStripMenuItem;
     }
 }

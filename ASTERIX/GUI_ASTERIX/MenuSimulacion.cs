@@ -91,8 +91,6 @@ namespace GUI_ASTERIX
 
         private void timerSimulacion_Tick(object sender, EventArgs e)
         {
-            historialAviones.Push(CopiarAviones());
-            historialTiempo.Push(TiempoActual);
             AvanzarUnSegundo();
         }
 
@@ -625,6 +623,68 @@ namespace GUI_ASTERIX
                 ActualizarMapa();
 
                 label1.Text = TiempoActual.ToString();
+            }
+        }
+
+        private void aplicarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormFiltro ventana = new FormFiltro();
+
+            if (ventana.ShowDialog() == DialogResult.OK)
+            {
+                Filtros gestorFiltros = new Filtros();
+
+                ListaMensajesFiltrados = gestorFiltros.AplicarFiltros(
+                    ListaMensajes,
+                    ventana.Cat48,
+                    ventana.Cat21,
+                    ventana.BlancoPuro,
+                    ventana.transFijo
+                );
+
+                // Reiniciamos la simulación
+                AvionesActuales.Clear();
+                historialAviones.Clear();
+                historialTiempo.Clear();
+
+                ActualizarAviones();
+                ActualizarDataGrid();
+                ActualizarMapa();
+            }
+        }
+
+        private void limpiarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListaMensajesFiltrados = new List<Mensaje>(ListaMensajes);
+
+            AvionesActuales.Clear();
+
+            historialAviones.Clear();
+            historialTiempo.Clear();
+
+            ActualizarAviones();
+            ActualizarDataGrid();
+            ActualizarMapa();
+        }
+
+        private void guardarEnCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog guardar = new SaveFileDialog();
+
+            guardar.Filter = "Archivo CSV (*.csv)|*.csv";
+            guardar.DefaultExt = "csv";
+            guardar.FileName = "ASTERIX.csv";
+
+            if (guardar.ShowDialog() == DialogResult.OK)
+            {
+                ExportarCSV exportador = new ExportarCSV();
+
+                exportador.Exportar(
+                    ListaMensajesFiltrados,
+                    guardar.FileName
+                );
+
+                MessageBox.Show("CSV guardado correctamente");
             }
         }
     }
