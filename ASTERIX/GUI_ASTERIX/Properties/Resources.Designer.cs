@@ -73,6 +73,26 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _5ee10cd8_d76b_424f_b639_5d1ddb340126 {
+            get {
+                object obj = ResourceManager.GetObject("5ee10cd8-d76b-424f-b639-5d1ddb340126", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _5ee10cd8_d76b_424f_b639_5d1ddb3401261 {
+            get {
+                object obj = ResourceManager.GetObject("5ee10cd8-d76b-424f-b639-5d1ddb3401261", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap avion {
             get {
                 object obj = ResourceManager.GetObject("avion", resourceCulture);

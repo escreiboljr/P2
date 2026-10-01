@@ -75,15 +75,18 @@ namespace GUI_ASTERIX
                     "ADS-B: " + (avion.detectadoADSB ? "Sí" : "No");
 
                 labelUltimoTiempo.Text =
-                    "Último tiempo: " + avion.ultimoTiempo.ToString("0.##");
+                "Última detección: " +
+                TimeSpan.FromSeconds(avion.ultimoTiempo).ToString(@"hh\:mm\:ss");
 
                 labelUltimoTiempoRadar.Text = avion.ultimoTiempoRadar >= 0
-                    ? "Último tiempo Radar: " + avion.ultimoTiempoRadar.ToString("0.##")
-                    : "Último tiempo Radar: N/A";
+                    ? "Última detección radar: " +
+                      TimeSpan.FromSeconds(avion.ultimoTiempoRadar).ToString(@"hh\:mm\:ss")
+                    : "Última detección radar: N/A";
 
                 labelUltimoTiempoADSB.Text = avion.ultimoTiempoADSB >= 0
-                    ? "Último tiempo ADS-B: " + avion.ultimoTiempoADSB.ToString("0.##")
-                    : "Último tiempo ADS-B: N/A";
+                    ? "Última detección ADS-B: " +
+                      TimeSpan.FromSeconds(avion.ultimoTiempoADSB).ToString(@"hh\:mm\:ss")
+                    : "Última detección ADS-B: N/A";
             }
             else
             {
@@ -100,9 +103,9 @@ namespace GUI_ASTERIX
 
                 labelRadar.Text = "Radar: N/A";
                 labelADSB.Text = "ADS-B: N/A";
-                labelUltimoTiempo.Text = "Último tiempo: N/A";
-                labelUltimoTiempoRadar.Text = "Último tiempo Radar: N/A";
-                labelUltimoTiempoADSB.Text = "Último tiempo ADS-B: N/A";
+                labelUltimoTiempo.Text = "Última detección: N/A";
+                labelUltimoTiempoRadar.Text = "Última detección Radar: N/A";
+                labelUltimoTiempoADSB.Text = "Última detección ADS-B: N/A";
             }
         }
     }

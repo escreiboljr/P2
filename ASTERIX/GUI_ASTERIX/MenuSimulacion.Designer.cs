@@ -33,6 +33,7 @@
             menuStrip1 = new MenuStrip();
             archivoToolStripMenuItem = new ToolStripMenuItem();
             cargaDatosrToolStripMenuItem = new ToolStripMenuItem();
+            guardarEnCSVToolStripMenuItem = new ToolStripMenuItem();
             filtrarToolStripMenuItem = new ToolStripMenuItem();
             aplicarToolStripMenuItem = new ToolStripMenuItem();
             limpiarToolStripMenuItem = new ToolStripMenuItem();
@@ -62,7 +63,7 @@
             pictureBox5 = new PictureBox();
             pictureBox6 = new PictureBox();
             labelTituloAsterix = new Label();
-            guardarEnCSVToolStripMenuItem = new ToolStripMenuItem();
+            timerClick = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -79,7 +80,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1391, 29);
+            menuStrip1.Size = new Size(1406, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -98,6 +99,13 @@
             cargaDatosrToolStripMenuItem.Text = "Cargar datos";
             cargaDatosrToolStripMenuItem.Click += cargaDatosrToolStripMenuItem_Click;
             // 
+            // guardarEnCSVToolStripMenuItem
+            // 
+            guardarEnCSVToolStripMenuItem.Name = "guardarEnCSVToolStripMenuItem";
+            guardarEnCSVToolStripMenuItem.Size = new Size(191, 26);
+            guardarEnCSVToolStripMenuItem.Text = "Guardar en CSV";
+            guardarEnCSVToolStripMenuItem.Click += guardarEnCSVToolStripMenuItem_Click;
+            // 
             // filtrarToolStripMenuItem
             // 
             filtrarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aplicarToolStripMenuItem, limpiarToolStripMenuItem });
@@ -109,14 +117,14 @@
             // aplicarToolStripMenuItem
             // 
             aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
-            aplicarToolStripMenuItem.Size = new Size(180, 26);
+            aplicarToolStripMenuItem.Size = new Size(172, 26);
             aplicarToolStripMenuItem.Text = "Aplicar filtros";
             aplicarToolStripMenuItem.Click += aplicarToolStripMenuItem_Click;
             // 
             // limpiarToolStripMenuItem
             // 
             limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
-            limpiarToolStripMenuItem.Size = new Size(180, 26);
+            limpiarToolStripMenuItem.Size = new Size(172, 26);
             limpiarToolStripMenuItem.Text = "Limpiar";
             limpiarToolStripMenuItem.Click += limpiarToolStripMenuItem_Click;
             // 
@@ -132,6 +140,7 @@
             buttonPlay.TabIndex = 1;
             buttonPlay.Text = "Play";
             buttonPlay.UseVisualStyleBackColor = true;
+            buttonPlay.Visible = false;
             buttonPlay.Click += buttonPlay_Click;
             // 
             // buttonStop
@@ -142,11 +151,13 @@
             buttonStop.TabIndex = 2;
             buttonStop.Text = "Stop";
             buttonStop.UseVisualStyleBackColor = true;
+            buttonStop.Visible = false;
             buttonStop.Click += buttonStop_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.ForeColor = SystemColors.ControlLightLight;
             label1.Location = new Point(151, 608);
             label1.Name = "label1";
             label1.Size = new Size(49, 15);
@@ -173,6 +184,7 @@
             buttonAvanzar.TabIndex = 6;
             buttonAvanzar.Text = "Avanzar";
             buttonAvanzar.UseVisualStyleBackColor = true;
+            buttonAvanzar.Visible = false;
             buttonAvanzar.Click += buttonAvanzar_Click;
             // 
             // buttonReset
@@ -188,7 +200,7 @@
             // dataGridAviones
             // 
             dataGridAviones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridAviones.Location = new Point(293, 49);
+            dataGridAviones.Location = new Point(310, 49);
             dataGridAviones.Name = "dataGridAviones";
             dataGridAviones.Size = new Size(1069, 623);
             dataGridAviones.TabIndex = 8;
@@ -233,6 +245,7 @@
             // labelX1
             // 
             labelX1.AutoSize = true;
+            labelX1.ForeColor = SystemColors.ControlLightLight;
             labelX1.Location = new Point(56, 528);
             labelX1.Name = "labelX1";
             labelX1.Size = new Size(18, 15);
@@ -242,6 +255,7 @@
             // labelx2
             // 
             labelx2.AutoSize = true;
+            labelx2.ForeColor = SystemColors.ControlLightLight;
             labelx2.Location = new Point(98, 528);
             labelx2.Name = "labelx2";
             labelx2.Size = new Size(18, 15);
@@ -251,6 +265,7 @@
             // labelx8
             // 
             labelx8.AutoSize = true;
+            labelx8.ForeColor = SystemColors.ControlLightLight;
             labelx8.Location = new Point(190, 528);
             labelx8.Name = "labelx8";
             labelx8.Size = new Size(18, 15);
@@ -260,6 +275,7 @@
             // labelx4
             // 
             labelx4.AutoSize = true;
+            labelx4.ForeColor = SystemColors.ControlLightLight;
             labelx4.Location = new Point(148, 528);
             labelx4.Name = "labelx4";
             labelx4.Size = new Size(18, 15);
@@ -269,6 +285,7 @@
             // labelTituloVelocidadReproduccion
             // 
             labelTituloVelocidadReproduccion.AutoSize = true;
+            labelTituloVelocidadReproduccion.ForeColor = SystemColors.ControlLightLight;
             labelTituloVelocidadReproduccion.Location = new Point(59, 469);
             labelTituloVelocidadReproduccion.Name = "labelTituloVelocidadReproduccion";
             labelTituloVelocidadReproduccion.Size = new Size(148, 15);
@@ -278,6 +295,7 @@
             // labelTituloHora
             // 
             labelTituloHora.AutoSize = true;
+            labelTituloHora.ForeColor = SystemColors.ControlLightLight;
             labelTituloHora.Location = new Point(50, 608);
             labelTituloHora.Name = "labelTituloHora";
             labelTituloHora.Size = new Size(74, 15);
@@ -323,6 +341,7 @@
             // labelTituloVerde
             // 
             labelTituloVerde.AutoSize = true;
+            labelTituloVerde.ForeColor = SystemColors.ControlLightLight;
             labelTituloVerde.Location = new Point(117, 187);
             labelTituloVerde.Name = "labelTituloVerde";
             labelTituloVerde.Size = new Size(41, 15);
@@ -332,6 +351,7 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.ForeColor = SystemColors.ControlLightLight;
             label2.Location = new Point(117, 214);
             label2.Name = "label2";
             label2.Size = new Size(37, 15);
@@ -341,6 +361,7 @@
             // label3
             // 
             label3.AutoSize = true;
+            label3.ForeColor = SystemColors.ControlLightLight;
             label3.Location = new Point(117, 241);
             label3.Name = "label3";
             label3.Size = new Size(85, 15);
@@ -383,25 +404,20 @@
             // labelTituloAsterix
             // 
             labelTituloAsterix.AutoSize = true;
-            labelTituloAsterix.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelTituloAsterix.Location = new Point(69, 75);
+            labelTituloAsterix.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTituloAsterix.ForeColor = Color.Turquoise;
+            labelTituloAsterix.Location = new Point(69, 107);
             labelTituloAsterix.Name = "labelTituloAsterix";
-            labelTituloAsterix.Size = new Size(101, 32);
+            labelTituloAsterix.Size = new Size(162, 47);
             labelTituloAsterix.TabIndex = 26;
             labelTituloAsterix.Text = "ASTERIX";
-            // 
-            // guardarEnCSVToolStripMenuItem
-            // 
-            guardarEnCSVToolStripMenuItem.Name = "guardarEnCSVToolStripMenuItem";
-            guardarEnCSVToolStripMenuItem.Size = new Size(191, 26);
-            guardarEnCSVToolStripMenuItem.Text = "Guardar en CSV";
-            guardarEnCSVToolStripMenuItem.Click += guardarEnCSVToolStripMenuItem_Click;
             // 
             // MenuSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1391, 700);
+            BackColor = Color.FromArgb(18, 28, 45);
+            ClientSize = new Size(1406, 700);
             Controls.Add(labelTituloAsterix);
             Controls.Add(pictureBox6);
             Controls.Add(pictureBox5);
@@ -430,6 +446,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MenuSimulacion";
+            SizeGripStyle = SizeGripStyle.Hide;
             Text = "ASTERIX";
             Load += MenuSimulacion_Load;
             menuStrip1.ResumeLayout(false);
@@ -481,5 +498,6 @@
         private PictureBox pictureBox6;
         private Label labelTituloAsterix;
         private ToolStripMenuItem guardarEnCSVToolStripMenuItem;
+        private System.Windows.Forms.Timer timerClick;
     }
 }

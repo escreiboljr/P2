@@ -1,4 +1,6 @@
-﻿namespace Simulacion
+﻿using System;
+using System.Collections.Generic;
+namespace Simulacion
 {
     public class AvionSimulacion
     {
@@ -15,6 +17,7 @@
         public double flightLevel { get; set; }
         public int trackNumber { get; set; }
         public double rumbo { get; set; }
+        public List<double[]> trayectoria { get; set; }
 
         public AvionSimulacion()
         {
@@ -31,6 +34,8 @@
             detectadoADSB = false;
             flightLevel = double.NaN;
             trackNumber = -1;
+
+            trayectoria = new List<double[]>();
 
             rumbo = 0;
         }
@@ -55,6 +60,15 @@
             copia.flightLevel = flightLevel;
             copia.trackNumber = trackNumber;
             copia.rumbo = rumbo;
+
+            copia.trayectoria = new List<double[]>();
+
+            foreach (double[] punto in trayectoria)
+            {
+                copia.trayectoria.Add(new double[]
+                { punto[0], punto[1]
+                });
+            }
 
             return copia;
         }

@@ -11,6 +11,7 @@ using Microsoft.VisualBasic;
 using Simulacion;
 using System.Data.Entity.Core.Mapping;
 using System.Diagnostics;
+using System.Security.Policy;
 
 namespace GUI_ASTERIX
 {
@@ -25,6 +26,10 @@ namespace GUI_ASTERIX
         private Stack<double> historialTiempo = new Stack<double>();
         private bool Reproduciendo = false;
         private GMapOverlay capaAviones;
+        private GMapOverlay capaTrayectorias;
+        private List<AvionSimulacion> avionesTrayectoriaSeleccionados = new List<AvionSimulacion>();
+        public bool oculto = true;
+        private AvionSimulacion avionClick;
         public MenuSimulacion()
         {
             InitializeComponent();
@@ -73,6 +78,9 @@ namespace GUI_ASTERIX
 
             gMapControl1.SetZoomToFitRect(zona);
 
+            capaTrayectorias = new GMapOverlay("trayectorias");
+            gMapControl1.Overlays.Add(capaTrayectorias);
+
             capaAviones = new GMapOverlay("aviones");
             gMapControl1.Overlays.Add(capaAviones);
         }
@@ -99,10 +107,12 @@ namespace GUI_ASTERIX
             historialAviones.Push(CopiarAviones());
             historialTiempo.Push(TiempoActual);
             TiempoActual = TiempoActual + 1;
-            label1.Text = TiempoActual.ToString();
+            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+            label1.Text = hora.ToString(@"hh\:mm\:ss");
             ActualizarAviones();
             ActualizarDataGrid();
             ActualizarMapa();
+            MostrarTrayectorias();
         }
 
         private void trackBarVelSimulacion_Scroll(object sender, EventArgs e)
@@ -256,6 +266,12 @@ namespace GUI_ASTERIX
 
                         nuevoAvion.latitud = latitud;
                         nuevoAvion.longitud = longitud;
+                        if (!double.IsNaN(latitud) && !double.IsNaN(longitud))
+                        {
+                            nuevoAvion.trayectoria.Add(
+                            new double[] { latitud, longitud }
+                            );
+                        }
                         nuevoAvion.altitud = altitud;
                         nuevoAvion.flightLevel = flightLevel;
 
@@ -304,6 +320,9 @@ namespace GUI_ASTERIX
 
                                 avionEncontrado.latitud = latitud;
                                 avionEncontrado.longitud = longitud;
+                                avionEncontrado.trayectoria.Add(
+                                new double[] { latitud, longitud }
+                                );
                             }
 
                             if (!double.IsNaN(altitud))
@@ -438,41 +457,59 @@ namespace GUI_ASTERIX
             dataGridAviones.Rows.Clear();
 
             BuscarTiempoInicial();
+            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+            label1.Text = hora.ToString(@"hh\:mm\:ss");
 
             label1.Text = TiempoActual.ToString();
 
             ActualizarAviones();
             ActualizarDataGrid();
             ActualizarMapa();
+
+            historialAviones.Clear();
+            historialTiempo.Clear();
+
+            MostrarTrayectorias();
+
+            capaTrayectorias.Routes.Clear();
         }
 
         private void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog explorador = new OpenFileDialog();
-
-            explorador.Title = "Seleccionar archivo ASTERIX";
-            //explorador.Filter 
-
-            if (explorador.ShowDialog() == DialogResult.OK)
+            try
             {
-                timerSimulacion.Stop();
-                Reproduciendo = false;
+                OpenFileDialog explorador = new OpenFileDialog();
 
-                AvionesActuales.Clear();
-                dataGridAviones.Rows.Clear();
+                explorador.Title = "Seleccionar archivo ASTERIX";
+                //explorador.Filter 
 
-                string rutaArchivo = explorador.FileName;
-                LeerDatos lector = new LeerDatos();
+                if (explorador.ShowDialog() == DialogResult.OK)
+                {
+                    timerSimulacion.Stop();
+                    Reproduciendo = false;
 
-                ListaMensajes = lector.DatosProcesados(rutaArchivo);
-                ListaMensajesFiltrados = ListaMensajes;
+                    AvionesActuales.Clear();
+                    dataGridAviones.Rows.Clear();
 
-                BuscarTiempoInicial();
-                ActualizarAviones();
-                ActualizarDataGrid();
-                ActualizarMapa();
+                    string rutaArchivo = explorador.FileName;
+                    LeerDatos lector = new LeerDatos();
 
-                MessageBox.Show("Archivo cargado bien" + ListaMensajes.Count);
+                    ListaMensajes = lector.DatosProcesados(rutaArchivo);
+                    ListaMensajesFiltrados = ListaMensajes;
+
+                    BuscarTiempoInicial();
+                    TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+                    label1.Text = hora.ToString(@"hh\:mm\:ss");
+                    ActualizarAviones();
+                    ActualizarDataGrid();
+                    ActualizarMapa();
+
+                    MessageBox.Show("Archivo cargado bien" + ListaMensajes.Count);
+                }
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show("Formato de archivo incorrecto o datos dañados");
             }
         }
         private void ActualizarDataGrid()
@@ -511,7 +548,9 @@ namespace GUI_ASTERIX
 
         private void buttonDataGrid_Click(object sender, EventArgs e)
         {
-            dataGridAviones.Visible = !dataGridAviones.Visible;
+            dataGridAviones.BringToFront();
+            dataGridAviones.Visible = !dataGridAviones.Visible; 
+
         }
         private void ActualizarMapa()
         {
@@ -574,10 +613,35 @@ namespace GUI_ASTERIX
         {
             AvionSimulacion avion = item.Tag as AvionSimulacion;
 
-            if (avion != null)
+            if (avion == null)
+            {
+                return;
+            }
+
+            // CLICK IZQUIERDO -> mostrar trayectoria
+            if (e.Button == MouseButtons.Left)
+            {
+                if (avionesTrayectoriaSeleccionados.Contains(avion))
+                {
+                    // Si ya estaba seleccionado, quitamos su trayectoria
+                    avionesTrayectoriaSeleccionados.Remove(avion);
+                }
+                else
+                {
+                    // Si no estaba seleccionado, la añadimos
+                    avionesTrayectoriaSeleccionados.Add(avion);
+                }
+
+                MostrarTrayectorias();
+            }
+
+            // CLICK DERECHO -> abrir información del avión
+            else if (e.Button == MouseButtons.Right)
             {
                 InformacionAvion ventana = new InformacionAvion();
+
                 ventana.avion = avion;
+
                 ventana.Show();
             }
         }
@@ -617,13 +681,47 @@ namespace GUI_ASTERIX
         {
             if (historialAviones.Count > 0)
             {
+                // Guardamos qué aviones tenían la trayectoria seleccionada
+                List<string> clavesSeleccionadas = new List<string>();
+
+                foreach (AvionSimulacion avion in avionesTrayectoriaSeleccionados)
+                {
+                    clavesSeleccionadas.Add(ObtenerClaveAvion(avion));
+                }
+
+                // Recuperamos estado anterior
                 AvionesActuales = historialAviones.Pop();
                 TiempoActual = historialTiempo.Pop();
 
-                ActualizarMapa();
+                // Reconstruimos la lista de seleccionados
+                avionesTrayectoriaSeleccionados.Clear();
 
-                label1.Text = TiempoActual.ToString();
+                foreach (AvionSimulacion avion in AvionesActuales)
+                {
+                    if (clavesSeleccionadas.Contains(ObtenerClaveAvion(avion)))
+                    {
+                        avionesTrayectoriaSeleccionados.Add(avion);
+                    }
+                }
+
+                // Actualizamos hora
+                TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+                label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+                ActualizarDataGrid();
+                ActualizarMapa();
+                MostrarTrayectorias();
             }
+        }
+        private string ObtenerClaveAvion(AvionSimulacion avion)
+        {
+            if (!string.IsNullOrEmpty(avion.direccion) &&
+                avion.direccion != "-1")
+            {
+                return avion.direccion;
+            }
+
+            return "TRACK_" + avion.trackNumber;
         }
 
         private void aplicarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -645,7 +743,6 @@ namespace GUI_ASTERIX
                     ventana.trayectoriaMax
                 );
 
-                // Reiniciamos la simulación
                 AvionesActuales.Clear();
                 historialAviones.Clear();
                 historialTiempo.Clear();
@@ -689,6 +786,67 @@ namespace GUI_ASTERIX
 
                 MessageBox.Show("CSV guardado correctamente");
             }
+        }
+        private AvionSimulacion BuscarAvionSeleccionado(AvionSimulacion avionAnterior)
+        {
+            if (avionAnterior == null)
+            {
+                return null;
+            }
+
+            foreach (AvionSimulacion avion in AvionesActuales)
+            {
+                if (!string.IsNullOrEmpty(avionAnterior.direccion) &&
+                    avionAnterior.direccion != "-1")
+                {
+                    if (avion.direccion == avionAnterior.direccion)
+                    {
+                        return avion;
+                    }
+                }
+
+                else
+                {
+                    if (avion.trackNumber == avionAnterior.trackNumber)
+                    {
+                        return avion;
+                    }
+                }
+            }
+
+            return null;
+        }
+        private void MostrarTrayectorias()
+        {
+            capaTrayectorias.Routes.Clear();
+
+            foreach (AvionSimulacion avion in avionesTrayectoriaSeleccionados)
+            {
+                if (avion.trayectoria.Count < 2)
+                {
+                    continue;
+                }
+
+                List<PointLatLng> puntos = new List<PointLatLng>();
+
+                foreach (double[] punto in avion.trayectoria)
+                {
+                    puntos.Add(
+                        new PointLatLng(punto[0], punto[1])
+                    );
+                }
+
+                GMapRoute ruta = new GMapRoute(
+                    puntos,
+                    "Trayectoria " + avion.identificador
+                );
+
+                ruta.Stroke = new Pen(Color.Blue, 2);
+
+                capaTrayectorias.Routes.Add(ruta);
+            }
+
+            gMapControl1.Refresh();
         }
     }
 }
