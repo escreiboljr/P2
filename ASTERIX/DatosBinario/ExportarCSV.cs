@@ -73,9 +73,9 @@ namespace Archivos
                         Valor(m.PositionCorrectedLatLonAlt[0]) + ";" +
                         Valor(m.PositionCorrectedLatLonAlt[1]) + ";" +
                         Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
-                        Valor(m.TargetRep.TYP) + ";" +
+                        TextoTYP(m.TargetRep.TYP) + ";" +
                         Valor(m.TrckStatus.CNF) + ";" +
-                        Valor(m.TrckStatus.RAD)
+                        TextoRAD(m.TrckStatus.RAD)
                     );
                 }
             }
@@ -206,12 +206,39 @@ namespace Archivos
                             Valor(m.PositionCorrectedLatLonAlt[1]) + ";" +
                             Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
                             Valor(m.TrackNum) + ";" +
-                            Valor(m.TargetRep.TYP) + ";" +
+                            TextoTYP(m.TargetRep.TYP) + ";" +
                             Valor(m.TrckStatus.CNF) + ";" +
-                            Valor(m.TrckStatus.RAD)
+                            TextoRAD(m.TrckStatus.RAD)
                         );
                     }
                 }
+            }
+        }
+        private string TextoTYP(string typ)
+        {
+            switch (typ)
+            {
+                case "000": return "No detection";
+                case "001": return "Single PSR detection";
+                case "010": return "Single SSR detection";
+                case "011": return "SSR + PSR detection";
+                case "100": return "Single ModeS All-Call";
+                case "101": return "Single ModeS Roll-Call";
+                case "110": return "ModeS All-Call + PSR";
+                case "111": return "ModeS Roll-Call + PSR";
+                default: return typ ?? "";
+            }
+        }
+
+        private string TextoRAD(string rad)
+        {
+            switch (rad)
+            {
+                case "00": return "Combined Track";
+                case "01": return "PSR Track";
+                case "10": return "SSR/Mode S Track";
+                case "11": return "Invalid";
+                default: return rad ?? "";
             }
         }
         private string Valor(object valor)
