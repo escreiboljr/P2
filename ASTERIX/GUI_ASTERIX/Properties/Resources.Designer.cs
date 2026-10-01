@@ -103,6 +103,66 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente {
+            get {
+                object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente1 {
+            get {
+                object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente2 {
+            get {
+                object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Imagen_de_ChatGPT_1_oct_2026__17_54_09 {
+            get {
+                object obj = ResourceManager.GetObject("Imagen de ChatGPT 1 oct 2026, 17_54_09", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Imagen_de_ChatGPT_1_oct_2026__17_56_52_2 {
+            get {
+                object obj = ResourceManager.GetObject("Imagen de ChatGPT 1 oct 2026, 17_56_52-2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Imagen_de_ChatGPT_1_oct_2026__17_56_53_3 {
+            get {
+                object obj = ResourceManager.GetObject("Imagen de ChatGPT 1 oct 2026, 17_56_53-3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap images {
             get {
                 object obj = ResourceManager.GetObject("images", resourceCulture);

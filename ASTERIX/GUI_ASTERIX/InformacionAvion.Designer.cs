@@ -228,7 +228,7 @@
             labelUltimoTiempoRadar.BackColor = Color.Transparent;
             labelUltimoTiempoRadar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelUltimoTiempoRadar.ForeColor = Color.PeachPuff;
-            labelUltimoTiempoRadar.Location = new Point(310, 478);
+            labelUltimoTiempoRadar.Location = new Point(339, 478);
             labelUltimoTiempoRadar.Name = "labelUltimoTiempoRadar";
             labelUltimoTiempoRadar.Size = new Size(261, 28);
             labelUltimoTiempoRadar.TabIndex = 14;
@@ -240,7 +240,7 @@
             labelUltimoTiempoADSB.BackColor = Color.Transparent;
             labelUltimoTiempoADSB.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelUltimoTiempoADSB.ForeColor = Color.PeachPuff;
-            labelUltimoTiempoADSB.Location = new Point(310, 506);
+            labelUltimoTiempoADSB.Location = new Point(339, 506);
             labelUltimoTiempoADSB.Name = "labelUltimoTiempoADSB";
             labelUltimoTiempoADSB.Size = new Size(266, 28);
             labelUltimoTiempoADSB.TabIndex = 15;
