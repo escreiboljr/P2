@@ -18,6 +18,9 @@ namespace Simulacion
         public int trackNumber { get; set; }
         public double rumbo { get; set; }
         public List<double[]> trayectoria { get; set; }
+        public double velocidad;
+        public string estadoVuelo;
+        public string mode3A;
 
         public AvionSimulacion()
         {
@@ -38,6 +41,10 @@ namespace Simulacion
             trayectoria = new List<double[]>();
 
             rumbo = 0;
+
+            velocidad = double.NaN;
+            estadoVuelo = "";
+            mode3A = "";
         }
         public AvionSimulacion Copiar()
         {
@@ -69,6 +76,10 @@ namespace Simulacion
                 { punto[0], punto[1]
                 });
             }
+
+            copia.velocidad = velocidad;
+            copia.estadoVuelo = estadoVuelo;
+            copia.mode3A = mode3A;
 
             return copia;
         }

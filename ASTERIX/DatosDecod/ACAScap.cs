@@ -7,7 +7,7 @@ namespace DatosDecod48
     public class ACAScap
     {
         public string COM {  get; set; }
-        public string STAT { get; set; }
+        public int STAT { get; set; }
         public int SI { get; set; }
         public int MSSC { get; set; }
         public int ARC { get; set; }
@@ -18,7 +18,7 @@ namespace DatosDecod48
         public ACAScap()
         {
             this.COM = "";
-            this.STAT = "";
+            this.STAT = -1;
             this.SI = -1;
             this.MSSC = -1;
             this.ARC = -1;

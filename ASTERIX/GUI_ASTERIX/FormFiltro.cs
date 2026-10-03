@@ -66,12 +66,11 @@ namespace GUI_ASTERIX
 
         private void FormFiltro_Load(object sender, EventArgs e)
         {
-            bool blancoPuro = false;
-            bool TransFijo = false;
-            bool Ground = false;
-            bool cat21 = checkBoxCat21.Checked;
-            bool cat48 = checkBoxCat48.Checked;
-
+            blancoPuro = false;
+            TransFijo = false;
+            Ground = false;
+            cat21 = checkBoxCat21.Checked;
+            cat48 = checkBoxCat48.Checked;
         }
 
         private void pictureBoxSlideButtonTransFijo_Click(object sender, EventArgs e)
@@ -90,20 +89,27 @@ namespace GUI_ASTERIX
 
         private void pictureBoxSlideButtonGround_Click(object sender, EventArgs e)
         {
-            if (Ground == false)
+            Ground = !Ground;
+
+            if (Ground)
             {
-                pictureBoxSlideButtonGround.Image = Properties.Resources.sliderActivado;
-                Ground = true;
+                pictureBoxSlideButtonGround.Image =
+                    Properties.Resources.sliderActivado;
             }
             else
             {
-                pictureBoxSlideButtonGround.Image = Properties.Resources.sliderApagado;
-                Ground = false;
+                pictureBoxSlideButtonGround.Image =
+                    Properties.Resources.sliderApagado;
             }
         }
 
         private void buttonAplciarCambios_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(
+    "Ground: " + Ground +
+    "\nCAT21: " + cat21 +
+    "\nCAT48: " + cat48
+);
             cat48 = checkBoxCat48.Checked;
             cat21 = checkBoxCat21.Checked;
 

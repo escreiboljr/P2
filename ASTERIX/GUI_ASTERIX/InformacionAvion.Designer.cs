@@ -46,6 +46,9 @@
             labelUltimoTiempo = new Label();
             labelUltimoTiempoRadar = new Label();
             labelUltimoTiempoADSB = new Label();
+            labelEstadoVuelo = new Label();
+            labelMode3A = new Label();
+            labelVelocidad = new Label();
             SuspendLayout();
             // 
             // labelIdentificador
@@ -54,10 +57,9 @@
             labelIdentificador.BackColor = Color.Transparent;
             labelIdentificador.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             labelIdentificador.ForeColor = Color.Turquoise;
-            labelIdentificador.Location = new Point(55, 39);
-            labelIdentificador.Margin = new Padding(4, 0, 4, 0);
+            labelIdentificador.Location = new Point(38, 23);
             labelIdentificador.Name = "labelIdentificador";
-            labelIdentificador.Size = new Size(294, 45);
+            labelIdentificador.Size = new Size(202, 30);
             labelIdentificador.TabIndex = 0;
             labelIdentificador.Text = "Identificador: N/A";
             // 
@@ -67,10 +69,9 @@
             labelFL.BackColor = Color.Transparent;
             labelFL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelFL.ForeColor = Color.LightGoldenrodYellow;
-            labelFL.Location = new Point(55, 293);
-            labelFL.Margin = new Padding(4, 0, 4, 0);
+            labelFL.Location = new Point(38, 176);
             labelFL.Name = "labelFL";
-            labelFL.Size = new Size(171, 28);
+            labelFL.Size = new Size(120, 19);
             labelFL.TabIndex = 1;
             labelFL.Text = "Flight Level: N/A";
             // 
@@ -84,9 +85,10 @@
             labelTituloPosicion.BackColor = Color.Transparent;
             labelTituloPosicion.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             labelTituloPosicion.ForeColor = Color.Lavender;
-            labelTituloPosicion.Location = new Point(55, 101);
+            labelTituloPosicion.Location = new Point(38, 61);
+            labelTituloPosicion.Margin = new Padding(2, 0, 2, 0);
             labelTituloPosicion.Name = "labelTituloPosicion";
-            labelTituloPosicion.Size = new Size(128, 32);
+            labelTituloPosicion.Size = new Size(86, 21);
             labelTituloPosicion.TabIndex = 2;
             labelTituloPosicion.Text = "POSICIÓN";
             // 
@@ -96,9 +98,10 @@
             labelLatitud.BackColor = Color.Transparent;
             labelLatitud.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelLatitud.ForeColor = Color.Lavender;
-            labelLatitud.Location = new Point(54, 133);
+            labelLatitud.Location = new Point(38, 80);
+            labelLatitud.Margin = new Padding(2, 0, 2, 0);
             labelLatitud.Name = "labelLatitud";
-            labelLatitud.Size = new Size(129, 28);
+            labelLatitud.Size = new Size(90, 19);
             labelLatitud.TabIndex = 3;
             labelLatitud.Text = "Latitud: N/A";
             // 
@@ -108,9 +111,10 @@
             labelLongitud.BackColor = Color.Transparent;
             labelLongitud.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelLongitud.ForeColor = Color.Lavender;
-            labelLongitud.Location = new Point(55, 161);
+            labelLongitud.Location = new Point(38, 97);
+            labelLongitud.Margin = new Padding(2, 0, 2, 0);
             labelLongitud.Name = "labelLongitud";
-            labelLongitud.Size = new Size(146, 28);
+            labelLongitud.Size = new Size(103, 19);
             labelLongitud.TabIndex = 4;
             labelLongitud.Text = "Longitud: N/A";
             // 
@@ -120,9 +124,10 @@
             labelAltitud.BackColor = Color.Transparent;
             labelAltitud.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelAltitud.ForeColor = Color.Lavender;
-            labelAltitud.Location = new Point(54, 189);
+            labelAltitud.Location = new Point(38, 113);
+            labelAltitud.Margin = new Padding(2, 0, 2, 0);
             labelAltitud.Name = "labelAltitud";
-            labelAltitud.Size = new Size(128, 28);
+            labelAltitud.Size = new Size(89, 19);
             labelAltitud.TabIndex = 5;
             labelAltitud.Text = "Altitud: N/A";
             // 
@@ -132,9 +137,10 @@
             labelTituloVuelo.BackColor = Color.Transparent;
             labelTituloVuelo.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             labelTituloVuelo.ForeColor = Color.LightGoldenrodYellow;
-            labelTituloVuelo.Location = new Point(55, 261);
+            labelTituloVuelo.Location = new Point(38, 157);
+            labelTituloVuelo.Margin = new Padding(2, 0, 2, 0);
             labelTituloVuelo.Name = "labelTituloVuelo";
-            labelTituloVuelo.Size = new Size(89, 32);
+            labelTituloVuelo.Size = new Size(62, 21);
             labelTituloVuelo.TabIndex = 6;
             labelTituloVuelo.Text = "VUELO";
             // 
@@ -144,9 +150,10 @@
             labelDireccion.BackColor = Color.Transparent;
             labelDireccion.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelDireccion.ForeColor = Color.LightGoldenrodYellow;
-            labelDireccion.Location = new Point(55, 321);
+            labelDireccion.Location = new Point(38, 193);
+            labelDireccion.Margin = new Padding(2, 0, 2, 0);
             labelDireccion.Name = "labelDireccion";
-            labelDireccion.Size = new Size(152, 28);
+            labelDireccion.Size = new Size(107, 19);
             labelDireccion.TabIndex = 7;
             labelDireccion.Text = "Dirección: N/A";
             // 
@@ -156,9 +163,10 @@
             labelRumbo.BackColor = Color.Transparent;
             labelRumbo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelRumbo.ForeColor = Color.LightGoldenrodYellow;
-            labelRumbo.Location = new Point(55, 346);
+            labelRumbo.Location = new Point(38, 208);
+            labelRumbo.Margin = new Padding(2, 0, 2, 0);
             labelRumbo.Name = "labelRumbo";
-            labelRumbo.Size = new Size(129, 28);
+            labelRumbo.Size = new Size(92, 19);
             labelRumbo.TabIndex = 8;
             labelRumbo.Text = "Rumbo: N/A";
             // 
@@ -168,9 +176,10 @@
             labelTrackNumber.BackColor = Color.Transparent;
             labelTrackNumber.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelTrackNumber.ForeColor = Color.LightGoldenrodYellow;
-            labelTrackNumber.Location = new Point(54, 371);
+            labelTrackNumber.Location = new Point(38, 223);
+            labelTrackNumber.Margin = new Padding(2, 0, 2, 0);
             labelTrackNumber.Name = "labelTrackNumber";
-            labelTrackNumber.Size = new Size(196, 28);
+            labelTrackNumber.Size = new Size(140, 19);
             labelTrackNumber.TabIndex = 9;
             labelTrackNumber.Text = "Track Number: N/A";
             // 
@@ -180,9 +189,10 @@
             labelTituloDeteccion.BackColor = Color.Transparent;
             labelTituloDeteccion.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             labelTituloDeteccion.ForeColor = Color.PeachPuff;
-            labelTituloDeteccion.Location = new Point(55, 446);
+            labelTituloDeteccion.Location = new Point(38, 268);
+            labelTituloDeteccion.Margin = new Padding(2, 0, 2, 0);
             labelTituloDeteccion.Name = "labelTituloDeteccion";
-            labelTituloDeteccion.Size = new Size(146, 32);
+            labelTituloDeteccion.Size = new Size(99, 21);
             labelTituloDeteccion.TabIndex = 10;
             labelTituloDeteccion.Text = "DETECCIÓN";
             // 
@@ -192,9 +202,10 @@
             labelRadar.BackColor = Color.Transparent;
             labelRadar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelRadar.ForeColor = Color.PeachPuff;
-            labelRadar.Location = new Point(55, 478);
+            labelRadar.Location = new Point(38, 287);
+            labelRadar.Margin = new Padding(2, 0, 2, 0);
             labelRadar.Name = "labelRadar";
-            labelRadar.Size = new Size(118, 28);
+            labelRadar.Size = new Size(85, 19);
             labelRadar.TabIndex = 11;
             labelRadar.Text = "Radar: N/A";
             // 
@@ -204,9 +215,10 @@
             labelADSB.BackColor = Color.Transparent;
             labelADSB.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelADSB.ForeColor = Color.PeachPuff;
-            labelADSB.Location = new Point(55, 503);
+            labelADSB.Location = new Point(38, 302);
+            labelADSB.Margin = new Padding(2, 0, 2, 0);
             labelADSB.Name = "labelADSB";
-            labelADSB.Size = new Size(123, 28);
+            labelADSB.Size = new Size(87, 19);
             labelADSB.TabIndex = 12;
             labelADSB.Text = "ADS-B: N/A";
             // 
@@ -216,9 +228,10 @@
             labelUltimoTiempo.BackColor = Color.Transparent;
             labelUltimoTiempo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelUltimoTiempo.ForeColor = Color.PeachPuff;
-            labelUltimoTiempo.Location = new Point(54, 528);
+            labelUltimoTiempo.Location = new Point(237, 283);
+            labelUltimoTiempo.Margin = new Padding(2, 0, 2, 0);
             labelUltimoTiempo.Name = "labelUltimoTiempo";
-            labelUltimoTiempo.Size = new Size(199, 28);
+            labelUltimoTiempo.Size = new Size(141, 19);
             labelUltimoTiempo.TabIndex = 13;
             labelUltimoTiempo.Text = "Último tiempo: N/A";
             // 
@@ -228,9 +241,10 @@
             labelUltimoTiempoRadar.BackColor = Color.Transparent;
             labelUltimoTiempoRadar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelUltimoTiempoRadar.ForeColor = Color.PeachPuff;
-            labelUltimoTiempoRadar.Location = new Point(339, 478);
+            labelUltimoTiempoRadar.Location = new Point(237, 302);
+            labelUltimoTiempoRadar.Margin = new Padding(2, 0, 2, 0);
             labelUltimoTiempoRadar.Name = "labelUltimoTiempoRadar";
-            labelUltimoTiempoRadar.Size = new Size(261, 28);
+            labelUltimoTiempoRadar.Size = new Size(186, 19);
             labelUltimoTiempoRadar.TabIndex = 14;
             labelUltimoTiempoRadar.Text = "Último tiempo Radar: N/A";
             // 
@@ -240,18 +254,60 @@
             labelUltimoTiempoADSB.BackColor = Color.Transparent;
             labelUltimoTiempoADSB.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelUltimoTiempoADSB.ForeColor = Color.PeachPuff;
-            labelUltimoTiempoADSB.Location = new Point(339, 506);
+            labelUltimoTiempoADSB.Location = new Point(237, 321);
+            labelUltimoTiempoADSB.Margin = new Padding(2, 0, 2, 0);
             labelUltimoTiempoADSB.Name = "labelUltimoTiempoADSB";
-            labelUltimoTiempoADSB.Size = new Size(266, 28);
+            labelUltimoTiempoADSB.Size = new Size(188, 19);
             labelUltimoTiempoADSB.TabIndex = 15;
             labelUltimoTiempoADSB.Text = "Último tiempo ADS-B: N/A";
             // 
+            // labelEstadoVuelo
+            // 
+            labelEstadoVuelo.AutoSize = true;
+            labelEstadoVuelo.BackColor = Color.Transparent;
+            labelEstadoVuelo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelEstadoVuelo.ForeColor = Color.LightGoldenrodYellow;
+            labelEstadoVuelo.Location = new Point(237, 174);
+            labelEstadoVuelo.Name = "labelEstadoVuelo";
+            labelEstadoVuelo.Size = new Size(129, 19);
+            labelEstadoVuelo.TabIndex = 16;
+            labelEstadoVuelo.Text = "Estado vuelo: N/A";
+            // 
+            // labelMode3A
+            // 
+            labelMode3A.AutoSize = true;
+            labelMode3A.BackColor = Color.Transparent;
+            labelMode3A.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelMode3A.ForeColor = Color.PeachPuff;
+            labelMode3A.Location = new Point(38, 320);
+            labelMode3A.Margin = new Padding(2, 0, 2, 0);
+            labelMode3A.Name = "labelMode3A";
+            labelMode3A.Size = new Size(111, 19);
+            labelMode3A.TabIndex = 17;
+            labelMode3A.Text = "Mode 3/A: N/A";
+            // 
+            // labelVelocidad
+            // 
+            labelVelocidad.AutoSize = true;
+            labelVelocidad.BackColor = Color.Transparent;
+            labelVelocidad.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelVelocidad.ForeColor = Color.LightGoldenrodYellow;
+            labelVelocidad.Location = new Point(237, 193);
+            labelVelocidad.Margin = new Padding(2, 0, 2, 0);
+            labelVelocidad.Name = "labelVelocidad";
+            labelVelocidad.Size = new Size(110, 19);
+            labelVelocidad.TabIndex = 18;
+            labelVelocidad.Text = "Velocidad: N/A";
+            // 
             // InformacionAvion
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(762, 610);
+            ClientSize = new Size(533, 366);
+            Controls.Add(labelVelocidad);
+            Controls.Add(labelMode3A);
+            Controls.Add(labelEstadoVuelo);
             Controls.Add(labelUltimoTiempoADSB);
             Controls.Add(labelUltimoTiempoRadar);
             Controls.Add(labelUltimoTiempo);
@@ -269,7 +325,6 @@
             Controls.Add(labelFL);
             Controls.Add(labelIdentificador);
             ForeColor = Color.WhiteSmoke;
-            Margin = new Padding(4, 5, 4, 5);
             Name = "InformacionAvion";
             Text = "Información del avión";
             Load += InformacionAvion_Load;
@@ -296,5 +351,8 @@
         private Label labelUltimoTiempo;
         private Label labelUltimoTiempoRadar;
         private Label labelUltimoTiempoADSB;
+        private Label labelEstadoVuelo;
+        private Label labelMode3A;
+        private Label labelVelocidad;
     }
 }

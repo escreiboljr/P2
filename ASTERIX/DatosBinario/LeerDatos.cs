@@ -2,6 +2,7 @@
 using DatosDecod;
 using DatosDecod21;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace Archvios
 {
@@ -63,6 +64,15 @@ namespace Archvios
             if (categoria == 48)
             {
                 var tira48 = DecodificarCAT048(colaMensaje);
+           //         Debug.WriteLine(
+           //"CAT48 -> " +
+           //"TRACK=" + tira48.TrackNum +
+           //" | ID=" + tira48.AircrftIddent +
+           //" | ADDR=" + tira48.AircrftAddrs +
+           //" | MODE3A=" + tira48.mode3.reply +
+           //" | VEL=" + tira48.TrckVelPolRepr[0] +
+           //" | HEADING=" + tira48.TrckVelPolRepr[1]);
+
                     if (tira48.PositionCorrectedLatLonAlt[0] > 40.99 &&
                         tira48.PositionCorrectedLatLonAlt[0] < 41.7 &&
                         tira48.PositionCorrectedLatLonAlt[1] > 1.5 &&

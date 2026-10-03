@@ -87,6 +87,17 @@ namespace GUI_ASTERIX
                     ? "Última detección ADS-B: " +
                       TimeSpan.FromSeconds(avion.ultimoTiempoADSB).ToString(@"hh\:mm\:ss")
                     : "Última detección ADS-B: N/A";
+                labelVelocidad.Text = !double.IsNaN(avion.velocidad)
+                    ? "Velocidad: " + avion.velocidad.ToString("0.##") + " kt"
+                    : "Velocidad: N/A";
+
+                labelEstadoVuelo.Text = !string.IsNullOrWhiteSpace(avion.estadoVuelo)
+                    ? "Estado: " + avion.estadoVuelo
+                    : "Estado: N/A";
+
+                labelMode3A.Text = !string.IsNullOrWhiteSpace(avion.mode3A)
+                    ? "Mode 3/A: " + avion.mode3A
+                    : "Mode 3/A: N/A";
             }
             else
             {

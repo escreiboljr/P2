@@ -1,4 +1,5 @@
 ﻿using DatosDecod48;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
@@ -28,6 +29,7 @@ namespace DatosDecod
         public List<double> TrckVelPolRepr { get; set; }
         public TrackStatus TrckStatus {  get; set; }
         public ACAScap CommACAScapability { get; set; }
+        public bool tieneTrackVelocity { get; set; }
 
         public TiraDatosDecod048()
         {
@@ -46,6 +48,7 @@ namespace DatosDecod
             this.TrckVelPolRepr = new List<double> { 0, 0 };
             this.TrckStatus = new TrackStatus();
             this.CommACAScapability = new ACAScap();
+            this.tieneTrackVelocity = false;
         }
 
         public static byte BitsToByte(List<int> bits)
@@ -321,28 +324,41 @@ namespace DatosDecod
 
         public void DecodeI048_250(Queue<byte> cola)
         {
-            byte[] mb = new byte[9];
-            for (int i = 0; i < 9; i++)
-                mb[i] = cola.Dequeue();
+            // Primer byte = REP
+            int rep = cola.Dequeue();
 
-            byte bds = mb[8];
-            int major = (bds >> 4) & 0x0F;
-            int minor = bds & 0x0F;
+            for (int i = 0; i < rep; i++)
+            {
+                // Cada bloque contiene 8 bytes:
+                // 7 bytes MB Data + 1 byte BDS
+                byte[] mb = new byte[8];
 
-            if (major == 4 && minor == 0)
-            {
-                this.ModeS.BDS40 = new BDS40();
-                this.ModeS.BDS40.Decode(mb);
-            }
-            else if (major == 5 && minor == 0)
-            {
-                this.ModeS.BDS50 = new BDS50();
-                this.ModeS.BDS50.Decode(mb);
-            }
-            else if (major == 6 && minor == 0)
-            {
-                this.ModeS.BDS60 = new BDS60();
-                this.ModeS.BDS60.Decode(mb);
+                for (int j = 0; j < 8; j++)
+                {
+                    mb[j] = cola.Dequeue();
+                }
+
+                // El último byte contiene BDS1 y BDS2
+                byte bds = mb[7];
+
+                int major = (bds >> 4) & 0x0F;
+                int minor = bds & 0x0F;
+
+                if (major == 4 && minor == 0)
+                {
+                    this.ModeS.BDS40 = new BDS40();
+                    this.ModeS.BDS40.Decode(mb);
+                }
+                else if (major == 5 && minor == 0)
+                {
+                    this.ModeS.BDS50 = new BDS50();
+                    this.ModeS.BDS50.Decode(mb);
+                }
+                else if (major == 6 && minor == 0)
+                {
+                    this.ModeS.BDS60 = new BDS60();
+                    this.ModeS.BDS60.Decode(mb);
+                }
             }
         }
 
@@ -351,9 +367,15 @@ namespace DatosDecod
             byte b1 = ColaBytes.Dequeue();
             byte b2 = ColaBytes.Dequeue();
 
-            int trackNumber = (b1 << 8) | b2;
+            int raw = (b1 << 8) | b2;
 
-            this.TrackNum = trackNumber;   
+            this.TrackNum = raw & 0x0FFF;
+//            Debug.WriteLine(
+//    "TRACK -> " +
+//    "b1: " + Convert.ToString(b1, 2).PadLeft(8, '0') +
+//    " | b2: " + Convert.ToString(b2, 2).PadLeft(8, '0') +
+//    " | RAW: " + raw
+//);
         }
 
         public void DecodeTrackVelocityPolar(Queue<byte> ColaBytes)
@@ -363,22 +385,16 @@ namespace DatosDecod
             byte b3 = ColaBytes.Dequeue();
             byte b4 = ColaBytes.Dequeue();
 
-            // Ground Speed (signed 16 bits)
             int gsRaw = (b1 << 8) | b2;
-            if ((gsRaw & 0x8000) != 0)
-                gsRaw -= 65536;
+            double groundSpeedKt = gsRaw * 3600.0 / 16384.0;
 
-            double groundSpeed = gsRaw / 128.0;
+            int headingRaw = (b3 << 8) | b4;
+            double heading = headingRaw * (360.0 / 65536.0);
 
-            // Heading Rate (signed 16 bits)
-            int hrRaw = (b3 << 8) | b4;
-            if ((hrRaw & 0x8000) != 0)
-                hrRaw -= 65536;
+            this.TrckVelPolRepr[0] = groundSpeedKt;
+            this.TrckVelPolRepr[1] = heading;
 
-            double headingRate = hrRaw * (360.0 / 65536.0);
-
-            this.TrckVelPolRepr[0] = groundSpeed;
-            this.TrckVelPolRepr[1] = headingRate;
+            this.tieneTrackVelocity = true;
         }
 
         public void DecodeTrackStatus(Queue<byte> ColaBytes)
@@ -412,7 +428,8 @@ namespace DatosDecod
             List<int> listaBits = JoinBytesToBits(list);
 
             this.CommACAScapability.COM = string.Join("", listaBits.GetRange(0, 3));
-            this.CommACAScapability.STAT = string.Join("", listaBits.GetRange(3, 3));
+            int STAT = 4 * listaBits[3] + 2 * listaBits[4] + listaBits[5];
+            this.CommACAScapability.STAT = STAT;
             this.CommACAScapability.SI = listaBits[6];
             this.CommACAScapability.MSSC = listaBits[8];
             this.CommACAScapability.ARC = listaBits[9];
