@@ -192,7 +192,7 @@ namespace GUI_ASTERIX
                 {
 
                     TiraDatosDecod048 mensaje48 = (TiraDatosDecod048)mensaje.tira;
-                    bool trackSinIdentificar = mensaje48.AircrftAddrs == -1 && string.IsNullOrEmpty(mensaje48.AircrftIddent) && mensaje48.TargetRep.TYP == "001";
+                    bool trackSinIdentificar = mensaje48.AircrftAddrs == "" && string.IsNullOrEmpty(mensaje48.AircrftIddent) && mensaje48.TargetRep.TYP == "001";
 
                     if (mensaje48.TrckStatus.CNF == 1 || trackSinIdentificar)
                     {
@@ -906,7 +906,7 @@ namespace GUI_ASTERIX
                         (TiraDatosDecod048)mensaje.tira;
 
                     bool trackSinIdentificar =
-                        mensaje48.AircrftAddrs == -1 &&
+                        mensaje48.AircrftAddrs == "" &&
                         string.IsNullOrEmpty(mensaje48.AircrftIddent) &&
                         mensaje48.TargetRep.TYP == "001";
 
