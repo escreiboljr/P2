@@ -295,7 +295,7 @@ double trayectoriaMax)
     TiraDatosDecod048 mensaje48)
         {
             // Primero intentamos identificarlo por Aircraft Address
-            if (mensaje48.AircrftAddrs != -1)
+            if (mensaje48.AircrftAddrs != "")
             {
                 return "ADDR_" + mensaje48.AircrftAddrs.ToString();
             }
@@ -364,7 +364,7 @@ double trayectoriaMax)
     TiraDatosDecod048 mensaje48)
 {
     // Preferimos Aircraft Address
-    if (mensaje48.AircrftAddrs != -1)
+    if (mensaje48.AircrftAddrs != "")
     {
         return mensaje48.AircrftAddrs.ToString();
     }

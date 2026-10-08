@@ -16,7 +16,7 @@ namespace DatosDecod
         public Mode3 mode3 { get; set; }
         public FlightLevel FL {  get; set; }
         public RadarPlotCharacteristics RadarPlot { get; set; }
-        public int AircrftAddrs { get; set; }
+        public string AircrftAddrs { get; set; }
         public string AircrftIddent { get; set; }
         public class ModeSData
         {
@@ -41,7 +41,7 @@ namespace DatosDecod
             this.mode3 = new Mode3();
             this.FL = new FlightLevel();
             this.RadarPlot = new RadarPlotCharacteristics();
-            this.AircrftAddrs = -1;
+            this.AircrftAddrs = "";
             this.AircrftIddent = "";
             this.ModeS = new ModeSData();
             this.TrackNum = -1;
@@ -284,7 +284,7 @@ namespace DatosDecod
             byte b3 = ColaBytes.Dequeue();
 
             int raw = (b1 << 16) | (b2 << 8) | b3;
-            this.AircrftAddrs = raw;
+            this.AircrftAddrs = raw.ToString("X6");
         }
 
         private char DecodeCharICAO(int v)
