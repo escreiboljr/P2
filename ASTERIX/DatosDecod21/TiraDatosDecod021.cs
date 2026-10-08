@@ -20,11 +20,11 @@
             this.TargetRep = new TargetReportDescriptor();
             this.ReservedExpField = -1;
             this.PosWGS84HighRes = new List<double> { 0, 0 };
-            this.TargetAddress = "";
+            this.TargetAddress = null;
             this.TimeReceptionPosition = -1;
-            this.Mode3ACode = "";
+            this.Mode3ACode = null;
             this.FlightLevel = double.NaN;
-            this.TargetIdentification = "";
+            this.TargetIdentification = null;
             this.QNH = double.NaN;
             this.AltitudCorregida = double.NaN;
         }
