@@ -212,7 +212,7 @@ namespace Archivos
                         Valor(m.AltitudCorregida) + ";" +
                         Valor(m.ReservedExpField) + ";" +
 
-                        TextoATP21(m.TargetRep.ATP) + ";" +
+                         TextoATP21(m.TargetRep.ATP) + ";" +
                         TextoARC21(m.TargetRep.ARC) + ";" +
                         Valor(m.TargetRep.RC) + ";" +
                         Valor(m.TargetRep.RAB) + ";" +
@@ -239,7 +239,7 @@ namespace Archivos
             using (StreamWriter sw = new StreamWriter(ruta))
             {
                 sw.WriteLine(
-                    
+
                     // DATOS COMUNES
                     "Categoria;" +
                     "SAC;" +
@@ -253,7 +253,7 @@ namespace Archivos
                     "Longitude;" +
                     "Altitude;" +
 
-                    
+
                     // TARGET REPORT DESCRIPTOR
                     // Algunos campos existen en ambas categorías
                     "TRD_SIM;" +
@@ -290,30 +290,30 @@ namespace Archivos
                     "TRD_PAI_EP;" +
                     "TRD_PAI_VAL;" +
 
-                    
+
                     // SOLO CAT21
                     "QNH;" +
                     "ReservedExpField;" +
-                    
+
                     // SOLO CAT48 - POLAR
                     "RHO_NM;" +
                     "THETA_deg;" +
 
                     // CAT48 - MODE 3/A
-                    
+
                     "Mode3A_V;" +
                     "Mode3A_G;" +
                     "Mode3A_L;" +
 
-                    
+
                     // CAT48 - FL
-                    
+
                     "FL_V;" +
                     "FL_G;" +
 
-                    
+
                     // CAT48 - RADAR PLOT
-                    
+
                     "RadarPlot_SRL;" +
                     "RadarPlot_SRR;" +
                     "RadarPlot_SAM;" +
@@ -322,16 +322,16 @@ namespace Archivos
                     "RadarPlot_RPD;" +
                     "RadarPlot_APD;" +
 
-                    
+
                     // CAT48 - TRACK
-                    
+
                     "TrackNumber;" +
                     "GroundSpeed_kt;" +
                     "Heading_deg;" +
 
-                    
+
                     // CAT48 - TRACK STATUS
-                    
+
                     "TrackStatus_CNF;" +
                     "TrackStatus_RAD;" +
                     "TrackStatus_DOU;" +
@@ -342,9 +342,9 @@ namespace Archivos
                     "TrackStatus_SUP;" +
                     "TrackStatus_TCC;" +
 
-                    
+
                     // CAT48 - COMM / ACAS
-                    
+
                     "COM;" +
                     "STAT;" +
                     "SI;" +
@@ -354,9 +354,9 @@ namespace Archivos
                     "B1A;" +
                     "B1B;" +
 
-                    
+
                     // CAT48 - BDS 4,0
-                    
+
                     "BDS40_MCP;" +
                     "BDS40_FMS;" +
                     "BDS40_Baro;" +
@@ -364,18 +364,18 @@ namespace Archivos
                     "BDS40_AltHold;" +
                     "BDS40_App;" +
 
-                    
+
                     // CAT48 - BDS 5,0
-                    
+
                     "BDS50_Roll;" +
                     "BDS50_Track;" +
                     "BDS50_GroundSpeed;" +
                     "BDS50_TrackRate;" +
                     "BDS50_TrueAirspeed;" +
 
-                    
+
                     // CAT48 - BDS 6,0
-                    
+
                     "BDS60_Heading;" +
                     "BDS60_IAS;" +
                     "BDS60_Mach;" +
@@ -393,9 +393,9 @@ namespace Archivos
                             (TiraDatosDecod021)mensaje.tira;
 
                         sw.WriteLine(
-                            
+
                             // DATOS COMUNES
-                            
+
                             "21;" +
                             Valor(m.DataSourceID[0]) + ";" +
                             Valor(m.DataSourceID[1]) + ";" +
@@ -408,9 +408,9 @@ namespace Archivos
                             Valor(m.PosWGS84HighRes[1]) + ";" +
                             Valor(m.AltitudCorregida) + ";" +
 
-                            
+
                             // TRD COMUNES
-                            
+
                             Valor(m.TargetRep.SIM) + ";" +
                             Valor(m.TargetRep.RAB) + ";" +
                             Valor(m.TargetRep.TST) + ";" +
@@ -418,8 +418,8 @@ namespace Archivos
 
                             // TRD CAT21
 
-                            TextoATP21(m.TargetRep.ATP) + ";" +
-                            TextoARC21(m.TargetRep.ARC) + ";" +
+                            Valor(m.TargetRep.ATP) + ";" +
+                            Valor(m.TargetRep.ARC) + ";" +
                             Valor(m.TargetRep.RC) + ";" +
                             Valor(m.TargetRep.DCR) + ";" +
                             Valor(m.TargetRep.GBS) + ";" +
@@ -431,29 +431,29 @@ namespace Archivos
                             Valor(m.TargetRep.LDPJ) + ";" +
                             Valor(m.TargetRep.RCF) + ";" +
 
-                            
+
                             // TRD CAT48 -> VACÍOS
                             // 14 campos
-                            
+
                             Vacio(14) +
 
-                            
+
                             // CAT21
-                            
+
                             Valor(m.QNH) + ";" +
                             Valor(m.ReservedExpField) + ";" +
 
-                            
+
                             // RESTO CAT48 -> VACÍO
-                            
+
                             Vacio(47)
                         );
                     }
 
 
-                    
+
                     // CAT48
-                    
+
                     else if (mensaje.categoria == 48)
                     {
                         TiraDatosDecod048 m =
@@ -474,29 +474,29 @@ namespace Archivos
                             Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
 
                             // TRD 
-                            TextoSIM(m.TargetRep.SIM) + ";" +
-                            TextoRAB48(m.TargetRep.RAB) + ";" +
-                            TextoTST48(m.TargetRep.TST) + ";" +
+                            Valor(m.TargetRep.SIM) + ";" +
+                            Valor(m.TargetRep.RAB) + ";" +
+                            Valor(m.TargetRep.TST) + ";" +
 
                             // TRD CAT21 -> VACÍOS
                             // 12 campos
                             Vacio(12) +
 
                             // TRD CAT48
-                            TextoTYP(m.TargetRep.TYP) + ";" +
-                            TextoRDP(m.TargetRep.RDP) + ";" +
-                            TextoSPI(m.TargetRep.SPI) + ";" +
-                            TextoERR(m.TargetRep.ERR) + ";" +
-                            TextoXPP(m.TargetRep.XPP) + ";" +
-                            TextoME(m.TargetRep.ME) + ";" +
-                            TextoMI(m.TargetRep.MI) + ";" +
-                            TextoFOE_FRI(m.TargetRep.FOE_FRI) + ";" +
-                            TextoADSB_EP(m.TargetRep.ADSB_EP) + ";" +
-                            TextoADSB_VAL(m.TargetRep.ADSB_EP, m.TargetRep.ADSB_VAL) + ";" +
-                            TextoSCN_EP(m.TargetRep.SCN_EP) + ";" +
-                            TextoSCN_VAL(m.TargetRep.SCN_EP, m.TargetRep.SCN_VAL) + ";" +
-                            TextoPAI_EP(m.TargetRep.PAI_EP) + ";" +
-                            TextoPAI_VAL(m.TargetRep.PAI_EP, m.TargetRep.PAI_VAL) + ";" +
+                            Valor(m.TargetRep.TYP) + ";" +
+                            Valor(m.TargetRep.RDP) + ";" +
+                            Valor(m.TargetRep.SPI) + ";" +
+                            Valor(m.TargetRep.ERR) + ";" +
+                            Valor(m.TargetRep.XPP) + ";" +
+                            Valor(m.TargetRep.ME) + ";" +
+                            Valor(m.TargetRep.MI) + ";" +
+                            Valor(m.TargetRep.FOE_FRI) + ";" +
+                            Valor(m.TargetRep.ADSB_EP) + ";" +
+                            Valor(m.TargetRep.ADSB_VAL) + ";" +
+                            Valor(m.TargetRep.SCN_EP) + ";" +
+                            Valor(m.TargetRep.SCN_VAL) + ";" +
+                            Valor(m.TargetRep.PAI_EP) + ";" +
+                            Valor(m.TargetRep.PAI_VAL) + ";" +
 
                             // CAT21 -> VACÍOS
                             // QNH + ReservedExpField
@@ -535,11 +535,11 @@ namespace Archivos
                                 ? Valor(m.TrckVelPolRepr[1])
                                 : "-") + ";" +
 
-                            
+
                             // TRACK STATUS
-                            
+
                             Valor(m.TrckStatus.CNF) + ";" +
-                            TextoRAD(m.TrckStatus.RAD) + ";" +
+                            Valor(m.TrckStatus.RAD) + ";" +
                             Valor(m.TrckStatus.DOU) + ";" +
                             Valor(m.TrckStatus.MAH) + ";" +
                             Valor(m.TrckStatus.CDM) + ";" +
@@ -548,9 +548,9 @@ namespace Archivos
                             Valor(m.TrckStatus.SUP) + ";" +
                             Valor(m.TrckStatus.TCC) + ";" +
 
-                            
+
                             // COMM / ACAS
-                            
+
                             Valor(m.CommACAScapability.COM) + ";" +
                             Valor(m.CommACAScapability.STAT) + ";" +
                             Valor(m.CommACAScapability.SI) + ";" +
@@ -560,9 +560,9 @@ namespace Archivos
                             Valor(m.CommACAScapability.B1A) + ";" +
                             Valor(m.CommACAScapability.B1B) + ";" +
 
-                            
+
                             // BDS 4,0
-                            
+
                             ValorBDS40(m) + ";" +
 
 
@@ -577,213 +577,6 @@ namespace Archivos
                         );
                     }
                 }
-            }
-        }
-
-        private string TextoRC21(int rc)
-        {
-            switch (rc)
-            {
-                case 0: return "Default";
-                case 1: return "Range Check passed, CPR Validation pending";
-                default: return "";
-            }
-        }
-        private string TextoARC21(string arc)
-        {
-            switch (arc)
-            {
-                case "00": return "25 ft";
-                case "01": return "100 ft";
-                case "10": return "Unknown";
-                case "11": return "Invalid";
-                default: return arc ?? "";
-            }
-        }
-
-        private string TextoATP21(string atp)
-        {
-            switch (atp)
-            {
-                case "000": return "24-Bit ICAO address";
-                case "001": return "Duplicate address";
-                case "010": return "Surface vehicle address";
-                case "011": return "Anonymous address";
-                case "100":
-                case "101":
-                case "110":
-                case "111":
-                    return "Reserved for future use";
-                default: return atp ?? "";
-            }
-        }
-
-        private string TextoPAI_VAL(int ep, int valor)
-        {
-            if (ep != 1)
-                return "";
-
-            switch (valor)
-            {
-                case 0: return "Not available";
-                case 1: return "Available";
-                default: return "";
-            }
-        }
-
-        private string TextoPAI_EP(int ep)
-        {
-            switch (ep)
-            {
-                case 0: return "PAI not populated";
-                case 1: return "PAI populated";
-                default: return "";
-            }
-        }
-
-        private string TextoSCN_VAL(int ep, int valor)
-        {
-            if (ep != 1)
-                return "";
-
-            switch (valor)
-            {
-                case 0: return "Not available";
-                case 1: return "Available";
-                default: return "";
-            }
-        }
-
-        private string TextoSCN_EP(int ep)
-        {
-            switch (ep)
-            {
-                case 0: return "SCN not populated";
-                case 1: return "SCN populated";
-                default: return "";
-            }
-        }
-
-        private string TextoADSB_VAL(int ep, int valor)
-        {
-            if (ep != 1)
-                return "";
-
-            switch (valor)
-            {
-                case 0: return "Not available";
-                case 1: return "Available";
-                default: return "";
-            }
-        }
-
-        private string TextoADSB_EP(int ep)
-        {
-            switch (ep)
-            {
-                case 0: return "ADSB not populated";
-                case 1: return "ADSB populated";
-                default: return "";
-            }
-        }
-
-        private string TextoFOE_FRI(string foeFri)
-        {
-            switch (foeFri)
-            {
-                case "00": return "No Mode 4 interrogation";
-                case "01": return "Friendly target";
-                case "10": return "Unknown target";
-                case "11": return "No reply";
-                default: return foeFri ?? "";
-            }
-        }
-
-        private string TextoMI(int mi)
-        {
-            switch (mi)
-            {
-                case 0: return "No military identification";
-                case 1: return "Military identification";
-                default: return "";
-            }
-        }
-
-        private string TextoME(int me)
-        {
-            switch (me)
-            {
-                case 0: return "No military emergency";
-                case 1: return "Military emergency";
-                default: return "";
-            }
-        }
-
-        private string TextoXPP(int xpp)
-        {
-            switch (xpp)
-            {
-                case 0: return "No X-Pulse present";
-                case 1: return "X-Pulse present";
-                default: return "";
-            }
-        }
-
-        private string TextoERR(int err)
-        {
-            switch (err)
-            {
-                case 0: return "No Extended Range";
-                case 1: return "Extended Range present";
-                default: return "";
-            }
-        }
-
-        private string TextoTST48(int tst)
-        {
-            switch (tst)
-            {
-                case 0: return "Real target report";
-                case 1: return "Test target report";
-                default: return "";
-            }
-        }
-        private string TextoRAB48(int rab)
-        {
-            switch (rab)
-            {
-                case 0: return "Report from aircraft transponder";
-                case 1: return "Report from field monitor (fixed transponder)";
-                default: return "";
-            }
-        }
-
-        private string TextoSPI(int spi)
-        {
-            switch (spi)
-            {
-                case 0: return "Absence of SPI";
-                case 1: return "Special Position Identification";
-                default: return "";
-            }
-        }
-        private string TextoRDP(int rdp)
-        {
-            switch (rdp)
-            {
-                case 0: return "Report from RDP Chain 1";
-                case 1: return "Report from RDP Chain 2";
-                default: return "";
-            }
-        }
-
-        private string TextoSIM(int sim)
-        {
-            switch (sim)
-            {
-                case 0: return "Actual target report";
-                case 1: return "Simulated target report";
-                default: return "";
             }
         }
         private string TextoTYP(string typ)
@@ -813,6 +606,213 @@ namespace Archivos
                 default: return rad ?? "-";
             }
         }
+        private string TextoRC21(int rc)
+        {
+            switch (rc)
+            {
+                case 0: return "Default";
+                case 1: return "Range Check passed, CPR Validation pending";
+                default: return "-";
+            }
+        }
+        private string TextoARC21(string arc)
+        {
+            switch (arc)
+            {
+                case "00": return "25 ft";
+                case "01": return "100 ft";
+                case "10": return "Unknown";
+                case "11": return "Invalid";
+                default: return arc ?? "-";
+            }
+        }
+
+        private string TextoATP21(string atp)
+        {
+            switch (atp)
+            {
+                case "000": return "24-Bit ICAO address";
+                case "001": return "Duplicate address";
+                case "010": return "Surface vehicle address";
+                case "011": return "Anonymous address";
+                case "100":
+                case "101":
+                case "110":
+                case "111":
+                    return "Reserved for future use";
+                default: return atp ?? "-";
+            }
+        }
+
+        private string TextoPAI_VAL(int ep, int valor)
+        {
+            if (ep != 1)
+                return "-";
+
+            switch (valor)
+            {
+                case 0: return "Not available";
+                case 1: return "Available";
+                default: return "-";
+            }
+        }
+
+        private string TextoPAI_EP(int ep)
+        {
+            switch (ep)
+            {
+                case 0: return "PAI not populated";
+                case 1: return "PAI populated";
+                default: return "-";
+            }
+        }
+
+        private string TextoSCN_VAL(int ep, int valor)
+        {
+            if (ep != 1)
+                return "-";
+
+            switch (valor)
+            {
+                case 0: return "Not available";
+                case 1: return "Available";
+                default: return "-";
+            }
+        }
+
+        private string TextoSCN_EP(int ep)
+        {
+            switch (ep)
+            {
+                case 0: return "SCN not populated";
+                case 1: return "SCN populated";
+                default: return "-";
+            }
+        }
+
+        private string TextoADSB_VAL(int ep, int valor)
+        {
+            if (ep != 1)
+                return "-";
+
+            switch (valor)
+            {
+                case 0: return "Not available";
+                case 1: return "Available";
+                default: return "-";
+            }
+        }
+
+        private string TextoADSB_EP(int ep)
+        {
+            switch (ep)
+            {
+                case 0: return "ADSB not populated";
+                case 1: return "ADSB populated";
+                default: return "-";
+            }
+        }
+
+        private string TextoFOE_FRI(string foeFri)
+        {
+            switch (foeFri)
+            {
+                case "00": return "No Mode 4 interrogation";
+                case "01": return "Friendly target";
+                case "10": return "Unknown target";
+                case "11": return "No reply";
+                default: return foeFri ?? "-";
+            }
+        }
+
+        private string TextoMI(int mi)
+        {
+            switch (mi)
+            {
+                case 0: return "No military identification";
+                case 1: return "Military identification";
+                default: return "-";
+            }
+        }
+
+        private string TextoME(int me)
+        {
+            switch (me)
+            {
+                case 0: return "No military emergency";
+                case 1: return "Military emergency";
+                default: return "-";
+            }
+        }
+
+        private string TextoXPP(int xpp)
+        {
+            switch (xpp)
+            {
+                case 0: return "No X-Pulse present";
+                case 1: return "X-Pulse present";
+                default: return "-";
+            }
+        }
+
+        private string TextoERR(int err)
+        {
+            switch (err)
+            {
+                case 0: return "No Extended Range";
+                case 1: return "Extended Range present";
+                default: return "-";
+            }
+        }
+
+        private string TextoTST48(int tst)
+        {
+            switch (tst)
+            {
+                case 0: return "Real target report";
+                case 1: return "Test target report";
+                default: return "-";
+            }
+        }
+        private string TextoRAB48(int rab)
+        {
+            switch (rab)
+            {
+                case 0: return "Report from aircraft transponder";
+                case 1: return "Report from field monitor (fixed transponder)";
+                default: return "-";
+            }
+        }
+
+        private string TextoSPI(int spi)
+        {
+            switch (spi)
+            {
+                case 0: return "Absence of SPI";
+                case 1: return "Special Position Identification";
+                default: return "-";
+            }
+        }
+        private string TextoRDP(int rdp)
+        {
+            switch (rdp)
+            {
+                case 0: return "Report from RDP Chain 1";
+                case 1: return "Report from RDP Chain 2";
+                default: return "-";
+            }
+        }
+
+        private string TextoSIM(int sim)
+        {
+            switch (sim)
+            {
+                case 0: return "Actual target report";
+                case 1: return "Simulated target report";
+                default: return "-";
+            }
+        }
+
         private string Valor(object valor)
         {
             if (valor == null)
@@ -897,7 +897,7 @@ namespace Archivos
         {
             if (m.ModeS.BDS60 == null)
             {
-                return Vacio(4);
+                return Vacio(5);
             }
 
             return string.Join(";", new string[]
@@ -909,5 +909,6 @@ namespace Archivos
                 Valor(m.ModeS.BDS60.InertialVS)
             });
         }
+
     }
 }
