@@ -18,11 +18,11 @@ namespace DatosDecod48
         {
             this.SRL = -1;
             this.SRR = -1;
-            this.SAM = -1;
+            this.SAM = int.MinValue;
             this.PRL = -1;
-            this.PAM = -1;
-            this.RPD = -1;
-            this.APD = -1;
+            this.PAM = int.MinValue;
+            this.RPD = int.MinValue;
+            this.APD = int.MinValue;
         }
     }
 }

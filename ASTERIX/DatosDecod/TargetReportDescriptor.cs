@@ -33,7 +33,7 @@ namespace DatosDecod
         // Número de bytes que ocupa este ítem
         public int Longitud { get;  set; }
 
-        public TargetReportDescriptor()
+        public TargetReportDescriptor() //todos son positivos, si es -1 es que no se ha enviado
         {
             this.TYP = "";
             this.SIM = -1;

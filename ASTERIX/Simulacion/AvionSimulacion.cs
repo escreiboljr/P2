@@ -40,7 +40,7 @@ namespace Simulacion
 
             trayectoria = new List<double[]>();
 
-            rumbo = 0;
+            rumbo = double.NaN;
 
             velocidad = double.NaN;
             estadoVuelo = "";

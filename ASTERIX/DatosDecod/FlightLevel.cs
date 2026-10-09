@@ -10,11 +10,11 @@ namespace DatosDecod48
         public int G { get; set; }
         public double FL { get; set; }
 
-        public FlightLevel()
+        public FlightLevel()    //revisar 
         {
             this.V = -1;
             this.G = -1;
-            this.FL = -1;
+            this.FL = double.NaN;
         }
     }
 }

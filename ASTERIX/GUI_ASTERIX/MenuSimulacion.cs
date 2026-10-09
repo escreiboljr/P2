@@ -111,6 +111,7 @@ namespace GUI_ASTERIX
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
             ActualizarAviones();
+            EliminarAvionesInactivos();
             ActualizarDataGrid();
             ActualizarMapa();
             MostrarTrayectorias();
@@ -159,6 +160,7 @@ namespace GUI_ASTERIX
                 int trackNumber = -1;
 
                 double velocidad = double.NaN;
+                double rumbo = double.NaN;
                 string mode3A = "";
                 string estadoVuelo = "";
 
@@ -192,7 +194,7 @@ namespace GUI_ASTERIX
                 {
 
                     TiraDatosDecod048 mensaje48 = (TiraDatosDecod048)mensaje.tira;
-                    bool trackSinIdentificar = mensaje48.AircrftAddrs == "" && string.IsNullOrEmpty(mensaje48.AircrftIddent) && mensaje48.TargetRep.TYP == "001";
+                    bool trackSinIdentificar = string.IsNullOrEmpty(mensaje48.AircrftAddrs) && string.IsNullOrEmpty(mensaje48.AircrftIddent) && mensaje48.TargetRep.TYP == "001";
 
                     if (mensaje48.TrckStatus.CNF == 1 || trackSinIdentificar)
                     {
@@ -202,19 +204,20 @@ namespace GUI_ASTERIX
                     if (mensaje48.tieneTrackVelocity)
                     {
                         velocidad = mensaje48.TrckVelPolRepr[0];
+                        rumbo = mensaje48.TrckVelPolRepr[1];
                     }
                     mode3A = mensaje48.mode3.reply;
 
                     tiempoMensaje = mensaje48.TimeOfDay;
 
-                    direccion = mensaje48.AircrftAddrs.ToString();
+                    direccion = mensaje48.AircrftAddrs ?? ""; //comentar esta linea 
                     identificador = mensaje48.AircrftIddent;
                     trackNumber = mensaje48.TrackNum;
 
                     latitud = mensaje48.PositionCorrectedLatLonAlt[0];
                     longitud = mensaje48.PositionCorrectedLatLonAlt[1];
 
-                    if (mensaje48.FL.FL != -1)
+                    if (!double.IsNaN(mensaje48.FL.FL))
                     {
                         flightLevel = mensaje48.FL.FL;
                     }
@@ -261,6 +264,7 @@ namespace GUI_ASTERIX
                         mensajeVisual.flightLevel = flightLevel;
 
                         mensajeVisual.velocidad = velocidad;
+                        mensajeVisual.rumbo = rumbo;
                         mensajeVisual.mode3A = mode3A;
 
                         mensajeVisual.ultimoTiempo = tiempoMensaje;
@@ -310,6 +314,7 @@ namespace GUI_ASTERIX
                         nuevoAvion.direccion = direccion;
                         nuevoAvion.identificador = identificador;
                         nuevoAvion.trackNumber = trackNumber;
+                        nuevoAvion.rumbo = rumbo;
 
                         nuevoAvion.latitud = latitud;
                         nuevoAvion.longitud = longitud;
@@ -544,40 +549,85 @@ namespace GUI_ASTERIX
 
         private void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            using (OpenFileDialog explorador = new OpenFileDialog())
             {
-                OpenFileDialog explorador = new OpenFileDialog();
-
                 explorador.Title = "Seleccionar archivo ASTERIX";
-                //explorador.Filter 
 
-                if (explorador.ShowDialog() == DialogResult.OK)
+                if (explorador.ShowDialog() != DialogResult.OK)
+                    return;
+
+                try
                 {
+                    // Primero leemos el archivo nuevo
+                    LeerDatos lector = new LeerDatos();
+
+                    List<Mensaje> nuevosMensajes =
+                        lector.DatosProcesados(explorador.FileName);
+
+                    if (nuevosMensajes == null || nuevosMensajes.Count == 0)
+                    {
+                        MessageBox.Show("El archivo no contiene mensajes válidos.");
+                        return;
+                    }
+
+                    // Detener la simulación anterior
                     timerSimulacion.Stop();
                     Reproduciendo = false;
 
+                    pictureBox1.Image =
+                        Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+
+                    // Borrar todos los datos anteriores
                     AvionesActuales.Clear();
+                    MensajesActuales.Clear();
+
+                    historialAviones.Clear();
+                    historialTiempo.Clear();
+
+                    avionesTrayectoriaSeleccionados.Clear();
+
                     dataGridAviones.Rows.Clear();
 
-                    string rutaArchivo = explorador.FileName;
-                    LeerDatos lector = new LeerDatos();
+                    capaAviones.Markers.Clear();
+                    capaTrayectorias.Routes.Clear();
 
-                    ListaMensajes = lector.DatosProcesados(rutaArchivo);
-                    ListaMensajesFiltrados = ListaMensajes;
+                    // Asignar exclusivamente los mensajes del nuevo archivo
+                    ListaMensajes = nuevosMensajes;
+                    ListaMensajesFiltrados = new List<Mensaje>(nuevosMensajes);
 
+                    int cat21 = ListaMensajesFiltrados.Count(m => m.categoria == 21);
+                    int cat48 = ListaMensajesFiltrados.Count(m => m.categoria == 48);
+
+                    MessageBox.Show(
+                        "Archivo: " + explorador.FileName +
+                        "\nCAT21: " + cat21 +
+                        "\nCAT48: " + cat48
+                    );
+
+                    // Reiniciar el tiempo al comienzo del nuevo archivo
+                    TiempoActual = 0;
                     BuscarTiempoInicial();
+
                     TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
                     label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+                    // Actualizar todo con los datos nuevos
                     ActualizarAviones();
                     ActualizarDataGrid();
                     ActualizarMapa();
+                    MostrarTrayectorias();
 
-                    MessageBox.Show("Archivo cargado bien" + ListaMensajes.Count);
+                    MessageBox.Show(
+                        "Archivo cargado correctamente.\n" +
+                        "Mensajes: " + ListaMensajes.Count
+                    );
                 }
-            }
-            catch (Exception ex)
-            { 
-                MessageBox.Show("Formato de archivo incorrecto o datos dañados");
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "Error al cargar el archivo:\n" + ex.Message
+                    );
+                }
             }
         }
         private void ActualizarDataGrid()
@@ -849,6 +899,7 @@ namespace GUI_ASTERIX
         }
         private void ActualizarMensajesActuales()
         {
+            MensajesActuales.Clear();
             foreach (Mensaje mensaje in ListaMensajesFiltrados)
             {
                 double tiempoMensaje = -1;
@@ -860,6 +911,7 @@ namespace GUI_ASTERIX
                 double longitud = double.NaN;
                 double altitud = double.NaN;
                 double flightLevel = double.NaN;
+                double rumbo = double.NaN;
 
                 int trackNumber = -1;
 
@@ -906,7 +958,7 @@ namespace GUI_ASTERIX
                         (TiraDatosDecod048)mensaje.tira;
 
                     bool trackSinIdentificar =
-                        mensaje48.AircrftAddrs == "" &&
+                        string.IsNullOrEmpty(mensaje48.AircrftAddrs) &&
                         string.IsNullOrEmpty(mensaje48.AircrftIddent) &&
                         mensaje48.TargetRep.TYP == "001";
 
@@ -919,8 +971,7 @@ namespace GUI_ASTERIX
                     tiempoMensaje =
                         mensaje48.TimeOfDay;
 
-                    direccion =
-                        mensaje48.AircrftAddrs.ToString();
+                    direccion = mensaje48.AircrftAddrs ?? "";
 
                     identificador =
                         mensaje48.AircrftIddent;
@@ -934,7 +985,7 @@ namespace GUI_ASTERIX
                     longitud =
                         mensaje48.PositionCorrectedLatLonAlt[1];
 
-                    if (mensaje48.FL.FL != -1)
+                    if (!double.IsNaN(mensaje48.FL.FL))
                     {
                         flightLevel = mensaje48.FL.FL;
                     }
@@ -951,14 +1002,15 @@ namespace GUI_ASTERIX
                     if (mensaje48.tieneTrackVelocity)
                     {
                         velocidad = mensaje48.TrckVelPolRepr[0];
+                        rumbo = mensaje48.TrckVelPolRepr[1];
                     }
 
                     mode3A = mensaje48.mode3.reply;
                 }
 
 
-                if (tiempoMensaje >= TiempoActual &&
-                    tiempoMensaje < TiempoActual + 1)
+                if (tiempoMensaje <= TiempoActual &&
+                    tiempoMensaje > TiempoActual - 10)
                 {
                     if (double.IsNaN(latitud) ||
                         double.IsNaN(longitud))
@@ -984,6 +1036,7 @@ namespace GUI_ASTERIX
 
                     mensajeVisual.detectadoADSB = esADSB;
                     mensajeVisual.detectadoRadar = esRadar;
+                    mensajeVisual.rumbo = rumbo;
 
                     if (esADSB)
                     {
@@ -1080,6 +1133,10 @@ namespace GUI_ASTERIX
                 {
                     mensajeAnterior.velocidad = nuevoMensaje.velocidad;
                 }
+                if (!double.IsNaN(nuevoMensaje.rumbo))
+                {
+                    mensajeAnterior.rumbo = nuevoMensaje.rumbo;
+                }
 
                 if (!string.IsNullOrWhiteSpace(nuevoMensaje.mode3A))
                 {
@@ -1138,15 +1195,7 @@ namespace GUI_ASTERIX
                     ventana.trayectoriaMax,
                     ventana.ground
                 );
-                AvionesActuales.Clear();
-                MensajesActuales.Clear();
-
-                historialAviones.Clear();
-                historialTiempo.Clear();
-
-                ActualizarAviones();
-                ActualizarDataGrid();
-                ActualizarMapa();
+                ReconstruirAvionesFiltrados();
             }
         }
 
@@ -1180,6 +1229,15 @@ namespace GUI_ASTERIX
 
             if (guardar.ShowDialog() == DialogResult.OK)
             {
+                int cat21 = ListaMensajesFiltrados.Count(m => m.categoria == 21);
+                int cat48 = ListaMensajesFiltrados.Count(m => m.categoria == 48);
+                /*
+                MessageBox.Show(
+                    "Mensajes que se van a exportar:\n" +
+                    "CAT21: " + cat21 + "\n" +
+                    "CAT48: " + cat48
+                ); */
+
                 ExportarCSV exportador = new ExportarCSV();
 
                 exportador.Exportar(
@@ -1249,6 +1307,56 @@ namespace GUI_ASTERIX
                 capaTrayectorias.Routes.Add(ruta);
             }
             gMapControl1.Refresh();
+        }
+        private void ReconstruirAvionesFiltrados()
+        {
+            double tiempoOriginal = TiempoActual;
+
+            AvionesActuales.Clear();
+            MensajesActuales.Clear();
+
+            historialAviones.Clear();
+            historialTiempo.Clear();
+
+            capaAviones.Markers.Clear();
+            capaTrayectorias.Routes.Clear();
+            avionesTrayectoriaSeleccionados.Clear();
+
+            // Buscar el tiempo inicial del archivo filtrado
+            BuscarTiempoInicial();
+
+            double tiempoInicial = TiempoActual;
+
+            // Reconstruir desde el inicio hasta el instante actual
+            for (double tiempo = tiempoInicial; tiempo <= tiempoOriginal; tiempo++)
+            {
+                TiempoActual = tiempo;
+                ActualizarAviones();
+                EliminarAvionesInactivos();
+            }
+
+            // Recuperar el tiempo en el que estaba la simulación
+            TiempoActual = tiempoOriginal;
+
+            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+            label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+            ActualizarDataGrid();
+            ActualizarMapa();
+            MostrarTrayectorias();
+        }
+
+        private void EliminarAvionesInactivos()
+        {
+            // Eliminar mensajes antiguos del mapa
+            MensajesActuales.RemoveAll(mensaje =>
+                TiempoActual - mensaje.ultimoTiempo >= 10
+            );
+
+            // Eliminar aviones que llevan 10 segundos sin enviar mensajes
+            AvionesActuales.RemoveAll(avion =>
+                TiempoActual - avion.ultimoTiempo >= 10
+            );
         }
     }
 }

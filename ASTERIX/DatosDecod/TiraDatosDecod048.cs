@@ -18,15 +18,15 @@ namespace DatosDecod
         public RadarPlotCharacteristics RadarPlot { get; set; }
         public string AircrftAddrs { get; set; }
         public string AircrftIddent { get; set; }
-        public class ModeSData
+        public class ModeSData      //se supone que no podran ser negativos y si no se crea no se pone ?? revisar
         {
             public BDS40? BDS40 { get; set; }
             public BDS50? BDS50 { get; set; }
             public BDS60? BDS60 { get; set; }
         }
         public ModeSData ModeS { get; set; }
-        public int TrackNum { get; set; }
-        public List<double> TrckVelPolRepr { get; set; }
+        public int TrackNum { get; set; }   //siempre es positivo
+        public List<double> TrckVelPolRepr { get; set; }    //siempre positivo
         public TrackStatus TrckStatus {  get; set; }
         public ACAScap CommACAScapability { get; set; }
         public bool tieneTrackVelocity { get; set; }
@@ -35,19 +35,19 @@ namespace DatosDecod
         {
             this.DataSourceID = new List<byte> { 0, 0 };
             this.TimeOfDay = -1;
-            this.TargetRep = new TargetReportDescriptor();
-            this.PosSlantPolarCoord = new List<double> { 0, 0 };
+            this.TargetRep = new TargetReportDescriptor();      //todo positivo
+            this.PosSlantPolarCoord = new List<double> { double.NaN, double.NaN };
             this.PositionCorrectedLatLonAlt =new List<double> { double.NaN, double.NaN, double.NaN };
-            this.mode3 = new Mode3();
-            this.FL = new FlightLevel();
-            this.RadarPlot = new RadarPlotCharacteristics();
-            this.AircrftAddrs = "";
-            this.AircrftIddent = "";
+            this.mode3 = new Mode3();       //todo positivo
+            this.FL = new FlightLevel();    //revisar
+            this.RadarPlot = new RadarPlotCharacteristics();    //ya esta cambiado para que no salga -1
+            this.AircrftAddrs = null;
+            this.AircrftIddent = null;
             this.ModeS = new ModeSData();
             this.TrackNum = -1;
-            this.TrckVelPolRepr = new List<double> { 0, 0 };
-            this.TrckStatus = new TrackStatus();
-            this.CommACAScapability = new ACAScap();
+            this.TrckVelPolRepr = new List<double> { double.NaN, double.NaN };
+            this.TrckStatus = new TrackStatus();    //siempre positivo
+            this.CommACAScapability = new ACAScap();    //siempre positivo
             this.tieneTrackVelocity = false;
         }
 
