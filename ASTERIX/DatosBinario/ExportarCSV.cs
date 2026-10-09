@@ -89,23 +89,23 @@ namespace Archivos
                         Valor(m.DataSourceID[1]) + ";" +
                         Valor(m.TimeOfDay) + ";" +
 
-                        Valor(m.TargetRep.TYP) + ";" +
-                        Valor(m.TargetRep.SIM) + ";" +
-                        Valor(m.TargetRep.RDP) + ";" +
-                        Valor(m.TargetRep.SPI) + ";" +
-                        Valor(m.TargetRep.RAB) + ";" +
-                        Valor(m.TargetRep.TST) + ";" +
-                        Valor(m.TargetRep.ERR) + ";" +
-                        Valor(m.TargetRep.XPP) + ";" +
-                        Valor(m.TargetRep.ME) + ";" +
-                        Valor(m.TargetRep.MI) + ";" +
-                        Valor(m.TargetRep.FOE_FRI) + ";" +
-                        Valor(m.TargetRep.ADSB_EP) + ";" +
-                        Valor(m.TargetRep.ADSB_VAL) + ";" +
-                        Valor(m.TargetRep.SCN_EP) + ";" +
-                        Valor(m.TargetRep.SCN_VAL) + ";" +
-                        Valor(m.TargetRep.PAI_EP) + ";" +
-                        Valor(m.TargetRep.PAI_VAL) + ";" +
+                        TextoTYP(m.TargetRep.TYP) + ";" +
+                        TextoSIM(m.TargetRep.SIM) + ";" +
+                        TextoRDP(m.TargetRep.RDP) + ";" +
+                        TextoSPI(m.TargetRep.SPI) + ";" +
+                        TextoRAB48(m.TargetRep.RAB) + ";" +
+                        TextoTST48(m.TargetRep.TST) + ";" +
+                        TextoERR(m.TargetRep.ERR) + ";" +
+                        TextoXPP(m.TargetRep.XPP) + ";" +
+                        TextoME(m.TargetRep.ME) + ";" +
+                        TextoMI(m.TargetRep.MI) + ";" +
+                        TextoFOE_FRI(m.TargetRep.FOE_FRI) + ";" +
+                        TextoADSB_EP(m.TargetRep.ADSB_EP) + ";" +
+                        TextoADSB_VAL(m.TargetRep.ADSB_EP, m.TargetRep.ADSB_VAL) + ";" +
+                        TextoSCN_EP(m.TargetRep.SCN_EP) + ";" +
+                        TextoSCN_VAL(m.TargetRep.SCN_EP, m.TargetRep.SCN_VAL) + ";" +
+                        TextoPAI_EP(m.TargetRep.PAI_EP) + ";" +
+                        TextoPAI_VAL(m.TargetRep.PAI_EP, m.TargetRep.PAI_VAL) + ";" +
 
                         Valor(m.PosSlantPolarCoord[0]) + ";" +
                         Valor(m.PosSlantPolarCoord[1]) + ";" +
@@ -211,8 +211,8 @@ namespace Archivos
                         Valor(m.AltitudCorregida) + ";" +
                         Valor(m.ReservedExpField) + ";" +
 
-                        Valor(m.TargetRep.ATP) + ";" +
-                        Valor(m.TargetRep.ARC) + ";" +
+                        TextoATP21(m.TargetRep.ATP) + ";" +
+                        TextoARC21(m.TargetRep.ARC) + ";" +
                         Valor(m.TargetRep.RC) + ";" +
                         Valor(m.TargetRep.RAB) + ";" +
 
@@ -414,11 +414,11 @@ namespace Archivos
                             Valor(m.TargetRep.RAB) + ";" +
                             Valor(m.TargetRep.TST) + ";" +
 
-                            
+
                             // TRD CAT21
-                            
-                            Valor(m.TargetRep.ATP) + ";" +
-                            Valor(m.TargetRep.ARC) + ";" +
+
+                            TextoATP21(m.TargetRep.ATP) + ";" +
+                            TextoARC21(m.TargetRep.ARC) + ";" +
                             Valor(m.TargetRep.RC) + ";" +
                             Valor(m.TargetRep.DCR) + ";" +
                             Valor(m.TargetRep.GBS) + ";" +
@@ -445,7 +445,7 @@ namespace Archivos
                             
                             // RESTO CAT48 -> VACÍO
                             
-                            Vacio(53)
+                            Vacio(49)
                         );
                     }
 
@@ -473,29 +473,29 @@ namespace Archivos
                             Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
 
                             // TRD 
-                            Valor(m.TargetRep.SIM) + ";" +
-                            Valor(m.TargetRep.RAB) + ";" +
-                            Valor(m.TargetRep.TST) + ";" +
+                            TextoSIM(m.TargetRep.SIM) + ";" +
+                            TextoRAB48(m.TargetRep.RAB) + ";" +
+                            TextoTST48(m.TargetRep.TST) + ";" +
 
                             // TRD CAT21 -> VACÍOS
                             // 12 campos
                             Vacio(12) +
 
                             // TRD CAT48
-                            Valor(m.TargetRep.TYP) + ";" +
-                            Valor(m.TargetRep.RDP) + ";" +
-                            Valor(m.TargetRep.SPI) + ";" +
-                            Valor(m.TargetRep.ERR) + ";" +
-                            Valor(m.TargetRep.XPP) + ";" +
-                            Valor(m.TargetRep.ME) + ";" +
-                            Valor(m.TargetRep.MI) + ";" +
-                            Valor(m.TargetRep.FOE_FRI) + ";" +
-                            Valor(m.TargetRep.ADSB_EP) + ";" +
-                            Valor(m.TargetRep.ADSB_VAL) + ";" +
-                            Valor(m.TargetRep.SCN_EP) + ";" +
-                            Valor(m.TargetRep.SCN_VAL) + ";" +
-                            Valor(m.TargetRep.PAI_EP) + ";" +
-                            Valor(m.TargetRep.PAI_VAL) + ";" +
+                            TextoTYP(m.TargetRep.TYP) + ";" +
+                            TextoRDP(m.TargetRep.RDP) + ";" +
+                            TextoSPI(m.TargetRep.SPI) + ";" +
+                            TextoERR(m.TargetRep.ERR) + ";" +
+                            TextoXPP(m.TargetRep.XPP) + ";" +
+                            TextoME(m.TargetRep.ME) + ";" +
+                            TextoMI(m.TargetRep.MI) + ";" +
+                            TextoFOE_FRI(m.TargetRep.FOE_FRI) + ";" +
+                            TextoADSB_EP(m.TargetRep.ADSB_EP) + ";" +
+                            TextoADSB_VAL(m.TargetRep.ADSB_EP, m.TargetRep.ADSB_VAL) + ";" +
+                            TextoSCN_EP(m.TargetRep.SCN_EP) + ";" +
+                            TextoSCN_VAL(m.TargetRep.SCN_EP, m.TargetRep.SCN_VAL) + ";" +
+                            TextoPAI_EP(m.TargetRep.PAI_EP) + ";" +
+                            TextoPAI_VAL(m.TargetRep.PAI_EP, m.TargetRep.PAI_VAL) + ";" +
 
                             // CAT21 -> VACÍOS
                             // QNH + ReservedExpField
@@ -538,7 +538,7 @@ namespace Archivos
                             // TRACK STATUS
                             
                             Valor(m.TrckStatus.CNF) + ";" +
-                            Valor(m.TrckStatus.RAD) + ";" +
+                            TextoRAD(m.TrckStatus.RAD) + ";" +
                             Valor(m.TrckStatus.DOU) + ";" +
                             Valor(m.TrckStatus.MAH) + ";" +
                             Valor(m.TrckStatus.CDM) + ";" +
@@ -576,6 +576,213 @@ namespace Archivos
                         );
                     }
                 }
+            }
+        }
+
+        private string TextoRC21(int rc)
+        {
+            switch (rc)
+            {
+                case 0: return "Default";
+                case 1: return "Range Check passed, CPR Validation pending";
+                default: return "";
+            }
+        }
+        private string TextoARC21(string arc)
+        {
+            switch (arc)
+            {
+                case "00": return "25 ft";
+                case "01": return "100 ft";
+                case "10": return "Unknown";
+                case "11": return "Invalid";
+                default: return arc ?? "";
+            }
+        }
+
+        private string TextoATP21(string atp)
+        {
+            switch (atp)
+            {
+                case "000": return "24-Bit ICAO address";
+                case "001": return "Duplicate address";
+                case "010": return "Surface vehicle address";
+                case "011": return "Anonymous address";
+                case "100":
+                case "101":
+                case "110":
+                case "111":
+                    return "Reserved for future use";
+                default: return atp ?? "";
+            }
+        }
+
+        private string TextoPAI_VAL(int ep, int valor)
+        {
+            if (ep != 1)
+                return "";
+
+            switch (valor)
+            {
+                case 0: return "Not available";
+                case 1: return "Available";
+                default: return "";
+            }
+        }
+
+        private string TextoPAI_EP(int ep)
+        {
+            switch (ep)
+            {
+                case 0: return "PAI not populated";
+                case 1: return "PAI populated";
+                default: return "";
+            }
+        }
+
+        private string TextoSCN_VAL(int ep, int valor)
+        {
+            if (ep != 1)
+                return "";
+
+            switch (valor)
+            {
+                case 0: return "Not available";
+                case 1: return "Available";
+                default: return "";
+            }
+        }
+
+        private string TextoSCN_EP(int ep)
+        {
+            switch (ep)
+            {
+                case 0: return "SCN not populated";
+                case 1: return "SCN populated";
+                default: return "";
+            }
+        }
+
+        private string TextoADSB_VAL(int ep, int valor)
+        {
+            if (ep != 1)
+                return "";
+
+            switch (valor)
+            {
+                case 0: return "Not available";
+                case 1: return "Available";
+                default: return "";
+            }
+        }
+
+        private string TextoADSB_EP(int ep)
+        {
+            switch (ep)
+            {
+                case 0: return "ADSB not populated";
+                case 1: return "ADSB populated";
+                default: return "";
+            }
+        }
+
+        private string TextoFOE_FRI(string foeFri)
+        {
+            switch (foeFri)
+            {
+                case "00": return "No Mode 4 interrogation";
+                case "01": return "Friendly target";
+                case "10": return "Unknown target";
+                case "11": return "No reply";
+                default: return foeFri ?? "";
+            }
+        }
+
+        private string TextoMI(int mi)
+        {
+            switch (mi)
+            {
+                case 0: return "No military identification";
+                case 1: return "Military identification";
+                default: return "";
+            }
+        }
+
+        private string TextoME(int me)
+        {
+            switch (me)
+            {
+                case 0: return "No military emergency";
+                case 1: return "Military emergency";
+                default: return "";
+            }
+        }
+
+        private string TextoXPP(int xpp)
+        {
+            switch (xpp)
+            {
+                case 0: return "No X-Pulse present";
+                case 1: return "X-Pulse present";
+                default: return "";
+            }
+        }
+
+        private string TextoERR(int err)
+        {
+            switch (err)
+            {
+                case 0: return "No Extended Range";
+                case 1: return "Extended Range present";
+                default: return "";
+            }
+        }
+
+        private string TextoTST48(int tst)
+        {
+            switch (tst)
+            {
+                case 0: return "Real target report";
+                case 1: return "Test target report";
+                default: return "";
+            }
+        }
+        private string TextoRAB48(int rab)
+        {
+            switch (rab)
+            {
+                case 0: return "Report from aircraft transponder";
+                case 1: return "Report from field monitor (fixed transponder)";
+                default: return "";
+            }
+        }
+
+        private string TextoSPI(int spi)
+        {
+            switch (spi)
+            {
+                case 0: return "Absence of SPI";
+                case 1: return "Special Position Identification";
+                default: return "";
+            }
+        }
+        private string TextoRDP(int rdp)
+        {
+            switch (rdp)
+            {
+                case 0: return "Report from RDP Chain 1";
+                case 1: return "Report from RDP Chain 2";
+                default: return "";
+            }
+        }
+
+        private string TextoSIM(int sim)
+        {
+            switch (sim)
+            {
+                case 0: return "Actual target report";
+                case 1: return "Simulated target report";
+                default: return "";
             }
         }
         private string TextoTYP(string typ)
@@ -665,7 +872,7 @@ namespace Archivos
         {
             if (m.ModeS.BDS60 == null)
             {
-                return Vacio(5);
+                return Vacio(4);
             }
 
             return
