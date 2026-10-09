@@ -14,7 +14,7 @@ namespace DatosDecod48
         {
             this.V = -1;
             this.G = -1;
-            this.FL = -1;
+            this.FL = double.NaN;
         }
     }
 }

@@ -65,19 +65,19 @@ namespace Archivos
         }
 
         private IEnumerable<Mensaje> FiltroCategoria(IEnumerable<Mensaje> listaFiltrada, int cat)  //filtro Categoria ASTERIX
-            {
-                return listaFiltrada.Where(x=> x.categoria == cat);
-            }
+        {
+            return listaFiltrada.Where(x => x.categoria == cat);
+        }
 
-            //private IEnumerable<Mensaje> FIltroBlancoPuro()
-            private IEnumerable<Mensaje> FiltrarBlancoPuro(IEnumerable<Mensaje> listaFiltro)
-            {
-                return listaFiltro;
-            }
-            private IEnumerable<Mensaje> FiltrarTransponderFijo(IEnumerable<Mensaje> listaFiltro)
-            {
-                return listaFiltro.Where(x => x.TransFijo == false);
-            }
+        //private IEnumerable<Mensaje> FIltroBlancoPuro()
+        private IEnumerable<Mensaje> FiltrarBlancoPuro(IEnumerable<Mensaje> listaFiltro)
+        {
+            return listaFiltro;
+        }
+        private IEnumerable<Mensaje> FiltrarTransponderFijo(IEnumerable<Mensaje> listaFiltro)
+        {
+            return listaFiltro.Where(x => x.TransFijo == false);
+        }
         /*private IEnumerable<Mensaje> FiltrarTrayectoria(IEnumerable<Mensaje> listaFiltro, double trayectoria)
         {
 
@@ -118,7 +118,7 @@ double trayectoriaMax)
                     TiraDatosDecod048 mensaje48 =
                         (TiraDatosDecod048)mensaje.tira;
 
-                    identificador = mensaje48.AircrftAddrs.ToString();
+                    identificador = mensaje48.AircrftAddrs ?? "";
 
                     latitud = mensaje48.PositionCorrectedLatLonAlt[0];
                     longitud = mensaje48.PositionCorrectedLatLonAlt[1];
@@ -216,166 +216,25 @@ double trayectoriaMax)
                        rumbo <= maximo;
             }
         }
-        private IEnumerable<Mensaje> FiltrarGround(
-    IEnumerable<Mensaje> listaFiltro)
+        private IEnumerable<Mensaje> FiltrarGround(IEnumerable<Mensaje> listaFiltro)
         {
-            List<Mensaje> resultado = new List<Mensaje>();
-
-            // Guardamos si cada avión está actualmente en Ground
-            Dictionary<string, bool> estadoGround =
-                new Dictionary<string, bool>();
-
-            foreach (Mensaje mensaje in listaFiltro)
+            return listaFiltro.Where(mensaje =>
             {
-                // CAT21 no se toca
+                // No modificamos los mensajes CAT21
                 if (mensaje.categoria != 48)
                 {
-                    resultado.Add(mensaje);
-                    continue;
+                    return true;
                 }
 
+                // Obtenemos el mensaje CAT48
                 TiraDatosDecod048 mensaje48 =
                     (TiraDatosDecod048)mensaje.tira;
 
-                string clave = ObtenerClaveCAT48(mensaje48);
-
                 int stat = mensaje48.CommACAScapability.STAT;
 
-
-                // Si no podemos identificar el avión,
-                // no lo eliminamos
-                if (clave == "")
-                {
-                    resultado.Add(mensaje);
-                    continue;
-                }
-
-
-                // Si todavía no conocemos el estado,
-                // asumimos inicialmente que NO está Ground
-                if (!estadoGround.ContainsKey(clave))
-                {
-                    estadoGround[clave] = false;
-                }
-
-
-                // ==========================================
-                // ACTUALIZAR ESTADO
-                // ==========================================
-
-                if (stat == 1 || stat == 3)
-                {
-                    // El avión acaba de decir GROUND
-                    estadoGround[clave] = true;
-                }
-                else if (stat == 0 || stat == 2)
-                {
-                    // El avión acaba de decir AIRBORNE
-                    estadoGround[clave] = false;
-                }
-
-                // Si STAT == -1:
-                // NO hacemos nada.
-                // Conservamos el último estado conocido.
-
-
-                // ==========================================
-                // DECIDIR SI MOSTRAR EL MENSAJE
-                // ==========================================
-
-                if (!estadoGround[clave])
-                {
-                    resultado.Add(mensaje);
-                }
-            }
-
-            return resultado;
+                // Solo conservamos los aviones en vuelo
+                return stat == 0 || stat == 2;
+            });
         }
-        private string ObtenerClaveCAT48(
-    TiraDatosDecod048 mensaje48)
-        {
-            // Primero intentamos identificarlo por Aircraft Address
-            if (mensaje48.AircrftAddrs != "")
-            {
-                return "ADDR_" + mensaje48.AircrftAddrs.ToString();
-            }
-
-            // Si no tiene Aircraft Address,
-            // usamos Track Number
-            if (mensaje48.TrackNum != -1)
-            {
-                return "TRACK_" + mensaje48.TrackNum.ToString();
-            }
-
-            return "";
-        }
-        private bool EstaEnZonaAeropuerto(
-        double latitud,
-        double longitud)
-        {
-            double latLEBL = 41.2974;
-            double lonLEBL = 2.0833;
-
-            double distancia =
-                CalcularDistancia(
-                    latitud,
-                    longitud,
-                    latLEBL,
-                    lonLEBL);
-
-            // 10 km alrededor del aeropuerto
-            return distancia <= 10.0;
-        }
-        private double CalcularDistancia(
-        double lat1,
-        double lon1,
-        double lat2,
-        double lon2)
-        {
-            const double R = 6371.0;
-
-            double lat1Rad = lat1 * Math.PI / 180.0;
-            double lat2Rad = lat2 * Math.PI / 180.0;
-
-            double diferenciaLat =
-                (lat2 - lat1) * Math.PI / 180.0;
-
-            double diferenciaLon =
-                (lon2 - lon1) * Math.PI / 180.0;
-
-            double a =
-                Math.Sin(diferenciaLat / 2) *
-                Math.Sin(diferenciaLat / 2) +
-
-                Math.Cos(lat1Rad) *
-                Math.Cos(lat2Rad) *
-
-                Math.Sin(diferenciaLon / 2) *
-                Math.Sin(diferenciaLon / 2);
-
-            double c =
-                2 * Math.Atan2(
-                    Math.Sqrt(a),
-                    Math.Sqrt(1 - a));
-
-            return R * c;
-        }
-        private string ObtenerIdentificadorRadar(
-    TiraDatosDecod048 mensaje48)
-{
-    // Preferimos Aircraft Address
-    if (mensaje48.AircrftAddrs != "")
-    {
-        return mensaje48.AircrftAddrs.ToString();
-    }
-
-    // Si no hay address, usamos Track Number
-    if (mensaje48.TrackNum != -1)
-    {
-        return "TRACK_" + mensaje48.TrackNum;
-    }
-
-    return "";
-}
     }
 }
