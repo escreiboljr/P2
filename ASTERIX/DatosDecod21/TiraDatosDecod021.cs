@@ -19,7 +19,7 @@
             this.DataSourceID = new List<byte> { 0, 0 };
             this.TargetRep = new TargetReportDescriptor();
             this.ReservedExpField = -1;
-            this.PosWGS84HighRes = new List<double> { 0, 0 };
+            this.PosWGS84HighRes = new List<double> { 0, 0 };   //no hace falta tener en cuenta las negativas asique dejamos 0,0 
             this.TargetAddress = null;
             this.TimeReceptionPosition = -1;
             this.Mode3ACode = null;

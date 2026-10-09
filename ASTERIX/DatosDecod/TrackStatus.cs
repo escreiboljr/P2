@@ -20,10 +20,10 @@ namespace DatosDecod48
         public TrackStatus()
         {
             this.CNF = -1;
-            this.RAD = "";
+            this.RAD = null;
             this.DOU = -1;
             this.MAH = -1;
-            this.CDM = "";
+            this.CDM = null;
             this.TRE = -1;
             this.GHO = -1;
             this.SUP = -1;

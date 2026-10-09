@@ -159,6 +159,7 @@ namespace GUI_ASTERIX
                 int trackNumber = -1;
 
                 double velocidad = double.NaN;
+                double rumbo = double.NaN;
                 string mode3A = "";
                 string estadoVuelo = "";
 
@@ -202,12 +203,13 @@ namespace GUI_ASTERIX
                     if (mensaje48.tieneTrackVelocity)
                     {
                         velocidad = mensaje48.TrckVelPolRepr[0];
+                        rumbo = mensaje48.TrckVelPolRepr[1];
                     }
                     mode3A = mensaje48.mode3.reply;
 
                     tiempoMensaje = mensaje48.TimeOfDay;
 
-                    direccion = mensaje48.AircrftAddrs.ToString();
+                    direccion = mensaje48.AircrftAddrs ?? ""; //comentar esta linea 
                     identificador = mensaje48.AircrftIddent;
                     trackNumber = mensaje48.TrackNum;
 
@@ -261,6 +263,7 @@ namespace GUI_ASTERIX
                         mensajeVisual.flightLevel = flightLevel;
 
                         mensajeVisual.velocidad = velocidad;
+                        mensajeVisual.rumbo = rumbo;
                         mensajeVisual.mode3A = mode3A;
 
                         mensajeVisual.ultimoTiempo = tiempoMensaje;
@@ -310,6 +313,7 @@ namespace GUI_ASTERIX
                         nuevoAvion.direccion = direccion;
                         nuevoAvion.identificador = identificador;
                         nuevoAvion.trackNumber = trackNumber;
+                        nuevoAvion.rumbo = rumbo;
 
                         nuevoAvion.latitud = latitud;
                         nuevoAvion.longitud = longitud;
@@ -860,6 +864,7 @@ namespace GUI_ASTERIX
                 double longitud = double.NaN;
                 double altitud = double.NaN;
                 double flightLevel = double.NaN;
+                double rumbo = double.NaN;
 
                 int trackNumber = -1;
 
@@ -951,6 +956,7 @@ namespace GUI_ASTERIX
                     if (mensaje48.tieneTrackVelocity)
                     {
                         velocidad = mensaje48.TrckVelPolRepr[0];
+                        rumbo = mensaje48.TrckVelPolRepr[1];
                     }
 
                     mode3A = mensaje48.mode3.reply;
@@ -984,6 +990,7 @@ namespace GUI_ASTERIX
 
                     mensajeVisual.detectadoADSB = esADSB;
                     mensajeVisual.detectadoRadar = esRadar;
+                    mensajeVisual.rumbo = rumbo;
 
                     if (esADSB)
                     {
@@ -1079,6 +1086,10 @@ namespace GUI_ASTERIX
                 if (!double.IsNaN(nuevoMensaje.velocidad))
                 {
                     mensajeAnterior.velocidad = nuevoMensaje.velocidad;
+                }
+                if (!double.IsNaN(nuevoMensaje.rumbo))
+                {
+                    mensajeAnterior.rumbo = nuevoMensaje.rumbo;
                 }
 
                 if (!string.IsNullOrWhiteSpace(nuevoMensaje.mode3A))

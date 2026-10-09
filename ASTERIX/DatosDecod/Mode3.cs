@@ -11,7 +11,7 @@ namespace DatosDecod48
         public int L { get; set; }
         public string reply { get; set; }
 
-        public Mode3()
+        public Mode3()  //todo es positivo
         {
             this.V = -1;
             this.G = -1;

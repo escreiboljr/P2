@@ -17,14 +17,14 @@ namespace DatosDecod48
 
         public ACAScap()
         {
-            this.COM = "";
+            this.COM = null;
             this.STAT = -1;
             this.SI = -1;
             this.MSSC = -1;
             this.ARC = -1;
             this.AIC = -1;
             this.B1A = -1;
-            this.B1B = "";
+            this.B1B = null;
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Linq;
 
 namespace Archivos
 {
@@ -134,9 +135,9 @@ namespace Archivos
                         Valor(m.AircrftIddent) + ";" +
                         Valor(m.TrackNum) + ";" +
 
-                        (m.tieneTrackVelocity ? Valor(m.TrckVelPolRepr[0]) : "") + ";" +
+                        (m.tieneTrackVelocity ? Valor(m.TrckVelPolRepr[0]) : "-") + ";" +
 
-                        (m.tieneTrackVelocity ? Valor(m.TrckVelPolRepr[1]) : "") + ";" +
+                        (m.tieneTrackVelocity ? Valor(m.TrckVelPolRepr[1]) : "-") + ";" +
 
                         Valor(m.TrckStatus.CNF) + ";" +
                         TextoRAD(m.TrckStatus.RAD) + ";" +
@@ -445,7 +446,7 @@ namespace Archivos
                             
                             // RESTO CAT48 -> VACÍO
                             
-                            Vacio(53)
+                            Vacio(47)
                         );
                     }
 
@@ -528,11 +529,11 @@ namespace Archivos
 
                             (m.tieneTrackVelocity
                                 ? Valor(m.TrckVelPolRepr[0])
-                                : "") + ";" +
+                                : "-") + ";" +
 
                             (m.tieneTrackVelocity
                                 ? Valor(m.TrckVelPolRepr[1])
-                                : "") + ";" +
+                                : "-") + ";" +
 
                             
                             // TRACK STATUS
@@ -562,16 +563,16 @@ namespace Archivos
                             
                             // BDS 4,0
                             
-                            ValorBDS40(m) +
+                            ValorBDS40(m) + ";" +
 
-                            
+
                             // BDS 5,0
-                            
-                            ValorBDS50(m) +
 
-                            
+                            ValorBDS50(m) + ";" +
+
+
                             // BDS 6,0
-                            
+
                             ValorBDS60(m)
                         );
                     }
@@ -590,7 +591,7 @@ namespace Archivos
                 case "101": return "Single ModeS Roll-Call";
                 case "110": return "ModeS All-Call + PSR";
                 case "111": return "ModeS Roll-Call + PSR";
-                default: return typ ?? "";
+                default: return typ ?? "-";
             }
         }
 
@@ -602,24 +603,44 @@ namespace Archivos
                 case "01": return "PSR Track";
                 case "10": return "SSR/Mode S Track";
                 case "11": return "Invalid";
-                default: return rad ?? "";
+                default: return rad ?? "-";
             }
         }
         private string Valor(object valor)
         {
             if (valor == null)
-                return "";
+                return "-";
 
             if (valor is double)
             {
                 double numero = (double)valor;
 
                 if (double.IsNaN(numero))
-                    return "";
+                    return "-";
 
                 return numero.ToString(
                     CultureInfo.GetCultureInfo("es-ES")
                 );
+            }
+
+            if (valor is int)
+            {
+                int numero = (int)valor;
+
+                if (numero == -1 || numero == int.MinValue)
+                    return "-";
+
+                return numero.ToString();
+            }
+
+            if (valor is string)
+            {
+                string texto = (string)valor;
+
+                if (string.IsNullOrEmpty(texto))
+                    return "-";
+
+                return texto;
             }
 
             return valor.ToString();
@@ -627,23 +648,25 @@ namespace Archivos
 
         private string Vacio(int cantidad)
         {
-            return new string(';', cantidad);
+            return string.Join(";", Enumerable.Repeat("-", cantidad)) + ";";
         }
 
         private string ValorBDS40(TiraDatosDecod048 m)
         {
-            if (m.ModeS.BDS40 == null)
-            {
-                return Vacio(6);
-            }
+            if (m.ModeS?.BDS40 == null)
+                return string.Join(";", Enumerable.Repeat("-", 6));
 
-            return
-                Valor(m.ModeS.BDS40.MCP) + ";" +
-                Valor(m.ModeS.BDS40.FMS) + ";" +
-                Valor(m.ModeS.BDS40.Baro) + ";" +
-                Valor(m.ModeS.BDS40.VNAV) + ";" +
-                Valor(m.ModeS.BDS40.AltHold) + ";" +
-                Valor(m.ModeS.BDS40.App) + ";";
+            var bds = m.ModeS.BDS40;
+
+            return string.Join(";", new string[]
+            {
+                Valor(bds.MCP),
+                Valor(bds.FMS),
+                Valor(bds.Baro),
+                Valor(bds.VNAV),
+                Valor(bds.AltHold),
+                Valor(bds.App)
+            });
         }
 
         private string ValorBDS50(TiraDatosDecod048 m)
@@ -653,12 +676,14 @@ namespace Archivos
                 return Vacio(5);
             }
 
-            return
+            return string.Join(";", new string[]
+            {
                 Valor(m.ModeS.BDS50.Roll) + ";" +
                 Valor(m.ModeS.BDS50.Track) + ";" +
                 Valor(m.ModeS.BDS50.GroundSpeed) + ";" +
                 Valor(m.ModeS.BDS50.TrackRate) + ";" +
-                Valor(m.ModeS.BDS50.TrueAirspeed) + ";";
+                Valor(m.ModeS.BDS50.TrueAirspeed) + ";"
+            });
         }
 
         private string ValorBDS60(TiraDatosDecod048 m)
@@ -668,12 +693,14 @@ namespace Archivos
                 return Vacio(5);
             }
 
-            return
+            return string.Join(";", new string[]
+            {
                 Valor(m.ModeS.BDS60.Heading) + ";" +
                 Valor(m.ModeS.BDS60.IAS) + ";" +
                 Valor(m.ModeS.BDS60.Mach) + ";" +
                 Valor(m.ModeS.BDS60.BaroRate) + ";" +
-                Valor(m.ModeS.BDS60.InertialVS);
+                Valor(m.ModeS.BDS60.InertialVS)
+            });
         }
     }
 }

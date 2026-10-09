@@ -30,7 +30,12 @@ namespace GUI_ASTERIX
             float centroY = LocalPosition.Y + 12;
 
             g.TranslateTransform(centroX, centroY);
-            g.RotateTransform((float)rumbo);
+
+            if (!double.IsNaN(rumbo) && !double.IsInfinity(rumbo))
+            {
+                float angulo = (float)((rumbo % 360 + 360) % 360);
+                g.RotateTransform(angulo);
+            }
 
             PointF[] flecha =
             {

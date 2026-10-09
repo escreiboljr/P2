@@ -60,8 +60,9 @@ namespace GUI_ASTERIX
                     ? "Dirección: " + avion.direccion
                     : "Dirección: N/A";
 
-                labelRumbo.Text =
-                    "Rumbo: " + avion.rumbo.ToString("0.##");
+                labelRumbo.Text = !double.IsNaN(avion.rumbo)
+                    ? "Rumbo: " + avion.rumbo.ToString("0.##") + "°"
+                    : "Rumbo: N/A";
 
                 labelTrackNumber.Text = avion.trackNumber >= 0
                     ? "Track Number: " + avion.trackNumber
