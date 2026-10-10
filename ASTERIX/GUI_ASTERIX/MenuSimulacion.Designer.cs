@@ -62,6 +62,11 @@
             pictureBox5 = new PictureBox();
             labelTituloAsterix = new Label();
             timerClick = new System.Windows.Forms.Timer(components);
+            labelAvanzarHora = new Label();
+            textBoxHora = new TextBox();
+            textBoxSegundo = new TextBox();
+            textBoxMinuto = new TextBox();
+            buttonSimularDesdeHora = new Button();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -132,9 +137,9 @@
             // 
             // buttonPlay
             // 
-            buttonPlay.Location = new Point(44, 397);
+            buttonPlay.Location = new Point(41, 49);
             buttonPlay.Name = "buttonPlay";
-            buttonPlay.Size = new Size(75, 23);
+            buttonPlay.Size = new Size(21, 23);
             buttonPlay.TabIndex = 1;
             buttonPlay.Text = "Play";
             buttonPlay.UseVisualStyleBackColor = true;
@@ -143,9 +148,9 @@
             // 
             // buttonStop
             // 
-            buttonStop.Location = new Point(148, 397);
+            buttonStop.Location = new Point(68, 49);
             buttonStop.Name = "buttonStop";
-            buttonStop.Size = new Size(75, 23);
+            buttonStop.Size = new Size(14, 23);
             buttonStop.TabIndex = 2;
             buttonStop.Text = "Stop";
             buttonStop.UseVisualStyleBackColor = true;
@@ -156,7 +161,7 @@
             // 
             label1.AutoSize = true;
             label1.ForeColor = SystemColors.ControlLightLight;
-            label1.Location = new Point(151, 608);
+            label1.Location = new Point(148, 536);
             label1.Name = "label1";
             label1.Size = new Size(49, 15);
             label1.TabIndex = 3;
@@ -165,7 +170,7 @@
             // trackBarVelSimulacion
             // 
             trackBarVelSimulacion.LargeChange = 4;
-            trackBarVelSimulacion.Location = new Point(50, 498);
+            trackBarVelSimulacion.Location = new Point(50, 462);
             trackBarVelSimulacion.Maximum = 4;
             trackBarVelSimulacion.Minimum = 1;
             trackBarVelSimulacion.Name = "trackBarVelSimulacion";
@@ -176,9 +181,9 @@
             // 
             // buttonAvanzar
             // 
-            buttonAvanzar.Location = new Point(44, 426);
+            buttonAvanzar.Location = new Point(88, 49);
             buttonAvanzar.Name = "buttonAvanzar";
-            buttonAvanzar.Size = new Size(75, 23);
+            buttonAvanzar.Size = new Size(21, 23);
             buttonAvanzar.TabIndex = 6;
             buttonAvanzar.Text = "Avanzar";
             buttonAvanzar.UseVisualStyleBackColor = true;
@@ -187,9 +192,9 @@
             // 
             // buttonReset
             // 
-            buttonReset.Location = new Point(98, 648);
+            buttonReset.Location = new Point(39, 590);
             buttonReset.Name = "buttonReset";
-            buttonReset.Size = new Size(75, 23);
+            buttonReset.Size = new Size(87, 23);
             buttonReset.TabIndex = 7;
             buttonReset.Text = "Reset";
             buttonReset.UseVisualStyleBackColor = true;
@@ -207,7 +212,7 @@
             // 
             // buttonDataGrid
             // 
-            buttonDataGrid.Location = new Point(148, 426);
+            buttonDataGrid.Location = new Point(91, 385);
             buttonDataGrid.Name = "buttonDataGrid";
             buttonDataGrid.Size = new Size(75, 23);
             buttonDataGrid.TabIndex = 9;
@@ -245,7 +250,7 @@
             // 
             labelX1.AutoSize = true;
             labelX1.ForeColor = SystemColors.ControlLightLight;
-            labelX1.Location = new Point(56, 528);
+            labelX1.Location = new Point(56, 492);
             labelX1.Name = "labelX1";
             labelX1.Size = new Size(18, 15);
             labelX1.TabIndex = 11;
@@ -255,7 +260,7 @@
             // 
             labelx2.AutoSize = true;
             labelx2.ForeColor = SystemColors.ControlLightLight;
-            labelx2.Location = new Point(98, 528);
+            labelx2.Location = new Point(98, 492);
             labelx2.Name = "labelx2";
             labelx2.Size = new Size(18, 15);
             labelx2.TabIndex = 12;
@@ -265,7 +270,7 @@
             // 
             labelx8.AutoSize = true;
             labelx8.ForeColor = SystemColors.ControlLightLight;
-            labelx8.Location = new Point(190, 528);
+            labelx8.Location = new Point(190, 492);
             labelx8.Name = "labelx8";
             labelx8.Size = new Size(18, 15);
             labelx8.TabIndex = 14;
@@ -275,7 +280,7 @@
             // 
             labelx4.AutoSize = true;
             labelx4.ForeColor = SystemColors.ControlLightLight;
-            labelx4.Location = new Point(148, 528);
+            labelx4.Location = new Point(148, 492);
             labelx4.Name = "labelx4";
             labelx4.Size = new Size(18, 15);
             labelx4.TabIndex = 13;
@@ -285,7 +290,7 @@
             // 
             labelTituloVelocidadReproduccion.AutoSize = true;
             labelTituloVelocidadReproduccion.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVelocidadReproduccion.Location = new Point(59, 469);
+            labelTituloVelocidadReproduccion.Location = new Point(59, 433);
             labelTituloVelocidadReproduccion.Name = "labelTituloVelocidadReproduccion";
             labelTituloVelocidadReproduccion.Size = new Size(148, 15);
             labelTituloVelocidadReproduccion.TabIndex = 15;
@@ -295,7 +300,7 @@
             // 
             labelTituloHora.AutoSize = true;
             labelTituloHora.ForeColor = SystemColors.ControlLightLight;
-            labelTituloHora.Location = new Point(50, 608);
+            labelTituloHora.Location = new Point(52, 536);
             labelTituloHora.Name = "labelTituloHora";
             labelTituloHora.Size = new Size(74, 15);
             labelTituloHora.TabIndex = 16;
@@ -305,7 +310,7 @@
             // 
             pictureBox1.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
             pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new Point(107, 327);
+            pictureBox1.Location = new Point(107, 295);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(47, 52);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -317,7 +322,7 @@
             // 
             pictureBox2.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_53_3;
             pictureBox2.InitialImage = (Image)resources.GetObject("pictureBox2.InitialImage");
-            pictureBox2.Location = new Point(166, 327);
+            pictureBox2.Location = new Point(166, 295);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(47, 52);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -329,7 +334,7 @@
             // 
             pictureBox3.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_54_09;
             pictureBox3.InitialImage = (Image)resources.GetObject("pictureBox3.InitialImage");
-            pictureBox3.Location = new Point(46, 327);
+            pictureBox3.Location = new Point(46, 295);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(47, 52);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -341,7 +346,7 @@
             // 
             labelTituloVerde.AutoSize = true;
             labelTituloVerde.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVerde.Location = new Point(128, 210);
+            labelTituloVerde.Location = new Point(128, 178);
             labelTituloVerde.Name = "labelTituloVerde";
             labelTituloVerde.Size = new Size(41, 15);
             labelTituloVerde.TabIndex = 20;
@@ -351,7 +356,7 @@
             // 
             label2.AutoSize = true;
             label2.ForeColor = SystemColors.ControlLightLight;
-            label2.Location = new Point(128, 237);
+            label2.Location = new Point(128, 205);
             label2.Name = "label2";
             label2.Size = new Size(37, 15);
             label2.TabIndex = 21;
@@ -361,7 +366,7 @@
             // 
             pictureBox4.Image = Properties.Resources.large_green_square_1f7e9;
             pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
-            pictureBox4.Location = new Point(80, 210);
+            pictureBox4.Location = new Point(80, 178);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(16, 15);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -372,7 +377,7 @@
             // 
             pictureBox5.Image = Properties.Resources.images;
             pictureBox5.InitialImage = (Image)resources.GetObject("pictureBox5.InitialImage");
-            pictureBox5.Location = new Point(80, 237);
+            pictureBox5.Location = new Point(80, 205);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(16, 15);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -384,11 +389,58 @@
             labelTituloAsterix.AutoSize = true;
             labelTituloAsterix.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTituloAsterix.ForeColor = Color.Turquoise;
-            labelTituloAsterix.Location = new Point(59, 107);
+            labelTituloAsterix.Location = new Point(59, 75);
             labelTituloAsterix.Name = "labelTituloAsterix";
             labelTituloAsterix.Size = new Size(162, 47);
             labelTituloAsterix.TabIndex = 26;
             labelTituloAsterix.Text = "ASTERIX";
+            // 
+            // labelAvanzarHora
+            // 
+            labelAvanzarHora.AutoSize = true;
+            labelAvanzarHora.ForeColor = SystemColors.ControlLightLight;
+            labelAvanzarHora.Location = new Point(12, 559);
+            labelAvanzarHora.Name = "labelAvanzarHora";
+            labelAvanzarHora.Size = new Size(114, 15);
+            labelAvanzarHora.TabIndex = 29;
+            labelAvanzarHora.Text = " Simular desde hora:";
+            // 
+            // textBoxHora
+            // 
+            textBoxHora.Location = new Point(149, 559);
+            textBoxHora.Name = "textBoxHora";
+            textBoxHora.Size = new Size(29, 23);
+            textBoxHora.TabIndex = 30;
+            textBoxHora.Text = "HH";
+            textBoxHora.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBoxSegundo
+            // 
+            textBoxSegundo.Location = new Point(209, 559);
+            textBoxSegundo.Name = "textBoxSegundo";
+            textBoxSegundo.Size = new Size(27, 23);
+            textBoxSegundo.TabIndex = 31;
+            textBoxSegundo.Text = "SS";
+            textBoxSegundo.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBoxMinuto
+            // 
+            textBoxMinuto.Location = new Point(180, 559);
+            textBoxMinuto.Name = "textBoxMinuto";
+            textBoxMinuto.Size = new Size(27, 23);
+            textBoxMinuto.TabIndex = 32;
+            textBoxMinuto.Text = "MM";
+            textBoxMinuto.TextAlign = HorizontalAlignment.Center;
+            // 
+            // buttonSimularDesdeHora
+            // 
+            buttonSimularDesdeHora.Location = new Point(149, 590);
+            buttonSimularDesdeHora.Name = "buttonSimularDesdeHora";
+            buttonSimularDesdeHora.Size = new Size(87, 23);
+            buttonSimularDesdeHora.TabIndex = 33;
+            buttonSimularDesdeHora.Text = "Simular";
+            buttonSimularDesdeHora.UseVisualStyleBackColor = true;
+            buttonSimularDesdeHora.Click += buttonSimularDesdeHora_Click;
             // 
             // MenuSimulacion
             // 
@@ -396,6 +448,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
             ClientSize = new Size(1402, 709);
+            Controls.Add(buttonSimularDesdeHora);
+            Controls.Add(textBoxMinuto);
+            Controls.Add(textBoxSegundo);
+            Controls.Add(textBoxHora);
+            Controls.Add(labelAvanzarHora);
             Controls.Add(labelTituloAsterix);
             Controls.Add(pictureBox5);
             Controls.Add(pictureBox4);
@@ -472,5 +529,10 @@
         private Label labelTituloAsterix;
         private ToolStripMenuItem guardarEnCSVToolStripMenuItem;
         private System.Windows.Forms.Timer timerClick;
+        private Label labelAvanzarHora;
+        private TextBox textBoxHora;
+        private TextBox textBoxSegundo;
+        private TextBox textBoxMinuto;
+        private Button buttonSimularDesdeHora;
     }
 }

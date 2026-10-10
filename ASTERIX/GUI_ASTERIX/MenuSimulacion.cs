@@ -269,6 +269,8 @@ namespace GUI_ASTERIX
 
                         mensajeVisual.ultimoTiempo = tiempoMensaje;
 
+                        mensajeVisual.mensajeOriginal = mensaje;
+
                         if (esADSB)
                         {
                             mensajeVisual.detectadoADSB = true;
@@ -663,7 +665,7 @@ namespace GUI_ASTERIX
         private void buttonDataGrid_Click(object sender, EventArgs e)
         {
             dataGridAviones.BringToFront();
-            dataGridAviones.Visible = !dataGridAviones.Visible; 
+            dataGridAviones.Visible = !dataGridAviones.Visible;
 
         }
         private void ActualizarMapa()
@@ -1021,6 +1023,8 @@ namespace GUI_ASTERIX
                     AvionSimulacion mensajeVisual =
                         new AvionSimulacion();
 
+                    mensajeVisual.mensajeOriginal = mensaje;
+
                     mensajeVisual.direccion = direccion;
                     mensajeVisual.identificador = identificador;
 
@@ -1118,6 +1122,8 @@ namespace GUI_ASTERIX
 
                 mensajeAnterior.latitud = nuevoMensaje.latitud;
                 mensajeAnterior.longitud = nuevoMensaje.longitud;
+
+                mensajeAnterior.mensajeOriginal = nuevoMensaje.mensajeOriginal;
 
                 if (!double.IsNaN(nuevoMensaje.altitud))
                 {
@@ -1357,6 +1363,69 @@ namespace GUI_ASTERIX
             AvionesActuales.RemoveAll(avion =>
                 TiempoActual - avion.ultimoTiempo >= 10
             );
+        }
+
+        private void buttonSimularDesdeHora_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(textBoxHora.Text, out int horas) ||
+        !int.TryParse(textBoxMinuto.Text, out int minutos) ||
+        !int.TryParse(textBoxSegundo.Text, out int segundos))
+            {
+                MessageBox.Show("Introduce valores numéricos válidos.");
+                return;
+            }
+
+            // Comprobar que la hora sea válida
+            if (horas < 0 || horas > 23 ||
+                minutos < 0 || minutos > 59 ||
+                segundos < 0 || segundos > 59)
+            {
+                MessageBox.Show("La hora introducida no es válida.");
+                return;
+            }
+
+            if (ListaMensajesFiltrados.Count == 0)
+            {
+                MessageBox.Show("Primero debes cargar un archivo ASTERIX.");
+                return;
+            }
+
+            // Detener la simulación
+            timerSimulacion.Stop();
+            Reproduciendo = false;
+
+            // Limpiar el estado anterior
+            AvionesActuales.Clear();
+            MensajesActuales.Clear();
+
+            historialAviones.Clear();
+            historialTiempo.Clear();
+
+            avionesTrayectoriaSeleccionados.Clear();
+
+            capaAviones.Markers.Clear();
+            capaTrayectorias.Routes.Clear();
+
+            dataGridAviones.Rows.Clear();
+
+            // Convertir la hora a segundos
+            TiempoActual = horas * 3600 + minutos * 60 + segundos;
+
+            // Actualizar la hora mostrada
+            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+            label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+            // Mostrar los aviones de ese instante
+            ActualizarAviones();
+            EliminarAvionesInactivos();
+
+            ActualizarDataGrid();
+            ActualizarMapa();
+            MostrarTrayectorias();
+
+            // Dejar la simulación pausada
+            pictureBox1.Image =
+                Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
         }
     }
 }

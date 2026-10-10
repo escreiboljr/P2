@@ -615,7 +615,7 @@ namespace Archivos
                 case "01": return "Report suspect";
                 case "10": return "No information";
                 case "11": return "Reserved for future use";
-                default: return cl ?? "";
+                default: return cl ?? "-";
             }
         }
 
@@ -625,7 +625,7 @@ namespace Archivos
             {
                 case 0: return "Default";
                 case 1: return "Independent Position Check failed";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -635,7 +635,7 @@ namespace Archivos
             {
                 case 0: return "NOGO-bit not set";
                 case 1: return "NOGO-bit set";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -645,7 +645,7 @@ namespace Archivos
             {
                 case 0: return "CPR Validation correct";
                 case 1: return "CPR Validation failed";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -655,7 +655,7 @@ namespace Archivos
             {
                 case 0: return "LDPJ not detected";
                 case 1: return "LDPJ detected";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -665,7 +665,7 @@ namespace Archivos
             {
                 case 0: return "Default";
                 case 1: return "Range Check failed";
-                default: return "";
+                default: return "-";
             }
         }
         private string TextoTST21(int tst)
@@ -674,7 +674,7 @@ namespace Archivos
             {
                 case 0: return "Default";
                 case 1: return "Test Target";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -684,7 +684,7 @@ namespace Archivos
             {
                 case 0: return "Equipment capable to provide Selected Altitude";
                 case 1: return "Equipment not capable to provide Selected Altitude";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -694,7 +694,7 @@ namespace Archivos
             {
                 case 0: return "Ground Bit not set";
                 case 1: return "Ground Bit set";
-                default: return "";
+                default: return "-";
             }
         }
         private string TextoDCR21(int dcr)
@@ -703,7 +703,7 @@ namespace Archivos
             {
                 case 0: return "No differential correction (ADS-B)";
                 case 1: return "Differential correction (ADS-B)";
-                default: return "";
+                default: return "-";
             }
         }
 
@@ -713,7 +713,7 @@ namespace Archivos
             {
                 case 0: return "Report from target transponder";
                 case 1: return "Report from field monitor (fixed transponder)";
-                default: return "";
+                default: return "-";
             }
         }
         private string TextoRC21(int rc)

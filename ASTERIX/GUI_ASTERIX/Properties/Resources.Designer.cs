@@ -103,6 +103,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Botón_azul_brillante_con_icono_de_documento {
+            get {
+                object obj = ResourceManager.GetObject("Botón azul brillante con icono de documento", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente {
             get {
                 object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente", resourceCulture);

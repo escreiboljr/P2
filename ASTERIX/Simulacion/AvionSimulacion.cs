@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Archivos;
 namespace Simulacion
 {
     public class AvionSimulacion
@@ -21,6 +22,7 @@ namespace Simulacion
         public double velocidad;
         public string estadoVuelo;
         public string mode3A;
+        public Mensaje mensajeOriginal { get; set; }
 
         public AvionSimulacion()
         {
@@ -80,6 +82,8 @@ namespace Simulacion
             copia.velocidad = velocidad;
             copia.estadoVuelo = estadoVuelo;
             copia.mode3A = mode3A;
+
+            copia.mensajeOriginal = mensajeOriginal;
 
             return copia;
         }

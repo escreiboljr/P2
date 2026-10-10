@@ -1,4 +1,7 @@
-﻿using Simulacion;
+﻿using Archivos;
+using DatosDecod;
+using DatosDecod21;
+using Simulacion;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -118,6 +121,32 @@ namespace GUI_ASTERIX
                 labelUltimoTiempo.Text = "Última detección: N/A";
                 labelUltimoTiempoRadar.Text = "Última detección Radar: N/A";
                 labelUltimoTiempoADSB.Text = "Última detección ADS-B: N/A";
+            }
+        }
+
+        private void pictureBoxMasInformacion_Click(object sender, EventArgs e)
+        {
+            if (avion == null || avion.mensajeOriginal == null)
+            {
+                MessageBox.Show("No hay información disponible.");
+                return;
+            }
+
+            Mensaje mensaje = avion.mensajeOriginal;
+
+            if (mensaje.categoria == 21)
+            {
+                InformacionCAT21 ventana = new InformacionCAT21();
+                ventana.mensaje = mensaje;
+
+                ventana.Show();
+            }
+            else if (mensaje.categoria == 48)
+            {
+                InformacionCAT48 ventana = new InformacionCAT48();
+                ventana.mensaje = mensaje;
+
+                ventana.Show();
             }
         }
     }
