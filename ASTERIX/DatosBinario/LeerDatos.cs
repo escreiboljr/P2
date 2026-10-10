@@ -10,6 +10,8 @@ namespace Archvios
     {
         public List<Mensaje> DatosProcesados(string nombreArchivo)
         {
+            TiraDatosDecod021.UltimosQNH.Clear();
+
             List<Mensaje> listaTiras = new List<Mensaje>();
             Queue<byte> cola = new Queue<byte>();
 

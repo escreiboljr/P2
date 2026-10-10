@@ -14,6 +14,9 @@
         public double QNH { get; set; }
         public double AltitudCorregida { get; set; }
 
+        public static Dictionary<string, double> UltimosQNH =
+            new Dictionary<string, double>();
+
         public TiraDatosDecod021()
          {
             this.DataSourceID = new List<byte> { 0, 0 };
@@ -74,7 +77,7 @@
             int direccion = (b1 << 16) | (b2 << 8) | b3;
 
             // Guardarlo como texto hexadecimal de seis caracteres
-            this.TargetAddress = direccion.ToString();
+            this.TargetAddress = direccion.ToString("X6");
         }
 
         public void DecodeTimeReceptionPosition(Queue<byte> ColaBytes)
@@ -100,8 +103,10 @@
             // Unirlos y conservar solo los 12 bits del código
             int codigo = ((b1 << 8) | b2);
 
+            codigo = codigo & 0x0FFF;
+
             // Convertir a octal y completar hasta cuatro cifras
-            this.Mode3ACode = Convert.ToString(codigo);
+            this.Mode3ACode = Convert.ToString(codigo, 8).PadLeft(4, '0');
         }
 
         public void DecodeFlightLevel(Queue<byte> ColaBytes)
@@ -215,25 +220,43 @@
         }
         public void DecodeReservedExp(Queue<byte> cola)
         {
-            cola.Dequeue();
-
+            // Primer byte: longitud total del Reserved Expansion
+            byte longitud = cola.Dequeue();
+          
+            if (longitud < 2 || cola.Count < longitud - 1)
+            {
+                throw new InvalidOperationException(
+                    "Longitud incorrecta del Reserved Expansion");
+            }
+           
+            // Segundo byte: indica los campos presentes
             byte b = cola.Dequeue();
             List<int> listaBits = ByteToBits(b);
 
+            // Primer bit = 1 significa que existe BPS
             if (listaBits[0] == 1)
             {
                 byte b1 = cola.Dequeue();
                 byte b2 = cola.Dequeue();
 
-                int raw = (b1 << 8) | b2;
-
-                raw = raw & 0x0FFF;
+                // Los 4 primeros bits son 0
+                // Nos quedamos con los 12 bits restantes
+                int raw = ((b1 & 0x0F) << 8) | b2;
 
                 this.QNH = (raw * 0.1) + 800.0;
 
                 this.ReservedExpField = this.QNH;
             }
+
+            // Saltar los campos restantes del Reserved Expansion
+            int bytesLeidos = listaBits[0] == 1 ? 4 : 2;
+
+            for (int i = bytesLeidos; i < longitud; i++)
+            {
+                cola.Dequeue();
+            }
         }
+
         public void CorregirAltitudQNH()
         {
             if (double.IsNaN(this.FlightLevel))
@@ -245,24 +268,38 @@
             double altitudIndicada = this.FlightLevel * 100.0;
 
             this.AltitudCorregida = altitudIndicada;
+
+            // Comprobar si tenemos una aeronave identificada
+            if (string.IsNullOrEmpty(this.TargetAddress))
+            {
+                return;
+            }
+
+            // Comprobar si el QNH recibido es diferente del estándar
+            if (!double.IsNaN(this.QNH) &&
+                (this.QNH < 1013.0 || this.QNH > 1013.5))
+            {
+                // Guardar el último QNH válido de esta aeronave
+                UltimosQNH[this.TargetAddress] = this.QNH;
+            }
+
+            // Solo corregimos por debajo de 6000 ft
             if (altitudIndicada >= 6000)
             {
                 return;
             }
-            if (double.IsNaN(this.QNH))
-            {
-                return;
-            }
-            if (this.QNH >= 1013.0 && this.QNH <= 1013.5)
-            {
-                return;
-            }
 
-            const double qnhEstandar = 1013.25;
+            double qnhUtilizado;
 
-            this.AltitudCorregida =
-                altitudIndicada +
-                (this.QNH - qnhEstandar) * 30.0;
+            // Recuperar el último QNH no estándar de la aeronave
+            if (UltimosQNH.TryGetValue(this.TargetAddress, out qnhUtilizado))
+            {
+                const double qnhEstandar = 1013.25;
+
+                this.AltitudCorregida =
+                    altitudIndicada +
+                    (qnhUtilizado - qnhEstandar) * 30.0;
+            }
         }
     }   
 }
