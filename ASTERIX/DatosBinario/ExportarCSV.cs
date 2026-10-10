@@ -212,23 +212,23 @@ namespace Archivos
                         Valor(m.AltitudCorregida) + ";" +
                         Valor(m.ReservedExpField) + ";" +
 
-                         TextoATP21(m.TargetRep.ATP) + ";" +
+                        TextoATP21(m.TargetRep.ATP) + ";" +
                         TextoARC21(m.TargetRep.ARC) + ";" +
-                        Valor(m.TargetRep.RC) + ";" +
-                        Valor(m.TargetRep.RAB) + ";" +
+                        TextoRC21(m.TargetRep.RC) + ";" +
+                        TextoRAB21(m.TargetRep.RAB) + ";" +
 
-                        Valor(m.TargetRep.DCR) + ";" +
-                        Valor(m.TargetRep.GBS) + ";" +
-                        Valor(m.TargetRep.SIM) + ";" +
-                        Valor(m.TargetRep.TST) + ";" +
-                        Valor(m.TargetRep.SAA) + ";" +
-                        Valor(m.TargetRep.CL) + ";" +
+                        TextoDCR21(m.TargetRep.DCR) + ";" +
+                        TextoGBS21(m.TargetRep.GBS) + ";" +
+                        TextoSIM(m.TargetRep.SIM) + ";" +
+                        TextoTST21(m.TargetRep.TST) + ";" +
+                        TextoSAA21(m.TargetRep.SAA) + ";" +
+                        TextoCL21(m.TargetRep.CL) + ";" +
 
-                        Valor(m.TargetRep.IPC) + ";" +
-                        Valor(m.TargetRep.NOGO) + ";" +
-                        Valor(m.TargetRep.CPR) + ";" +
-                        Valor(m.TargetRep.LDPJ) + ";" +
-                        Valor(m.TargetRep.RCF)
+                        TextoIPC21(m.TargetRep.IPC) + ";" +
+                        TextoNOGO21(m.TargetRep.NOGO) + ";" +
+                        TextoCPR21(m.TargetRep.CPR) + ";" +
+                        TextoLDPJ21(m.TargetRep.LDPJ) + ";" +
+                        TextoRCF21(m.TargetRep.RCF)
                     );
                 }
             }
@@ -411,25 +411,25 @@ namespace Archivos
 
                             // TRD COMUNES
 
-                            Valor(m.TargetRep.SIM) + ";" +
-                            Valor(m.TargetRep.RAB) + ";" +
-                            Valor(m.TargetRep.TST) + ";" +
+                            TextoSIM(m.TargetRep.SIM) + ";" +
+                            TextoRAB21(m.TargetRep.RAB) + ";" +
+                            TextoTST21(m.TargetRep.TST) + ";" +
 
 
                             // TRD CAT21
 
-                            Valor(m.TargetRep.ATP) + ";" +
-                            Valor(m.TargetRep.ARC) + ";" +
-                            Valor(m.TargetRep.RC) + ";" +
-                            Valor(m.TargetRep.DCR) + ";" +
-                            Valor(m.TargetRep.GBS) + ";" +
-                            Valor(m.TargetRep.SAA) + ";" +
-                            Valor(m.TargetRep.CL) + ";" +
-                            Valor(m.TargetRep.IPC) + ";" +
-                            Valor(m.TargetRep.NOGO) + ";" +
-                            Valor(m.TargetRep.CPR) + ";" +
-                            Valor(m.TargetRep.LDPJ) + ";" +
-                            Valor(m.TargetRep.RCF) + ";" +
+                            TextoATP21(m.TargetRep.ATP) + ";" +
+                            TextoARC21(m.TargetRep.ARC) + ";" +
+                            TextoRC21(m.TargetRep.RC) + ";" +
+                            TextoDCR21(m.TargetRep.DCR) + ";" +
+                            TextoGBS21(m.TargetRep.GBS) + ";" +
+                            TextoSAA21(m.TargetRep.SAA) + ";" +
+                            TextoCL21(m.TargetRep.CL) + ";" +
+                            TextoIPC21(m.TargetRep.IPC) + ";" +
+                            TextoNOGO21(m.TargetRep.NOGO) + ";" +
+                            TextoCPR21(m.TargetRep.CPR) + ";" +
+                            TextoLDPJ21(m.TargetRep.LDPJ) + ";" +
+                            TextoRCF21(m.TargetRep.RCF) + ";" +
 
 
                             // TRD CAT48 -> VACÍOS
@@ -446,7 +446,7 @@ namespace Archivos
 
                             // RESTO CAT48 -> VACÍO
 
-                            Vacio(47)
+                            string.Join(";", Enumerable.Repeat("-", 50))
                         );
                     }
 
@@ -473,30 +473,30 @@ namespace Archivos
                             Valor(m.PositionCorrectedLatLonAlt[1]) + ";" +
                             Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
 
-                            // TRD 
-                            Valor(m.TargetRep.SIM) + ";" +
-                            Valor(m.TargetRep.RAB) + ";" +
-                            Valor(m.TargetRep.TST) + ";" +
+                            // TRD
+                            TextoSIM(m.TargetRep.SIM) + ";" +
+                            TextoRAB48(m.TargetRep.RAB) + ";" +
+                            TextoTST48(m.TargetRep.TST) + ";" +
 
                             // TRD CAT21 -> VACÍOS
                             // 12 campos
                             Vacio(12) +
 
                             // TRD CAT48
-                            Valor(m.TargetRep.TYP) + ";" +
-                            Valor(m.TargetRep.RDP) + ";" +
-                            Valor(m.TargetRep.SPI) + ";" +
-                            Valor(m.TargetRep.ERR) + ";" +
-                            Valor(m.TargetRep.XPP) + ";" +
-                            Valor(m.TargetRep.ME) + ";" +
-                            Valor(m.TargetRep.MI) + ";" +
-                            Valor(m.TargetRep.FOE_FRI) + ";" +
-                            Valor(m.TargetRep.ADSB_EP) + ";" +
-                            Valor(m.TargetRep.ADSB_VAL) + ";" +
-                            Valor(m.TargetRep.SCN_EP) + ";" +
-                            Valor(m.TargetRep.SCN_VAL) + ";" +
-                            Valor(m.TargetRep.PAI_EP) + ";" +
-                            Valor(m.TargetRep.PAI_VAL) + ";" +
+                            TextoTYP(m.TargetRep.TYP) + ";" +
+                            TextoRDP(m.TargetRep.RDP) + ";" +
+                            TextoSPI(m.TargetRep.SPI) + ";" +
+                            TextoERR(m.TargetRep.ERR) + ";" +
+                            TextoXPP(m.TargetRep.XPP) + ";" +
+                            TextoME(m.TargetRep.ME) + ";" +
+                            TextoMI(m.TargetRep.MI) + ";" +
+                            TextoFOE_FRI(m.TargetRep.FOE_FRI) + ";" +
+                            TextoADSB_EP(m.TargetRep.ADSB_EP) + ";" +
+                            TextoADSB_VAL(m.TargetRep.ADSB_EP, m.TargetRep.ADSB_VAL) + ";" +
+                            TextoSCN_EP(m.TargetRep.SCN_EP) + ";" +
+                            TextoSCN_VAL(m.TargetRep.SCN_EP, m.TargetRep.SCN_VAL) + ";" +
+                            TextoPAI_EP(m.TargetRep.PAI_EP) + ";" +
+                            TextoPAI_VAL(m.TargetRep.PAI_EP, m.TargetRep.PAI_VAL) + ";" +
 
                             // CAT21 -> VACÍOS
                             // QNH + ReservedExpField
@@ -539,7 +539,7 @@ namespace Archivos
                             // TRACK STATUS
 
                             Valor(m.TrckStatus.CNF) + ";" +
-                            Valor(m.TrckStatus.RAD) + ";" +
+                            TextoRAD(m.TrckStatus.RAD) + ";" +
                             Valor(m.TrckStatus.DOU) + ";" +
                             Valor(m.TrckStatus.MAH) + ";" +
                             Valor(m.TrckStatus.CDM) + ";" +
@@ -604,6 +604,116 @@ namespace Archivos
                 case "10": return "SSR/Mode S Track";
                 case "11": return "Invalid";
                 default: return rad ?? "-";
+            }
+        }
+
+        private string TextoCL21(string cl)
+        {
+            switch (cl)
+            {
+                case "00": return "Report valid";
+                case "01": return "Report suspect";
+                case "10": return "No information";
+                case "11": return "Reserved for future use";
+                default: return cl ?? "";
+            }
+        }
+
+        private string TextoIPC21(int ipc)
+        {
+            switch (ipc)
+            {
+                case 0: return "Default";
+                case 1: return "Independent Position Check failed";
+                default: return "";
+            }
+        }
+
+        private string TextoNOGO21(int nogo)
+        {
+            switch (nogo)
+            {
+                case 0: return "NOGO-bit not set";
+                case 1: return "NOGO-bit set";
+                default: return "";
+            }
+        }
+
+        private string TextoCPR21(int cpr)
+        {
+            switch (cpr)
+            {
+                case 0: return "CPR Validation correct";
+                case 1: return "CPR Validation failed";
+                default: return "";
+            }
+        }
+
+        private string TextoLDPJ21(int ldpj)
+        {
+            switch (ldpj)
+            {
+                case 0: return "LDPJ not detected";
+                case 1: return "LDPJ detected";
+                default: return "";
+            }
+        }
+
+        private string TextoRCF21(int rcf)
+        {
+            switch (rcf)
+            {
+                case 0: return "Default";
+                case 1: return "Range Check failed";
+                default: return "";
+            }
+        }
+        private string TextoTST21(int tst)
+        {
+            switch (tst)
+            {
+                case 0: return "Default";
+                case 1: return "Test Target";
+                default: return "";
+            }
+        }
+
+        private string TextoSAA21(int saa)
+        {
+            switch (saa)
+            {
+                case 0: return "Equipment capable to provide Selected Altitude";
+                case 1: return "Equipment not capable to provide Selected Altitude";
+                default: return "";
+            }
+        }
+
+        private string TextoGBS21(int gbs)
+        {
+            switch (gbs)
+            {
+                case 0: return "Ground Bit not set";
+                case 1: return "Ground Bit set";
+                default: return "";
+            }
+        }
+        private string TextoDCR21(int dcr)
+        {
+            switch (dcr)
+            {
+                case 0: return "No differential correction (ADS-B)";
+                case 1: return "Differential correction (ADS-B)";
+                default: return "";
+            }
+        }
+
+        private string TextoRAB21(int rab)
+        {
+            switch (rab)
+            {
+                case 0: return "Report from target transponder";
+                case 1: return "Report from field monitor (fixed transponder)";
+                default: return "";
             }
         }
         private string TextoRC21(int rc)
@@ -876,37 +986,37 @@ namespace Archivos
             });
         }
 
-        private string ValorBDS50(TiraDatosDecod048 m)
+        private string ValorBDS50(TiraDatosDecod048 m) // Prepara los cinco datos de BDS50 para exportarlos al CSV                                        
         {
-            if (m.ModeS.BDS50 == null)
-            {
-                return Vacio(5);
-            }
+            if (m.ModeS?.BDS50 == null)
+                return string.Join(";", Enumerable.Repeat("-", 5)); // Si no hay datos escribe cinco guiones uno por columna
 
-            return string.Join(";", new string[]
+            var bds = m.ModeS.BDS50;
+
+            return string.Join(";", new string[]   // Separa los valores con ; sin añadir un separador al final
             {
-                Valor(m.ModeS.BDS50.Roll) + ";" +
-                Valor(m.ModeS.BDS50.Track) + ";" +
-                Valor(m.ModeS.BDS50.GroundSpeed) + ";" +
-                Valor(m.ModeS.BDS50.TrackRate) + ";" +
-                Valor(m.ModeS.BDS50.TrueAirspeed) + ";"
+                Valor(bds.Roll),
+                Valor(bds.Track),
+                Valor(bds.GroundSpeed),
+                Valor(bds.TrackRate),
+                Valor(bds.TrueAirspeed)
             });
         }
 
-        private string ValorBDS60(TiraDatosDecod048 m)
+        private string ValorBDS60(TiraDatosDecod048 m)  // Prepara los cinco datos de BDS60 para exportarlos al CSV
         {
-            if (m.ModeS.BDS60 == null)
-            {
-                return Vacio(5);
-            }
+            if (m.ModeS?.BDS60 == null)
+                return string.Join(";", Enumerable.Repeat("-", 5)); // Si no hay datos escribe cinco guiones uno por columna.
 
-            return string.Join(";", new string[]
+            var bds = m.ModeS.BDS60;
+
+            return string.Join(";", new string[]   // Separa los valores con ; sin añadir un separador al final
             {
-                Valor(m.ModeS.BDS60.Heading) + ";" +
-                Valor(m.ModeS.BDS60.IAS) + ";" +
-                Valor(m.ModeS.BDS60.Mach) + ";" +
-                Valor(m.ModeS.BDS60.BaroRate) + ";" +
-                Valor(m.ModeS.BDS60.InertialVS)
+                Valor(bds.Heading),
+                Valor(bds.IAS),
+                Valor(bds.Mach),
+                Valor(bds.BaroRate),
+                Valor(bds.InertialVS)
             });
         }
 
