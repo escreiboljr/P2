@@ -538,25 +538,25 @@ namespace Archivos
 
                             // TRACK STATUS
 
-                            Valor(m.TrckStatus.CNF) + ";" +
+                            TextoCNF(m.TrckStatus.CNF) + ";" +
                             TextoRAD(m.TrckStatus.RAD) + ";" +
-                            Valor(m.TrckStatus.DOU) + ";" +
-                            Valor(m.TrckStatus.MAH) + ";" +
-                            Valor(m.TrckStatus.CDM) + ";" +
-                            Valor(m.TrckStatus.TRE) + ";" +
-                            Valor(m.TrckStatus.GHO) + ";" +
-                            Valor(m.TrckStatus.SUP) + ";" +
-                            Valor(m.TrckStatus.TCC) + ";" +
+                            TextoDOU(m.TrckStatus.DOU) + ";" +
+                            TextoMAH(m.TrckStatus.MAH) + ";" +
+                            TextoCDM(m.TrckStatus.CDM) + ";" +
+                            TextoTRE(m.TrckStatus.TRE) + ";" +
+                            TextoGHO(m.TrckStatus.GHO) + ";" +
+                            TextoSUP(m.TrckStatus.SUP) + ";" +
+                            TextoTCC(m.TrckStatus.TCC) + ";" +
 
 
                             // COMM / ACAS
 
-                            Valor(m.CommACAScapability.COM) + ";" +
-                            Valor(m.CommACAScapability.STAT) + ";" +
-                            Valor(m.CommACAScapability.SI) + ";" +
-                            Valor(m.CommACAScapability.MSSC) + ";" +
-                            Valor(m.CommACAScapability.ARC) + ";" +
-                            Valor(m.CommACAScapability.AIC) + ";" +
+                            TextoCOM(m.CommACAScapability.COM) + ";" +
+                            TextoSTAT(m.CommACAScapability.STAT) + ";" +
+                            TextoSI(m.CommACAScapability.SI) + ";" +
+                            TextoMSSC(m.CommACAScapability.MSSC) + ";" +
+                            TextoARC(m.CommACAScapability.ARC) + ";" +
+                            TextoAIC(m.CommACAScapability.AIC) + ";" +
                             Valor(m.CommACAScapability.B1A) + ";" +
                             Valor(m.CommACAScapability.B1B) + ";" +
 
@@ -579,7 +579,7 @@ namespace Archivos
                 }
             }
         }
-        private string TextoTYP(string typ)
+        public string TextoTYP(string typ)
         {
             switch (typ)
             {
@@ -595,7 +595,7 @@ namespace Archivos
             }
         }
 
-        private string TextoRAD(string rad)
+        public string TextoRAD(string rad)
         {
             switch (rad)
             {
@@ -607,7 +607,7 @@ namespace Archivos
             }
         }
 
-        private string TextoCL21(string cl)
+        public string TextoCL21(string cl)
         {
             switch (cl)
             {
@@ -619,7 +619,7 @@ namespace Archivos
             }
         }
 
-        private string TextoIPC21(int ipc)
+        public string TextoIPC21(int ipc)
         {
             switch (ipc)
             {
@@ -629,7 +629,7 @@ namespace Archivos
             }
         }
 
-        private string TextoNOGO21(int nogo)
+        public string TextoNOGO21(int nogo)
         {
             switch (nogo)
             {
@@ -639,7 +639,7 @@ namespace Archivos
             }
         }
 
-        private string TextoCPR21(int cpr)
+        public string TextoCPR21(int cpr)
         {
             switch (cpr)
             {
@@ -649,7 +649,7 @@ namespace Archivos
             }
         }
 
-        private string TextoLDPJ21(int ldpj)
+        public string TextoLDPJ21(int ldpj)
         {
             switch (ldpj)
             {
@@ -659,7 +659,7 @@ namespace Archivos
             }
         }
 
-        private string TextoRCF21(int rcf)
+        public string TextoRCF21(int rcf)
         {
             switch (rcf)
             {
@@ -668,7 +668,7 @@ namespace Archivos
                 default: return "-";
             }
         }
-        private string TextoTST21(int tst)
+        public string TextoTST21(int tst)
         {
             switch (tst)
             {
@@ -678,7 +678,7 @@ namespace Archivos
             }
         }
 
-        private string TextoSAA21(int saa)
+        public string TextoSAA21(int saa)
         {
             switch (saa)
             {
@@ -688,7 +688,7 @@ namespace Archivos
             }
         }
 
-        private string TextoGBS21(int gbs)
+        public string TextoGBS21(int gbs)
         {
             switch (gbs)
             {
@@ -697,7 +697,7 @@ namespace Archivos
                 default: return "-";
             }
         }
-        private string TextoDCR21(int dcr)
+        public string TextoDCR21(int dcr)
         {
             switch (dcr)
             {
@@ -707,7 +707,7 @@ namespace Archivos
             }
         }
 
-        private string TextoRAB21(int rab)
+        public string TextoRAB21(int rab)
         {
             switch (rab)
             {
@@ -716,7 +716,7 @@ namespace Archivos
                 default: return "-";
             }
         }
-        private string TextoRC21(int rc)
+        public string TextoRC21(int rc)
         {
             switch (rc)
             {
@@ -725,7 +725,7 @@ namespace Archivos
                 default: return "-";
             }
         }
-        private string TextoARC21(string arc)
+        public string TextoARC21(string arc)
         {
             switch (arc)
             {
@@ -737,7 +737,7 @@ namespace Archivos
             }
         }
 
-        private string TextoATP21(string atp)
+        public string TextoATP21(string atp)
         {
             switch (atp)
             {
@@ -754,7 +754,7 @@ namespace Archivos
             }
         }
 
-        private string TextoPAI_VAL(int ep, int valor)
+        public string TextoPAI_VAL(int ep, int valor)
         {
             if (ep != 1)
                 return "-";
@@ -767,7 +767,7 @@ namespace Archivos
             }
         }
 
-        private string TextoPAI_EP(int ep)
+        public string TextoPAI_EP(int ep)
         {
             switch (ep)
             {
@@ -777,7 +777,7 @@ namespace Archivos
             }
         }
 
-        private string TextoSCN_VAL(int ep, int valor)
+        public string TextoSCN_VAL(int ep, int valor)
         {
             if (ep != 1)
                 return "-";
@@ -790,7 +790,7 @@ namespace Archivos
             }
         }
 
-        private string TextoSCN_EP(int ep)
+        public string TextoSCN_EP(int ep)
         {
             switch (ep)
             {
@@ -800,7 +800,7 @@ namespace Archivos
             }
         }
 
-        private string TextoADSB_VAL(int ep, int valor)
+        public string TextoADSB_VAL(int ep, int valor)
         {
             if (ep != 1)
                 return "-";
@@ -813,7 +813,7 @@ namespace Archivos
             }
         }
 
-        private string TextoADSB_EP(int ep)
+        public string TextoADSB_EP(int ep)
         {
             switch (ep)
             {
@@ -823,7 +823,7 @@ namespace Archivos
             }
         }
 
-        private string TextoFOE_FRI(string foeFri)
+        public string TextoFOE_FRI(string foeFri)
         {
             switch (foeFri)
             {
@@ -835,7 +835,7 @@ namespace Archivos
             }
         }
 
-        private string TextoMI(int mi)
+        public string TextoMI(int mi)
         {
             switch (mi)
             {
@@ -845,7 +845,7 @@ namespace Archivos
             }
         }
 
-        private string TextoME(int me)
+        public string TextoME(int me)
         {
             switch (me)
             {
@@ -855,7 +855,7 @@ namespace Archivos
             }
         }
 
-        private string TextoXPP(int xpp)
+        public string TextoXPP(int xpp)
         {
             switch (xpp)
             {
@@ -865,7 +865,7 @@ namespace Archivos
             }
         }
 
-        private string TextoERR(int err)
+        public string TextoERR(int err)
         {
             switch (err)
             {
@@ -875,7 +875,7 @@ namespace Archivos
             }
         }
 
-        private string TextoTST48(int tst)
+        public string TextoTST48(int tst)
         {
             switch (tst)
             {
@@ -884,7 +884,7 @@ namespace Archivos
                 default: return "-";
             }
         }
-        private string TextoRAB48(int rab)
+        public string TextoRAB48(int rab)
         {
             switch (rab)
             {
@@ -894,7 +894,7 @@ namespace Archivos
             }
         }
 
-        private string TextoSPI(int spi)
+        public string TextoSPI(int spi)
         {
             switch (spi)
             {
@@ -903,7 +903,7 @@ namespace Archivos
                 default: return "-";
             }
         }
-        private string TextoRDP(int rdp)
+        public string TextoRDP(int rdp)
         {
             switch (rdp)
             {
@@ -913,7 +913,7 @@ namespace Archivos
             }
         }
 
-        private string TextoSIM(int sim)
+        public string TextoSIM(int sim)
         {
             switch (sim)
             {
@@ -923,7 +923,7 @@ namespace Archivos
             }
         }
 
-        private string Valor(object valor)
+        public string Valor(object valor)
         {
             if (valor == null)
                 return "-";
@@ -935,7 +935,7 @@ namespace Archivos
                 if (double.IsNaN(numero))
                     return "-";
 
-                return numero.ToString(
+                return numero.ToString("0.####",
                     CultureInfo.GetCultureInfo("es-ES")
                 );
             }
@@ -968,7 +968,7 @@ namespace Archivos
             return string.Join(";", Enumerable.Repeat("-", cantidad)) + ";";
         }
 
-        private string ValorBDS40(TiraDatosDecod048 m)
+        public string ValorBDS40(TiraDatosDecod048 m)
         {
             if (m.ModeS?.BDS40 == null)
                 return string.Join(";", Enumerable.Repeat("-", 6));
@@ -986,7 +986,7 @@ namespace Archivos
             });
         }
 
-        private string ValorBDS50(TiraDatosDecod048 m) // Prepara los cinco datos de BDS50 para exportarlos al CSV                                        
+        public string ValorBDS50(TiraDatosDecod048 m) // Prepara los cinco datos de BDS50 para exportarlos al CSV                                        
         {
             if (m.ModeS?.BDS50 == null)
                 return string.Join(";", Enumerable.Repeat("-", 5)); // Si no hay datos escribe cinco guiones uno por columna
@@ -1003,7 +1003,7 @@ namespace Archivos
             });
         }
 
-        private string ValorBDS60(TiraDatosDecod048 m)  // Prepara los cinco datos de BDS60 para exportarlos al CSV
+        public string ValorBDS60(TiraDatosDecod048 m)  // Prepara los cinco datos de BDS60 para exportarlos al CSV
         {
             if (m.ModeS?.BDS60 == null)
                 return string.Join(";", Enumerable.Repeat("-", 5)); // Si no hay datos escribe cinco guiones uno por columna.
@@ -1018,6 +1018,160 @@ namespace Archivos
                 Valor(bds.BaroRate),
                 Valor(bds.InertialVS)
             });
+        }
+
+        public string TextoCNF(int cnf)
+        {
+            switch (cnf)
+            {
+                case 0: return "Confirmed Track";
+                case 1: return "Tentative Track";
+                default: return "-";
+            }
+        }
+
+        public string TextoDOU(int dou)
+        {
+            switch (dou)
+            {
+                case 0: return "Normal confidence";
+                case 1: return "Low confidence in plot";
+                default: return "-";
+            }
+        }
+
+        public string TextoMAH(int mah)
+        {
+            switch (mah)
+            {
+                case 0: return "No horizontal manoeuvre sensed";
+                case 1: return "Horizontal manoeuvre sensed";
+                default: return "-";
+            }
+        }
+
+        public string TextoCDM(string cdm)
+        {
+            switch (cdm)
+            {
+                case "00": return "Maintaining";
+                case "01": return "Climbing";
+                case "10": return "Descending";
+                case "11": return "Unknown";
+                default: return cdm ?? "-";
+            }
+        }
+
+        public string TextoTRE(int tre)
+        {
+            switch (tre)
+            {
+                case 0: return "Track still alive";
+                case 1: return "End of track lifetime";
+                default: return "-";
+            }
+        }
+
+        public string TextoGHO(int gho)
+        {
+            switch (gho)
+            {
+                case 0: return "True target track";
+                case 1: return "Ghost target track";
+                default: return "-";
+            }
+        }
+
+        public string TextoSUP(int sup)
+        {
+            switch (sup)
+            {
+                case 0: return "No";
+                case 1: return "Yes";
+                default: return "-";
+            }
+        }
+
+        public string TextoTCC(int tcc)
+        {
+            switch (tcc)
+            {
+                case 0: return "Tracking in Radar Plane";
+                case 1: return "Slant range correction and projection";
+                default: return "-";
+            }
+        }
+
+        public string TextoCOM(int com)
+        {
+            switch (com)
+            {
+                case 0: return "No communications capability (surveillance only)";
+                case 1: return "Comm. A and Comm. B capability";
+                case 2: return "Comm. A, Comm. B and Uplink ELM";
+                case 3: return "Comm. A, Comm. B, Uplink ELM and Downlink ELM";
+                case 4: return "Level 5 Transponder capability";
+                case 5:
+                case 6:
+                case 7: return "Not assigned";
+                default: return "-";
+            }
+        }
+
+        public string TextoSTAT(int stat)
+        {
+            switch (stat)
+            {
+                case 0: return "No alert, no SPI, aircraft airborne";
+                case 1: return "No alert, no SPI, aircraft on ground";
+                case 2: return "Alert, no SPI, aircraft airborne";
+                case 3: return "Alert, no SPI, aircraft on ground";
+                case 4: return "Alert, SPI, aircraft airborne or on ground";
+                case 5: return "No alert, SPI, aircraft airborne or on ground";
+                case 6: return "Not assigned";
+                case 7: return "Unknown";
+                default: return "-";
+            }
+        }
+
+        public string TextoSI(int si)
+        {
+            switch (si)
+            {
+                case 0: return "SI-Code Capable";
+                case 1: return "II-Code Capable";
+                default: return "-";
+            }
+        }
+
+        public string TextoMSSC(int mssc)
+        {
+            switch (mssc)
+            {
+                case 0: return "No";
+                case 1: return "Yes";
+                default: return "-";
+            }
+        }
+
+        public string TextoARC(int arc)
+        {
+            switch (arc)
+            {
+                case 0: return "100 ft resolution";
+                case 1: return "25 ft resolution";
+                default: return "-";
+            }
+        }
+
+        public string TextoAIC(int aic)
+        {
+            switch (aic)
+            {
+                case 0: return "No";
+                case 1: return "Yes";
+                default: return "-";
+            }
         }
 
     }

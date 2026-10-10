@@ -427,7 +427,7 @@ namespace DatosDecod
             List<byte> list = new List<byte> { b1,b2};
             List<int> listaBits = JoinBytesToBits(list);
 
-            this.CommACAScapability.COM = string.Join("", listaBits.GetRange(0, 3));
+            this.CommACAScapability.COM = 4 * listaBits[0] + 2 * listaBits[1] + listaBits[2];
             int STAT = 4 * listaBits[3] + 2 * listaBits[4] + listaBits[5];
             this.CommACAScapability.STAT = STAT;
             this.CommACAScapability.SI = listaBits[6];
