@@ -113,6 +113,26 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Elegante_llave_curva_en_melocotón {
+            get {
+                object obj = ResourceManager.GetObject("Elegante llave curva en melocotón", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Elegante_llave_curva_en_melocotón1 {
+            get {
+                object obj = ResourceManager.GetObject("Elegante llave curva en melocotón1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente {
             get {
                 object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente", resourceCulture);

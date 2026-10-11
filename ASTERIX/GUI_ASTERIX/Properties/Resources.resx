@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Icono de pausa blanco sobre transparente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono de pausa blanco sobre transparente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Icono de pausa blanco sobre transparente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icono de pausa blanco sobre transparente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -133,11 +130,17 @@
   <data name="playbutton_113628" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\playbutton_113628.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="large-green-circle_1f7e2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\large-green-circle_1f7e2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="large-green-square_1f7e9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\large-green-square_1f7e9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="large-green-circle_1f7e2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\large-green-circle_1f7e2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Icono de pausa blanco sobre transparente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono de pausa blanco sobre transparente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Elegante llave curva en melocotón" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Elegante llave curva en melocotón.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\images.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,6 +163,9 @@
   <data name="Icono de pausa blanco sobre transparente" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icono de pausa blanco sobre transparente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Botón azul brillante con icono de documento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Botón azul brillante con icono de documento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="avion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\avion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -178,7 +184,7 @@
   <data name="25650" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\25650.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Botón azul brillante con icono de documento" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Botón azul brillante con icono de documento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Elegante llave curva en melocotón1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Elegante llave curva en melocotón1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

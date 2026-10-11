@@ -90,5 +90,19 @@ namespace GUI_ASTERIX
 
         }
 
+        private void labelGBS_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelSIM_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelTituloDescriptor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

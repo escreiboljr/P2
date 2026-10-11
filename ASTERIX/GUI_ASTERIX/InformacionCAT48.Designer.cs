@@ -107,9 +107,10 @@
             labelIdentificador.BackColor = Color.Transparent;
             labelIdentificador.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             labelIdentificador.ForeColor = Color.Turquoise;
-            labelIdentificador.Location = new Point(12, 9);
+            labelIdentificador.Location = new Point(17, 15);
+            labelIdentificador.Margin = new Padding(4, 0, 4, 0);
             labelIdentificador.Name = "labelIdentificador";
-            labelIdentificador.Size = new Size(202, 30);
+            labelIdentificador.Size = new Size(294, 45);
             labelIdentificador.TabIndex = 1;
             labelIdentificador.Text = "Identificador: N/A";
             // 
@@ -118,11 +119,10 @@
             labelTYP.AutoSize = true;
             labelTYP.BackColor = Color.Transparent;
             labelTYP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTYP.ForeColor = Color.Lavender;
-            labelTYP.Location = new Point(12, 121);
-            labelTYP.Margin = new Padding(2, 0, 2, 0);
+            labelTYP.ForeColor = Color.FromArgb(255, 192, 255);
+            labelTYP.Location = new Point(17, 202);
             labelTYP.Name = "labelTYP";
-            labelTYP.Size = new Size(70, 19);
+            labelTYP.Size = new Size(98, 28);
             labelTYP.TabIndex = 4;
             labelTYP.Text = "TYP: N/A";
             // 
@@ -131,11 +131,10 @@
             labelSIM.AutoSize = true;
             labelSIM.BackColor = Color.Transparent;
             labelSIM.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSIM.ForeColor = Color.Lavender;
-            labelSIM.Location = new Point(11, 150);
-            labelSIM.Margin = new Padding(2, 0, 2, 0);
+            labelSIM.ForeColor = Color.FromArgb(255, 192, 255);
+            labelSIM.Location = new Point(16, 250);
             labelSIM.Name = "labelSIM";
-            labelSIM.Size = new Size(69, 19);
+            labelSIM.Size = new Size(98, 28);
             labelSIM.TabIndex = 5;
             labelSIM.Text = "SIM: N/A";
             // 
@@ -144,11 +143,10 @@
             labelTST.AutoSize = true;
             labelTST.BackColor = Color.Transparent;
             labelTST.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTST.ForeColor = Color.Lavender;
-            labelTST.Location = new Point(11, 262);
-            labelTST.Margin = new Padding(2, 0, 2, 0);
+            labelTST.ForeColor = Color.FromArgb(255, 192, 255);
+            labelTST.Location = new Point(16, 437);
             labelTST.Name = "labelTST";
-            labelTST.Size = new Size(68, 19);
+            labelTST.Size = new Size(97, 28);
             labelTST.TabIndex = 7;
             labelTST.Text = "TST: N/A";
             // 
@@ -157,11 +155,10 @@
             labelRAB.AutoSize = true;
             labelRAB.BackColor = Color.Transparent;
             labelRAB.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelRAB.ForeColor = Color.Lavender;
-            labelRAB.Location = new Point(12, 233);
-            labelRAB.Margin = new Padding(2, 0, 2, 0);
+            labelRAB.ForeColor = Color.FromArgb(255, 192, 255);
+            labelRAB.Location = new Point(17, 388);
             labelRAB.Name = "labelRAB";
-            labelRAB.Size = new Size(72, 19);
+            labelRAB.Size = new Size(102, 28);
             labelRAB.TabIndex = 6;
             labelRAB.Text = "RAB: N/A";
             // 
@@ -170,11 +167,10 @@
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
             label3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label3.ForeColor = Color.Lavender;
-            label3.Location = new Point(12, 178);
-            label3.Margin = new Padding(2, 0, 2, 0);
+            label3.ForeColor = Color.FromArgb(255, 192, 255);
+            label3.Location = new Point(17, 297);
             label3.Name = "label3";
-            label3.Size = new Size(72, 19);
+            label3.Size = new Size(102, 28);
             label3.TabIndex = 6;
             label3.Text = "RDP: N/A";
             // 
@@ -183,11 +179,10 @@
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label4.ForeColor = Color.Lavender;
-            label4.Location = new Point(11, 207);
-            label4.Margin = new Padding(2, 0, 2, 0);
+            label4.ForeColor = Color.FromArgb(255, 192, 255);
+            label4.Location = new Point(16, 345);
             label4.Name = "label4";
-            label4.Size = new Size(65, 19);
+            label4.Size = new Size(91, 28);
             label4.TabIndex = 7;
             label4.Text = "SPI: N/A";
             // 
@@ -196,11 +191,10 @@
             labelXPP.AutoSize = true;
             labelXPP.BackColor = Color.Transparent;
             labelXPP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelXPP.ForeColor = Color.Lavender;
-            labelXPP.Location = new Point(11, 321);
-            labelXPP.Margin = new Padding(2, 0, 2, 0);
+            labelXPP.ForeColor = Color.FromArgb(255, 192, 255);
+            labelXPP.Location = new Point(16, 535);
             labelXPP.Name = "labelXPP";
-            labelXPP.Size = new Size(71, 19);
+            labelXPP.Size = new Size(99, 28);
             labelXPP.TabIndex = 9;
             labelXPP.Text = "XPP: N/A";
             // 
@@ -209,11 +203,10 @@
             labelERR.AutoSize = true;
             labelERR.BackColor = Color.Transparent;
             labelERR.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelERR.ForeColor = Color.Lavender;
-            labelERR.Location = new Point(12, 292);
-            labelERR.Margin = new Padding(2, 0, 2, 0);
+            labelERR.ForeColor = Color.FromArgb(255, 192, 255);
+            labelERR.Location = new Point(17, 487);
             labelERR.Name = "labelERR";
-            labelERR.Size = new Size(69, 19);
+            labelERR.Size = new Size(99, 28);
             labelERR.TabIndex = 8;
             labelERR.Text = "ERR: N/A";
             // 
@@ -222,11 +215,10 @@
             labelPAI_VAL.AutoSize = true;
             labelPAI_VAL.BackColor = Color.Transparent;
             labelPAI_VAL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelPAI_VAL.ForeColor = Color.Lavender;
-            labelPAI_VAL.Location = new Point(12, 589);
-            labelPAI_VAL.Margin = new Padding(2, 0, 2, 0);
+            labelPAI_VAL.ForeColor = Color.FromArgb(255, 192, 255);
+            labelPAI_VAL.Location = new Point(17, 982);
             labelPAI_VAL.Name = "labelPAI_VAL";
-            labelPAI_VAL.Size = new Size(97, 19);
+            labelPAI_VAL.Size = new Size(137, 28);
             labelPAI_VAL.TabIndex = 12;
             labelPAI_VAL.Text = "PAI_VAL: N/A";
             // 
@@ -235,11 +227,10 @@
             labelPAI_EP.AutoSize = true;
             labelPAI_EP.BackColor = Color.Transparent;
             labelPAI_EP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelPAI_EP.ForeColor = Color.Lavender;
-            labelPAI_EP.Location = new Point(13, 560);
-            labelPAI_EP.Margin = new Padding(2, 0, 2, 0);
+            labelPAI_EP.ForeColor = Color.FromArgb(255, 192, 255);
+            labelPAI_EP.Location = new Point(19, 933);
             labelPAI_EP.Name = "labelPAI_EP";
-            labelPAI_EP.Size = new Size(88, 19);
+            labelPAI_EP.Size = new Size(124, 28);
             labelPAI_EP.TabIndex = 11;
             labelPAI_EP.Text = "PAI_EP: N/A";
             // 
@@ -248,11 +239,10 @@
             labelSCN_VAL.AutoSize = true;
             labelSCN_VAL.BackColor = Color.Transparent;
             labelSCN_VAL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSCN_VAL.ForeColor = Color.Lavender;
-            labelSCN_VAL.Location = new Point(12, 530);
-            labelSCN_VAL.Margin = new Padding(2, 0, 2, 0);
+            labelSCN_VAL.ForeColor = Color.FromArgb(255, 192, 255);
+            labelSCN_VAL.Location = new Point(17, 883);
             labelSCN_VAL.Name = "labelSCN_VAL";
-            labelSCN_VAL.Size = new Size(103, 19);
+            labelSCN_VAL.Size = new Size(145, 28);
             labelSCN_VAL.TabIndex = 10;
             labelSCN_VAL.Text = "SCN_VAL: N/A";
             // 
@@ -261,11 +251,10 @@
             labelME.AutoSize = true;
             labelME.BackColor = Color.Transparent;
             labelME.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelME.ForeColor = Color.Lavender;
-            labelME.Location = new Point(11, 352);
-            labelME.Margin = new Padding(2, 0, 2, 0);
+            labelME.ForeColor = Color.FromArgb(255, 192, 255);
+            labelME.Location = new Point(16, 587);
             labelME.Name = "labelME";
-            labelME.Size = new Size(64, 19);
+            labelME.Size = new Size(92, 28);
             labelME.TabIndex = 10;
             labelME.Text = "ME: N/A";
             // 
@@ -274,11 +263,10 @@
             labelMI.AutoSize = true;
             labelMI.BackColor = Color.Transparent;
             labelMI.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelMI.ForeColor = Color.Lavender;
-            labelMI.Location = new Point(12, 382);
-            labelMI.Margin = new Padding(2, 0, 2, 0);
+            labelMI.ForeColor = Color.FromArgb(255, 192, 255);
+            labelMI.Location = new Point(17, 637);
             labelMI.Name = "labelMI";
-            labelMI.Size = new Size(61, 19);
+            labelMI.Size = new Size(87, 28);
             labelMI.TabIndex = 11;
             labelMI.Text = "MI: N/A";
             // 
@@ -287,11 +275,10 @@
             labelFOE_FRI.AutoSize = true;
             labelFOE_FRI.BackColor = Color.Transparent;
             labelFOE_FRI.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelFOE_FRI.ForeColor = Color.Lavender;
-            labelFOE_FRI.Location = new Point(11, 411);
-            labelFOE_FRI.Margin = new Padding(2, 0, 2, 0);
+            labelFOE_FRI.ForeColor = Color.FromArgb(255, 192, 255);
+            labelFOE_FRI.Location = new Point(16, 685);
             labelFOE_FRI.Name = "labelFOE_FRI";
-            labelFOE_FRI.Size = new Size(95, 19);
+            labelFOE_FRI.Size = new Size(136, 28);
             labelFOE_FRI.TabIndex = 12;
             labelFOE_FRI.Text = "FOE/FRI: N/A";
             // 
@@ -300,11 +287,10 @@
             labelSCN_EP.AutoSize = true;
             labelSCN_EP.BackColor = Color.Transparent;
             labelSCN_EP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSCN_EP.ForeColor = Color.Lavender;
-            labelSCN_EP.Location = new Point(12, 502);
-            labelSCN_EP.Margin = new Padding(2, 0, 2, 0);
+            labelSCN_EP.ForeColor = Color.FromArgb(255, 192, 255);
+            labelSCN_EP.Location = new Point(17, 837);
             labelSCN_EP.Name = "labelSCN_EP";
-            labelSCN_EP.Size = new Size(94, 19);
+            labelSCN_EP.Size = new Size(132, 28);
             labelSCN_EP.TabIndex = 15;
             labelSCN_EP.Text = "SCN_EP: N/A";
             // 
@@ -313,11 +299,10 @@
             labelADSB_VAL.AutoSize = true;
             labelADSB_VAL.BackColor = Color.Transparent;
             labelADSB_VAL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelADSB_VAL.ForeColor = Color.Lavender;
-            labelADSB_VAL.Location = new Point(13, 473);
-            labelADSB_VAL.Margin = new Padding(2, 0, 2, 0);
+            labelADSB_VAL.ForeColor = Color.FromArgb(255, 192, 255);
+            labelADSB_VAL.Location = new Point(19, 788);
             labelADSB_VAL.Name = "labelADSB_VAL";
-            labelADSB_VAL.Size = new Size(112, 19);
+            labelADSB_VAL.Size = new Size(159, 28);
             labelADSB_VAL.TabIndex = 14;
             labelADSB_VAL.Text = "ADSB_VAL: N/A";
             // 
@@ -326,11 +311,10 @@
             labelADSBEP.AutoSize = true;
             labelADSBEP.BackColor = Color.Transparent;
             labelADSBEP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelADSBEP.ForeColor = Color.Lavender;
-            labelADSBEP.Location = new Point(12, 443);
-            labelADSBEP.Margin = new Padding(2, 0, 2, 0);
+            labelADSBEP.ForeColor = Color.FromArgb(255, 192, 255);
+            labelADSBEP.Location = new Point(17, 738);
             labelADSBEP.Name = "labelADSBEP";
-            labelADSBEP.Size = new Size(103, 19);
+            labelADSBEP.Size = new Size(146, 28);
             labelADSBEP.TabIndex = 13;
             labelADSBEP.Text = "ADSB_EP: N/A";
             // 
@@ -339,11 +323,10 @@
             labelAPD.AutoSize = true;
             labelAPD.BackColor = Color.Transparent;
             labelAPD.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelAPD.ForeColor = Color.Lavender;
-            labelAPD.Location = new Point(307, 292);
-            labelAPD.Margin = new Padding(2, 0, 2, 0);
+            labelAPD.ForeColor = Color.FromArgb(192, 255, 255);
+            labelAPD.Location = new Point(439, 487);
             labelAPD.Name = "labelAPD";
-            labelAPD.Size = new Size(73, 19);
+            labelAPD.Size = new Size(103, 28);
             labelAPD.TabIndex = 22;
             labelAPD.Text = "APD: N/A";
             // 
@@ -352,11 +335,10 @@
             labelPRL.AutoSize = true;
             labelPRL.BackColor = Color.Transparent;
             labelPRL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelPRL.ForeColor = Color.Lavender;
-            labelPRL.Location = new Point(306, 207);
-            labelPRL.Margin = new Padding(2, 0, 2, 0);
+            labelPRL.ForeColor = Color.FromArgb(192, 255, 255);
+            labelPRL.Location = new Point(437, 345);
             labelPRL.Name = "labelPRL";
-            labelPRL.Size = new Size(69, 19);
+            labelPRL.Size = new Size(97, 28);
             labelPRL.TabIndex = 20;
             labelPRL.Text = "PRL: N/A";
             // 
@@ -365,11 +347,10 @@
             labelRPD.AutoSize = true;
             labelRPD.BackColor = Color.Transparent;
             labelRPD.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelRPD.ForeColor = Color.Lavender;
-            labelRPD.Location = new Point(306, 262);
-            labelRPD.Margin = new Padding(2, 0, 2, 0);
+            labelRPD.ForeColor = Color.FromArgb(192, 255, 255);
+            labelRPD.Location = new Point(437, 437);
             labelRPD.Name = "labelRPD";
-            labelRPD.Size = new Size(72, 19);
+            labelRPD.Size = new Size(102, 28);
             labelRPD.TabIndex = 21;
             labelRPD.Text = "RPD: N/A";
             // 
@@ -378,11 +359,10 @@
             labelSAM.AutoSize = true;
             labelSAM.BackColor = Color.Transparent;
             labelSAM.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSAM.ForeColor = Color.Lavender;
-            labelSAM.Location = new Point(307, 178);
-            labelSAM.Margin = new Padding(2, 0, 2, 0);
+            labelSAM.ForeColor = Color.FromArgb(192, 255, 255);
+            labelSAM.Location = new Point(439, 297);
             labelSAM.Name = "labelSAM";
-            labelSAM.Size = new Size(75, 19);
+            labelSAM.Size = new Size(106, 28);
             labelSAM.TabIndex = 18;
             labelSAM.Text = "SAM: N/A";
             // 
@@ -391,11 +371,10 @@
             labelPAM.AutoSize = true;
             labelPAM.BackColor = Color.Transparent;
             labelPAM.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelPAM.ForeColor = Color.Lavender;
-            labelPAM.Location = new Point(307, 233);
-            labelPAM.Margin = new Padding(2, 0, 2, 0);
+            labelPAM.ForeColor = Color.FromArgb(192, 255, 255);
+            labelPAM.Location = new Point(439, 388);
             labelPAM.Name = "labelPAM";
-            labelPAM.Size = new Size(75, 19);
+            labelPAM.Size = new Size(106, 28);
             labelPAM.TabIndex = 19;
             labelPAM.Text = "PAM: N/A";
             // 
@@ -404,11 +383,10 @@
             labelSRR.AutoSize = true;
             labelSRR.BackColor = Color.Transparent;
             labelSRR.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSRR.ForeColor = Color.Lavender;
-            labelSRR.Location = new Point(306, 150);
-            labelSRR.Margin = new Padding(2, 0, 2, 0);
+            labelSRR.ForeColor = Color.FromArgb(192, 255, 255);
+            labelSRR.Location = new Point(437, 250);
             labelSRR.Name = "labelSRR";
-            labelSRR.Size = new Size(70, 19);
+            labelSRR.Size = new Size(99, 28);
             labelSRR.TabIndex = 17;
             labelSRR.Text = "SRR: N/A";
             // 
@@ -417,11 +395,10 @@
             labelSRL.AutoSize = true;
             labelSRL.BackColor = Color.Transparent;
             labelSRL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSRL.ForeColor = Color.Lavender;
-            labelSRL.Location = new Point(307, 121);
-            labelSRL.Margin = new Padding(2, 0, 2, 0);
+            labelSRL.ForeColor = Color.FromArgb(192, 255, 255);
+            labelSRL.Location = new Point(439, 202);
             labelSRL.Name = "labelSRL";
-            labelSRL.Size = new Size(68, 19);
+            labelSRL.Size = new Size(96, 28);
             labelSRL.TabIndex = 16;
             labelSRL.Text = "SRL: N/A";
             // 
@@ -430,11 +407,10 @@
             labelTituloTargetReport.AutoSize = true;
             labelTituloTargetReport.BackColor = Color.Transparent;
             labelTituloTargetReport.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelTituloTargetReport.ForeColor = Color.Lavender;
-            labelTituloTargetReport.Location = new Point(12, 61);
-            labelTituloTargetReport.Margin = new Padding(2, 0, 2, 0);
+            labelTituloTargetReport.ForeColor = Color.FromArgb(255, 192, 255);
+            labelTituloTargetReport.Location = new Point(17, 102);
             labelTituloTargetReport.Name = "labelTituloTargetReport";
-            labelTituloTargetReport.Size = new Size(132, 21);
+            labelTituloTargetReport.Size = new Size(202, 32);
             labelTituloTargetReport.TabIndex = 23;
             labelTituloTargetReport.Text = "TARGET REPORT";
             // 
@@ -443,11 +419,10 @@
             labelTituloDescriptor.AutoSize = true;
             labelTituloDescriptor.BackColor = Color.Transparent;
             labelTituloDescriptor.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelTituloDescriptor.ForeColor = Color.Lavender;
-            labelTituloDescriptor.Location = new Point(13, 82);
-            labelTituloDescriptor.Margin = new Padding(2, 0, 2, 0);
+            labelTituloDescriptor.ForeColor = Color.FromArgb(255, 192, 255);
+            labelTituloDescriptor.Location = new Point(19, 137);
             labelTituloDescriptor.Name = "labelTituloDescriptor";
-            labelTituloDescriptor.Size = new Size(105, 21);
+            labelTituloDescriptor.Size = new Size(159, 32);
             labelTituloDescriptor.TabIndex = 24;
             labelTituloDescriptor.Text = "DESCRIPTOR";
             // 
@@ -456,11 +431,10 @@
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.ForeColor = Color.Lavender;
-            label1.Location = new Point(307, 82);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.ForeColor = Color.FromArgb(192, 255, 255);
+            label1.Location = new Point(436, 134);
             label1.Name = "label1";
-            label1.Size = new Size(159, 21);
+            label1.Size = new Size(241, 32);
             label1.TabIndex = 26;
             label1.Text = "CHRACACTERISTICS";
             // 
@@ -469,11 +443,10 @@
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label2.ForeColor = Color.Lavender;
-            label2.Location = new Point(306, 61);
-            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.ForeColor = Color.FromArgb(192, 255, 255);
+            label2.Location = new Point(437, 102);
             label2.Name = "label2";
-            label2.Size = new Size(106, 21);
+            label2.Size = new Size(162, 32);
             label2.TabIndex = 25;
             label2.Text = "RADAR PLOT";
             // 
@@ -482,11 +455,10 @@
             labelAircraftAddres.AutoSize = true;
             labelAircraftAddres.BackColor = Color.Transparent;
             labelAircraftAddres.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelAircraftAddres.ForeColor = Color.Lavender;
-            labelAircraftAddres.Location = new Point(305, 17);
-            labelAircraftAddres.Margin = new Padding(2, 0, 2, 0);
+            labelAircraftAddres.ForeColor = Color.SlateBlue;
+            labelAircraftAddres.Location = new Point(436, 28);
             labelAircraftAddres.Name = "labelAircraftAddres";
-            labelAircraftAddres.Size = new Size(147, 19);
+            labelAircraftAddres.Size = new Size(207, 28);
             labelAircraftAddres.TabIndex = 27;
             labelAircraftAddres.Text = "Aircraft Addres: N/A";
             // 
@@ -495,11 +467,10 @@
             labelAircraftIddent.AutoSize = true;
             labelAircraftIddent.BackColor = Color.Transparent;
             labelAircraftIddent.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelAircraftIddent.ForeColor = Color.Lavender;
-            labelAircraftIddent.Location = new Point(510, 17);
-            labelAircraftIddent.Margin = new Padding(2, 0, 2, 0);
+            labelAircraftIddent.ForeColor = Color.SlateBlue;
+            labelAircraftIddent.Location = new Point(729, 28);
             labelAircraftIddent.Name = "labelAircraftIddent";
-            labelAircraftIddent.Size = new Size(170, 19);
+            labelAircraftIddent.Size = new Size(242, 28);
             labelAircraftIddent.TabIndex = 28;
             labelAircraftIddent.Text = "Aircraft Iddentifier: N/A";
             // 
@@ -508,11 +479,10 @@
             labelVNAV.AutoSize = true;
             labelVNAV.BackColor = Color.Transparent;
             labelVNAV.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelVNAV.ForeColor = Color.Lavender;
-            labelVNAV.Location = new Point(583, 236);
-            labelVNAV.Margin = new Padding(2, 0, 2, 0);
+            labelVNAV.ForeColor = Color.FromArgb(255, 192, 192);
+            labelVNAV.Location = new Point(851, 388);
             labelVNAV.Name = "labelVNAV";
-            labelVNAV.Size = new Size(82, 19);
+            labelVNAV.Size = new Size(117, 28);
             labelVNAV.TabIndex = 33;
             labelVNAV.Text = "VNAV: N/A";
             // 
@@ -521,11 +491,10 @@
             labelApp.AutoSize = true;
             labelApp.BackColor = Color.Transparent;
             labelApp.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelApp.ForeColor = Color.Lavender;
-            labelApp.Location = new Point(583, 291);
-            labelApp.Margin = new Padding(2, 0, 2, 0);
+            labelApp.ForeColor = Color.FromArgb(255, 192, 192);
+            labelApp.Location = new Point(849, 487);
             labelApp.Name = "labelApp";
-            labelApp.Size = new Size(72, 19);
+            labelApp.Size = new Size(100, 28);
             labelApp.TabIndex = 34;
             labelApp.Text = "App: N/A";
             // 
@@ -534,11 +503,10 @@
             labelBaro.AutoSize = true;
             labelBaro.BackColor = Color.Transparent;
             labelBaro.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelBaro.ForeColor = Color.Lavender;
-            labelBaro.Location = new Point(584, 207);
-            labelBaro.Margin = new Padding(2, 0, 2, 0);
+            labelBaro.ForeColor = Color.FromArgb(255, 192, 192);
+            labelBaro.Location = new Point(851, 345);
             labelBaro.Name = "labelBaro";
-            labelBaro.Size = new Size(76, 19);
+            labelBaro.Size = new Size(106, 28);
             labelBaro.TabIndex = 31;
             labelBaro.Text = "Baro: N/A";
             // 
@@ -547,11 +515,10 @@
             labelAltHold.AutoSize = true;
             labelAltHold.BackColor = Color.Transparent;
             labelAltHold.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelAltHold.ForeColor = Color.Lavender;
-            labelAltHold.Location = new Point(584, 262);
-            labelAltHold.Margin = new Padding(2, 0, 2, 0);
+            labelAltHold.ForeColor = Color.FromArgb(255, 192, 192);
+            labelAltHold.Location = new Point(851, 437);
             labelAltHold.Name = "labelAltHold";
-            labelAltHold.Size = new Size(96, 19);
+            labelAltHold.Size = new Size(135, 28);
             labelAltHold.TabIndex = 32;
             labelAltHold.Text = "AltHold: N/A";
             // 
@@ -560,11 +527,10 @@
             labelFMS.AutoSize = true;
             labelFMS.BackColor = Color.Transparent;
             labelFMS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelFMS.ForeColor = Color.Lavender;
-            labelFMS.Location = new Point(583, 179);
-            labelFMS.Margin = new Padding(2, 0, 2, 0);
+            labelFMS.ForeColor = Color.FromArgb(255, 192, 192);
+            labelFMS.Location = new Point(851, 297);
             labelFMS.Name = "labelFMS";
-            labelFMS.Size = new Size(72, 19);
+            labelFMS.Size = new Size(102, 28);
             labelFMS.TabIndex = 30;
             labelFMS.Text = "FMS: N/A";
             // 
@@ -573,11 +539,10 @@
             labelMCP.AutoSize = true;
             labelMCP.BackColor = Color.Transparent;
             labelMCP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelMCP.ForeColor = Color.Lavender;
-            labelMCP.Location = new Point(584, 150);
-            labelMCP.Margin = new Padding(2, 0, 2, 0);
+            labelMCP.ForeColor = Color.FromArgb(255, 192, 192);
+            labelMCP.Location = new Point(851, 250);
             labelMCP.Name = "labelMCP";
-            labelMCP.Size = new Size(75, 19);
+            labelMCP.Size = new Size(105, 28);
             labelMCP.TabIndex = 29;
             labelMCP.Text = "MCP: N/A";
             // 
@@ -586,11 +551,10 @@
             labelBaroRate.AutoSize = true;
             labelBaroRate.BackColor = Color.Transparent;
             labelBaroRate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelBaroRate.ForeColor = Color.Lavender;
-            labelBaroRate.Location = new Point(909, 233);
-            labelBaroRate.Margin = new Padding(2, 0, 2, 0);
+            labelBaroRate.ForeColor = Color.FromArgb(255, 192, 192);
+            labelBaroRate.Location = new Point(1324, 388);
             labelBaroRate.Name = "labelBaroRate";
-            labelBaroRate.Size = new Size(106, 19);
+            labelBaroRate.Size = new Size(149, 28);
             labelBaroRate.TabIndex = 39;
             labelBaroRate.Text = "BaroRate: N/A";
             // 
@@ -599,11 +563,10 @@
             labelMach.AutoSize = true;
             labelMach.BackColor = Color.Transparent;
             labelMach.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelMach.ForeColor = Color.Lavender;
-            labelMach.Location = new Point(910, 204);
-            labelMach.Margin = new Padding(2, 0, 2, 0);
+            labelMach.ForeColor = Color.FromArgb(255, 192, 192);
+            labelMach.Location = new Point(1324, 340);
             labelMach.Name = "labelMach";
-            labelMach.Size = new Size(80, 19);
+            labelMach.Size = new Size(114, 28);
             labelMach.TabIndex = 37;
             labelMach.Text = "Mach: N/A";
             // 
@@ -612,11 +575,10 @@
             labelInertialVS.AutoSize = true;
             labelInertialVS.BackColor = Color.Transparent;
             labelInertialVS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelInertialVS.ForeColor = Color.Lavender;
-            labelInertialVS.Location = new Point(910, 259);
-            labelInertialVS.Margin = new Padding(2, 0, 2, 0);
+            labelInertialVS.ForeColor = Color.FromArgb(255, 192, 192);
+            labelInertialVS.Location = new Point(1324, 432);
             labelInertialVS.Name = "labelInertialVS";
-            labelInertialVS.Size = new Size(108, 19);
+            labelInertialVS.Size = new Size(155, 28);
             labelInertialVS.TabIndex = 38;
             labelInertialVS.Text = "InertialVS: N/A";
             // 
@@ -625,11 +587,10 @@
             labelIAS.AutoSize = true;
             labelIAS.BackColor = Color.Transparent;
             labelIAS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelIAS.ForeColor = Color.Lavender;
-            labelIAS.Location = new Point(909, 176);
-            labelIAS.Margin = new Padding(2, 0, 2, 0);
+            labelIAS.ForeColor = Color.FromArgb(255, 192, 192);
+            labelIAS.Location = new Point(1324, 293);
             labelIAS.Name = "labelIAS";
-            labelIAS.Size = new Size(66, 19);
+            labelIAS.Size = new Size(93, 28);
             labelIAS.TabIndex = 36;
             labelIAS.Text = "IAS: N/A";
             // 
@@ -638,11 +599,10 @@
             labelHeading.AutoSize = true;
             labelHeading.BackColor = Color.Transparent;
             labelHeading.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelHeading.ForeColor = Color.Lavender;
-            labelHeading.Location = new Point(910, 147);
-            labelHeading.Margin = new Padding(2, 0, 2, 0);
+            labelHeading.ForeColor = Color.FromArgb(255, 192, 192);
+            labelHeading.Location = new Point(1324, 245);
             labelHeading.Name = "labelHeading";
-            labelHeading.Size = new Size(101, 19);
+            labelHeading.Size = new Size(141, 28);
             labelHeading.TabIndex = 35;
             labelHeading.Text = "Heading: N/A";
             // 
@@ -651,11 +611,10 @@
             labelRoll.AutoSize = true;
             labelRoll.BackColor = Color.Transparent;
             labelRoll.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelRoll.ForeColor = Color.Lavender;
-            labelRoll.Location = new Point(751, 147);
-            labelRoll.Margin = new Padding(2, 0, 2, 0);
+            labelRoll.ForeColor = Color.FromArgb(255, 192, 192);
+            labelRoll.Location = new Point(1073, 245);
             labelRoll.Name = "labelRoll";
-            labelRoll.Size = new Size(70, 19);
+            labelRoll.Size = new Size(99, 28);
             labelRoll.TabIndex = 35;
             labelRoll.Text = "Roll: N/A";
             // 
@@ -664,11 +623,10 @@
             labelTrack.AutoSize = true;
             labelTrack.BackColor = Color.Transparent;
             labelTrack.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTrack.ForeColor = Color.Lavender;
-            labelTrack.Location = new Point(750, 176);
-            labelTrack.Margin = new Padding(2, 0, 2, 0);
+            labelTrack.ForeColor = Color.FromArgb(255, 192, 192);
+            labelTrack.Location = new Point(1071, 293);
             labelTrack.Name = "labelTrack";
-            labelTrack.Size = new Size(81, 19);
+            labelTrack.Size = new Size(113, 28);
             labelTrack.TabIndex = 36;
             labelTrack.Text = "Track: N/A";
             // 
@@ -677,11 +635,10 @@
             labelTrueAirspeed.AutoSize = true;
             labelTrueAirspeed.BackColor = Color.Transparent;
             labelTrueAirspeed.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTrueAirspeed.ForeColor = Color.Lavender;
-            labelTrueAirspeed.Location = new Point(751, 259);
-            labelTrueAirspeed.Margin = new Padding(2, 0, 2, 0);
+            labelTrueAirspeed.ForeColor = Color.FromArgb(255, 192, 192);
+            labelTrueAirspeed.Location = new Point(1073, 432);
             labelTrueAirspeed.Name = "labelTrueAirspeed";
-            labelTrueAirspeed.Size = new Size(133, 19);
+            labelTrueAirspeed.Size = new Size(186, 28);
             labelTrueAirspeed.TabIndex = 38;
             labelTrueAirspeed.Text = "TrueAirspeed: N/A";
             // 
@@ -690,11 +647,10 @@
             labelGroundSpeed.AutoSize = true;
             labelGroundSpeed.BackColor = Color.Transparent;
             labelGroundSpeed.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelGroundSpeed.ForeColor = Color.Lavender;
-            labelGroundSpeed.Location = new Point(751, 204);
-            labelGroundSpeed.Margin = new Padding(2, 0, 2, 0);
+            labelGroundSpeed.ForeColor = Color.FromArgb(255, 192, 192);
+            labelGroundSpeed.Location = new Point(1073, 340);
             labelGroundSpeed.Name = "labelGroundSpeed";
-            labelGroundSpeed.Size = new Size(136, 19);
+            labelGroundSpeed.Size = new Size(189, 28);
             labelGroundSpeed.TabIndex = 37;
             labelGroundSpeed.Text = "GroundSpeed: N/A";
             // 
@@ -703,11 +659,10 @@
             labelTrackRate.AutoSize = true;
             labelTrackRate.BackColor = Color.Transparent;
             labelTrackRate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTrackRate.ForeColor = Color.Lavender;
-            labelTrackRate.Location = new Point(750, 233);
-            labelTrackRate.Margin = new Padding(2, 0, 2, 0);
+            labelTrackRate.ForeColor = Color.FromArgb(255, 192, 192);
+            labelTrackRate.Location = new Point(1071, 388);
             labelTrackRate.Name = "labelTrackRate";
-            labelTrackRate.Size = new Size(110, 19);
+            labelTrackRate.Size = new Size(155, 28);
             labelTrackRate.TabIndex = 39;
             labelTrackRate.Text = "TrackRate: N/A";
             // 
@@ -716,24 +671,22 @@
             labelTituloModeS.AutoSize = true;
             labelTituloModeS.BackColor = Color.Transparent;
             labelTituloModeS.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelTituloModeS.ForeColor = Color.Lavender;
-            labelTituloModeS.Location = new Point(733, 61);
-            labelTituloModeS.Margin = new Padding(2, 0, 2, 0);
+            labelTituloModeS.ForeColor = Color.FromArgb(255, 192, 192);
+            labelTituloModeS.Location = new Point(1051, 102);
             labelTituloModeS.Name = "labelTituloModeS";
-            labelTituloModeS.Size = new Size(107, 21);
+            labelTituloModeS.Size = new Size(175, 32);
             labelTituloModeS.TabIndex = 40;
-            labelTituloModeS.Text = "Mode S Data";
+            labelTituloModeS.Text = "MODE S DATA";
             // 
             // labelBDS40
             // 
             labelBDS40.AutoSize = true;
             labelBDS40.BackColor = Color.Transparent;
             labelBDS40.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelBDS40.ForeColor = Color.Lavender;
-            labelBDS40.Location = new Point(583, 118);
-            labelBDS40.Margin = new Padding(2, 0, 2, 0);
+            labelBDS40.ForeColor = Color.FromArgb(255, 192, 192);
+            labelBDS40.Location = new Point(851, 197);
             labelBDS40.Name = "labelBDS40";
-            labelBDS40.Size = new Size(67, 21);
+            labelBDS40.Size = new Size(102, 32);
             labelBDS40.TabIndex = 41;
             labelBDS40.Text = "BDS 4.0";
             // 
@@ -742,11 +695,10 @@
             labelBDS50.AutoSize = true;
             labelBDS50.BackColor = Color.Transparent;
             labelBDS50.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelBDS50.ForeColor = Color.Lavender;
-            labelBDS50.Location = new Point(754, 118);
-            labelBDS50.Margin = new Padding(2, 0, 2, 0);
+            labelBDS50.ForeColor = Color.FromArgb(255, 192, 192);
+            labelBDS50.Location = new Point(1071, 197);
             labelBDS50.Name = "labelBDS50";
-            labelBDS50.Size = new Size(67, 21);
+            labelBDS50.Size = new Size(102, 32);
             labelBDS50.TabIndex = 42;
             labelBDS50.Text = "BDS 5.0";
             // 
@@ -755,11 +707,10 @@
             labelBDS60.AutoSize = true;
             labelBDS60.BackColor = Color.Transparent;
             labelBDS60.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelBDS60.ForeColor = Color.Lavender;
-            labelBDS60.Location = new Point(910, 121);
-            labelBDS60.Margin = new Padding(2, 0, 2, 0);
+            labelBDS60.ForeColor = Color.FromArgb(255, 192, 192);
+            labelBDS60.Location = new Point(1324, 197);
             labelBDS60.Name = "labelBDS60";
-            labelBDS60.Size = new Size(67, 21);
+            labelBDS60.Size = new Size(102, 32);
             labelBDS60.TabIndex = 43;
             labelBDS60.Text = "BDS 6.0";
             // 
@@ -768,11 +719,10 @@
             labelCNF.AutoSize = true;
             labelCNF.BackColor = Color.Transparent;
             labelCNF.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelCNF.ForeColor = Color.Lavender;
-            labelCNF.Location = new Point(307, 384);
-            labelCNF.Margin = new Padding(2, 0, 2, 0);
+            labelCNF.ForeColor = Color.FromArgb(255, 255, 192);
+            labelCNF.Location = new Point(441, 616);
             labelCNF.Name = "labelCNF";
-            labelCNF.Size = new Size(71, 19);
+            labelCNF.Size = new Size(100, 28);
             labelCNF.TabIndex = 44;
             labelCNF.Text = "CNF: N/A";
             // 
@@ -781,11 +731,10 @@
             labelRAD.AutoSize = true;
             labelRAD.BackColor = Color.Transparent;
             labelRAD.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelRAD.ForeColor = Color.Lavender;
-            labelRAD.Location = new Point(306, 413);
-            labelRAD.Margin = new Padding(2, 0, 2, 0);
+            labelRAD.ForeColor = Color.FromArgb(255, 255, 192);
+            labelRAD.Location = new Point(439, 658);
             labelRAD.Name = "labelRAD";
-            labelRAD.Size = new Size(73, 19);
+            labelRAD.Size = new Size(104, 28);
             labelRAD.TabIndex = 45;
             labelRAD.Text = "RAD: N/A";
             // 
@@ -794,11 +743,10 @@
             labelCDM.AutoSize = true;
             labelCDM.BackColor = Color.Transparent;
             labelCDM.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelCDM.ForeColor = Color.Lavender;
-            labelCDM.Location = new Point(307, 496);
-            labelCDM.Margin = new Padding(2, 0, 2, 0);
+            labelCDM.ForeColor = Color.FromArgb(255, 255, 192);
+            labelCDM.Location = new Point(439, 802);
             labelCDM.Name = "labelCDM";
-            labelCDM.Size = new Size(76, 19);
+            labelCDM.Size = new Size(108, 28);
             labelCDM.TabIndex = 47;
             labelCDM.Text = "CDM: N/A";
             // 
@@ -807,11 +755,10 @@
             labelDOU.AutoSize = true;
             labelDOU.BackColor = Color.Transparent;
             labelDOU.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelDOU.ForeColor = Color.Lavender;
-            labelDOU.Location = new Point(307, 441);
-            labelDOU.Margin = new Padding(2, 0, 2, 0);
+            labelDOU.ForeColor = Color.FromArgb(255, 255, 192);
+            labelDOU.Location = new Point(439, 707);
             labelDOU.Name = "labelDOU";
-            labelDOU.Size = new Size(75, 19);
+            labelDOU.Size = new Size(106, 28);
             labelDOU.TabIndex = 46;
             labelDOU.Text = "DOU: N/A";
             // 
@@ -820,11 +767,10 @@
             labelTRE.AutoSize = true;
             labelTRE.BackColor = Color.Transparent;
             labelTRE.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTRE.ForeColor = Color.Lavender;
-            labelTRE.Location = new Point(306, 525);
-            labelTRE.Margin = new Padding(2, 0, 2, 0);
+            labelTRE.ForeColor = Color.FromArgb(255, 255, 192);
+            labelTRE.Location = new Point(439, 845);
             labelTRE.Name = "labelTRE";
-            labelTRE.Size = new Size(68, 19);
+            labelTRE.Size = new Size(98, 28);
             labelTRE.TabIndex = 49;
             labelTRE.Text = "TRE: N/A";
             // 
@@ -833,11 +779,10 @@
             labelMAH.AutoSize = true;
             labelMAH.BackColor = Color.Transparent;
             labelMAH.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelMAH.ForeColor = Color.Lavender;
-            labelMAH.Location = new Point(306, 470);
-            labelMAH.Margin = new Padding(2, 0, 2, 0);
+            labelMAH.ForeColor = Color.FromArgb(255, 255, 192);
+            labelMAH.Location = new Point(439, 753);
             labelMAH.Name = "labelMAH";
-            labelMAH.Size = new Size(78, 19);
+            labelMAH.Size = new Size(110, 28);
             labelMAH.TabIndex = 48;
             labelMAH.Text = "MAH: N/A";
             // 
@@ -846,11 +791,10 @@
             labelGHO.AutoSize = true;
             labelGHO.BackColor = Color.Transparent;
             labelGHO.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelGHO.ForeColor = Color.Lavender;
-            labelGHO.Location = new Point(307, 555);
-            labelGHO.Margin = new Padding(2, 0, 2, 0);
+            labelGHO.ForeColor = Color.FromArgb(255, 255, 192);
+            labelGHO.Location = new Point(441, 893);
             labelGHO.Name = "labelGHO";
-            labelGHO.Size = new Size(76, 19);
+            labelGHO.Size = new Size(106, 28);
             labelGHO.TabIndex = 50;
             labelGHO.Text = "GHO: N/A";
             // 
@@ -859,11 +803,10 @@
             labelTituloTrackStatus.AutoSize = true;
             labelTituloTrackStatus.BackColor = Color.Transparent;
             labelTituloTrackStatus.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelTituloTrackStatus.ForeColor = Color.Lavender;
-            labelTituloTrackStatus.Location = new Point(306, 350);
-            labelTituloTrackStatus.Margin = new Padding(2, 0, 2, 0);
+            labelTituloTrackStatus.ForeColor = Color.FromArgb(255, 255, 192);
+            labelTituloTrackStatus.Location = new Point(437, 567);
             labelTituloTrackStatus.Name = "labelTituloTrackStatus";
-            labelTituloTrackStatus.Size = new Size(121, 21);
+            labelTituloTrackStatus.Size = new Size(183, 32);
             labelTituloTrackStatus.TabIndex = 51;
             labelTituloTrackStatus.Text = "TRACK STATUS";
             // 
@@ -872,11 +815,10 @@
             labelTCC.AutoSize = true;
             labelTCC.BackColor = Color.Transparent;
             labelTCC.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelTCC.ForeColor = Color.Lavender;
-            labelTCC.Location = new Point(307, 613);
-            labelTCC.Margin = new Padding(2, 0, 2, 0);
+            labelTCC.ForeColor = Color.FromArgb(255, 255, 192);
+            labelTCC.Location = new Point(439, 990);
             labelTCC.Name = "labelTCC";
-            labelTCC.Size = new Size(70, 19);
+            labelTCC.Size = new Size(96, 28);
             labelTCC.TabIndex = 53;
             labelTCC.Text = "TCC: N/A";
             // 
@@ -885,11 +827,10 @@
             labelSUP.AutoSize = true;
             labelSUP.BackColor = Color.Transparent;
             labelSUP.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSUP.ForeColor = Color.Lavender;
-            labelSUP.Location = new Point(306, 583);
-            labelSUP.Margin = new Padding(2, 0, 2, 0);
+            labelSUP.ForeColor = Color.FromArgb(255, 255, 192);
+            labelSUP.Location = new Point(441, 943);
             labelSUP.Name = "labelSUP";
-            labelSUP.Size = new Size(71, 19);
+            labelSUP.Size = new Size(99, 28);
             labelSUP.TabIndex = 52;
             labelSUP.Text = "SUP: N/A";
             // 
@@ -898,11 +839,10 @@
             labelB1B.AutoSize = true;
             labelB1B.BackColor = Color.Transparent;
             labelB1B.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelB1B.ForeColor = Color.Lavender;
-            labelB1B.Location = new Point(750, 594);
-            labelB1B.Margin = new Padding(2, 0, 2, 0);
+            labelB1B.ForeColor = Color.FromArgb(192, 192, 255);
+            labelB1B.Location = new Point(1071, 943);
             labelB1B.Name = "labelB1B";
-            labelB1B.Size = new Size(70, 19);
+            labelB1B.Size = new Size(100, 28);
             labelB1B.TabIndex = 62;
             labelB1B.Text = "B1B: N/A";
             // 
@@ -911,24 +851,22 @@
             labelTituloACAScap.AutoSize = true;
             labelTituloACAScap.BackColor = Color.Transparent;
             labelTituloACAScap.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelTituloACAScap.ForeColor = Color.Lavender;
-            labelTituloACAScap.Location = new Point(750, 361);
-            labelTituloACAScap.Margin = new Padding(2, 0, 2, 0);
+            labelTituloACAScap.ForeColor = Color.FromArgb(192, 192, 255);
+            labelTituloACAScap.Location = new Point(1071, 567);
             labelTituloACAScap.Name = "labelTituloACAScap";
-            labelTituloACAScap.Size = new Size(133, 21);
+            labelTituloACAScap.Size = new Size(225, 32);
             labelTituloACAScap.TabIndex = 61;
-            labelTituloACAScap.Text = "ACAS Capability";
+            labelTituloACAScap.Text = "ACAS CAPABILITY ";
             // 
             // labelB1A
             // 
             labelB1A.AutoSize = true;
             labelB1A.BackColor = Color.Transparent;
             labelB1A.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelB1A.ForeColor = Color.Lavender;
-            labelB1A.Location = new Point(751, 566);
-            labelB1A.Margin = new Padding(2, 0, 2, 0);
+            labelB1A.ForeColor = Color.FromArgb(192, 192, 255);
+            labelB1A.Location = new Point(1072, 893);
             labelB1A.Name = "labelB1A";
-            labelB1A.Size = new Size(71, 19);
+            labelB1A.Size = new Size(101, 28);
             labelB1A.TabIndex = 60;
             labelB1A.Text = "B1A: N/A";
             // 
@@ -937,11 +875,10 @@
             labelMSSC.AutoSize = true;
             labelMSSC.BackColor = Color.Transparent;
             labelMSSC.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelMSSC.ForeColor = Color.Lavender;
-            labelMSSC.Location = new Point(750, 481);
-            labelMSSC.Margin = new Padding(2, 0, 2, 0);
+            labelMSSC.ForeColor = Color.FromArgb(192, 192, 255);
+            labelMSSC.Location = new Point(1073, 753);
             labelMSSC.Name = "labelMSSC";
-            labelMSSC.Size = new Size(82, 19);
+            labelMSSC.Size = new Size(115, 28);
             labelMSSC.TabIndex = 58;
             labelMSSC.Text = "MSSC: N/A";
             // 
@@ -950,11 +887,10 @@
             labelAIC.AutoSize = true;
             labelAIC.BackColor = Color.Transparent;
             labelAIC.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelAIC.ForeColor = Color.Lavender;
-            labelAIC.Location = new Point(750, 536);
-            labelAIC.Margin = new Padding(2, 0, 2, 0);
+            labelAIC.ForeColor = Color.FromArgb(192, 192, 255);
+            labelAIC.Location = new Point(1071, 845);
             labelAIC.Name = "labelAIC";
-            labelAIC.Size = new Size(67, 19);
+            labelAIC.Size = new Size(94, 28);
             labelAIC.TabIndex = 59;
             labelAIC.Text = "AIC: N/A";
             // 
@@ -963,11 +899,10 @@
             labelSI.AutoSize = true;
             labelSI.BackColor = Color.Transparent;
             labelSI.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSI.ForeColor = Color.Lavender;
-            labelSI.Location = new Point(751, 452);
-            labelSI.Margin = new Padding(2, 0, 2, 0);
+            labelSI.ForeColor = Color.FromArgb(192, 192, 255);
+            labelSI.Location = new Point(1072, 707);
             labelSI.Name = "labelSI";
-            labelSI.Size = new Size(56, 19);
+            labelSI.Size = new Size(79, 28);
             labelSI.TabIndex = 56;
             labelSI.Text = "SI: N/A";
             // 
@@ -976,11 +911,10 @@
             labelARC.AutoSize = true;
             labelARC.BackColor = Color.Transparent;
             labelARC.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelARC.ForeColor = Color.Lavender;
-            labelARC.Location = new Point(751, 507);
-            labelARC.Margin = new Padding(2, 0, 2, 0);
+            labelARC.ForeColor = Color.FromArgb(192, 192, 255);
+            labelARC.Location = new Point(1073, 802);
             labelARC.Name = "labelARC";
-            labelARC.Size = new Size(72, 19);
+            labelARC.Size = new Size(101, 28);
             labelARC.TabIndex = 57;
             labelARC.Text = "ARC: N/A";
             // 
@@ -989,11 +923,10 @@
             labelSTAT.AutoSize = true;
             labelSTAT.BackColor = Color.Transparent;
             labelSTAT.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelSTAT.ForeColor = Color.Lavender;
-            labelSTAT.Location = new Point(750, 424);
-            labelSTAT.Margin = new Padding(2, 0, 2, 0);
+            labelSTAT.ForeColor = Color.FromArgb(192, 192, 255);
+            labelSTAT.Location = new Point(1073, 658);
             labelSTAT.Name = "labelSTAT";
-            labelSTAT.Size = new Size(76, 19);
+            labelSTAT.Size = new Size(109, 28);
             labelSTAT.TabIndex = 55;
             labelSTAT.Text = "STAT: N/A";
             // 
@@ -1002,11 +935,10 @@
             labelCOM.AutoSize = true;
             labelCOM.BackColor = Color.Transparent;
             labelCOM.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelCOM.ForeColor = Color.Lavender;
-            labelCOM.Location = new Point(751, 395);
-            labelCOM.Margin = new Padding(2, 0, 2, 0);
+            labelCOM.ForeColor = Color.FromArgb(192, 192, 255);
+            labelCOM.Location = new Point(1073, 616);
             labelCOM.Name = "labelCOM";
-            labelCOM.Size = new Size(77, 19);
+            labelCOM.Size = new Size(108, 28);
             labelCOM.TabIndex = 54;
             labelCOM.Text = "COM: N/A";
             // 
@@ -1016,19 +948,18 @@
             label5.BackColor = Color.Brown;
             label5.Font = new Font("Segoe UI Black", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(279, 777);
-            label5.Margin = new Padding(2, 0, 2, 0);
+            label5.Location = new Point(399, 1295);
             label5.Name = "label5";
-            label5.Size = new Size(581, 21);
+            label5.Size = new Size(870, 32);
             label5.TabIndex = 63;
             label5.Text = "IF \"-\" IS SHOWN, NO INFORMATION HAS BEEN SENDED FOR THAT ITEM";
             // 
             // InformacionCAT48
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(1174, 832);
+            ClientSize = new Size(1563, 1050);
             Controls.Add(label5);
             Controls.Add(labelB1B);
             Controls.Add(labelTituloACAScap);
@@ -1100,6 +1031,7 @@
             Controls.Add(labelSIM);
             Controls.Add(labelTYP);
             Controls.Add(labelIdentificador);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "InformacionCAT48";
             RightToLeft = RightToLeft.No;
             Text = "InformacionCAT48";
