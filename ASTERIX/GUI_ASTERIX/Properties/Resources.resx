@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="botonPausa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonPausa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Icono de pausa blanco sobre transparente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icono de pausa blanco sobre transparente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Elegante llave curva en melocotón1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Elegante llave curva en melocotón1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="large-blue-square_1f7e6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\large-blue-square_1f7e6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,6 +163,9 @@
   <data name="5ee10cd8-d76b-424f-b639-5d1ddb3401261" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\5ee10cd8-d76b-424f-b639-5d1ddb3401261.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="botonAvanzar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonAvanzar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="5ee10cd8-d76b-424f-b639-5d1ddb340126" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\5ee10cd8-d76b-424f-b639-5d1ddb340126.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -172,8 +181,8 @@
   <data name="Imagen de ChatGPT 1 oct 2026, 17_56_52-2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_56_52-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="retroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\retroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="botonReproducir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonReproducir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pausebutton_113576" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pausebutton_113576.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,7 +193,10 @@
   <data name="25650" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\25650.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Elegante llave curva en melocotón1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Elegante llave curva en melocotón1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="retroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonRetroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonRetroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

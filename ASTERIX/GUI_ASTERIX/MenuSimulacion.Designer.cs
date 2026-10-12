@@ -37,6 +37,9 @@
             filtrarToolStripMenuItem = new ToolStripMenuItem();
             aplicarToolStripMenuItem = new ToolStripMenuItem();
             limpiarToolStripMenuItem = new ToolStripMenuItem();
+            verToolStripMenuItem = new ToolStripMenuItem();
+            mostrarDatosEnCeldasToolStripMenuItem = new ToolStripMenuItem();
+            trayectoriasToolStripMenuItem = new ToolStripMenuItem();
             timerSimulacion = new System.Windows.Forms.Timer(components);
             buttonPlay = new Button();
             buttonStop = new Button();
@@ -80,7 +83,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem, verToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1402, 29);
@@ -130,6 +133,28 @@
             limpiarToolStripMenuItem.Size = new Size(172, 26);
             limpiarToolStripMenuItem.Text = "Limpiar";
             limpiarToolStripMenuItem.Click += limpiarToolStripMenuItem_Click;
+            // 
+            // verToolStripMenuItem
+            // 
+            verToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mostrarDatosEnCeldasToolStripMenuItem, trayectoriasToolStripMenuItem });
+            verToolStripMenuItem.Font = new Font("Segoe UI", 12F);
+            verToolStripMenuItem.Name = "verToolStripMenuItem";
+            verToolStripMenuItem.Size = new Size(45, 25);
+            verToolStripMenuItem.Text = "Ver";
+            // 
+            // mostrarDatosEnCeldasToolStripMenuItem
+            // 
+            mostrarDatosEnCeldasToolStripMenuItem.Name = "mostrarDatosEnCeldasToolStripMenuItem";
+            mostrarDatosEnCeldasToolStripMenuItem.Size = new Size(254, 26);
+            mostrarDatosEnCeldasToolStripMenuItem.Text = "Mostar aviones en celdas";
+            mostrarDatosEnCeldasToolStripMenuItem.Click += mostrarDatosEnCeldasToolStripMenuItem_Click;
+            // 
+            // trayectoriasToolStripMenuItem
+            // 
+            trayectoriasToolStripMenuItem.Name = "trayectoriasToolStripMenuItem";
+            trayectoriasToolStripMenuItem.Size = new Size(254, 26);
+            trayectoriasToolStripMenuItem.Text = "Trayectorias";
+            trayectoriasToolStripMenuItem.Click += trayectoriasToolStripMenuItem_Click;
             // 
             // timerSimulacion
             // 
@@ -212,12 +237,13 @@
             // 
             // buttonDataGrid
             // 
-            buttonDataGrid.Location = new Point(91, 385);
+            buttonDataGrid.Location = new Point(122, 49);
             buttonDataGrid.Name = "buttonDataGrid";
             buttonDataGrid.Size = new Size(75, 23);
             buttonDataGrid.TabIndex = 9;
             buttonDataGrid.Text = "Mostrar Tabla";
             buttonDataGrid.UseVisualStyleBackColor = true;
+            buttonDataGrid.Visible = false;
             buttonDataGrid.Click += buttonDataGrid_Click;
             // 
             // gMapControl1
@@ -308,11 +334,11 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+            pictureBox1.Image = Properties.Resources.botonReproducir;
             pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new Point(107, 295);
+            pictureBox1.Location = new Point(114, 369);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(47, 52);
+            pictureBox1.Size = new Size(44, 43);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 17;
             pictureBox1.TabStop = false;
@@ -320,11 +346,11 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_53_3;
+            pictureBox2.Image = Properties.Resources.botonAvanzar;
             pictureBox2.InitialImage = (Image)resources.GetObject("pictureBox2.InitialImage");
-            pictureBox2.Location = new Point(166, 295);
+            pictureBox2.Location = new Point(175, 369);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(47, 52);
+            pictureBox2.Size = new Size(44, 43);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 18;
             pictureBox2.TabStop = false;
@@ -332,11 +358,11 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_54_09;
+            pictureBox3.Image = Properties.Resources.botonRetroceder;
             pictureBox3.InitialImage = (Image)resources.GetObject("pictureBox3.InitialImage");
-            pictureBox3.Location = new Point(46, 295);
+            pictureBox3.Location = new Point(53, 369);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(47, 52);
+            pictureBox3.Size = new Size(44, 43);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 19;
             pictureBox3.TabStop = false;
@@ -411,7 +437,7 @@
             textBoxHora.Name = "textBoxHora";
             textBoxHora.Size = new Size(29, 23);
             textBoxHora.TabIndex = 30;
-            textBoxHora.Text = "HH";
+            textBoxHora.Text = "hh";
             textBoxHora.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxSegundo
@@ -420,7 +446,7 @@
             textBoxSegundo.Name = "textBoxSegundo";
             textBoxSegundo.Size = new Size(27, 23);
             textBoxSegundo.TabIndex = 31;
-            textBoxSegundo.Text = "SS";
+            textBoxSegundo.Text = "ss";
             textBoxSegundo.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxMinuto
@@ -429,7 +455,7 @@
             textBoxMinuto.Name = "textBoxMinuto";
             textBoxMinuto.Size = new Size(27, 23);
             textBoxMinuto.TabIndex = 32;
-            textBoxMinuto.Text = "MM";
+            textBoxMinuto.Text = "mm";
             textBoxMinuto.TextAlign = HorizontalAlignment.Center;
             // 
             // buttonSimularDesdeHora
@@ -534,5 +560,8 @@
         private TextBox textBoxSegundo;
         private TextBox textBoxMinuto;
         private Button buttonSimularDesdeHora;
+        private ToolStripMenuItem verToolStripMenuItem;
+        private ToolStripMenuItem mostrarDatosEnCeldasToolStripMenuItem;
+        private ToolStripMenuItem trayectoriasToolStripMenuItem;
     }
 }

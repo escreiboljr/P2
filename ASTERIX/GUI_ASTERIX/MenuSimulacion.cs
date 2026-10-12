@@ -31,6 +31,7 @@ namespace GUI_ASTERIX
         private List<AvionSimulacion> avionesTrayectoriaSeleccionados = new List<AvionSimulacion>();
         public bool oculto = true;
         private AvionSimulacion avionClick;
+        private bool mostrarTodasTrayectorias = false;
         public MenuSimulacion()
         {
             InitializeComponent();
@@ -836,14 +837,14 @@ namespace GUI_ASTERIX
             if (Reproduciendo == false)
             {
                 Reproduciendo = true;
-                pictureBox1.Image = Properties.Resources.Icono_de_pausa_blanco_sobre_transparente1;
+                pictureBox1.Image = Properties.Resources.botonPausa;
                 timerSimulacion.Start();
             }
             else if (Reproduciendo == true)
             {
                 Reproduciendo = false;
                 timerSimulacion.Stop();
-                pictureBox1.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+                pictureBox1.Image = Properties.Resources.botonReproducir;
             }
         }
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -1287,9 +1288,13 @@ namespace GUI_ASTERIX
         {
             capaTrayectorias.Routes.Clear();
 
-            foreach (AvionSimulacion avion in avionesTrayectoriaSeleccionados)
+            List<AvionSimulacion> avionesMostrar = mostrarTodasTrayectorias
+                ? AvionesActuales
+                : avionesTrayectoriaSeleccionados;
+
+            foreach (AvionSimulacion avion in avionesMostrar)
             {
-                if (avion.trayectoria.Count < 2)
+                if (avion.trayectoria == null || avion.trayectoria.Count < 2)
                 {
                     continue;
                 }
@@ -1298,9 +1303,7 @@ namespace GUI_ASTERIX
 
                 foreach (double[] punto in avion.trayectoria)
                 {
-                    puntos.Add(
-                        new PointLatLng(punto[0], punto[1])
-                    );
+                    puntos.Add(new PointLatLng(punto[0], punto[1]));
                 }
 
                 GMapRoute ruta = new GMapRoute(
@@ -1312,6 +1315,7 @@ namespace GUI_ASTERIX
 
                 capaTrayectorias.Routes.Add(ruta);
             }
+
             gMapControl1.Refresh();
         }
         private void ReconstruirAvionesFiltrados()
@@ -1426,6 +1430,34 @@ namespace GUI_ASTERIX
             // Dejar la simulación pausada
             pictureBox1.Image =
                 Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+        }
+
+        private void mostrarDatosEnCeldasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridAviones.BringToFront();
+            dataGridAviones.Visible = !dataGridAviones.Visible;
+            mostrarDatosEnCeldasToolStripMenuItem.Checked = dataGridAviones.Visible;
+        }
+
+        private void trayectoriasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mostrarTodasTrayectorias = !mostrarTodasTrayectorias;
+
+            trayectoriasToolStripMenuItem.Checked =
+                mostrarTodasTrayectorias;
+
+            if (mostrarTodasTrayectorias)
+            {
+                // Mostrar todas las trayectorias
+                MostrarTrayectorias();
+            }
+            else
+            {
+                // Quitar todas las trayectorias
+                avionesTrayectoriaSeleccionados.Clear();
+                capaTrayectorias.Routes.Clear();
+                gMapControl1.Refresh();
+            }
         }
     }
 }
