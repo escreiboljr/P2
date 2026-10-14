@@ -123,14 +123,14 @@
             // aplicarToolStripMenuItem
             // 
             aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
-            aplicarToolStripMenuItem.Size = new Size(172, 26);
+            aplicarToolStripMenuItem.Size = new Size(180, 26);
             aplicarToolStripMenuItem.Text = "Aplicar filtros";
             aplicarToolStripMenuItem.Click += aplicarToolStripMenuItem_Click;
             // 
             // limpiarToolStripMenuItem
             // 
             limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
-            limpiarToolStripMenuItem.Size = new Size(172, 26);
+            limpiarToolStripMenuItem.Size = new Size(180, 26);
             limpiarToolStripMenuItem.Text = "Limpiar";
             limpiarToolStripMenuItem.Click += limpiarToolStripMenuItem_Click;
             // 
@@ -185,10 +185,11 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ControlLightLight;
-            label1.Location = new Point(148, 536);
+            label1.Location = new Point(56, 283);
             label1.Name = "label1";
-            label1.Size = new Size(49, 15);
+            label1.Size = new Size(158, 47);
             label1.TabIndex = 3;
             label1.Text = "00:00:00";
             // 
@@ -325,10 +326,11 @@
             // labelTituloHora
             // 
             labelTituloHora.AutoSize = true;
+            labelTituloHora.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelTituloHora.ForeColor = SystemColors.ControlLightLight;
-            labelTituloHora.Location = new Point(52, 536);
+            labelTituloHora.Location = new Point(65, 251);
             labelTituloHora.Name = "labelTituloHora";
-            labelTituloHora.Size = new Size(74, 15);
+            labelTituloHora.Size = new Size(147, 32);
             labelTituloHora.TabIndex = 16;
             labelTituloHora.Text = "Hora actual: ";
             // 

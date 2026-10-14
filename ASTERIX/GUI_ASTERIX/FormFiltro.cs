@@ -45,9 +45,20 @@ namespace GUI_ASTERIX
         bool filtrarTrayectoria { get; set; }
         public bool FiltrarTrayectoria
         { get { return  filtrarTrayectoria; }  }
-        public FormFiltro()
+        public FormFiltro(bool blancoPuro,bool transFijo,bool ground,bool cat21,bool cat48,bool filtrarTrayectoria,double trayectoriaMin,double trayectoriaMax)
         {
             InitializeComponent();
+
+            this.blancoPuro = blancoPuro;
+            this.TransFijo = transFijo;
+            this.Ground = ground;
+            this.cat21 = cat21;
+            this.cat48 = cat48;
+            this.filtrarTrayectoria = filtrarTrayectoria;
+            this.TrayectoriaMin = trayectoriaMin;
+            this.TrayectoriaMax = trayectoriaMax;
+
+            ActualizarControles();
         }
 
         private void pictureBoxSlideButtonBlancoPuro_Click(object sender, EventArgs e)
@@ -64,13 +75,10 @@ namespace GUI_ASTERIX
             }
         }
 
+
         private void FormFiltro_Load(object sender, EventArgs e)
         {
-            blancoPuro = false;
-            TransFijo = false;
-            Ground = false;
-            cat21 = checkBoxCat21.Checked;
-            cat48 = checkBoxCat48.Checked;
+            ActualizarControles();
         }
 
         private void pictureBoxSlideButtonTransFijo_Click(object sender, EventArgs e)
@@ -146,5 +154,41 @@ namespace GUI_ASTERIX
             DialogResult = DialogResult.OK;
             Close();
         }
+
+        private void ActualizarControles()
+        {
+            // Categorías
+            checkBoxCat21.Checked = cat21;
+            checkBoxCat48.Checked = cat48;
+
+            // Blanco puro
+            pictureBoxSlideButtonBlancoPuro.Image = blancoPuro
+                ? Properties.Resources.sliderActivado
+                : Properties.Resources.sliderApagado;
+
+            // Transpondedor fijo
+            pictureBoxSlideButtonTransFijo.Image = TransFijo
+                ? Properties.Resources.sliderActivado
+                : Properties.Resources.sliderApagado;
+
+            // Ground
+            pictureBoxSlideButtonGround.Image = Ground
+                ? Properties.Resources.sliderActivado
+                : Properties.Resources.sliderApagado;
+
+            // Trayectoria
+            if (filtrarTrayectoria)
+            {
+                textBox1.Text = TrayectoriaMin.ToString();
+                textBoxTrayectoriaMax.Text = TrayectoriaMax.ToString();
+            }
+            else
+            {
+                textBox1.Text = "";
+                textBoxTrayectoriaMax.Text = "";
+            }
+        }
+
+
     }
 }

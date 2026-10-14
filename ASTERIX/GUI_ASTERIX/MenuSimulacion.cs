@@ -1183,25 +1183,62 @@ namespace GUI_ASTERIX
             return "TRACK_" + avion.trackNumber;
         }
 
+        private bool filtroBlancoPuro = false;
+        private bool filtroTransFijo = false;
+        private bool filtroGround = false;
+
+        private bool filtroCat21 = true;
+        private bool filtroCat48 = true;
+
+        private bool filtroTrayectoria = false;
+        private double filtroTrayectoriaMin = 0;
+        private double filtroTrayectoriaMax = 360;
+
+        private bool filtroAltura = false;
+        private double filtroAlturaMin = 0;
+        private double filtroAlturaMax = 999;
         private void aplicarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormFiltro ventana = new FormFiltro();
+            FormFiltro ventana = new FormFiltro(
+                filtroBlancoPuro,
+                filtroTransFijo,
+                filtroGround,
+                filtroCat21,
+                filtroCat48,
+                filtroTrayectoria,
+                filtroTrayectoriaMin,
+                filtroTrayectoriaMax
+            );
 
             if (ventana.ShowDialog() == DialogResult.OK)
             {
+                // Guardar los valores seleccionados
+                filtroBlancoPuro = ventana.BlancoPuro;
+                filtroTransFijo = ventana.transFijo;
+                filtroGround = ventana.ground;
+
+                filtroCat21 = ventana.Cat21;
+                filtroCat48 = ventana.Cat48;
+
+                filtroTrayectoria = ventana.FiltrarTrayectoria;
+                filtroTrayectoriaMin = ventana.trayectoriaMin;
+                filtroTrayectoriaMax = ventana.trayectoriaMax;
+
+                // Aplicar filtros
                 Filtros gestorFiltros = new Filtros();
 
                 ListaMensajesFiltrados = gestorFiltros.AplicarFiltros(
                     ListaMensajes,
-                    ventana.Cat48,
-                    ventana.Cat21,
-                    ventana.BlancoPuro,
-                    ventana.transFijo,
-                    ventana.FiltrarTrayectoria,
-                    ventana.trayectoriaMin,
-                    ventana.trayectoriaMax,
-                    ventana.ground
+                    filtroCat48,
+                    filtroCat21,
+                    filtroBlancoPuro,
+                    filtroTransFijo,
+                    filtroTrayectoria,
+                    filtroTrayectoriaMin,
+                    filtroTrayectoriaMax,
+                    filtroGround
                 );
+
                 ReconstruirAvionesFiltrados();
             }
         }
