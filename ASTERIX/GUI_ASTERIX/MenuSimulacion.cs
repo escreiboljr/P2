@@ -12,6 +12,8 @@ using Simulacion;
 using System.Data.Entity.Core.Mapping;
 using System.Diagnostics;
 using System.Security.Policy;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace GUI_ASTERIX
 {
@@ -550,7 +552,7 @@ namespace GUI_ASTERIX
             capaTrayectorias.Routes.Clear();
         }
 
-        private void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog explorador = new OpenFileDialog())
             {
@@ -561,11 +563,37 @@ namespace GUI_ASTERIX
 
                 try
                 {
-                    // Primero leemos el archivo nuevo
-                    LeerDatos lector = new LeerDatos();
 
-                    List<Mensaje> nuevosMensajes =
-                        lector.DatosProcesados(explorador.FileName);
+                    List<Mensaje> nuevosMensajes;
+
+                    using (FormCargando cargando = new FormCargando())
+                    {
+                        cargando.Show(this);
+                        cargando.ActualizarProgreso(0);
+
+                        IProgress<int> progreso = new Progress<int>(porcentaje =>
+                        {
+                            if (!cargando.IsDisposed)
+                                cargando.ActualizarProgreso(porcentaje);
+                        });
+
+                        try
+                        {
+                            nuevosMensajes = await Task.Run(() =>
+                            {
+                                LeerDatos lector = new LeerDatos();
+
+                                return lector.DatosProcesados(
+                                    explorador.FileName,
+                                    progreso
+                                );
+                            });
+                        }
+                        finally
+                        {
+                            cargando.Close();
+                        }
+                    }
 
                     if (nuevosMensajes == null || nuevosMensajes.Count == 0)
                     {

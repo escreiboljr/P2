@@ -8,7 +8,8 @@ namespace Archvios
 {
     public class LeerDatos
     {
-        public List<Mensaje> DatosProcesados(string nombreArchivo)
+
+        public List<Mensaje> DatosProcesados(string nombreArchivo, IProgress<int> progreso = null)
         {
             TiraDatosDecod021.UltimosQNH.Clear();
 
@@ -17,23 +18,41 @@ namespace Archvios
 
             using (FileStream fs = new FileStream(nombreArchivo, FileMode.Open, FileAccess.Read))
             {
-                byte[] buffer = new byte[8*1024*1024];              //lee 8MB para que no se atasque 
+                byte[] buffer = new byte[8 * 1024 * 1024];
                 int leidos;
+
+                long bytesTotales = fs.Length;
+                int ultimoPorcentaje = -1;
+
+                progreso?.Report(0);
 
                 while ((leidos = fs.Read(buffer, 0, buffer.Length)) > 0)
                 {
                     for (int i = 0; i < leidos; i++)
-                        cola.Enqueue(buffer[i]);            //mete los mensajes en la cola
+                        cola.Enqueue(buffer[i]);
 
                     ProcesarMensajes(cola, listaTiras);
+
+                    // Calcular el porcentaje de carga
+                    int porcentaje = (int)(fs.Position * 100 / bytesTotales);
+
+                    // Actualizar solo si cambia el porcentaje
+                    if (porcentaje != ultimoPorcentaje)
+                    {
+                        progreso?.Report(porcentaje);
+                        ultimoPorcentaje = porcentaje;
+                    }
                 }
             }
 
-            // Procesar lo que quede al final
+            // Procesar los mensajes restantes
             ProcesarMensajes(cola, listaTiras);
+
+            progreso?.Report(100);
 
             return listaTiras;
         }
+
         private void ProcesarMensajes(Queue<byte> cola, List<Mensaje> listaTiras)
     {
         while (true)
