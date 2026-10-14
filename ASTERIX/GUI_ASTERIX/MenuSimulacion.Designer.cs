@@ -40,6 +40,9 @@
             verToolStripMenuItem = new ToolStripMenuItem();
             mostrarDatosEnCeldasToolStripMenuItem = new ToolStripMenuItem();
             trayectoriasToolStripMenuItem = new ToolStripMenuItem();
+            heatmapToolStripMenuItem = new ToolStripMenuItem();
+            mostrarHeatmapCompletoToolStripMenuItem = new ToolStripMenuItem();
+            mostrarHeatmapDinamicoToolStripMenuItem = new ToolStripMenuItem();
             timerSimulacion = new System.Windows.Forms.Timer(components);
             buttonPlay = new Button();
             buttonStop = new Button();
@@ -123,20 +126,20 @@
             // aplicarToolStripMenuItem
             // 
             aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
-            aplicarToolStripMenuItem.Size = new Size(180, 26);
+            aplicarToolStripMenuItem.Size = new Size(172, 26);
             aplicarToolStripMenuItem.Text = "Aplicar filtros";
             aplicarToolStripMenuItem.Click += aplicarToolStripMenuItem_Click;
             // 
             // limpiarToolStripMenuItem
             // 
             limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
-            limpiarToolStripMenuItem.Size = new Size(180, 26);
+            limpiarToolStripMenuItem.Size = new Size(172, 26);
             limpiarToolStripMenuItem.Text = "Limpiar";
             limpiarToolStripMenuItem.Click += limpiarToolStripMenuItem_Click;
             // 
             // verToolStripMenuItem
             // 
-            verToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mostrarDatosEnCeldasToolStripMenuItem, trayectoriasToolStripMenuItem });
+            verToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mostrarDatosEnCeldasToolStripMenuItem, trayectoriasToolStripMenuItem, heatmapToolStripMenuItem });
             verToolStripMenuItem.Font = new Font("Segoe UI", 12F);
             verToolStripMenuItem.Name = "verToolStripMenuItem";
             verToolStripMenuItem.Size = new Size(45, 25);
@@ -155,6 +158,27 @@
             trayectoriasToolStripMenuItem.Size = new Size(254, 26);
             trayectoriasToolStripMenuItem.Text = "Trayectorias";
             trayectoriasToolStripMenuItem.Click += trayectoriasToolStripMenuItem_Click;
+            // 
+            // heatmapToolStripMenuItem
+            // 
+            heatmapToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mostrarHeatmapCompletoToolStripMenuItem, mostrarHeatmapDinamicoToolStripMenuItem });
+            heatmapToolStripMenuItem.Name = "heatmapToolStripMenuItem";
+            heatmapToolStripMenuItem.Size = new Size(254, 26);
+            heatmapToolStripMenuItem.Text = "Heatmap";
+            // 
+            // mostrarHeatmapCompletoToolStripMenuItem
+            // 
+            mostrarHeatmapCompletoToolStripMenuItem.Name = "mostrarHeatmapCompletoToolStripMenuItem";
+            mostrarHeatmapCompletoToolStripMenuItem.Size = new Size(269, 26);
+            mostrarHeatmapCompletoToolStripMenuItem.Text = "Mostrar heatmap completo";
+            mostrarHeatmapCompletoToolStripMenuItem.Click += mostrarHeatmapCompletoToolStripMenuItem_Click;
+            // 
+            // mostrarHeatmapDinamicoToolStripMenuItem
+            // 
+            mostrarHeatmapDinamicoToolStripMenuItem.Name = "mostrarHeatmapDinamicoToolStripMenuItem";
+            mostrarHeatmapDinamicoToolStripMenuItem.Size = new Size(269, 26);
+            mostrarHeatmapDinamicoToolStripMenuItem.Text = "Mostrar heatmap dinamico";
+            mostrarHeatmapDinamicoToolStripMenuItem.Click += mostrarHeatmapDinamicoToolStripMenuItem_Click;
             // 
             // timerSimulacion
             // 
@@ -565,5 +589,8 @@
         private ToolStripMenuItem verToolStripMenuItem;
         private ToolStripMenuItem mostrarDatosEnCeldasToolStripMenuItem;
         private ToolStripMenuItem trayectoriasToolStripMenuItem;
+        private ToolStripMenuItem heatmapToolStripMenuItem;
+        private ToolStripMenuItem mostrarHeatmapCompletoToolStripMenuItem;
+        private ToolStripMenuItem mostrarHeatmapDinamicoToolStripMenuItem;
     }
 }

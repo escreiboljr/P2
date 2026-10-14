@@ -30,6 +30,11 @@ namespace GUI_ASTERIX
         private bool Reproduciendo = false;
         private GMapOverlay capaAviones;
         private GMapOverlay capaTrayectorias;
+        private GMapOverlay capaHeatmap;
+        private bool mostrarHeatmapDinamico = false;
+        private double ultimoTiempoHeatmap = -1;
+        private const double intervaloHeatmap = 10;
+        private bool mostrarHeatmap = false;
         private List<AvionSimulacion> avionesTrayectoriaSeleccionados = new List<AvionSimulacion>();
         public bool oculto = true;
         private AvionSimulacion avionClick;
@@ -82,6 +87,9 @@ namespace GUI_ASTERIX
 
             gMapControl1.SetZoomToFitRect(zona);
 
+            capaHeatmap = new GMapOverlay("heatmap");
+            gMapControl1.Overlays.Add(capaHeatmap);
+
             capaTrayectorias = new GMapOverlay("trayectorias");
             gMapControl1.Overlays.Add(capaTrayectorias);
 
@@ -118,6 +126,7 @@ namespace GUI_ASTERIX
             ActualizarDataGrid();
             ActualizarMapa();
             MostrarTrayectorias();
+            ActualizarHeatmapDinamico();
         }
 
         private void trackBarVelSimulacion_Scroll(object sender, EventArgs e)
@@ -550,6 +559,12 @@ namespace GUI_ASTERIX
             pictureBox1.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
 
             capaTrayectorias.Routes.Clear();
+
+            densidadesDinamicas.Clear();
+            siguientePuntoHeatmap = 0;
+            ultimoTiempoHeatmap = -1;
+
+            ActualizarHeatmapDinamico(true);
         }
 
         private async void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
@@ -625,6 +640,9 @@ namespace GUI_ASTERIX
                     // Asignar exclusivamente los mensajes del nuevo archivo
                     ListaMensajes = nuevosMensajes;
                     ListaMensajesFiltrados = new List<Mensaje>(nuevosMensajes);
+                    InvalidarHeatmap();
+
+                    PrepararPuntosHeatmap();
 
                     int cat21 = ListaMensajesFiltrados.Count(m => m.categoria == 21);
                     int cat48 = ListaMensajesFiltrados.Count(m => m.categoria == 48);
@@ -647,6 +665,8 @@ namespace GUI_ASTERIX
                     ActualizarDataGrid();
                     ActualizarMapa();
                     MostrarTrayectorias();
+
+                    ActualizarHeatmapDinamico(true);
 
                     MessageBox.Show(
                         "Archivo cargado correctamente.\n" +
@@ -926,6 +946,8 @@ namespace GUI_ASTERIX
                 ActualizarDataGrid();
                 ActualizarMapa();
                 MostrarTrayectorias();
+
+                ActualizarHeatmapDinamico(true);
             }
         }
         private void ActualizarMensajesActuales()
@@ -1268,12 +1290,20 @@ namespace GUI_ASTERIX
                 );
 
                 ReconstruirAvionesFiltrados();
+                InvalidarHeatmap();
+
+                PrepararPuntosHeatmap();
+                ActualizarHeatmapDinamico(true);
             }
         }
 
         private void limpiarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ListaMensajesFiltrados = new List<Mensaje>(ListaMensajes);
+            InvalidarHeatmap();
+
+            PrepararPuntosHeatmap();
+            ActualizarHeatmapDinamico(true);
 
             AvionesActuales.Clear();
             MensajesActuales.Clear();
@@ -1492,6 +1522,8 @@ namespace GUI_ASTERIX
             ActualizarMapa();
             MostrarTrayectorias();
 
+            ActualizarHeatmapDinamico(true);
+
             // Dejar la simulación pausada
             pictureBox1.Image =
                 Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
@@ -1523,6 +1555,427 @@ namespace GUI_ASTERIX
                 capaTrayectorias.Routes.Clear();
                 gMapControl1.Refresh();
             }
+        }
+
+        private void mostrarHeatmapCompletoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mostrarHeatmapDinamico = false;
+            mostrarHeatmapDinamicoToolStripMenuItem.Checked = false;
+
+            mostrarHeatmap = !mostrarHeatmap;
+            mostrarHeatmapCompletoToolStripMenuItem.Checked = mostrarHeatmap;
+            if (mostrarHeatmap)
+            {
+                CalcularHeatmapCompleto();
+            }
+            capaHeatmap.IsVisibile = mostrarHeatmap;
+            gMapControl1.Refresh();
+        }
+
+
+        private void CalcularHeatmapCompleto()
+        {
+            capaHeatmap.Markers.Clear();
+
+            // Tamaño aproximado de las celdas:
+            // 0,005 grados de latitud equivale a unos 555 metros.
+            const double tamanoCelda = 0.0005;
+
+            // Cada celda guarda los identificadores de las aeronaves
+            // que han pasado por ella.
+            Dictionary<(int, int), HashSet<string>> densidades =
+                new Dictionary<(int, int), HashSet<string>>();
+
+            foreach (Mensaje mensaje in ListaMensajesFiltrados)
+            {
+                double latitud;
+                double longitud;
+                string identificadorAvion;
+
+                if (mensaje.categoria == 21)
+                {
+                    TiraDatosDecod021 datos =
+                        (TiraDatosDecod021)mensaje.tira;
+
+                    if (datos.PosWGS84HighRes == null ||
+                        datos.PosWGS84HighRes.Count < 2)
+                        continue;
+
+                    latitud = datos.PosWGS84HighRes[0];
+                    longitud = datos.PosWGS84HighRes[1];
+
+                    identificadorAvion = datos.TargetAddress;
+
+                    if (string.IsNullOrWhiteSpace(identificadorAvion))
+                        identificadorAvion = datos.TargetIdentification;
+                }
+                else if (mensaje.categoria == 48)
+                {
+                    TiraDatosDecod048 datos =
+                        (TiraDatosDecod048)mensaje.tira;
+
+                    bool trackSinIdentificar =
+                        string.IsNullOrEmpty(datos.AircrftAddrs) &&
+                        string.IsNullOrEmpty(datos.AircrftIddent) &&
+                        datos.TargetRep.TYP == "001";
+
+                    if (datos.TrckStatus.CNF == 1 || trackSinIdentificar)
+                        continue;
+
+                    if (datos.PositionCorrectedLatLonAlt == null ||
+                        datos.PositionCorrectedLatLonAlt.Count < 2)
+                        continue;
+
+                    latitud = datos.PositionCorrectedLatLonAlt[0];
+                    longitud = datos.PositionCorrectedLatLonAlt[1];
+
+                    identificadorAvion = datos.AircrftAddrs;
+
+                    if (string.IsNullOrWhiteSpace(identificadorAvion))
+                        identificadorAvion = datos.AircrftIddent;
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (double.IsNaN(latitud) ||
+                    double.IsNaN(longitud) ||
+                    double.IsInfinity(latitud) ||
+                    double.IsInfinity(longitud))
+                    continue;
+
+                // Ignorar posiciones sin identificación fiable.
+                if (string.IsNullOrWhiteSpace(identificadorAvion))
+                    continue;
+
+                int fila = (int)Math.Floor(latitud / tamanoCelda);
+                int columna = (int)Math.Floor(longitud / tamanoCelda);
+
+                var clave = (fila, columna);
+
+                if (!densidades.TryGetValue(clave, out HashSet<string> aviones))
+                {
+                    aviones = new HashSet<string>();
+                    densidades.Add(clave, aviones);
+                }
+
+                aviones.Add(identificadorAvion);
+            }
+            DibujarHeatmap(densidades);
+        }
+
+        private void DibujarHeatmap(
+            Dictionary<(int, int), HashSet<string>> densidades)
+        {
+            capaHeatmap.Markers.Clear();
+
+            if (densidades.Count == 0)
+            {
+                gMapControl1.Refresh();
+                return;
+            }
+
+            Dictionary<(int, int), double> densidadesSuavizadas =
+                SuavizarHeatmap(densidades);
+
+            double maximo = densidadesSuavizadas.Values.Max();
+
+            foreach (var celda in densidadesSuavizadas)
+            {
+                double cantidad = celda.Value;
+
+                double intensidad = Math.Log(1.0 + cantidad) /
+                                   Math.Log(1.0 + maximo);
+
+                Color color;
+
+                if (intensidad < 0.33)
+                {
+                    double t = intensidad / 0.33;
+
+                    color = Color.FromArgb(
+                        110, (int)(255 * t), 220, 0);
+                }
+                else if (intensidad < 0.66)
+                {
+                    double t = (intensidad - 0.33) / 0.33;
+
+                    color = Color.FromArgb(
+                        130, 255, (int)(220 - 100 * t), 0);
+                }
+                else
+                {
+                    double t = (intensidad - 0.66) / 0.34;
+
+                    color = Color.FromArgb(
+                        160, 255, (int)(120 * (1 - t)), 0);
+                }
+
+                double latMin = celda.Key.Item1 * tamanoCeldaHeatmap;
+                double lonMin = celda.Key.Item2 * tamanoCeldaHeatmap;
+
+                CeldaHeatmap marcador = new CeldaHeatmap(
+                    latMin,
+                    latMin + tamanoCeldaHeatmap,
+                    lonMin,
+                    lonMin + tamanoCeldaHeatmap,
+                    color
+                );
+
+                capaHeatmap.Markers.Add(marcador);
+            }
+
+            gMapControl1.Refresh();
+        }
+
+        private void InvalidarHeatmap()
+        {
+            if (capaHeatmap == null)
+                return;
+
+            capaHeatmap.Markers.Clear();
+
+            if (mostrarHeatmap)
+                CalcularHeatmapCompleto();
+        }
+
+        private Dictionary<(int, int), double> SuavizarHeatmap(
+            Dictionary<(int, int), HashSet<string>> densidades)
+        {
+            Dictionary<(int, int), double> suavizadas =
+                new Dictionary<(int, int), double>();
+
+            int radio = 4;
+            double sigma = 2.5;
+
+            foreach (var celda in densidades)
+            {
+                int fila = celda.Key.Item1;
+                int columna = celda.Key.Item2;
+
+                double suma = 0;
+                double sumaPesos = 0;
+
+                for (int i = -radio; i <= radio; i++)
+                {
+                    for (int j = -radio; j <= radio; j++)
+                    {
+                        double distancia2 = i * i + j * j;
+
+                        double peso = Math.Exp(
+                            -distancia2 / (2 * sigma * sigma)
+                        );
+
+                        var vecino = (fila + i, columna + j);
+
+                        if (densidades.TryGetValue(
+                            vecino, out HashSet<string> aviones))
+                        {
+                            suma += aviones.Count * peso;
+                        }
+
+                        sumaPesos += peso;
+                    }
+                }
+
+                suavizadas[celda.Key] = suma / sumaPesos;
+            }
+
+            return suavizadas;
+        }
+
+        private void ActualizarHeatmapDinamico(bool forzar = false)
+        {
+            if (!mostrarHeatmapDinamico)
+                return;
+
+            if (!forzar &&
+                ultimoTiempoHeatmap >= 0 &&
+                TiempoActual >= ultimoTiempoHeatmap &&
+                TiempoActual - ultimoTiempoHeatmap < intervaloHeatmap)
+            {
+                return;
+            }
+
+            CalcularDensidadesDinamicas();
+            DibujarHeatmap(densidadesDinamicas);
+
+            ultimoTiempoHeatmap = TiempoActual;
+        }
+
+
+        private class PuntoHeatmap
+        {
+            public double tiempo;
+            public double latitud;
+            public double longitud;
+            public string identificador;
+        }
+        private List<PuntoHeatmap> puntosHeatmap = new List<PuntoHeatmap>();
+        private Dictionary<(int, int), HashSet<string>> densidadesDinamicas = new Dictionary<(int, int), HashSet<string>>();
+        private int siguientePuntoHeatmap = 0;
+        private const double tamanoCeldaHeatmap = 0.0005;
+
+
+        private void PrepararPuntosHeatmap()
+        {
+            puntosHeatmap.Clear();
+
+            foreach (Mensaje mensaje in ListaMensajesFiltrados)
+            {
+                double tiempo;
+                double latitud;
+                double longitud;
+                string identificador;
+
+                if (mensaje.categoria == 21)
+                {
+                    TiraDatosDecod021 datos =
+                        (TiraDatosDecod021)mensaje.tira;
+
+                    if (datos.PosWGS84HighRes == null ||
+                        datos.PosWGS84HighRes.Count < 2)
+                        continue;
+
+                    tiempo = datos.TimeReceptionPosition;
+                    latitud = datos.PosWGS84HighRes[0];
+                    longitud = datos.PosWGS84HighRes[1];
+
+                    identificador = datos.TargetAddress;
+
+                    if (string.IsNullOrWhiteSpace(identificador))
+                        identificador = datos.TargetIdentification;
+                }
+                else if (mensaje.categoria == 48)
+                {
+                    TiraDatosDecod048 datos =
+                        (TiraDatosDecod048)mensaje.tira;
+
+                    bool trackSinIdentificar =
+                        string.IsNullOrEmpty(datos.AircrftAddrs) &&
+                        string.IsNullOrEmpty(datos.AircrftIddent) &&
+                        datos.TargetRep.TYP == "001";
+
+                    if (datos.TrckStatus.CNF == 1 || trackSinIdentificar)
+                        continue;
+
+                    if (datos.PositionCorrectedLatLonAlt == null ||
+                        datos.PositionCorrectedLatLonAlt.Count < 2)
+                        continue;
+
+                    tiempo = datos.TimeOfDay;
+                    latitud = datos.PositionCorrectedLatLonAlt[0];
+                    longitud = datos.PositionCorrectedLatLonAlt[1];
+
+                    identificador = datos.AircrftAddrs;
+
+                    if (string.IsNullOrWhiteSpace(identificador))
+                        identificador = datos.AircrftIddent;
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (double.IsNaN(tiempo) ||
+                    double.IsInfinity(tiempo) ||
+                    tiempo < 0 ||
+                    double.IsNaN(latitud) ||
+                    double.IsInfinity(latitud) ||
+                    double.IsNaN(longitud) ||
+                    double.IsInfinity(longitud) ||
+                    string.IsNullOrWhiteSpace(identificador))
+                {
+                    continue;
+                }
+
+                puntosHeatmap.Add(new PuntoHeatmap
+                {
+                    tiempo = tiempo,
+                    latitud = latitud,
+                    longitud = longitud,
+                    identificador = identificador
+                });
+            }
+
+            puntosHeatmap.Sort((a, b) =>
+                a.tiempo.CompareTo(b.tiempo));
+
+            densidadesDinamicas.Clear();
+            siguientePuntoHeatmap = 0;
+            ultimoTiempoHeatmap = -1;
+        }
+
+        private void CalcularDensidadesDinamicas()
+        {
+            // Si hemos retrocedido, reconstruir desde el principio
+            if (ultimoTiempoHeatmap >= 0 &&
+                TiempoActual < ultimoTiempoHeatmap)
+            {
+                densidadesDinamicas.Clear();
+                siguientePuntoHeatmap = 0;
+            }
+
+            // Incorporar solo las posiciones hasta TiempoActual
+            while (siguientePuntoHeatmap < puntosHeatmap.Count)
+            {
+                PuntoHeatmap punto =
+                    puntosHeatmap[siguientePuntoHeatmap];
+
+                if (punto.tiempo > TiempoActual)
+                    break;
+
+                int fila = (int)Math.Floor(
+                    punto.latitud / tamanoCeldaHeatmap);
+
+                int columna = (int)Math.Floor(
+                    punto.longitud / tamanoCeldaHeatmap);
+
+                var clave = (fila, columna);
+
+                if (!densidadesDinamicas.TryGetValue(
+                    clave, out HashSet<string> aviones))
+                {
+                    aviones = new HashSet<string>();
+                    densidadesDinamicas.Add(clave, aviones);
+                }
+
+                aviones.Add(punto.identificador);
+
+                siguientePuntoHeatmap++;
+            }
+        }
+
+        private void mostrarHeatmapDinamicoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            mostrarHeatmapDinamico = !mostrarHeatmapDinamico;
+
+            if (mostrarHeatmapDinamico)
+            {
+                // Desactivar el modo completo
+                mostrarHeatmap = false;
+                mostrarHeatmapCompletoToolStripMenuItem.Checked = false;
+
+                mostrarHeatmapDinamicoToolStripMenuItem.Checked = true;
+
+                capaHeatmap.IsVisibile = true;
+
+                PrepararPuntosHeatmap();
+                ActualizarHeatmapDinamico(true);
+            }
+            else
+            {
+                mostrarHeatmapDinamicoToolStripMenuItem.Checked = false;
+
+                capaHeatmap.Markers.Clear();
+                capaHeatmap.IsVisibile = false;
+
+                ultimoTiempoHeatmap = -1;
+            }
+
+            gMapControl1.Refresh();
         }
     }
 }
