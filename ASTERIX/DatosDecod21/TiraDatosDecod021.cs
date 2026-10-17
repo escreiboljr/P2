@@ -1,4 +1,6 @@
-﻿namespace DatosDecod21
+﻿using System.Diagnostics;
+
+namespace DatosDecod21
 {
     public class TiraDatosDecod021
     {
@@ -11,11 +13,12 @@
         public string Mode3ACode { get; set; }
         public double FlightLevel { get; set; }
         public string TargetIdentification { get; set; }
-        public double QNH { get; set; }
         public double AltitudCorregida { get; set; }
-
-        public static Dictionary<string, double> UltimosQNH =
-            new Dictionary<string, double>();
+        public double BPS { get; set; }
+        public bool? ajusteEstandar { get; set; } = null;
+        public double altitudPresionFt { get; set; } = double.NaN;
+        public double altitudQNHFt { get; set; } = double.NaN;
+        public double qnhUtilizado { get; set; } = double.NaN;
 
         public TiraDatosDecod021()
          {
@@ -28,8 +31,12 @@
             this.Mode3ACode = null;
             this.FlightLevel = double.NaN;
             this.TargetIdentification = null;
-            this.QNH = double.NaN;
             this.AltitudCorregida = double.NaN;
+            this.BPS = double.NaN;
+            this.ajusteEstandar = null;
+            this.altitudPresionFt = double.NaN;
+            this.altitudQNHFt = double.NaN;
+            this.qnhUtilizado = double.NaN;
         }
 
         public void DecDataSourceID(Queue<byte> ColaBytes)
@@ -243,9 +250,8 @@
                 // Nos quedamos con los 12 bits restantes
                 int raw = ((b1 & 0x0F) << 8) | b2;
 
-                this.QNH = (raw * 0.1) + 800.0;
-
-                this.ReservedExpField = this.QNH;
+                this.BPS = (raw * 0.1) + 800.0;
+                this.ReservedExpField = this.BPS;
             }
 
             // Saltar los campos restantes del Reserved Expansion
@@ -257,49 +263,58 @@
             }
         }
 
-        public void CorregirAltitudQNH()
+        public void IdentificarAjusteBarometrico()
         {
-            if (double.IsNaN(this.FlightLevel))
-            {
-                this.AltitudCorregida = double.NaN;
+            ajusteEstandar = null;
+
+            if (double.IsNaN(BPS) || double.IsInfinity(BPS))
                 return;
-            }
 
-            double altitudIndicada = this.FlightLevel * 100.0;
-
-            this.AltitudCorregida = altitudIndicada;
-
-            // Comprobar si tenemos una aeronave identificada
-            if (string.IsNullOrEmpty(this.TargetAddress))
-            {
-                return;
-            }
-
-            // Comprobar si el QNH recibido es diferente del estándar
-            if (!double.IsNaN(this.QNH) &&
-                (this.QNH < 1013.0 || this.QNH > 1013.5))
-            {
-                // Guardar el último QNH válido de esta aeronave
-                UltimosQNH[this.TargetAddress] = this.QNH;
-            }
-
-            // Solo corregimos por debajo de 6000 ft
-            if (altitudIndicada >= 6000)
-            {
-                return;
-            }
-
-            double qnhUtilizado;
-
-            // Recuperar el último QNH no estándar de la aeronave
-            if (UltimosQNH.TryGetValue(this.TargetAddress, out qnhUtilizado))
-            {
-                const double qnhEstandar = 1013.25;
-
-                this.AltitudCorregida =
-                    altitudIndicada +
-                    (qnhUtilizado - qnhEstandar) * 30.0;
-            }
+            ajusteEstandar = BPS >= 1013.0 && BPS <= 1013.5;
         }
-    }   
+
+
+
+
+        public void CalcularAltitudBarometrica(double qnhReferencia)
+        {
+            altitudPresionFt = double.NaN;
+            altitudQNHFt = double.NaN;
+            qnhUtilizado = double.NaN;
+            AltitudCorregida = double.NaN;
+
+            if (double.IsNaN(FlightLevel) ||
+                double.IsInfinity(FlightLevel))
+                return;
+
+            // Altitud de presión, disponible aunque no conozcamos QNH.
+            altitudPresionFt = FlightLevel * 100.0;
+
+            // Altitud que utilizaremos por defecto.
+            AltitudCorregida = altitudPresionFt;
+
+            // A partir de 6000 ft no aplicamos la corrección.
+            if (altitudPresionFt >= 6000.0)
+                return;
+
+            // Si no conocemos el QNH, conservamos la altitud
+            // de presión y dejamos altitudQNHFt como NaN.
+            if (double.IsNaN(qnhReferencia) ||
+                double.IsInfinity(qnhReferencia) ||
+                qnhReferencia < 900.0 ||
+                qnhReferencia > 1100.0)
+                return;
+
+            qnhUtilizado = qnhReferencia;
+
+            altitudQNHFt =
+                altitudPresionFt +
+                (qnhReferencia - 1013.25) * 30.0;
+
+            // Tenemos QNH: utilizamos la altitud corregida.
+            AltitudCorregida = altitudQNHFt;
+        }
+
+
+    }
 }

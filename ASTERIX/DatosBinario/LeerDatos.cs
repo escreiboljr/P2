@@ -8,11 +8,17 @@ namespace Archvios
 {
     public class LeerDatos
     {
+        private readonly Dictionary<string, double> bpsCandidatos = new Dictionary<string, double>();
+        private readonly Dictionary<string, int> repeticionesBPS = new Dictionary<string, int>();
+        private readonly Dictionary<string, double> ultimosQNH = new Dictionary<string, double>();
 
         public List<Mensaje> DatosProcesados(string nombreArchivo, IProgress<int> progreso = null)
         {
-            TiraDatosDecod021.UltimosQNH.Clear();
-
+            ultimosBPS.Clear();
+            ultimosTiemposBPS.Clear();
+            bpsCandidatos.Clear();
+            repeticionesBPS.Clear();
+            ultimosQNH.Clear();
             List<Mensaje> listaTiras = new List<Mensaje>();
             Queue<byte> cola = new Queue<byte>();
 
@@ -85,28 +91,11 @@ namespace Archvios
             if (categoria == 48)
             {
                 var tira48 = DecodificarCAT048(colaMensaje);
-           //         Debug.WriteLine(
-           //"CAT48 -> " +
-           //"TRACK=" + tira48.TrackNum +
-           //" | ID=" + tira48.AircrftIddent +
-           //" | ADDR=" + tira48.AircrftAddrs +
-           //" | MODE3A=" + tira48.mode3.reply +
-           //" | VEL=" + tira48.TrckVelPolRepr[0] +
-           //" | HEADING=" + tira48.TrckVelPolRepr[1]);
-
                     if (tira48.PositionCorrectedLatLonAlt[0] > 40.99 &&
                         tira48.PositionCorrectedLatLonAlt[0] < 41.7 &&
                         tira48.PositionCorrectedLatLonAlt[1] > 1.5 &&
                         tira48.PositionCorrectedLatLonAlt[1] < 2.6)
                     {
-                        /*Console.WriteLine(
-    "ADDR: " + tira48.AircrftAddrs +
-    " TRACK: " + tira48.TrackNum +
-    " ID: " + tira48.AircrftIddent +
-    " FL: " + tira48.FL.FL +
-    " LAT: " + tira48.PositionCorrectedLatLonAlt[0] +
-    " LON: " + tira48.PositionCorrectedLatLonAlt[1]
-);*/
                         if (tira48.mode3.reply =="7777")
                         { listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48, TransFijo=true }); }
                         else
@@ -116,7 +105,24 @@ namespace Archvios
                 else if (categoria == 21)
                 {
                     var tira21 = DecodificarCAT021(colaMensaje);
+                    DetectarCambioBPS(tira21);
 
+                    if (!double.IsNaN(tira21.FlightLevel) &&
+    tira21.FlightLevel < 60 &&
+    !string.IsNullOrEmpty(tira21.TargetAddress))
+                    {
+                        /*Debug.WriteLine(
+                            "PRUEBA QNH | " +
+                            "ADDR: " + tira21.TargetAddress +
+                            " | TIEMPO: " + tira21.TimeReceptionPosition.ToString("F2") +
+                            " | FL: " + tira21.FlightLevel.ToString("F2") +
+                            " | BPS: " + tira21.BPS.ToString("F1") +
+                            " | STD: " + tira21.ajusteEstandar +
+                            " | QNH GUARDADO: " + tira21.qnhUtilizado.ToString("F1") +
+                            " | ALT PRESION: " + tira21.altitudPresionFt.ToString("F1") +
+                            " | ALT QNH: " + tira21.altitudQNHFt.ToString("F1")
+                        );*/
+                    }
                     if (tira21.TargetRep.GBS == 0)
                     {
                         if (tira21.PosWGS84HighRes[0] > 40.9 && //Descartar mensajes de aeronaves que no se encuentren dentro del filtro geográfico
@@ -143,12 +149,7 @@ namespace Archvios
         { 1,  (q, td) => td.DecDataSourceID(q) },
         { 2,  (q, td) => td.DecodeTimeOfDayFromBits(q) },
         { 3,  (q, td) => td.DecodeTargetRep(q) },
-        { 4, (q, td) =>
-            {
-                td.DecodePosSlantPolarCoord(q);
-                td.ConvertToWGS84(41.30070233, 2.10205819);;
-            }
-        },
+        { 4, (q, td) => td.DecodePosSlantPolarCoord(q) },
         { 5, (q, td)  => td.DecodeMode3A(q) },
         { 6,  (q, td) => td.DecodeFL(q) },
         { 7,  (q, td) => td.DecodeRadarPlot(q) },
@@ -237,8 +238,11 @@ namespace Archvios
                     break;   // ya no hay nada más que decodificar
                 }
             }
-
-
+            if (!double.IsNaN(td.PosSlantPolarCoord[0]) &&!double.IsNaN(td.PosSlantPolarCoord[1]))
+            {
+                td.ConvertToWGS84(41.3007023333, 2.1020581944, 27.257);
+            }
+            AplicarCorreccionQNH(td);
             return td;
         }
 
@@ -573,7 +577,9 @@ namespace Archvios
                     break;
                 }
             }
-            td.CorregirAltitudQNH();
+            td.IdentificarAjusteBarometrico();
+            AplicarCorreccionQNH(td);
+
             return td;
         }
 
@@ -611,6 +617,208 @@ namespace Archvios
             }
 
             return FRNpresentes;
+        }
+        private readonly Dictionary<string, double> ultimosBPS = new Dictionary<string, double>();
+
+
+        private readonly Dictionary<string, double> ultimosTiemposBPS =
+            new Dictionary<string, double>();
+
+
+        private void DetectarCambioBPS(TiraDatosDecod021 td)
+        {
+            if (td == null || string.IsNullOrEmpty(td.TargetAddress))
+                return;
+
+            if (double.IsNaN(td.BPS) || double.IsInfinity(td.BPS))
+                return;
+
+            string direccion = td.TargetAddress;
+            double tiempo = td.TimeReceptionPosition;
+
+            if (!ultimosBPS.TryGetValue(direccion, out double bpsReferencia))
+            {
+                ultimosBPS[direccion] = td.BPS;
+
+                if (tiempo >= 0 && !double.IsInfinity(tiempo))
+                    ultimosTiemposBPS[direccion] = tiempo;
+
+                return;
+            }
+
+            double diferencia = td.BPS - bpsReferencia;
+
+            if (Math.Abs(diferencia) < 3.0)
+                return;
+
+            string tiempoTranscurrido = "N/A";
+
+            if (tiempo >= 0 &&
+                !double.IsInfinity(tiempo) &&
+                ultimosTiemposBPS.TryGetValue(direccion, out double tiempoAnterior))
+            {
+                double dt = tiempo - tiempoAnterior;
+
+                if (dt < -43200)
+                    dt += 86400;
+
+                if (dt >= 0)
+                    tiempoTranscurrido = dt.ToString("F2") + " s";
+            }
+            ultimosBPS[direccion] = td.BPS;
+
+            if (tiempo >= 0 && !double.IsInfinity(tiempo))
+                ultimosTiemposBPS[direccion] = tiempo;
+        }
+
+
+
+        private void AplicarCorreccionQNH(TiraDatosDecod021 td)
+        {
+            if (td == null)
+                return;
+
+            string direccion = td.TargetAddress;
+            double bps = td.BPS;
+
+            bool bpsValido =
+                !double.IsNaN(bps) &&
+                !double.IsInfinity(bps) &&
+                bps >= 900.0 &&
+                bps <= 1100.0;
+
+            // Mismo criterio STD que IdentificarAjusteBarometrico()
+            bool esEstandar =
+                                bpsValido &&
+                                bps >= 1013.0 &&
+                                bps <= 1013.5;
+
+            double qnh = double.NaN;
+
+            if (!string.IsNullOrWhiteSpace(direccion))
+            {
+                if (bpsValido && !esEstandar)
+                {
+                    // Confirmamos cualquier nuevo BPS no estándar,
+                    // sin exigir una diferencia mínima de 3 hPa.
+                    ConfirmarCandidatoBPS(direccion, bps);
+                }
+                else
+                {
+                    // STD o BPS ausente: no actualizamos el QNH.
+                    // Descartamos una confirmación incompleta.
+                    bpsCandidatos.Remove(direccion);
+                    repeticionesBPS.Remove(direccion);
+                }
+
+                // Recuperar la última referencia confirmada.
+                if (ultimosQNH.TryGetValue(direccion, out double qnhGuardado))
+                {
+                    qnh = qnhGuardado;
+                }
+            }
+
+            // Calcular la altitud usando el QNH disponible.
+            td.CalcularAltitudBarometrica(qnh);
+        }
+        private void AplicarCorreccionQNH(TiraDatosDecod048 td)
+        {
+            td.altitudQNHFt = double.NaN;
+            td.qnhUtilizado = double.NaN;
+
+            if (double.IsNaN(td.altitudPresionFt))
+                return;
+
+            // A partir de 6000 ft utilizamos la altitud de presión
+            if (td.altitudPresionFt >= 6000)
+            {
+                td.altitudQNHFt = td.altitudPresionFt;
+                return;
+            }
+
+            // Identificar el avión
+            string direccion = td.AircrftAddrs;
+
+            if (string.IsNullOrWhiteSpace(direccion))
+                return;
+
+            double bps = td.BPS;
+
+            // Comprobar si tenemos una presión válida y no estándar
+            if (!double.IsNaN(bps) &&
+                bps >= 900 &&
+                bps <= 1100 &&
+                (bps < 1013.0 || bps > 1013.5))
+            {
+                ConfirmarCandidatoBPS(direccion, bps);
+            }
+            else
+            {
+                bpsCandidatos.Remove(direccion);
+                repeticionesBPS.Remove(direccion);
+            }
+
+            // Recuperar el último QNH confirmado de este avión
+            if (ultimosQNH.TryGetValue(direccion, out double qnh))
+            {
+                td.qnhUtilizado = qnh;
+
+                td.altitudQNHFt =
+                    td.altitudPresionFt + (qnh - 1013.25) * 30.0;
+            }
+            else
+            {
+                td.altitudQNHFt = td.altitudPresionFt;
+            }
+            double altitudEsperada = td.altitudPresionFt;
+
+            if (td.altitudPresionFt < 6000 &&
+                !double.IsNaN(td.qnhUtilizado))
+            {
+                altitudEsperada +=
+                    (td.qnhUtilizado - 1013.25) * 30.0;
+            }
+
+            bool correcto =
+                !double.IsNaN(td.altitudQNHFt) &&
+                Math.Abs(td.altitudQNHFt - altitudEsperada) < 0.01;
+        }
+        private void ConfirmarCandidatoBPS(string direccion, double bps)
+        {
+            const double toleranciaLecturas = 0.5;
+            const int lecturasNecesarias = 3;
+
+            if (bpsCandidatos.TryGetValue(direccion, out double candidato) &&
+                Math.Abs(bps - candidato) <= toleranciaLecturas)
+            {
+                repeticionesBPS[direccion]++;
+            }
+            else
+            {
+                bpsCandidatos[direccion] = bps;
+                repeticionesBPS[direccion] = 1;
+            }
+
+            // Esperar tres lecturas consecutivas similares.
+            if (repeticionesBPS[direccion] < lecturasNecesarias)
+                return;
+
+            double qnhNuevo = bpsCandidatos[direccion];
+
+            bool existeAnterior =
+                ultimosQNH.TryGetValue(direccion, out double qnhAnterior);
+
+            // Actualizar si no existe QNH o si ha cambiado
+            // al menos una décima de hPa.
+            if (!existeAnterior ||
+                Math.Abs(qnhNuevo - qnhAnterior) >= 0.1 - 0.000001)
+            {
+                ultimosQNH[direccion] = qnhNuevo;
+            }
+
+            // Preparados para detectar un cambio posterior.
+            bpsCandidatos.Remove(direccion);
+            repeticionesBPS.Remove(direccion);
         }
     }
 }

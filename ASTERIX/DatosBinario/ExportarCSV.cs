@@ -208,7 +208,7 @@ namespace Archivos
                         Valor(m.PosWGS84HighRes[0]) + ";" +
                         Valor(m.PosWGS84HighRes[1]) + ";" +
 
-                        Valor(m.QNH) + ";" +
+                        //Valor(m.QNH) + ";" +
                         Valor(m.AltitudCorregida) + ";" +
                         Valor(m.ReservedExpField) + ";" +
 
@@ -440,7 +440,7 @@ namespace Archivos
 
                             // CAT21
 
-                            Valor(m.QNH) + ";" +
+                            //Valor(m.QNH) + ";" +
                             Valor(m.ReservedExpField) + ";" +
 
 

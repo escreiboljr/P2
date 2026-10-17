@@ -233,7 +233,7 @@
             Controls.Add(labelTituloCat);
             ForeColor = SystemColors.ControlLightLight;
             Name = "FormFiltro";
-            Text = "FormFiltro";
+            Text = "Filtros";
             ((System.ComponentModel.ISupportInitialize)pictureBoxSlideButtonBlancoPuro).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxSlideButtonGround).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxSlideButtonTransFijo).EndInit();

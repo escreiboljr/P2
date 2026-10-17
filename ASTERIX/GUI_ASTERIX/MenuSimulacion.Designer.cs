@@ -43,6 +43,7 @@
             heatmapToolStripMenuItem = new ToolStripMenuItem();
             mostrarHeatmapCompletoToolStripMenuItem = new ToolStripMenuItem();
             mostrarHeatmapDinamicoToolStripMenuItem = new ToolStripMenuItem();
+            ayudaToolStripMenuItem = new ToolStripMenuItem();
             timerSimulacion = new System.Windows.Forms.Timer(components);
             buttonPlay = new Button();
             buttonStop = new Button();
@@ -86,7 +87,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem, verToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem, verToolStripMenuItem, ayudaToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1402, 29);
@@ -180,6 +181,13 @@
             mostrarHeatmapDinamicoToolStripMenuItem.Text = "Mostrar heatmap dinamico";
             mostrarHeatmapDinamicoToolStripMenuItem.Click += mostrarHeatmapDinamicoToolStripMenuItem_Click;
             // 
+            // ayudaToolStripMenuItem
+            // 
+            ayudaToolStripMenuItem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+            ayudaToolStripMenuItem.Size = new Size(66, 25);
+            ayudaToolStripMenuItem.Text = "Ayuda";
+            // 
             // timerSimulacion
             // 
             timerSimulacion.Tick += timerSimulacion_Tick;
@@ -211,7 +219,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ControlLightLight;
-            label1.Location = new Point(56, 283);
+            label1.Location = new Point(59, 184);
             label1.Name = "label1";
             label1.Size = new Size(158, 47);
             label1.TabIndex = 3;
@@ -219,13 +227,13 @@
             // 
             // trackBarVelSimulacion
             // 
-            trackBarVelSimulacion.LargeChange = 4;
-            trackBarVelSimulacion.Location = new Point(50, 462);
-            trackBarVelSimulacion.Maximum = 4;
+            trackBarVelSimulacion.LargeChange = 1;
+            trackBarVelSimulacion.Location = new Point(25, 385);
+            trackBarVelSimulacion.Maximum = 8;
             trackBarVelSimulacion.Minimum = 1;
             trackBarVelSimulacion.Name = "trackBarVelSimulacion";
-            trackBarVelSimulacion.Size = new Size(163, 45);
-            trackBarVelSimulacion.TabIndex = 4;
+            trackBarVelSimulacion.Size = new Size(240, 45);
+            trackBarVelSimulacion.TabIndex = 8;
             trackBarVelSimulacion.Value = 1;
             trackBarVelSimulacion.Scroll += trackBarVelSimulacion_Scroll;
             // 
@@ -242,7 +250,7 @@
             // 
             // buttonReset
             // 
-            buttonReset.Location = new Point(39, 590);
+            buttonReset.Location = new Point(47, 545);
             buttonReset.Name = "buttonReset";
             buttonReset.Size = new Size(87, 23);
             buttonReset.TabIndex = 7;
@@ -300,59 +308,65 @@
             // labelX1
             // 
             labelX1.AutoSize = true;
+            labelX1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelX1.ForeColor = SystemColors.ControlLightLight;
-            labelX1.Location = new Point(56, 492);
+            labelX1.Location = new Point(24, 412);
             labelX1.Name = "labelX1";
-            labelX1.Size = new Size(18, 15);
+            labelX1.Size = new Size(32, 30);
             labelX1.TabIndex = 11;
             labelX1.Text = "x1";
             // 
             // labelx2
             // 
             labelx2.AutoSize = true;
+            labelx2.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelx2.ForeColor = SystemColors.ControlLightLight;
-            labelx2.Location = new Point(98, 492);
+            labelx2.Location = new Point(93, 412);
             labelx2.Name = "labelx2";
-            labelx2.Size = new Size(18, 15);
+            labelx2.Size = new Size(36, 30);
             labelx2.TabIndex = 12;
             labelx2.Text = "x2";
             // 
             // labelx8
             // 
             labelx8.AutoSize = true;
+            labelx8.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelx8.ForeColor = SystemColors.ControlLightLight;
-            labelx8.Location = new Point(190, 492);
+            labelx8.Location = new Point(235, 412);
             labelx8.Name = "labelx8";
-            labelx8.Size = new Size(18, 15);
+            labelx8.Size = new Size(36, 30);
             labelx8.TabIndex = 14;
             labelx8.Text = "x8";
             // 
             // labelx4
             // 
             labelx4.AutoSize = true;
+            labelx4.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelx4.ForeColor = SystemColors.ControlLightLight;
-            labelx4.Location = new Point(148, 492);
+            labelx4.Location = new Point(165, 412);
             labelx4.Name = "labelx4";
-            labelx4.Size = new Size(18, 15);
+            labelx4.Size = new Size(36, 30);
             labelx4.TabIndex = 13;
             labelx4.Text = "x4";
             // 
             // labelTituloVelocidadReproduccion
             // 
             labelTituloVelocidadReproduccion.AutoSize = true;
+            labelTituloVelocidadReproduccion.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelTituloVelocidadReproduccion.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVelocidadReproduccion.Location = new Point(59, 433);
+            labelTituloVelocidadReproduccion.Location = new Point(12, 352);
             labelTituloVelocidadReproduccion.Name = "labelTituloVelocidadReproduccion";
-            labelTituloVelocidadReproduccion.Size = new Size(148, 15);
+            labelTituloVelocidadReproduccion.Size = new Size(270, 30);
             labelTituloVelocidadReproduccion.TabIndex = 15;
             labelTituloVelocidadReproduccion.Text = "Velocidad de reproducción";
             // 
             // labelTituloHora
             // 
             labelTituloHora.AutoSize = true;
+            labelTituloHora.BackColor = Color.Transparent;
             labelTituloHora.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelTituloHora.ForeColor = SystemColors.ControlLightLight;
-            labelTituloHora.Location = new Point(65, 251);
+            labelTituloHora.Location = new Point(68, 152);
             labelTituloHora.Name = "labelTituloHora";
             labelTituloHora.Size = new Size(147, 32);
             labelTituloHora.TabIndex = 16;
@@ -362,7 +376,7 @@
             // 
             pictureBox1.Image = Properties.Resources.botonReproducir;
             pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new Point(114, 369);
+            pictureBox1.Location = new Point(112, 279);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(44, 43);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -374,7 +388,7 @@
             // 
             pictureBox2.Image = Properties.Resources.botonAvanzar;
             pictureBox2.InitialImage = (Image)resources.GetObject("pictureBox2.InitialImage");
-            pictureBox2.Location = new Point(175, 369);
+            pictureBox2.Location = new Point(173, 279);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(44, 43);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -386,7 +400,7 @@
             // 
             pictureBox3.Image = Properties.Resources.botonRetroceder;
             pictureBox3.InitialImage = (Image)resources.GetObject("pictureBox3.InitialImage");
-            pictureBox3.Location = new Point(53, 369);
+            pictureBox3.Location = new Point(51, 279);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(44, 43);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -397,20 +411,22 @@
             // labelTituloVerde
             // 
             labelTituloVerde.AutoSize = true;
+            labelTituloVerde.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             labelTituloVerde.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVerde.Location = new Point(128, 178);
+            labelTituloVerde.Location = new Point(553, 685);
             labelTituloVerde.Name = "labelTituloVerde";
-            labelTituloVerde.Size = new Size(41, 15);
+            labelTituloVerde.Size = new Size(68, 25);
             labelTituloVerde.TabIndex = 20;
             labelTituloVerde.Text = "ADS-B";
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             label2.ForeColor = SystemColors.ControlLightLight;
-            label2.Location = new Point(128, 205);
+            label2.Location = new Point(1054, 685);
             label2.Name = "label2";
-            label2.Size = new Size(37, 15);
+            label2.Size = new Size(62, 25);
             label2.TabIndex = 21;
             label2.Text = "Radar";
             // 
@@ -418,9 +434,9 @@
             // 
             pictureBox4.Image = Properties.Resources.large_green_square_1f7e9;
             pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
-            pictureBox4.Location = new Point(80, 178);
+            pictureBox4.Location = new Point(516, 685);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(16, 15);
+            pictureBox4.Size = new Size(28, 28);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 23;
             pictureBox4.TabStop = false;
@@ -429,9 +445,9 @@
             // 
             pictureBox5.Image = Properties.Resources.images;
             pictureBox5.InitialImage = (Image)resources.GetObject("pictureBox5.InitialImage");
-            pictureBox5.Location = new Point(80, 205);
+            pictureBox5.Location = new Point(1017, 686);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(16, 15);
+            pictureBox5.Size = new Size(29, 28);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 24;
             pictureBox5.TabStop = false;
@@ -441,7 +457,7 @@
             labelTituloAsterix.AutoSize = true;
             labelTituloAsterix.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTituloAsterix.ForeColor = Color.Turquoise;
-            labelTituloAsterix.Location = new Point(59, 75);
+            labelTituloAsterix.Location = new Point(60, 75);
             labelTituloAsterix.Name = "labelTituloAsterix";
             labelTituloAsterix.Size = new Size(162, 47);
             labelTituloAsterix.TabIndex = 26;
@@ -451,7 +467,7 @@
             // 
             labelAvanzarHora.AutoSize = true;
             labelAvanzarHora.ForeColor = SystemColors.ControlLightLight;
-            labelAvanzarHora.Location = new Point(12, 559);
+            labelAvanzarHora.Location = new Point(20, 514);
             labelAvanzarHora.Name = "labelAvanzarHora";
             labelAvanzarHora.Size = new Size(114, 15);
             labelAvanzarHora.TabIndex = 29;
@@ -459,7 +475,7 @@
             // 
             // textBoxHora
             // 
-            textBoxHora.Location = new Point(149, 559);
+            textBoxHora.Location = new Point(157, 514);
             textBoxHora.Name = "textBoxHora";
             textBoxHora.Size = new Size(29, 23);
             textBoxHora.TabIndex = 30;
@@ -468,7 +484,7 @@
             // 
             // textBoxSegundo
             // 
-            textBoxSegundo.Location = new Point(209, 559);
+            textBoxSegundo.Location = new Point(217, 514);
             textBoxSegundo.Name = "textBoxSegundo";
             textBoxSegundo.Size = new Size(27, 23);
             textBoxSegundo.TabIndex = 31;
@@ -477,7 +493,7 @@
             // 
             // textBoxMinuto
             // 
-            textBoxMinuto.Location = new Point(180, 559);
+            textBoxMinuto.Location = new Point(188, 514);
             textBoxMinuto.Name = "textBoxMinuto";
             textBoxMinuto.Size = new Size(27, 23);
             textBoxMinuto.TabIndex = 32;
@@ -486,7 +502,7 @@
             // 
             // buttonSimularDesdeHora
             // 
-            buttonSimularDesdeHora.Location = new Point(149, 590);
+            buttonSimularDesdeHora.Location = new Point(157, 545);
             buttonSimularDesdeHora.Name = "buttonSimularDesdeHora";
             buttonSimularDesdeHora.Size = new Size(87, 23);
             buttonSimularDesdeHora.TabIndex = 33;
@@ -499,7 +515,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(1402, 709);
+            ClientSize = new Size(1402, 731);
+            Controls.Add(labelX1);
             Controls.Add(buttonSimularDesdeHora);
             Controls.Add(textBoxMinuto);
             Controls.Add(textBoxSegundo);
@@ -518,7 +535,6 @@
             Controls.Add(labelx8);
             Controls.Add(labelx4);
             Controls.Add(labelx2);
-            Controls.Add(labelX1);
             Controls.Add(gMapControl1);
             Controls.Add(buttonDataGrid);
             Controls.Add(dataGridAviones);
@@ -592,5 +608,6 @@
         private ToolStripMenuItem heatmapToolStripMenuItem;
         private ToolStripMenuItem mostrarHeatmapCompletoToolStripMenuItem;
         private ToolStripMenuItem mostrarHeatmapDinamicoToolStripMenuItem;
+        private ToolStripMenuItem ayudaToolStripMenuItem;
     }
 }

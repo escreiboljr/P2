@@ -7,13 +7,14 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using Gst;
 using Microsoft.VisualBasic;
 using Simulacion;
 using System.Data.Entity.Core.Mapping;
 using System.Diagnostics;
 using System.Security.Policy;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace GUI_ASTERIX
 {
@@ -44,6 +45,8 @@ namespace GUI_ASTERIX
             InitializeComponent();
             timerSimulacion.Interval = 1000;
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
+            LeerDatos prueba = new LeerDatos();
+            prueba.PruebaRealSTD();
         }
 
         private void MenuSimulacion_Load(object sender, EventArgs e)
@@ -154,6 +157,29 @@ namespace GUI_ASTERIX
                 timerSimulacion.Interval = 125;
                 //labelVelocidad.Text = "x8";
             }
+            if (trackBarVelSimulacion.Value == 5)
+            {
+                timerSimulacion.Interval = 62;
+                //labelVelocidad.Text = "x16";
+            }
+
+            if (trackBarVelSimulacion.Value == 6)
+            {
+                timerSimulacion.Interval = 31;
+                //labelVelocidad.Text = "x32";
+            }
+
+            if (trackBarVelSimulacion.Value == 7)
+            {
+                timerSimulacion.Interval = 16;
+                //labelVelocidad.Text = "x64";
+            }
+
+            if (trackBarVelSimulacion.Value == 8)
+            {
+                timerSimulacion.Interval = 8;
+                //labelVelocidad.Text = "x128";
+            }
         }
 
         private void ActualizarAviones()
@@ -169,6 +195,12 @@ namespace GUI_ASTERIX
                 double longitud = double.NaN;
                 double altitud = double.NaN;
                 double flightLevel = double.NaN;
+
+                double bps = double.NaN;
+                double altitudPresionFt = double.NaN;
+                double altitudQNHFt = double.NaN;
+                double qnhUtilizado = double.NaN;
+
                 int trackNumber = -1;
 
                 double velocidad = double.NaN;
@@ -196,7 +228,21 @@ namespace GUI_ASTERIX
                     if (!double.IsNaN(mensaje21.FlightLevel))
                     {
                         flightLevel = mensaje21.FlightLevel;
-                        altitud = mensaje21.AltitudCorregida;
+
+                        bps = mensaje21.BPS;
+                        altitudPresionFt = mensaje21.altitudPresionFt;
+                        altitudQNHFt = mensaje21.altitudQNHFt;
+                        qnhUtilizado = mensaje21.qnhUtilizado;
+
+                        // Utilizar la altitud corregida cuando esté disponible
+                        if (!double.IsNaN(altitudQNHFt))
+                        {
+                            altitud = altitudQNHFt;
+                        }
+                        else
+                        {
+                            altitud = altitudPresionFt;
+                        }
                     }
 
                     esADSB = true;
@@ -232,28 +278,19 @@ namespace GUI_ASTERIX
                     if (!double.IsNaN(mensaje48.FL.FL))
                     {
                         flightLevel = mensaje48.FL.FL;
-                    }
 
-                    if (!double.IsNaN(mensaje48.PositionCorrectedLatLonAlt[2]))
-                    {
-                        altitud = mensaje48.PositionCorrectedLatLonAlt[2];
+                        bps = mensaje48.BPS;
+                        altitudPresionFt = mensaje48.altitudPresionFt;
+                        altitudQNHFt = mensaje48.altitudQNHFt;
+                        qnhUtilizado = mensaje48.qnhUtilizado;
+
+                        // Usar la altitud corregida cuando esté disponible
+                        altitud = !double.IsNaN(altitudQNHFt)
+                            ? altitudQNHFt
+                            : altitudPresionFt;
                     }
 
                     esRadar = true;
-                    /*Debug.WriteLine(
-    "ADDR: " + mensaje48.AircrftAddrs +
-    " TRACK: " + mensaje48.TrackNum +
-    " ID: " + mensaje48.AircrftIddent +
-    " FL: " + mensaje48.FL.FL +
-    " TYP: " + mensaje48.TargetRep.TYP +
-    " CNF: " + mensaje48.TrckStatus.CNF +
-    " RAD: " + mensaje48.TrckStatus.RAD +
-    " TRE: " + mensaje48.TrckStatus.TRE +
-    " GHO: " + mensaje48.TrckStatus.GHO +
-    " SUP: " + mensaje48.TrckStatus.SUP +
-    " LAT: " + mensaje48.PositionCorrectedLatLonAlt[0] +
-    " LON: " + mensaje48.PositionCorrectedLatLonAlt[1]
-);*/
                 }
 
 
@@ -274,6 +311,10 @@ namespace GUI_ASTERIX
 
                         mensajeVisual.altitud = altitud;
                         mensajeVisual.flightLevel = flightLevel;
+                        mensajeVisual.bps = bps;
+                        mensajeVisual.altitudPresionFt = altitudPresionFt;
+                        mensajeVisual.altitudQNHFt = altitudQNHFt;
+                        mensajeVisual.qnhUtilizado = qnhUtilizado;
 
                         mensajeVisual.velocidad = velocidad;
                         mensajeVisual.rumbo = rumbo;
@@ -340,6 +381,10 @@ namespace GUI_ASTERIX
                         }
                         nuevoAvion.altitud = altitud;
                         nuevoAvion.flightLevel = flightLevel;
+                        nuevoAvion.bps = bps;
+                        nuevoAvion.altitudPresionFt = altitudPresionFt;
+                        nuevoAvion.altitudQNHFt = altitudQNHFt;
+                        nuevoAvion.qnhUtilizado = qnhUtilizado;
 
                         nuevoAvion.ultimoTiempo = tiempoMensaje;
 
@@ -404,6 +449,13 @@ namespace GUI_ASTERIX
                             {
                                 avionEncontrado.flightLevel = flightLevel;
                             }
+                            if (esADSB || esRadar)
+                            {
+                                avionEncontrado.bps = bps;
+                                avionEncontrado.altitudPresionFt = altitudPresionFt;
+                                avionEncontrado.altitudQNHFt = altitudQNHFt;
+                                avionEncontrado.qnhUtilizado = qnhUtilizado;
+                            }
                             if (!double.IsNaN(velocidad))
                             {
                                 avionEncontrado.velocidad = velocidad;
@@ -460,11 +512,6 @@ namespace GUI_ASTERIX
                     {
                         avion.detectadoRadar = false;
                     }
-
-                    //if (TiempoActual - avion.ultimoTiempo >= 10)
-                    //{
-                    //    AvionesActuales.RemoveAt(i);
-                    //}
                 }
             }
         }
@@ -556,7 +603,7 @@ namespace GUI_ASTERIX
             ActualizarDataGrid();
             ActualizarMapa();
 
-            pictureBox1.Image = Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+            pictureBox1.Image = Properties.Resources.botonReproducir;
 
             capaTrayectorias.Routes.Clear();
 
@@ -621,7 +668,7 @@ namespace GUI_ASTERIX
                     Reproduciendo = false;
 
                     pictureBox1.Image =
-                        Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+                        Properties.Resources.botonReproducir;
 
                     // Borrar todos los datos anteriores
                     AvionesActuales.Clear();
@@ -966,6 +1013,11 @@ namespace GUI_ASTERIX
                 double flightLevel = double.NaN;
                 double rumbo = double.NaN;
 
+                double bps = double.NaN;
+                double altitudPresionFt = double.NaN;
+                double altitudQNHFt = double.NaN;
+                double qnhUtilizado = double.NaN;
+
                 int trackNumber = -1;
 
                 bool esADSB = false;
@@ -997,8 +1049,13 @@ namespace GUI_ASTERIX
                     flightLevel =
                         mensaje21.FlightLevel;
 
-                    altitud =
-                        mensaje21.AltitudCorregida;
+                    altitud = !double.IsNaN(mensaje21.altitudQNHFt)
+                                 ? mensaje21.altitudQNHFt
+                                 : mensaje21.altitudPresionFt;
+                    bps = mensaje21.BPS;
+                    altitudPresionFt = mensaje21.altitudPresionFt;
+                    altitudQNHFt = mensaje21.altitudQNHFt;
+                    qnhUtilizado = mensaje21.qnhUtilizado;
 
                     esADSB = true;
 
@@ -1041,13 +1098,15 @@ namespace GUI_ASTERIX
                     if (!double.IsNaN(mensaje48.FL.FL))
                     {
                         flightLevel = mensaje48.FL.FL;
-                    }
 
-                    if (!double.IsNaN(
-                        mensaje48.PositionCorrectedLatLonAlt[2]))
-                    {
-                        altitud =
-                            mensaje48.PositionCorrectedLatLonAlt[2];
+                        bps = mensaje48.BPS;
+                        altitudPresionFt = mensaje48.altitudPresionFt;
+                        altitudQNHFt = mensaje48.altitudQNHFt;
+                        qnhUtilizado = mensaje48.qnhUtilizado;
+
+                        altitud = !double.IsNaN(altitudQNHFt)
+                            ? altitudQNHFt
+                            : altitudPresionFt;
                     }
 
                     esRadar = true;
@@ -1086,6 +1145,10 @@ namespace GUI_ASTERIX
 
                     mensajeVisual.altitud = altitud;
                     mensajeVisual.flightLevel = flightLevel;
+                    mensajeVisual.bps = bps;
+                    mensajeVisual.altitudPresionFt = altitudPresionFt;
+                    mensajeVisual.altitudQNHFt = altitudQNHFt;
+                    mensajeVisual.qnhUtilizado = qnhUtilizado;
 
                     mensajeVisual.ultimoTiempo = tiempoMensaje;
 
@@ -1185,7 +1248,13 @@ namespace GUI_ASTERIX
                 {
                     mensajeAnterior.flightLevel = nuevoMensaje.flightLevel;
                 }
-
+                if (nuevoMensaje.detectadoADSB || nuevoMensaje.detectadoRadar)
+                {
+                    mensajeAnterior.bps = nuevoMensaje.bps;
+                    mensajeAnterior.altitudPresionFt = nuevoMensaje.altitudPresionFt;
+                    mensajeAnterior.altitudQNHFt = nuevoMensaje.altitudQNHFt;
+                    mensajeAnterior.qnhUtilizado = nuevoMensaje.qnhUtilizado;
+                }
                 if (!double.IsNaN(nuevoMensaje.velocidad))
                 {
                     mensajeAnterior.velocidad = nuevoMensaje.velocidad;
@@ -1526,7 +1595,7 @@ namespace GUI_ASTERIX
 
             // Dejar la simulación pausada
             pictureBox1.Image =
-                Properties.Resources.Imagen_de_ChatGPT_1_oct_2026__17_56_52_2;
+                Properties.Resources.botonReproducir;
         }
 
         private void mostrarDatosEnCeldasToolStripMenuItem_Click(object sender, EventArgs e)

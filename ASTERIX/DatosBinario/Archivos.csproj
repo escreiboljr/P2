@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Accord" Version="3.8.0" />
+    <PackageReference Include="VisioForge.DotNet.Core" Version="2026.10.15" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DatosDecod21\DatosDecod21.csproj" />
     <ProjectReference Include="..\DatosDecod\DatosDecod48.csproj" />
   </ItemGroup>

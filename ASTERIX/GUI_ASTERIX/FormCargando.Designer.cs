@@ -73,7 +73,7 @@
             Controls.Add(labelTitulo);
             Controls.Add(progressBarCarga);
             Name = "FormCargando";
-            Text = "FormCargando";
+            TopMost = true;
             Load += FormCargando_Load;
             ResumeLayout(false);
             PerformLayout();

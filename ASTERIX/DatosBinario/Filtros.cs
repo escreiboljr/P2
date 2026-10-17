@@ -21,7 +21,6 @@ namespace Archivos
             double trayectoriaMax,
             bool eliminarGround)
         {
-            //Debug.WriteLine("ENTRA EN FILTRAR GROUND");
             IEnumerable<Mensaje> listaFiltrada = listaOriginal;
 
             if (cat48 && cat21)

@@ -1,8 +1,10 @@
 ﻿using DatosDecod48;
+using MultiCAT6.Utils;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using MultiCAT6.Utils;
 
 namespace DatosDecod
 {
@@ -30,6 +32,12 @@ namespace DatosDecod
         public TrackStatus TrckStatus {  get; set; }
         public ACAScap CommACAScapability { get; set; }
         public bool tieneTrackVelocity { get; set; }
+        public double altitudPresionFt { get; set; } = double.NaN;
+        public double altitudEstimadaM { get; set; } = double.NaN;
+        public double elevacionRadarRad { get; set; } = double.NaN;
+        public double BPS { get; set; } = double.NaN;
+        public double altitudQNHFt { get; set; } = double.NaN;
+        public double qnhUtilizado { get; set; } = double.NaN;
 
         public TiraDatosDecod048()
         {
@@ -126,24 +134,94 @@ namespace DatosDecod
             this.PosSlantPolarCoord[1] = thetaDeg;
         }
 
-        public void ConvertToWGS84(double radarLat, double radarLon)
+
+
+        public void ConvertToWGS84(double radarLat, double radarLon, double radarAlt)
         {
             double rhoNM = this.PosSlantPolarCoord[0];
             double thetaDeg = this.PosSlantPolarCoord[1];
 
-            double rho_m = rhoNM * 1852.0;
-            double theta_rad = thetaDeg * Math.PI / 180.0;
+            if (double.IsNaN(rhoNM) || double.IsNaN(thetaDeg) ||
+                double.IsInfinity(rhoNM) || double.IsInfinity(thetaDeg) ||
+                rhoNM < 0)
+            {
+                return;
+            }
 
-            double X = rho_m * Math.Sin(theta_rad);
-            double Y = rho_m * Math.Cos(theta_rad);
+            GeoUtils geo = new GeoUtils();
 
-            double R = 6378137.0;
-            double lat = radarLat + (Y / R) * (180.0 / Math.PI);
-            double lon = radarLon + (X / (R * Math.Cos(radarLat * Math.PI / 180.0))) * (180.0 / Math.PI);
+            CoordinatesWGS84 radar = new CoordinatesWGS84(
+                radarLat * GeoUtils.DEGS2RADS,
+                radarLon * GeoUtils.DEGS2RADS,
+                radarAlt
+            );
 
-            this.PositionCorrectedLatLonAlt[0] = lat;
-            this.PositionCorrectedLatLonAlt[1] = lon;
+            double rho = rhoNM * GeoUtils.NM2METERS;
+            double theta = thetaDeg * GeoUtils.DEGS2RADS;
+
+            double elevacion = 0.0;
+
+            this.altitudEstimadaM = double.NaN;
+
+            if (!double.IsNaN(this.altitudPresionFt) &&
+                !double.IsInfinity(this.altitudPresionFt) &&
+                rho > 0)
+            {
+                double alturaEstimada =
+                    this.altitudPresionFt * GeoUtils.FEET2METERS;
+
+                double radioTierra = 6371000.0;
+
+                double diferenciaAltura = alturaEstimada - radarAlt;
+
+                double senoElevacion =
+                    (2.0 * radioTierra * diferenciaAltura +
+                     alturaEstimada * alturaEstimada -
+                     radarAlt * radarAlt -
+                     rho * rho) /
+                    (2.0 * rho * (radioTierra + radarAlt));
+
+                if (senoElevacion >= -1.0 && senoElevacion <= 1.0)
+                {
+                    elevacion = Math.Asin(senoElevacion);
+                    this.altitudEstimadaM = alturaEstimada;
+                }
+            }
+
+            this.elevacionRadarRad = elevacion;
+
+            CoordinatesPolar polar = new CoordinatesPolar(
+                rho,
+                theta,
+                elevacion
+            );
+
+            CoordinatesXYZ cartesiana =
+                GeoUtils.change_radar_spherical2radar_cartesian(polar);
+
+            CoordinatesXYZ geocentrica =
+                geo.change_radar_cartesian2geocentric(radar, cartesiana);
+
+            CoordinatesWGS84 posicion =
+                geo.change_geocentric2geodesic(geocentrica);
+
+            this.PositionCorrectedLatLonAlt[0] =
+                posicion.Lat * GeoUtils.RADS2DEGS;
+
+            this.PositionCorrectedLatLonAlt[1] =
+                posicion.Lon * GeoUtils.RADS2DEGS;
+
+            if (!double.IsNaN(this.altitudEstimadaM))
+            {
+                this.PositionCorrectedLatLonAlt[2] = posicion.Height;
+            }
+            else
+            {
+                this.PositionCorrectedLatLonAlt[2] = double.NaN;
+            }
         }
+
+
 
         public void DecodeTargetRep(Queue<byte> ColaBytes)    //preguntar lo del third extent
         {
@@ -222,7 +300,7 @@ namespace DatosDecod
 
             double altitudFt = flightLevel * 100.0;
 
-            this.PositionCorrectedLatLonAlt[2] = altitudFt;
+            this.altitudPresionFt = altitudFt;
         }
 
         private int TwosComplementToInt(byte b)    //esta funcion es para el decodeRadarPlot
@@ -348,6 +426,7 @@ namespace DatosDecod
                 {
                     this.ModeS.BDS40 = new BDS40();
                     this.ModeS.BDS40.Decode(mb);
+                    this.BPS = this.ModeS.BDS40.Baro;
                 }
                 else if (major == 5 && minor == 0)
                 {
@@ -370,12 +449,6 @@ namespace DatosDecod
             int raw = (b1 << 8) | b2;
 
             this.TrackNum = raw & 0x0FFF;
-//            Debug.WriteLine(
-//    "TRACK -> " +
-//    "b1: " + Convert.ToString(b1, 2).PadLeft(8, '0') +
-//    " | b2: " + Convert.ToString(b2, 2).PadLeft(8, '0') +
-//    " | RAW: " + raw
-//);
         }
 
         public void DecodeTrackVelocityPolar(Queue<byte> ColaBytes)

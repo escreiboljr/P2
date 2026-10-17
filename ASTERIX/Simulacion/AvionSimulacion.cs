@@ -23,6 +23,10 @@ namespace Simulacion
         public string estadoVuelo;
         public string mode3A;
         public Mensaje mensajeOriginal { get; set; }
+        public double bps { get; set; } = double.NaN;
+        public double altitudPresionFt { get; set; } = double.NaN;
+        public double altitudQNHFt { get; set; } = double.NaN;
+        public double qnhUtilizado { get; set; } = double.NaN;
 
         public AvionSimulacion()
         {
@@ -84,6 +88,11 @@ namespace Simulacion
             copia.mode3A = mode3A;
 
             copia.mensajeOriginal = mensajeOriginal;
+
+            copia.bps = bps;
+            copia.altitudPresionFt = altitudPresionFt;
+            copia.altitudQNHFt = altitudQNHFt;
+            copia.qnhUtilizado = qnhUtilizado;
 
             return copia;
         }
