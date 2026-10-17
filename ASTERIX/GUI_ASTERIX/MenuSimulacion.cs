@@ -46,7 +46,6 @@ namespace GUI_ASTERIX
             timerSimulacion.Interval = 1000;
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
             LeerDatos prueba = new LeerDatos();
-            prueba.PruebaRealSTD();
         }
 
         private void MenuSimulacion_Load(object sender, EventArgs e)

@@ -51,13 +51,20 @@ namespace Archivos
                     "ADSB_EP;ADSB_VAL;SCN_EP;SCN_VAL;PAI_EP;PAI_VAL;" +
 
                     // POSICION
-                    "RHO_NM;THETA_deg;Latitude;Longitude;Altitude_ft;" +
+                    // POSICION Y ALTITUDES
+                    "RHO_NM;THETA_deg;Latitude;Longitude;" +
+                    "AltitudGeometricaEstimada_m;" +
+                    "AltitudPresion_ft;" +
+                    "AltitudCorregidaQNH_ft;" +
+                    "AltitudUtilizada_ft;" +
+                    "BPS_Recibido_hPa;" +
+                    "QNH_Utilizado_hPa;" +
 
                     // MODE 3/A
                     "Mode3A;Mode3A_V;Mode3A_G;Mode3A_L;" +
 
                     // FL
-                    "FlightLevel;FL_V;FL_G;" +
+                    "FlightLevel_FL;FL_V;FL_G;" +
 
                     // RADAR PLOT
                     "SRL;SRR;SAM;PRL;PAM;RPD;APD;" +
@@ -108,11 +115,38 @@ namespace Archivos
                         TextoPAI_EP(m.TargetRep.PAI_EP) + ";" +
                         TextoPAI_VAL(m.TargetRep.PAI_EP, m.TargetRep.PAI_VAL) + ";" +
 
+                        // Coordenadas
                         Valor(m.PosSlantPolarCoord[0]) + ";" +
                         Valor(m.PosSlantPolarCoord[1]) + ";" +
                         Valor(m.PositionCorrectedLatLonAlt[0]) + ";" +
                         Valor(m.PositionCorrectedLatLonAlt[1]) + ";" +
+
+                        // Altitud geométrica estimada (metros)
                         Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
+
+                        // Altitud de presión (pies)
+                        Valor(m.altitudPresionFt) + ";" +
+
+                        // Altitud corregida por QNH, solo si realmente se aplica
+                        Valor(
+                            !double.IsNaN(m.qnhUtilizado) &&
+                            m.altitudPresionFt < 6000
+                                ? m.altitudQNHFt
+                                : double.NaN
+                        ) + ";" +
+
+                        // Altitud finalmente utilizada (pies)
+                        Valor(
+                            !double.IsNaN(m.altitudQNHFt)
+                                ? m.altitudQNHFt
+                                : m.altitudPresionFt
+                        ) + ";" +
+
+                        // BPS recibido directamente del mensaje
+                        Valor(m.BPS) + ";" +
+
+                        // QNH confirmado y utilizado
+                        Valor(m.qnhUtilizado) + ";" +
 
                         Valor(m.mode3.reply) + ";" +
                         Valor(m.mode3.V) + ";" +
@@ -173,9 +207,13 @@ namespace Archivos
                     "TargetAddress;" +
                     "TargetIdentification;" +
                     "Mode3A;" +
-                    "FlightLevel;" +
+                    "FlightLevel_FL;" +
                     "Latitude;Longitude;" +
-                    "QNH;AltitudeCorrected;" +
+                    "AltitudPresion_ft;" +
+                    "AltitudCorregidaQNH_ft;" +
+                    "AltitudUtilizada_ft;" +
+                    "BPS_Recibido_hPa;" +
+                    "QNH_Utilizado_hPa;" +
                     "ReservedExpField;" +
 
                     // TARGET REPORT DESCRIPTOR
@@ -208,8 +246,22 @@ namespace Archivos
                         Valor(m.PosWGS84HighRes[0]) + ";" +
                         Valor(m.PosWGS84HighRes[1]) + ";" +
 
-                        //Valor(m.QNH) + ";" +
+                        // Altitud de presión sin corrección
+                        Valor(m.altitudPresionFt) + ";" +
+
+                        // Altitud corregida por QNH, si está disponible
+                        Valor(m.altitudQNHFt) + ";" +
+
+                        // Altitud finalmente utilizada
                         Valor(m.AltitudCorregida) + ";" +
+
+                        // Presión recibida directamente del mensaje
+                        Valor(m.BPS) + ";" +
+
+                        // QNH confirmado y utilizado en la corrección
+                        Valor(m.qnhUtilizado) + ";" +
+
+                        // Campo original Reserved Expansion
                         Valor(m.ReservedExpField) + ";" +
 
                         TextoATP21(m.TargetRep.ATP) + ";" +
@@ -248,10 +300,15 @@ namespace Archivos
                     "TargetAddress;" +
                     "TargetIdentification;" +
                     "Mode3A;" +
-                    "FlightLevel;" +
+                    "FlightLevel_FL;" +
                     "Latitude;" +
                     "Longitude;" +
-                    "Altitude;" +
+                    "AltitudPresion_ft;" +
+                    "AltitudCorregidaQNH_ft;" +
+                    "AltitudUtilizada_ft;" +
+                    "AltitudGeometricaEstimada_m;" +
+                    "BPS_Recibido_hPa;" +
+                    "QNH_Utilizado_hPa;" +
 
 
                     // TARGET REPORT DESCRIPTOR
@@ -292,7 +349,6 @@ namespace Archivos
 
 
                     // SOLO CAT21
-                    "QNH;" +
                     "ReservedExpField;" +
 
                     // SOLO CAT48 - POLAR
@@ -406,7 +462,24 @@ namespace Archivos
                             Valor(m.FlightLevel) + ";" +
                             Valor(m.PosWGS84HighRes[0]) + ";" +
                             Valor(m.PosWGS84HighRes[1]) + ";" +
+
+                            // Altitud de presión (ft)
+                            Valor(m.altitudPresionFt) + ";" +
+
+                            // Altitud corregida por QNH (ft)
+                            Valor(m.altitudQNHFt) + ";" +
+
+                            // Altitud utilizada (ft)
                             Valor(m.AltitudCorregida) + ";" +
+
+                            // Altitud geométrica estimada (no disponible en CAT21)
+                            "-;" +
+
+                            // BPS recibido (hPa)
+                            Valor(m.BPS) + ";" +
+
+                            // QNH utilizado (hPa)
+                            Valor(m.qnhUtilizado) + ";" +
 
 
                             // TRD COMUNES
@@ -471,7 +544,33 @@ namespace Archivos
                             Valor(m.FL.FL) + ";" +
                             Valor(m.PositionCorrectedLatLonAlt[0]) + ";" +
                             Valor(m.PositionCorrectedLatLonAlt[1]) + ";" +
+
+                            // Altitud de presión (ft)
+                            Valor(m.altitudPresionFt) + ";" +
+
+                            // Altitud corregida por QNH (ft)
+                            Valor(
+                                !double.IsNaN(m.qnhUtilizado) &&
+                                m.altitudPresionFt < 6000
+                                    ? m.altitudQNHFt
+                                    : double.NaN
+                            ) + ";" +
+
+                            // Altitud utilizada (ft)
+                            Valor(
+                                !double.IsNaN(m.altitudQNHFt)
+                                    ? m.altitudQNHFt
+                                    : m.altitudPresionFt
+                            ) + ";" +
+
+                            // Altitud geométrica estimada (m)
                             Valor(m.PositionCorrectedLatLonAlt[2]) + ";" +
+
+                            // BPS recibido (hPa)
+                            Valor(m.BPS) + ";" +
+
+                            // QNH utilizado (hPa)
+                            Valor(m.qnhUtilizado) + ";" +
 
                             // TRD
                             TextoSIM(m.TargetRep.SIM) + ";" +
@@ -500,7 +599,7 @@ namespace Archivos
 
                             // CAT21 -> VACÍOS
                             // QNH + ReservedExpField
-                            Vacio(2) +
+                            Vacio(1) +
 
                             // POSICIÓN POLAR
                             Valor(m.PosSlantPolarCoord[0]) + ";" +
