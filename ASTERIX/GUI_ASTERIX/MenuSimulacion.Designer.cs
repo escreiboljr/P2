@@ -54,10 +54,6 @@
             dataGridAviones = new DataGridView();
             buttonDataGrid = new Button();
             gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
-            labelX1 = new Label();
-            labelx2 = new Label();
-            labelx8 = new Label();
-            labelx4 = new Label();
             labelTituloVelocidadReproduccion = new Label();
             labelTituloHora = new Label();
             pictureBox1 = new PictureBox();
@@ -74,6 +70,7 @@
             textBoxSegundo = new TextBox();
             textBoxMinuto = new TextBox();
             buttonSimularDesdeHora = new Button();
+            labelVelocidad = new Label();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -305,50 +302,6 @@
             gMapControl1.TabIndex = 10;
             gMapControl1.Zoom = 0D;
             // 
-            // labelX1
-            // 
-            labelX1.AutoSize = true;
-            labelX1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelX1.ForeColor = SystemColors.ControlLightLight;
-            labelX1.Location = new Point(24, 412);
-            labelX1.Name = "labelX1";
-            labelX1.Size = new Size(32, 30);
-            labelX1.TabIndex = 11;
-            labelX1.Text = "x1";
-            // 
-            // labelx2
-            // 
-            labelx2.AutoSize = true;
-            labelx2.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelx2.ForeColor = SystemColors.ControlLightLight;
-            labelx2.Location = new Point(93, 412);
-            labelx2.Name = "labelx2";
-            labelx2.Size = new Size(36, 30);
-            labelx2.TabIndex = 12;
-            labelx2.Text = "x2";
-            // 
-            // labelx8
-            // 
-            labelx8.AutoSize = true;
-            labelx8.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelx8.ForeColor = SystemColors.ControlLightLight;
-            labelx8.Location = new Point(235, 412);
-            labelx8.Name = "labelx8";
-            labelx8.Size = new Size(36, 30);
-            labelx8.TabIndex = 14;
-            labelx8.Text = "x8";
-            // 
-            // labelx4
-            // 
-            labelx4.AutoSize = true;
-            labelx4.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelx4.ForeColor = SystemColors.ControlLightLight;
-            labelx4.Location = new Point(165, 412);
-            labelx4.Name = "labelx4";
-            labelx4.Size = new Size(36, 30);
-            labelx4.TabIndex = 13;
-            labelx4.Text = "x4";
-            // 
             // labelTituloVelocidadReproduccion
             // 
             labelTituloVelocidadReproduccion.AutoSize = true;
@@ -510,13 +463,25 @@
             buttonSimularDesdeHora.UseVisualStyleBackColor = true;
             buttonSimularDesdeHora.Click += buttonSimularDesdeHora_Click;
             // 
+            // labelVelocidad
+            // 
+            labelVelocidad.AutoSize = true;
+            labelVelocidad.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
+            labelVelocidad.ForeColor = SystemColors.ControlLightLight;
+            labelVelocidad.Location = new Point(121, 418);
+            labelVelocidad.Name = "labelVelocidad";
+            labelVelocidad.Size = new Size(32, 30);
+            labelVelocidad.TabIndex = 35;
+            labelVelocidad.Text = "x1";
+            labelVelocidad.TextAlign = ContentAlignment.TopCenter;
+            // 
             // MenuSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
             ClientSize = new Size(1402, 731);
-            Controls.Add(labelX1);
+            Controls.Add(labelVelocidad);
             Controls.Add(buttonSimularDesdeHora);
             Controls.Add(textBoxMinuto);
             Controls.Add(textBoxSegundo);
@@ -532,9 +497,6 @@
             Controls.Add(pictureBox1);
             Controls.Add(labelTituloHora);
             Controls.Add(labelTituloVelocidadReproduccion);
-            Controls.Add(labelx8);
-            Controls.Add(labelx4);
-            Controls.Add(labelx2);
             Controls.Add(gMapControl1);
             Controls.Add(buttonDataGrid);
             Controls.Add(dataGridAviones);
@@ -579,10 +541,6 @@
         private DataGridView dataGridAviones;
         private Button buttonDataGrid;
         private GMap.NET.WindowsForms.GMapControl gMapControl1;
-        private Label labelX1;
-        private Label labelx2;
-        private Label labelx8;
-        private Label labelx4;
         private Label labelTituloVelocidadReproduccion;
         private Label labelTituloHora;
         private PictureBox pictureBox1;
@@ -609,5 +567,7 @@
         private ToolStripMenuItem mostrarHeatmapCompletoToolStripMenuItem;
         private ToolStripMenuItem mostrarHeatmapDinamicoToolStripMenuItem;
         private ToolStripMenuItem ayudaToolStripMenuItem;
+        private Button buttonSalirMenuInicio;
+        private Label labelVelocidad;
     }
 }

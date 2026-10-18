@@ -136,48 +136,48 @@ namespace GUI_ASTERIX
             if (trackBarVelSimulacion.Value == 1)
             {
                 timerSimulacion.Interval = 1000;
-                //labelVelocidad.Text = "x1";
+                labelVelocidad.Text = "x1";
             }
 
             if (trackBarVelSimulacion.Value == 2)
             {
                 timerSimulacion.Interval = 500;
-                //labelVelocidad.Text = "x2";
+                labelVelocidad.Text = "x2";
             }
 
             if (trackBarVelSimulacion.Value == 3)
             {
                 timerSimulacion.Interval = 250;
-                //labelVelocidad.Text = "x4";
+                labelVelocidad.Text = "x4";
             }
 
             if (trackBarVelSimulacion.Value == 4)
             {
                 timerSimulacion.Interval = 125;
-                //labelVelocidad.Text = "x8";
+                labelVelocidad.Text = "x8";
             }
             if (trackBarVelSimulacion.Value == 5)
             {
                 timerSimulacion.Interval = 62;
-                //labelVelocidad.Text = "x16";
+                labelVelocidad.Text = "x16";
             }
 
             if (trackBarVelSimulacion.Value == 6)
             {
                 timerSimulacion.Interval = 31;
-                //labelVelocidad.Text = "x32";
+                labelVelocidad.Text = "x32";
             }
 
             if (trackBarVelSimulacion.Value == 7)
             {
                 timerSimulacion.Interval = 16;
-                //labelVelocidad.Text = "x64";
+                labelVelocidad.Text = "x64";
             }
 
             if (trackBarVelSimulacion.Value == 8)
             {
                 timerSimulacion.Interval = 8;
-                //labelVelocidad.Text = "x128";
+                labelVelocidad.Text = "x128";
             }
         }
 

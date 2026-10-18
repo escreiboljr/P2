@@ -93,6 +93,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap asterix_radar_fondo {
+            get {
+                object obj = ResourceManager.GetObject("asterix_radar_fondo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap avion {
             get {
                 object obj = ResourceManager.GetObject("avion", resourceCulture);
@@ -123,6 +133,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botonMenuSimulacion {
+            get {
+                object obj = ResourceManager.GetObject("botonMenuSimulacion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonPausa {
             get {
                 object obj = ResourceManager.GetObject("botonPausa", resourceCulture);
@@ -146,6 +166,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap botonRetroceder {
             get {
                 object obj = ResourceManager.GetObject("botonRetroceder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap botonTourPrograma {
+            get {
+                object obj = ResourceManager.GetObject("botonTourPrograma", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,6 +313,76 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MapaConControles {
+            get {
+                object obj = ResourceManager.GetObject("MapaConControles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuFiltro {
+            get {
+                object obj = ResourceManager.GetObject("MenuFiltro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuSimArchivos {
+            get {
+                object obj = ResourceManager.GetObject("MenuSimArchivos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuSimFiltro {
+            get {
+                object obj = ResourceManager.GetObject("MenuSimFiltro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuSimHeatmap {
+            get {
+                object obj = ResourceManager.GetObject("MenuSimHeatmap", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuSimulacion {
+            get {
+                object obj = ResourceManager.GetObject("MenuSimulacion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuSimVer {
+            get {
+                object obj = ResourceManager.GetObject("MenuSimVer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pausebutton_113576 {
             get {
                 object obj = ResourceManager.GetObject("pausebutton_113576", resourceCulture);
@@ -296,6 +396,66 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap playbutton_113628 {
             get {
                 object obj = ResourceManager.GetObject("playbutton_113628", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecuadroAdsbRadar {
+            get {
+                object obj = ResourceManager.GetObject("RecuadroAdsbRadar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecuadroHoraControlesSim {
+            get {
+                object obj = ResourceManager.GetObject("RecuadroHoraControlesSim", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecuadroMapa {
+            get {
+                object obj = ResourceManager.GetObject("RecuadroMapa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecuadroReset {
+            get {
+                object obj = ResourceManager.GetObject("RecuadroReset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecuadroSimdesdeHora {
+            get {
+                object obj = ResourceManager.GetObject("RecuadroSimdesdeHora", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecuadroVelocidadSim {
+            get {
+                object obj = ResourceManager.GetObject("RecuadroVelocidadSim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
