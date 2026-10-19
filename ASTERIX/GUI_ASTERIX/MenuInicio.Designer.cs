@@ -38,6 +38,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BackgroundImage = Properties.Resources.botonMenuSimulacion;
             pictureBox1.BackgroundImageLayout = ImageLayout.None;
@@ -52,6 +53,7 @@
             // 
             // pictureBox2
             // 
+            pictureBox2.Anchor = AnchorStyles.None;
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.BackgroundImage = Properties.Resources.botonTourPrograma;
             pictureBox2.BackgroundImageLayout = ImageLayout.None;
@@ -69,10 +71,12 @@
             pictureBoxFondo.BackColor = Color.Transparent;
             pictureBoxFondo.BackgroundImage = Properties.Resources.botonMenuSimulacion;
             pictureBoxFondo.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBoxFondo.Dock = DockStyle.Fill;
             pictureBoxFondo.Image = Properties.Resources.asterix_radar_fondo;
-            pictureBoxFondo.Location = new Point(-2, -1);
+            pictureBoxFondo.Location = new Point(0, 0);
             pictureBoxFondo.Name = "pictureBoxFondo";
-            pictureBoxFondo.Size = new Size(835, 477);
+            pictureBoxFondo.Size = new Size(796, 447);
+            pictureBoxFondo.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxFondo.TabIndex = 2;
             pictureBoxFondo.TabStop = false;
             // 

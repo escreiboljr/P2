@@ -175,10 +175,7 @@ namespace DatosDecod
                 double diferenciaAltura = alturaEstimada - radarAlt;
 
                 double senoElevacion =
-                    (2.0 * radioTierra * diferenciaAltura +
-                     alturaEstimada * alturaEstimada -
-                     radarAlt * radarAlt -
-                     rho * rho) /
+                    (2.0 * radioTierra * diferenciaAltura + alturaEstimada * alturaEstimada - radarAlt * radarAlt - rho * rho) /
                     (2.0 * rho * (radioTierra + radarAlt));
 
                 if (senoElevacion >= -1.0 && senoElevacion <= 1.0)
@@ -190,11 +187,7 @@ namespace DatosDecod
 
             this.elevacionRadarRad = elevacion;
 
-            CoordinatesPolar polar = new CoordinatesPolar(
-                rho,
-                theta,
-                elevacion
-            );
+            CoordinatesPolar polar = new CoordinatesPolar(rho,theta,elevacion);
 
             CoordinatesXYZ cartesiana =
                 GeoUtils.change_radar_spherical2radar_cartesian(polar);
