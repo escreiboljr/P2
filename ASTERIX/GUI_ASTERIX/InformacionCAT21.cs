@@ -1,4 +1,6 @@
 ﻿using Archivos;
+using DatosDecod21;
+using Simulacion;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,27 +8,45 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using DatosDecod21;
 
 namespace GUI_ASTERIX
 {
     public partial class InformacionCAT21 : Form
     {
         public Mensaje mensaje;
+        public AvionSimulacion avion;
         private ExportarCSV csv = new ExportarCSV();
         private string Valor(object valor) => csv.Valor(valor);
+
 
         public InformacionCAT21()
         {
             InitializeComponent();
+            timerActualizar.Interval = 500;
+            timerActualizar.Tick += timerActualizar_Tick;
+            timerActualizar.Start();
+        }
+
+        private void timerActualizar_Tick(object sender, EventArgs e)
+        {
+            ActualizarInformacion();
         }
 
         private void InformacionCAT21_Load(object sender, EventArgs e)
         {
+            ActualizarInformacion();
+        }
+
+        private void ActualizarInformacion()
+        {
+            if (avion != null && avion.ultimoMensajeCAT21 != null)
+            {
+                mensaje = avion.ultimoMensajeCAT21;
+            }
+
             if (mensaje == null || mensaje.categoria != 21 ||
                 !(mensaje.tira is TiraDatosDecod021))
             {
-                MessageBox.Show("No hay datos CAT21 disponibles.");
                 return;
             }
 

@@ -69,6 +69,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
             ClientSize = new Size(277, 169);
+            ControlBox = false;
             Controls.Add(labelPorcentaje);
             Controls.Add(labelTitulo);
             Controls.Add(progressBarCarga);

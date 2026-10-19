@@ -41,10 +41,12 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox1.Image = Properties.Resources.MenuSimulacion;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(1404, 763);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -80,6 +82,7 @@
             // 
             // buttonAtras
             // 
+            buttonAtras.Anchor = AnchorStyles.Bottom;
             buttonAtras.Location = new Point(439, 787);
             buttonAtras.Name = "buttonAtras";
             buttonAtras.Size = new Size(75, 23);
@@ -90,6 +93,7 @@
             // 
             // buttonAvanzar
             // 
+            buttonAvanzar.Anchor = AnchorStyles.Bottom;
             buttonAvanzar.Location = new Point(782, 787);
             buttonAvanzar.Name = "buttonAvanzar";
             buttonAvanzar.Size = new Size(75, 23);
@@ -100,6 +104,7 @@
             // 
             // textBoxContador
             // 
+            textBoxContador.Anchor = AnchorStyles.Bottom;
             textBoxContador.Location = new Point(595, 788);
             textBoxContador.Name = "textBoxContador";
             textBoxContador.Size = new Size(40, 23);
@@ -109,6 +114,7 @@
             // 
             // labelContador
             // 
+            labelContador.Anchor = AnchorStyles.Bottom;
             labelContador.AutoSize = true;
             labelContador.Location = new Point(664, 791);
             labelContador.Name = "labelContador";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             labelIdentificador = new Label();
             labelTituloTargetReport = new Label();
             labelDCR = new Label();
@@ -47,6 +48,7 @@
             labelLDPJ = new Label();
             labelNOGO = new Label();
             labelIPC = new Label();
+            timerActualizar = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // labelIdentificador
@@ -361,5 +363,6 @@
         private Label labelLDPJ;
         private Label labelNOGO;
         private Label labelIPC;
+        private System.Windows.Forms.Timer timerActualizar;
     }
 }

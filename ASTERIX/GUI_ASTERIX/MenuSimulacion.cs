@@ -406,6 +406,11 @@ namespace GUI_ASTERIX
                             nuevoAvion.detectadoRadar = true;
                         }
 
+                        nuevoAvion.mensajeOriginal = mensaje;
+                        if (mensaje.categoria == 21)
+                            nuevoAvion.ultimoMensajeCAT21 = mensaje;
+                        else if (mensaje.categoria == 48)
+                            nuevoAvion.ultimoMensajeCAT48 = mensaje;
                         AvionesActuales.Add(nuevoAvion);
                     }
 
@@ -473,6 +478,11 @@ namespace GUI_ASTERIX
                                 avionEncontrado.estadoVuelo = estadoVuelo;
                             }
                             avionEncontrado.ultimoTiempo = tiempoMensaje;
+                            avionEncontrado.mensajeOriginal = mensaje;
+                            if (mensaje.categoria == 21)
+                                avionEncontrado.ultimoMensajeCAT21 = mensaje;
+                            else if (mensaje.categoria == 48)
+                                avionEncontrado.ultimoMensajeCAT48 = mensaje;
 
                             if (identificador != "")
                             {
@@ -920,10 +930,17 @@ namespace GUI_ASTERIX
             // CLICK DERECHO -> información del mensaje concreto
             else if (e.Button == MouseButtons.Right)
             {
-                InformacionAvion ventana =
-                    new InformacionAvion();
+                AvionSimulacion avionReal = BuscarAvionSeleccionado(mensaje);
 
-                ventana.avion = mensaje;
+                if (avionReal == null)
+                    return;
+
+                InformacionAvion ventana = new InformacionAvion();
+
+                ventana.avion = avionReal;
+
+                ventana.categoriaSeleccionada =
+                    mensaje.detectadoRadar ? 48 : 21;
 
                 ventana.Show();
             }
@@ -2017,6 +2034,7 @@ namespace GUI_ASTERIX
                 siguientePuntoHeatmap++;
             }
         }
+        
 
         private void mostrarHeatmapDinamicoToolStripMenuItem_Click(object sender, EventArgs e)
         {

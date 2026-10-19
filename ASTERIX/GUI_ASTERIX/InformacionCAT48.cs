@@ -1,5 +1,6 @@
 ﻿using Archivos;
 using DatosDecod;
+using Simulacion;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace GUI_ASTERIX
     {
         public Mensaje mensaje;
         private ExportarCSV csv = new ExportarCSV();
-
+        public AvionSimulacion avion;
         private string Valor(object valor) => csv.Valor(valor);
         private string TextoTYP(string v) => csv.TextoTYP(v);
         private string TextoSIM(int v) => csv.TextoSIM(v);
@@ -52,14 +53,27 @@ namespace GUI_ASTERIX
         public InformacionCAT48()
         {
             InitializeComponent();
+            timerActualizar.Interval = 500;
+            timerActualizar.Tick += timerActualizar_Tick;
+            timerActualizar.Start();
         }
 
         private void InformacionCAT48_Load(object sender, EventArgs e)
         {
+            ActualizarInformacion();
+        }
+
+
+        private void ActualizarInformacion()
+        {
+            if (avion != null && avion.ultimoMensajeCAT48 != null)
+            {
+                mensaje = avion.ultimoMensajeCAT48;
+            }
+
             if (mensaje == null || mensaje.categoria != 48 ||
                 !(mensaje.tira is TiraDatosDecod048))
             {
-                MessageBox.Show("No hay datos CAT48 disponibles.");
                 return;
             }
 
@@ -193,6 +207,22 @@ namespace GUI_ASTERIX
                     "InertialVS: " + Valor(bds.InertialVS);
             }
         }
+        public void CambiarMensaje(Mensaje nuevoMensaje)
+        {
+            if (nuevoMensaje == null ||
+                nuevoMensaje.categoria != 48 ||
+                !(nuevoMensaje.tira is TiraDatosDecod048))
+            {
+                return;
+            }
 
+            mensaje = nuevoMensaje;
+            ActualizarInformacion();
+        }
+
+        private void timerActualizar_Tick(object sender, EventArgs e)
+        {
+            ActualizarInformacion();
+        }
     }
 }

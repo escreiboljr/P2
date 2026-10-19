@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             labelIdentificador = new Label();
             labelTYP = new Label();
             labelSIM = new Label();
@@ -99,6 +100,7 @@
             labelSTAT = new Label();
             labelCOM = new Label();
             label5 = new Label();
+            timerActualizar = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // labelIdentificador
@@ -1023,6 +1025,10 @@
             label5.TabIndex = 63;
             label5.Text = "IF \"-\" IS SHOWN, NO INFORMATION HAS BEEN SENDED FOR THAT ITEM";
             // 
+            // timerActualizar
+            // 
+            timerActualizar.Tick += timerActualizar_Tick;
+            // 
             // InformacionCAT48
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1181,5 +1187,6 @@
         private Label labelSTAT;
         private Label labelCOM;
         private Label label5;
+        private System.Windows.Forms.Timer timerActualizar;
     }
 }

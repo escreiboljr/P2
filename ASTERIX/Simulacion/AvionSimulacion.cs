@@ -23,6 +23,8 @@ namespace Simulacion
         public string estadoVuelo;
         public string mode3A;
         public Mensaje mensajeOriginal { get; set; }
+        public Mensaje ultimoMensajeCAT21;
+        public Mensaje ultimoMensajeCAT48;
         public double bps { get; set; } = double.NaN;
         public double altitudPresionFt { get; set; } = double.NaN;
         public double altitudQNHFt { get; set; } = double.NaN;

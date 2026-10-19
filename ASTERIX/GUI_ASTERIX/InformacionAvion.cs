@@ -15,6 +15,7 @@ namespace GUI_ASTERIX
     public partial class InformacionAvion : Form
     {
         public AvionSimulacion avion;
+        public int categoriaSeleccionada;
         public InformacionAvion()
         {
             InitializeComponent();
@@ -126,27 +127,32 @@ namespace GUI_ASTERIX
 
         private void pictureBoxMasInformacion_Click(object sender, EventArgs e)
         {
-            if (avion == null || avion.mensajeOriginal == null)
+            if (avion == null)
             {
                 MessageBox.Show("No hay información disponible.");
                 return;
             }
 
-            Mensaje mensaje = avion.mensajeOriginal;
-
-            if (mensaje.categoria == 21)
+            if (categoriaSeleccionada == 21 && avion.ultimoMensajeCAT21 != null)
             {
                 InformacionCAT21 ventana = new InformacionCAT21();
-                ventana.mensaje = mensaje;
+
+                ventana.avion = avion;
+                ventana.mensaje = avion.ultimoMensajeCAT21;
 
                 ventana.Show();
             }
-            else if (mensaje.categoria == 48)
+            else if (categoriaSeleccionada == 48 && avion.ultimoMensajeCAT48 != null)
             {
                 InformacionCAT48 ventana = new InformacionCAT48();
-                ventana.mensaje = mensaje;
 
+                ventana.avion = avion;
+                ventana.mensaje = avion.ultimoMensajeCAT48;
                 ventana.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay información disponible para esta categoría.");
             }
         }
     }
