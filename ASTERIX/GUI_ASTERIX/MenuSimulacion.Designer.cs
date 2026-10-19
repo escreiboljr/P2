@@ -363,6 +363,7 @@
             // 
             // labelTituloVerde
             // 
+            labelTituloVerde.Anchor = AnchorStyles.Bottom;
             labelTituloVerde.AutoSize = true;
             labelTituloVerde.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             labelTituloVerde.ForeColor = SystemColors.ControlLightLight;
@@ -374,6 +375,7 @@
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Bottom;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             label2.ForeColor = SystemColors.ControlLightLight;
@@ -385,6 +387,7 @@
             // 
             // pictureBox4
             // 
+            pictureBox4.Anchor = AnchorStyles.Bottom;
             pictureBox4.Image = Properties.Resources.large_green_square_1f7e9;
             pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
             pictureBox4.Location = new Point(516, 685);
@@ -396,6 +399,7 @@
             // 
             // pictureBox5
             // 
+            pictureBox5.Anchor = AnchorStyles.Bottom;
             pictureBox5.Image = Properties.Resources.images;
             pictureBox5.InitialImage = (Image)resources.GetObject("pictureBox5.InitialImage");
             pictureBox5.Location = new Point(1017, 686);

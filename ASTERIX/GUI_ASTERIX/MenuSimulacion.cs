@@ -46,6 +46,9 @@ namespace GUI_ASTERIX
             timerSimulacion.Interval = 1000;
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
             LeerDatos prueba = new LeerDatos();
+
+            AjustarMapa();
+            this.Resize += (sender, e) => AjustarMapa();
         }
 
         private void MenuSimulacion_Load(object sender, EventArgs e)
@@ -2044,6 +2047,17 @@ namespace GUI_ASTERIX
             }
 
             gMapControl1.Refresh();
+        }
+        private void AjustarMapa()
+        {
+            int margenDerecho = 25;
+            int margenInferior = 70;
+
+            gMapControl1.Width =
+                this.ClientSize.Width - gMapControl1.Left - margenDerecho;
+
+            gMapControl1.Height =
+                this.ClientSize.Height - gMapControl1.Top - margenInferior;
         }
     }
 }
