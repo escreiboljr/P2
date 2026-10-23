@@ -71,6 +71,8 @@
             textBoxMinuto = new TextBox();
             buttonSimularDesdeHora = new Button();
             labelVelocidad = new Label();
+            trackBarTiempo = new TrackBar();
+            labelTiempoFinal = new Label();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -79,6 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarTiempo).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -225,7 +228,7 @@
             // trackBarVelSimulacion
             // 
             trackBarVelSimulacion.LargeChange = 1;
-            trackBarVelSimulacion.Location = new Point(25, 385);
+            trackBarVelSimulacion.Location = new Point(25, 462);
             trackBarVelSimulacion.Maximum = 8;
             trackBarVelSimulacion.Minimum = 1;
             trackBarVelSimulacion.Name = "trackBarVelSimulacion";
@@ -247,7 +250,7 @@
             // 
             // buttonReset
             // 
-            buttonReset.Location = new Point(47, 545);
+            buttonReset.Location = new Point(47, 593);
             buttonReset.Name = "buttonReset";
             buttonReset.Size = new Size(87, 23);
             buttonReset.TabIndex = 7;
@@ -307,7 +310,7 @@
             labelTituloVelocidadReproduccion.AutoSize = true;
             labelTituloVelocidadReproduccion.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelTituloVelocidadReproduccion.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVelocidadReproduccion.Location = new Point(12, 352);
+            labelTituloVelocidadReproduccion.Location = new Point(12, 429);
             labelTituloVelocidadReproduccion.Name = "labelTituloVelocidadReproduccion";
             labelTituloVelocidadReproduccion.Size = new Size(270, 30);
             labelTituloVelocidadReproduccion.TabIndex = 15;
@@ -424,7 +427,7 @@
             // 
             labelAvanzarHora.AutoSize = true;
             labelAvanzarHora.ForeColor = SystemColors.ControlLightLight;
-            labelAvanzarHora.Location = new Point(20, 514);
+            labelAvanzarHora.Location = new Point(20, 562);
             labelAvanzarHora.Name = "labelAvanzarHora";
             labelAvanzarHora.Size = new Size(114, 15);
             labelAvanzarHora.TabIndex = 29;
@@ -432,7 +435,7 @@
             // 
             // textBoxHora
             // 
-            textBoxHora.Location = new Point(157, 514);
+            textBoxHora.Location = new Point(157, 562);
             textBoxHora.Name = "textBoxHora";
             textBoxHora.Size = new Size(29, 23);
             textBoxHora.TabIndex = 30;
@@ -441,7 +444,7 @@
             // 
             // textBoxSegundo
             // 
-            textBoxSegundo.Location = new Point(217, 514);
+            textBoxSegundo.Location = new Point(217, 562);
             textBoxSegundo.Name = "textBoxSegundo";
             textBoxSegundo.Size = new Size(27, 23);
             textBoxSegundo.TabIndex = 31;
@@ -450,7 +453,7 @@
             // 
             // textBoxMinuto
             // 
-            textBoxMinuto.Location = new Point(188, 514);
+            textBoxMinuto.Location = new Point(188, 562);
             textBoxMinuto.Name = "textBoxMinuto";
             textBoxMinuto.Size = new Size(27, 23);
             textBoxMinuto.TabIndex = 32;
@@ -459,7 +462,7 @@
             // 
             // buttonSimularDesdeHora
             // 
-            buttonSimularDesdeHora.Location = new Point(157, 545);
+            buttonSimularDesdeHora.Location = new Point(157, 593);
             buttonSimularDesdeHora.Name = "buttonSimularDesdeHora";
             buttonSimularDesdeHora.Size = new Size(87, 23);
             buttonSimularDesdeHora.TabIndex = 33;
@@ -472,12 +475,32 @@
             labelVelocidad.AutoSize = true;
             labelVelocidad.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelVelocidad.ForeColor = SystemColors.ControlLightLight;
-            labelVelocidad.Location = new Point(121, 418);
+            labelVelocidad.Location = new Point(121, 495);
             labelVelocidad.Name = "labelVelocidad";
             labelVelocidad.Size = new Size(32, 30);
             labelVelocidad.TabIndex = 35;
             labelVelocidad.Text = "x1";
             labelVelocidad.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // trackBarTiempo
+            // 
+            trackBarTiempo.Location = new Point(30, 363);
+            trackBarTiempo.Maximum = 100;
+            trackBarTiempo.Name = "trackBarTiempo";
+            trackBarTiempo.Size = new Size(235, 45);
+            trackBarTiempo.TabIndex = 36;
+            trackBarTiempo.MouseUp += trackBarTiempo_MouseUp;
+            // 
+            // labelTiempoFinal
+            // 
+            labelTiempoFinal.AutoSize = true;
+            labelTiempoFinal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTiempoFinal.ForeColor = SystemColors.ControlLightLight;
+            labelTiempoFinal.Location = new Point(203, 394);
+            labelTiempoFinal.Name = "labelTiempoFinal";
+            labelTiempoFinal.Size = new Size(88, 25);
+            labelTiempoFinal.TabIndex = 37;
+            labelTiempoFinal.Text = "00:00:00";
             // 
             // MenuSimulacion
             // 
@@ -485,6 +508,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
             ClientSize = new Size(1402, 731);
+            Controls.Add(labelTiempoFinal);
+            Controls.Add(trackBarTiempo);
             Controls.Add(labelVelocidad);
             Controls.Add(buttonSimularDesdeHora);
             Controls.Add(textBoxMinuto);
@@ -525,6 +550,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarTiempo).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -573,5 +599,7 @@
         private ToolStripMenuItem ayudaToolStripMenuItem;
         private Button buttonSalirMenuInicio;
         private Label labelVelocidad;
+        private TrackBar trackBarTiempo;
+        private Label labelTiempoFinal;
     }
 }

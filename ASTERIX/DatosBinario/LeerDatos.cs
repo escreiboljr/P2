@@ -11,7 +11,6 @@ namespace Archvios
         private readonly Dictionary<string, double> bpsCandidatos = new Dictionary<string, double>();
         private readonly Dictionary<string, int> repeticionesBPS = new Dictionary<string, int>();
         private readonly Dictionary<string, double> ultimosQNH = new Dictionary<string, double>();
-
         public List<Mensaje> DatosProcesados(string nombreArchivo, IProgress<int> progreso = null)
         {
             ultimosBPS.Clear();
@@ -102,12 +101,12 @@ namespace Archvios
                         { listaTiras.Add(new Mensaje { categoria = categoria, tira = tira48, TransFijo = false }); }
                     }
                 }
-                else if (categoria == 21)
-                {
-                    var tira21 = DecodificarCAT021(colaMensaje);
-                    DetectarCambioBPS(tira21);
+            else if (categoria == 21)
+            {
+                var tira21 = DecodificarCAT021(colaMensaje);
+                DetectarCambioBPS(tira21);
 
-                    if (!double.IsNaN(tira21.FlightLevel) &&
+    if (!double.IsNaN(tira21.FlightLevel) &&
     tira21.FlightLevel < 60 &&
     !string.IsNullOrEmpty(tira21.TargetAddress))
                     {

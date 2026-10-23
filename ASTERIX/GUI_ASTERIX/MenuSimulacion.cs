@@ -21,6 +21,8 @@ namespace GUI_ASTERIX
     public partial class MenuSimulacion : Form
     {
         private double TiempoActual = 0;
+        private double tiempoInicioSimulacion = 0;
+        private double tiempoFinSimulacion = 0;
         private List<Mensaje> ListaMensajes = new List<Mensaje>();
         private List<Mensaje> ListaMensajesFiltrados = new List<Mensaje>();
         //private List<Mensaje> AvionesActuales = new List<Mensaje>();
@@ -124,6 +126,12 @@ namespace GUI_ASTERIX
             historialAviones.Push(CopiarAviones());
             historialTiempo.Push(TiempoActual);
             TiempoActual = TiempoActual + 1;
+            if (TiempoActual <= tiempoFinSimulacion)
+            {
+                trackBarTiempo.Value = (int)(
+                    TiempoActual - tiempoInicioSimulacion
+                );
+            }
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
             ActualizarAviones();
@@ -552,10 +560,11 @@ namespace GUI_ASTERIX
         private void BuscarTiempoInicial()
         {
             double primerTiempo = double.MaxValue;
+            double ultimoTiempo = double.MinValue;
 
             foreach (Mensaje mensaje in ListaMensajesFiltrados)
             {
-                double tiempo = -1;
+                double tiempo = double.NaN;
 
                 if (mensaje.categoria == 21)
                 {
@@ -564,7 +573,6 @@ namespace GUI_ASTERIX
 
                     tiempo = mensaje21.TimeReceptionPosition;
                 }
-
                 else if (mensaje.categoria == 48)
                 {
                     TiraDatosDecod048 mensaje48 =
@@ -573,18 +581,84 @@ namespace GUI_ASTERIX
                     tiempo = mensaje48.TimeOfDay;
                 }
 
-                if (tiempo >= 0 && tiempo < primerTiempo)
+                if (double.IsNaN(tiempo) ||
+                    double.IsInfinity(tiempo) ||
+                    tiempo < 0)
                 {
-                    primerTiempo = tiempo;
+                    continue;
                 }
+
+                if (tiempo < primerTiempo)
+                    primerTiempo = tiempo;
+
+                if (tiempo > ultimoTiempo)
+                    ultimoTiempo = tiempo;
             }
 
             if (primerTiempo != double.MaxValue)
             {
-                TiempoActual = Math.Floor(primerTiempo);
-                label1.Text = TiempoActual.ToString();
+                tiempoInicioSimulacion = Math.Floor(primerTiempo);
+                tiempoFinSimulacion = Math.Ceiling(ultimoTiempo);
+                trackBarTiempo.Minimum = 0;
+
+                trackBarTiempo.Maximum = (int)(
+                    tiempoFinSimulacion - tiempoInicioSimulacion
+                );
+
+                trackBarTiempo.Value = 0;
+
+                TiempoActual = tiempoInicioSimulacion;
+
+                TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+                label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+                TimeSpan duracion = TimeSpan.FromSeconds(
+                    tiempoFinSimulacion - tiempoInicioSimulacion
+                );
+                TimeSpan horaFinal = TimeSpan.FromSeconds(tiempoFinSimulacion);
+
+                labelTiempoFinal.Text = horaFinal.ToString(@"hh\:mm\:ss");
             }
         }
+        private void trackBarTiempo_Scroll(object sender, EventArgs e)
+{
+    if (ListaMensajesFiltrados.Count == 0)
+        return;
+
+    // Pausar la simulación
+    timerSimulacion.Stop();
+    Reproduciendo = false;
+    pictureBox1.Image = Properties.Resources.botonReproducir;
+
+    // Limpiar los datos anteriores
+    AvionesActuales.Clear();
+    MensajesActuales.Clear();
+
+    historialAviones.Clear();
+    historialTiempo.Clear();
+
+    avionesTrayectoriaSeleccionados.Clear();
+
+    capaAviones.Markers.Clear();
+    capaTrayectorias.Routes.Clear();
+
+    // Obtener el tiempo seleccionado
+    TiempoActual = tiempoInicioSimulacion + trackBarTiempo.Value;
+
+    // Actualizar la hora
+    TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+    label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+    // Actualizar los mensajes visibles de los últimos 10 segundos
+    ActualizarMensajesActuales();
+
+    // Actualizar la interfaz
+    ActualizarDataGrid();
+    ActualizarMapa();
+    MostrarTrayectorias();
+
+    ActualizarHeatmapDinamico(true);
+}
 
         private void buttonAvanzar_Click(object sender, EventArgs e)
         {
@@ -826,11 +900,16 @@ namespace GUI_ASTERIX
                     }
 
 
-                    double rumbo = 0;
+                    double rumbo = mensaje.rumbo;
 
-                    if (avionReal != null)
+                    if (avionReal != null && !double.IsNaN(avionReal.rumbo))
                     {
                         rumbo = avionReal.rumbo;
+                    }
+
+                    if (double.IsNaN(rumbo))
+                    {
+                        rumbo = 0;
                     }
 
 
@@ -888,12 +967,9 @@ namespace GUI_ASTERIX
             return "";
         }
 
-        private void GMapControl1_OnMarkerClick(
-    GMapMarker item,
-    MouseEventArgs e)
+        private void GMapControl1_OnMarkerClick(GMapMarker item,MouseEventArgs e)
         {
-            AvionSimulacion mensaje =
-                item.Tag as AvionSimulacion;
+            AvionSimulacion mensaje = item.Tag as AvionSimulacion;
 
             if (mensaje == null)
             {
@@ -1191,6 +1267,70 @@ namespace GUI_ASTERIX
                     mensajeVisual.mode3A = mode3A;
 
                     ActualizarMensajeVisual(mensajeVisual);
+                }
+            }
+            foreach (AvionSimulacion avion in MensajesActuales)
+            {
+                if (!double.IsNaN(avion.rumbo))
+                    continue;
+
+                double mejorTiempo = double.MinValue;
+                double latitudAnterior = double.NaN;
+                double longitudAnterior = double.NaN;
+
+                foreach (Mensaje mensaje in ListaMensajesFiltrados)
+                {
+                    double tiempo;
+                    string direccion;
+                    double latitud;
+                    double longitud;
+
+                    if (mensaje.categoria == 21)
+                    {
+                        TiraDatosDecod021 datos = (TiraDatosDecod021)mensaje.tira;
+
+                        tiempo = datos.TimeReceptionPosition;
+                        direccion = datos.TargetAddress;
+                        latitud = datos.PosWGS84HighRes[0];
+                        longitud = datos.PosWGS84HighRes[1];
+                    }
+                    else if (mensaje.categoria == 48)
+                    {
+                        TiraDatosDecod048 datos = (TiraDatosDecod048)mensaje.tira;
+
+                        tiempo = datos.TimeOfDay;
+                        direccion = datos.AircrftAddrs;
+                        latitud = datos.PositionCorrectedLatLonAlt[0];
+                        longitud = datos.PositionCorrectedLatLonAlt[1];
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    if (direccion != avion.direccion ||
+                        tiempo >= avion.ultimoTiempo ||
+                        tiempo <= mejorTiempo)
+                    {
+                        continue;
+                    }
+
+                    if (double.IsNaN(latitud) || double.IsNaN(longitud))
+                        continue;
+
+                    mejorTiempo = tiempo;
+                    latitudAnterior = latitud;
+                    longitudAnterior = longitud;
+                }
+
+                if (!double.IsNaN(latitudAnterior))
+                {
+                    avion.rumbo = CalcularRumbo(
+                        latitudAnterior,
+                        longitudAnterior,
+                        avion.latitud,
+                        avion.longitud
+                    );
                 }
             }
         }
@@ -1515,10 +1655,7 @@ namespace GUI_ASTERIX
             capaTrayectorias.Routes.Clear();
             avionesTrayectoriaSeleccionados.Clear();
 
-            // Buscar el tiempo inicial del archivo filtrado
-            BuscarTiempoInicial();
-
-            double tiempoInicial = TiempoActual;
+            double tiempoInicial = tiempoInicioSimulacion;
 
             // Reconstruir desde el inicio hasta el instante actual
             for (double tiempo = tiempoInicial; tiempo <= tiempoOriginal; tiempo++)
@@ -1529,10 +1666,18 @@ namespace GUI_ASTERIX
             }
 
             // Recuperar el tiempo en el que estaba la simulación
+            // Recuperar el tiempo seleccionado
             TiempoActual = tiempoOriginal;
+
+            // Actualizar la posición de la barra
+            trackBarTiempo.Value = (int)(
+                TiempoActual - tiempoInicioSimulacion
+            );
 
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+            ActualizarMensajesActuales();
 
             ActualizarDataGrid();
             ActualizarMapa();
@@ -1885,7 +2030,6 @@ namespace GUI_ASTERIX
             {
                 return;
             }
-
             CalcularDensidadesDinamicas();
             DibujarHeatmap(densidadesDinamicas);
 
@@ -2034,7 +2178,7 @@ namespace GUI_ASTERIX
                 siguientePuntoHeatmap++;
             }
         }
-        
+
 
         private void mostrarHeatmapDinamicoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2076,6 +2220,23 @@ namespace GUI_ASTERIX
 
             gMapControl1.Height =
                 this.ClientSize.Height - gMapControl1.Top - margenInferior;
+        }
+
+        private void trackBarTiempo_MouseUp(object sender, MouseEventArgs e)
+        {
+            // Guardar si la simulación estaba reproduciéndose
+            bool estabaReproduciendo = Reproduciendo;
+
+            // Actualizar la simulación al tiempo seleccionado
+            trackBarTiempo_Scroll(sender, EventArgs.Empty);
+
+            // Recuperar el estado de reproducción
+            if (estabaReproduciendo)
+            {
+                Reproduciendo = true;
+                pictureBox1.Image = Properties.Resources.botonPausa;
+                timerSimulacion.Start();
+            }
         }
     }
 }
