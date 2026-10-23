@@ -70,6 +70,7 @@ namespace GUI_ASTERIX
             );
         }
 
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -77,7 +78,7 @@ namespace GUI_ASTERIX
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            int margen = 10;
+            int margen = 12;
             int ancho = Math.Max(1, Width - margen * 2);
             int centroY = Height / 2;
 
@@ -87,34 +88,59 @@ namespace GUI_ASTERIX
 
             float posicionX = margen + ancho * progreso;
 
-            using (Pen fondo = new Pen(Color.FromArgb(65, 78, 96), 5))
-            using (Pen avance = new Pen(Color.FromArgb(0, 200, 235), 5))
-            using (SolidBrush cursor = new SolidBrush(Color.FromArgb(0, 200, 235)))
-            using (SolidBrush centro = new SolidBrush(Color.White))
+            Color colorFondo = Color.FromArgb(57, 71, 91);
+            Color colorProgreso = Color.FromArgb(34, 211, 238);
+            Color colorCursor = Color.White;
+
+            // Barra completa
+            using (Pen fondo = new Pen(colorFondo, 6))
             {
                 fondo.StartCap = LineCap.Round;
                 fondo.EndCap = LineCap.Round;
 
-                avance.StartCap = LineCap.Round;
-                avance.EndCap = LineCap.Round;
-
-                g.DrawLine(fondo, margen, centroY,
+                g.DrawLine(fondo,
+                    margen, centroY,
                     margen + ancho, centroY);
+            }
 
-                g.DrawLine(avance, margen, centroY,
-                    posicionX, centroY);
+            // Progreso de la simulación
+            if (posicionX > margen)
+            {
+                using (Pen avance = new Pen(colorProgreso, 6))
+                {
+                    avance.StartCap = LineCap.Round;
+                    avance.EndCap = LineCap.Round;
 
+                    g.DrawLine(avance,
+                        margen, centroY,
+                        posicionX, centroY);
+                }
+            }
+
+            // Cursor circular
+            int radio = arrastrando ? 9 : 7;
+
+            using (SolidBrush cursor = new SolidBrush(colorCursor))
+            using (Pen borde = new Pen(colorProgreso, 2))
+            {
                 g.FillEllipse(cursor,
-                    posicionX - 8, centroY - 8, 16, 16);
+                    posicionX - radio,
+                    centroY - radio,
+                    radio * 2,
+                    radio * 2);
 
-                g.FillEllipse(centro,
-                    posicionX - 3, centroY - 3, 6, 6);
+                g.DrawEllipse(borde,
+                    posicionX - radio,
+                    centroY - radio,
+                    radio * 2,
+                    radio * 2);
             }
         }
 
+
         private void ActualizarValorDesdeRaton(int x)
         {
-            int margen = 10;
+            int margen = 12;
             int ancho = Math.Max(1, Width - margen * 2);
 
             double porcentaje =

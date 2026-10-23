@@ -20,6 +20,7 @@ namespace GUI_ASTERIX
 {
     public partial class MenuSimulacion : Form
     {
+        private BarraTiempoPersonalizada barraTiempoNueva;
         private double TiempoActual = 0;
         private double tiempoInicioSimulacion = 0;
         private double tiempoFinSimulacion = 0;
@@ -51,7 +52,43 @@ namespace GUI_ASTERIX
 
             AjustarMapa();
             this.Resize += (sender, e) => AjustarMapa();
+
+            barraTiempoNueva = new BarraTiempoPersonalizada();
+
+            barraTiempoNueva.Location = trackBarTiempo.Location;
+            barraTiempoNueva.Size = new Size(trackBarTiempo.Width, 36);
+
+            barraTiempoNueva.Anchor = trackBarTiempo.Anchor;
+            barraTiempoNueva.BackColor = Color.FromArgb(21, 29, 41);
+
+            barraTiempoNueva.TiempoMinimo = trackBarTiempo.Minimum;
+            barraTiempoNueva.TiempoMaximo = trackBarTiempo.Maximum;
+            barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
+
+            // Añadirla al mismo contenedor que la barra original
+            trackBarTiempo.Parent.Controls.Add(barraTiempoNueva);
+
+            // Ocultar la barra antigua
+            trackBarTiempo.Visible = false;
+
+            barraTiempoNueva.BringToFront();
+            barraTiempoNueva.ValorConfirmado += (sender, e) =>
+            {
+                bool estabaReproduciendo = Reproduciendo;
+
+                trackBarTiempo.Value = barraTiempoNueva.TiempoValor;
+
+                trackBarTiempo_Scroll(sender, EventArgs.Empty);
+
+                if (estabaReproduciendo)
+                {
+                    Reproduciendo = true;
+                    pictureBox1.Image = Properties.Resources.botonPausa;
+                    timerSimulacion.Start();
+                }
+            };
         }
+
 
         private void MenuSimulacion_Load(object sender, EventArgs e)
         {
@@ -132,6 +169,7 @@ namespace GUI_ASTERIX
                     TiempoActual - tiempoInicioSimulacion
                 );
             }
+            barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
             ActualizarAviones();
@@ -606,6 +644,9 @@ namespace GUI_ASTERIX
                 );
 
                 trackBarTiempo.Value = 0;
+                barraTiempoNueva.TiempoMinimo = trackBarTiempo.Minimum;
+                barraTiempoNueva.TiempoMaximo = trackBarTiempo.Maximum;
+                barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
 
                 TiempoActual = tiempoInicioSimulacion;
 
