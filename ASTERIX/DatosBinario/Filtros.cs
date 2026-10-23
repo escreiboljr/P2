@@ -60,6 +60,7 @@ namespace Archivos
             {
                 listaFiltrada = FiltrarGround(listaFiltrada);
             }
+            listaFiltrada = FiltrarMensajesInvalidos(listaFiltrada);
             return listaFiltrada.ToList();
         }
 
@@ -69,9 +70,28 @@ namespace Archivos
         }
 
         //private IEnumerable<Mensaje> FIltroBlancoPuro()
-        private IEnumerable<Mensaje> FiltrarBlancoPuro(IEnumerable<Mensaje> listaFiltro)
+        private IEnumerable<Mensaje> FiltrarBlancoPuro(
+    IEnumerable<Mensaje> listaFiltro)
         {
-            return listaFiltro;
+            return listaFiltro.Where(mensaje =>
+            {
+                // Los mensajes CAT21 no se modifican
+                if (mensaje.categoria != 48)
+                {
+                    return true;
+                }
+
+                TiraDatosDecod048 mensaje48 =
+                    (TiraDatosDecod048)mensaje.tira;
+
+                string typ = mensaje48.TargetRep.TYP;
+
+                // Conservar únicamente detecciones Modo S
+                return typ == "100" ||
+                       typ == "101" ||
+                       typ == "110" ||
+                       typ == "111";
+            });
         }
         private IEnumerable<Mensaje> FiltrarTransponderFijo(IEnumerable<Mensaje> listaFiltro)
         {
@@ -234,6 +254,30 @@ double trayectoriaMax)
                 // Solo conservamos los aviones en vuelo
                 return stat == 0 || stat == 2;
             });
+        }
+        private IEnumerable<Mensaje> FiltrarMensajesInvalidos(
+    IEnumerable<Mensaje> listaFiltro)
+        {
+            return listaFiltro.Where(mensaje =>
+            {
+                if (mensaje.categoria != 48)
+                    return true;
+
+                TiraDatosDecod048 mensaje48 =
+                    (TiraDatosDecod048)mensaje.tira;
+
+                bool trackSinIdentificar =
+                    string.IsNullOrEmpty(mensaje48.AircrftAddrs) &&
+                    string.IsNullOrEmpty(mensaje48.AircrftIddent) &&
+                    mensaje48.TargetRep.TYP == "001";
+
+                return mensaje48.TrckStatus.CNF != 1 &&
+                       !trackSinIdentificar;
+            });
+        }
+        public List<Mensaje> PrepararMensajes(List<Mensaje> mensajes)
+        {
+            return FiltrarMensajesInvalidos(mensajes).ToList();
         }
     }
 }

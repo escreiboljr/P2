@@ -21,6 +21,7 @@ namespace GUI_ASTERIX
     public partial class MenuSimulacion : Form
     {
         private BarraTiempoPersonalizada barraTiempoNueva;
+        private BarraTiempoPersonalizada barraVelocidadNueva;
         private double TiempoActual = 0;
         private double tiempoInicioSimulacion = 0;
         private double tiempoFinSimulacion = 0;
@@ -50,8 +51,8 @@ namespace GUI_ASTERIX
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
             LeerDatos prueba = new LeerDatos();
 
-            //AjustarMapa();
-            //this.Resize += (sender, e) => AjustarMapa();
+            AjustarMapa();
+            this.Resize += (sender, e) => AjustarMapa();
 
             barraTiempoNueva = new BarraTiempoPersonalizada();
 
@@ -59,7 +60,7 @@ namespace GUI_ASTERIX
             barraTiempoNueva.Size = new Size(trackBarTiempo.Width, 36);
 
             barraTiempoNueva.Anchor = trackBarTiempo.Anchor;
-            barraTiempoNueva.BackColor = Color.FromArgb(21, 29, 41);
+            barraTiempoNueva.BackColor = Color.FromArgb(18, 28, 45);
 
             barraTiempoNueva.TiempoMinimo = trackBarTiempo.Minimum;
             barraTiempoNueva.TiempoMaximo = trackBarTiempo.Maximum;
@@ -87,11 +88,84 @@ namespace GUI_ASTERIX
                     timerSimulacion.Start();
                 }
             };
+            barraTiempoNueva.ValorCambiado += (sender, e) =>
+            {
+                if (!barraTiempoNueva.EstaArrastrando)
+                    return;
+
+                double tiempoPrevisualizado =
+                    tiempoInicioSimulacion + barraTiempoNueva.TiempoValor;
+
+                TimeSpan hora = TimeSpan.FromSeconds(tiempoPrevisualizado);
+
+                textBoxHora.Text = ((int)hora.TotalHours).ToString("00");
+                textBoxMinuto.Text = hora.Minutes.ToString("00");
+                textBoxSegundo.Text = hora.Seconds.ToString("00");
+            };
             textBoxHora.KeyDown += HoraTextBox_KeyDown;
             textBoxMinuto.KeyDown += HoraTextBox_KeyDown;
             textBoxSegundo.KeyDown += HoraTextBox_KeyDown;
+
+            barraVelocidadNueva = new BarraTiempoPersonalizada();
+
+            barraVelocidadNueva.Location = trackBarVelSimulacion.Location;
+            barraVelocidadNueva.Size = new Size(
+                trackBarVelSimulacion.Width, 32);
+
+            barraVelocidadNueva.Anchor = trackBarVelSimulacion.Anchor;
+            barraVelocidadNueva.BackColor = Color.FromArgb(18, 28, 45);
+
+            barraVelocidadNueva.TiempoMinimo = 1;
+            barraVelocidadNueva.TiempoMaximo = 8;
+            barraVelocidadNueva.TiempoValor = trackBarVelSimulacion.Value;
+
+            trackBarVelSimulacion.Parent.Controls.Add(barraVelocidadNueva);
+
+            trackBarVelSimulacion.Visible = false;
+
+            barraVelocidadNueva.BringToFront();
+
+            barraVelocidadNueva.ValorConfirmado += (sender, e) =>
+            {
+                trackBarVelSimulacion.Value = barraVelocidadNueva.TiempoValor;
+
+                trackBarVelSimulacion_Scroll(sender, EventArgs.Empty);
+            };
+            // Mientras se arrastra: solo actualizar el texto
+            barraVelocidadNueva.ValorCambiado += (sender, e) =>
+            {
+                int valor = barraVelocidadNueva.TiempoValor;
+                int velocidad = (int)Math.Pow(2, valor - 1);
+
+                labelVelocidad.Text = "x" + velocidad;
+            };
+
+            // Al soltar: cambiar realmente la velocidad
+            barraVelocidadNueva.ValorConfirmado += (sender, e) =>
+            {
+                trackBarVelSimulacion.Value = barraVelocidadNueva.TiempoValor;
+                trackBarVelSimulacion_Scroll(sender, EventArgs.Empty);
+            };
+
+
+            AjustarDataGrid();
+
+            gMapControl1.Resize += (sender, e) =>
+            {
+                AjustarDataGrid();
+            };
+
+            gMapControl1.LocationChanged += (sender, e) =>
+            {
+                AjustarDataGrid();
+            };
         }
 
+        private void AjustarDataGrid()
+        {
+            dataGridAviones.Location = gMapControl1.Location;
+            dataGridAviones.Size = gMapControl1.Size;
+        }
 
         private void MenuSimulacion_Load(object sender, EventArgs e)
         {
@@ -126,10 +200,10 @@ namespace GUI_ASTERIX
 
             // Zona de interés con un poco de margen
             RectLatLng zona = RectLatLng.FromLTRB(
-                1.4,    // Oeste
-                41.8,   // Norte
-                2.7,    // Este
-                40.8    // Sur
+                1.7,    // Oeste
+                41.5,   // Norte
+                2.4,    // Este
+                41.1    // Sur
             );
 
             gMapControl1.SetZoomToFitRect(zona);
@@ -819,8 +893,16 @@ namespace GUI_ASTERIX
                     capaTrayectorias.Routes.Clear();
 
                     // Asignar exclusivamente los mensajes del nuevo archivo
+                    // Guardar todos los mensajes originales
+                    RestablecerFiltros();
                     ListaMensajes = nuevosMensajes;
-                    ListaMensajesFiltrados = new List<Mensaje>(nuevosMensajes);
+
+                    // Preparar los mensajes válidos para simulación y CSV
+                    Filtros gestorFiltros = new Filtros();
+
+                    ListaMensajesFiltrados =
+                        gestorFiltros.PrepararMensajes(ListaMensajes);
+
                     InvalidarHeatmap();
 
                     PrepararPuntosHeatmap();
@@ -1577,7 +1659,12 @@ namespace GUI_ASTERIX
 
         private void limpiarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ListaMensajesFiltrados = new List<Mensaje>(ListaMensajes);
+            RestablecerFiltros();
+
+            Filtros gestorFiltros = new Filtros();
+
+            ListaMensajesFiltrados =
+                gestorFiltros.PrepararMensajes(ListaMensajes);
             InvalidarHeatmap();
 
             PrepararPuntosHeatmap();
@@ -1597,6 +1684,24 @@ namespace GUI_ASTERIX
             ActualizarMapa();
 
             gMapControl1.Refresh();
+        }
+
+        private void RestablecerFiltros()
+        {
+            filtroBlancoPuro = false;
+            filtroTransFijo = false;
+            filtroGround = false;
+
+            filtroCat21 = true;
+            filtroCat48 = true;
+
+            filtroTrayectoria = false;
+            filtroTrayectoriaMin = 0;
+            filtroTrayectoriaMax = 360;
+
+            filtroAltura = false;
+            filtroAlturaMin = 0;
+            filtroAlturaMax = 999;
         }
 
         private void guardarEnCSVToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2262,7 +2367,7 @@ namespace GUI_ASTERIX
         private void AjustarMapa()
         {
             int margenDerecho = 25;
-            int margenInferior = 70;
+            int margenInferior = 230;
 
             gMapControl1.Width =
                 this.ClientSize.Width - gMapControl1.Left - margenDerecho;

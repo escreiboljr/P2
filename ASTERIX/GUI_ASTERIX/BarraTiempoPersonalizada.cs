@@ -15,6 +15,7 @@ namespace GUI_ASTERIX
         private bool arrastrando = false;
 
         public event EventHandler ValorConfirmado;
+        public event EventHandler ValorCambiado;
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -50,9 +51,23 @@ namespace GUI_ASTERIX
             get { return valor; }
             set
             {
-                valor = Math.Max(minimo, Math.Min(maximo, value));
-                Invalidate();
+                int nuevoValor = Math.Max(minimo, Math.Min(maximo, value));
+
+                if (valor != nuevoValor)
+                {
+                    valor = nuevoValor;
+                    Invalidate();
+
+                    ValorCambiado?.Invoke(this, EventArgs.Empty);
+                }
             }
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool EstaArrastrando
+        {
+            get { return arrastrando; }
         }
 
         public BarraTiempoPersonalizada()

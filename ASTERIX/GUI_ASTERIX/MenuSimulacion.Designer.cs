@@ -93,7 +93,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem, verToolStripMenuItem, ayudaToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1281, 29);
+            menuStrip1.Size = new Size(985, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -231,8 +231,9 @@
             // 
             // trackBarVelSimulacion
             // 
+            trackBarVelSimulacion.Anchor = AnchorStyles.Bottom;
             trackBarVelSimulacion.LargeChange = 1;
-            trackBarVelSimulacion.Location = new Point(25, 647);
+            trackBarVelSimulacion.Location = new Point(359, 667);
             trackBarVelSimulacion.Maximum = 8;
             trackBarVelSimulacion.Minimum = 1;
             trackBarVelSimulacion.Name = "trackBarVelSimulacion";
@@ -266,10 +267,10 @@
             // dataGridAviones
             // 
             dataGridAviones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridAviones.Location = new Point(297, 49);
+            dataGridAviones.Location = new Point(25, 49);
             dataGridAviones.Name = "dataGridAviones";
             dataGridAviones.RowHeadersWidth = 62;
-            dataGridAviones.Size = new Size(962, 536);
+            dataGridAviones.Size = new Size(927, 445);
             dataGridAviones.TabIndex = 8;
             dataGridAviones.Visible = false;
             // 
@@ -306,28 +307,30 @@
             gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             gMapControl1.SelectedAreaFillColor = Color.FromArgb(33, 65, 105, 225);
             gMapControl1.ShowTileGridLines = false;
-            gMapControl1.Size = new Size(1234, 536);
+            gMapControl1.Size = new Size(927, 445);
             gMapControl1.TabIndex = 10;
             gMapControl1.Zoom = 0D;
             // 
             // labelTituloVelocidadReproduccion
             // 
+            labelTituloVelocidadReproduccion.Anchor = AnchorStyles.Bottom;
             labelTituloVelocidadReproduccion.AutoSize = true;
             labelTituloVelocidadReproduccion.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelTituloVelocidadReproduccion.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVelocidadReproduccion.Location = new Point(12, 614);
+            labelTituloVelocidadReproduccion.Location = new Point(324, 632);
             labelTituloVelocidadReproduccion.Name = "labelTituloVelocidadReproduccion";
-            labelTituloVelocidadReproduccion.Size = new Size(270, 30);
+            labelTituloVelocidadReproduccion.Size = new Size(275, 30);
             labelTituloVelocidadReproduccion.TabIndex = 15;
-            labelTituloVelocidadReproduccion.Text = "Velocidad de reproducción";
+            labelTituloVelocidadReproduccion.Text = "Velocidad de reproducción:";
             // 
             // labelTituloHora
             // 
+            labelTituloHora.Anchor = AnchorStyles.Bottom;
             labelTituloHora.AutoSize = true;
             labelTituloHora.BackColor = Color.Transparent;
             labelTituloHora.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelTituloHora.ForeColor = SystemColors.ControlLightLight;
-            labelTituloHora.Location = new Point(295, 646);
+            labelTituloHora.Location = new Point(75, 552);
             labelTituloHora.Name = "labelTituloHora";
             labelTituloHora.Size = new Size(147, 32);
             labelTituloHora.TabIndex = 16;
@@ -335,9 +338,10 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.Bottom;
             pictureBox1.Image = Properties.Resources.botonReproducir;
             pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new Point(673, 662);
+            pictureBox1.Location = new Point(453, 568);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(44, 43);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -347,9 +351,10 @@
             // 
             // pictureBox2
             // 
+            pictureBox2.Anchor = AnchorStyles.Bottom;
             pictureBox2.Image = Properties.Resources.botonAvanzar;
             pictureBox2.InitialImage = (Image)resources.GetObject("pictureBox2.InitialImage");
-            pictureBox2.Location = new Point(765, 662);
+            pictureBox2.Location = new Point(545, 568);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(44, 43);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -359,9 +364,10 @@
             // 
             // pictureBox3
             // 
+            pictureBox3.Anchor = AnchorStyles.Bottom;
             pictureBox3.Image = Properties.Resources.botonRetroceder;
             pictureBox3.InitialImage = (Image)resources.GetObject("pictureBox3.InitialImage");
-            pictureBox3.Location = new Point(575, 662);
+            pictureBox3.Location = new Point(355, 568);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(44, 43);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -375,7 +381,7 @@
             labelTituloVerde.AutoSize = true;
             labelTituloVerde.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             labelTituloVerde.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVerde.Location = new Point(902, 675);
+            labelTituloVerde.Location = new Point(41, 689);
             labelTituloVerde.Name = "labelTituloVerde";
             labelTituloVerde.Size = new Size(68, 25);
             labelTituloVerde.TabIndex = 20;
@@ -387,7 +393,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             label2.ForeColor = SystemColors.ControlLightLight;
-            label2.Location = new Point(1020, 675);
+            label2.Location = new Point(44, 652);
             label2.Name = "label2";
             label2.Size = new Size(62, 25);
             label2.TabIndex = 21;
@@ -398,7 +404,7 @@
             pictureBox4.Anchor = AnchorStyles.Bottom;
             pictureBox4.Image = Properties.Resources.large_green_square_1f7e9;
             pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
-            pictureBox4.Location = new Point(868, 675);
+            pictureBox4.Location = new Point(7, 689);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(28, 28);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -410,7 +416,7 @@
             pictureBox5.Anchor = AnchorStyles.Bottom;
             pictureBox5.Image = Properties.Resources.images;
             pictureBox5.InitialImage = (Image)resources.GetObject("pictureBox5.InitialImage");
-            pictureBox5.Location = new Point(983, 676);
+            pictureBox5.Location = new Point(7, 653);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(29, 28);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -419,10 +425,11 @@
             // 
             // labelTituloAsterix
             // 
+            labelTituloAsterix.Anchor = AnchorStyles.Bottom;
             labelTituloAsterix.AutoSize = true;
             labelTituloAsterix.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTituloAsterix.ForeColor = Color.Turquoise;
-            labelTituloAsterix.Location = new Point(1107, 675);
+            labelTituloAsterix.Location = new Point(811, 667);
             labelTituloAsterix.Name = "labelTituloAsterix";
             labelTituloAsterix.Size = new Size(162, 47);
             labelTituloAsterix.TabIndex = 26;
@@ -430,11 +437,12 @@
             // 
             // textBoxHora
             // 
+            textBoxHora.Anchor = AnchorStyles.Bottom;
             textBoxHora.BackColor = Color.FromArgb(18, 28, 45);
             textBoxHora.BorderStyle = BorderStyle.None;
             textBoxHora.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             textBoxHora.ForeColor = SystemColors.ControlLightLight;
-            textBoxHora.Location = new Point(290, 600);
+            textBoxHora.Location = new Point(70, 506);
             textBoxHora.Name = "textBoxHora";
             textBoxHora.Size = new Size(42, 47);
             textBoxHora.TabIndex = 30;
@@ -443,11 +451,12 @@
             // 
             // textBoxSegundo
             // 
+            textBoxSegundo.Anchor = AnchorStyles.Bottom;
             textBoxSegundo.BackColor = Color.FromArgb(18, 28, 45);
             textBoxSegundo.BorderStyle = BorderStyle.None;
             textBoxSegundo.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             textBoxSegundo.ForeColor = SystemColors.ControlLightLight;
-            textBoxSegundo.Location = new Point(388, 600);
+            textBoxSegundo.Location = new Point(168, 506);
             textBoxSegundo.Name = "textBoxSegundo";
             textBoxSegundo.Size = new Size(42, 47);
             textBoxSegundo.TabIndex = 31;
@@ -456,11 +465,12 @@
             // 
             // textBoxMinuto
             // 
+            textBoxMinuto.Anchor = AnchorStyles.Bottom;
             textBoxMinuto.BackColor = Color.FromArgb(18, 28, 45);
             textBoxMinuto.BorderStyle = BorderStyle.None;
             textBoxMinuto.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             textBoxMinuto.ForeColor = SystemColors.ControlLightLight;
-            textBoxMinuto.Location = new Point(339, 600);
+            textBoxMinuto.Location = new Point(119, 506);
             textBoxMinuto.Name = "textBoxMinuto";
             textBoxMinuto.Size = new Size(42, 47);
             textBoxMinuto.TabIndex = 32;
@@ -480,10 +490,11 @@
             // 
             // labelVelocidad
             // 
+            labelVelocidad.Anchor = AnchorStyles.Bottom;
             labelVelocidad.AutoSize = true;
             labelVelocidad.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelVelocidad.ForeColor = SystemColors.ControlLightLight;
-            labelVelocidad.Location = new Point(121, 680);
+            labelVelocidad.ForeColor = Color.Turquoise;
+            labelVelocidad.Location = new Point(600, 632);
             labelVelocidad.Name = "labelVelocidad";
             labelVelocidad.Size = new Size(32, 30);
             labelVelocidad.TabIndex = 35;
@@ -492,7 +503,8 @@
             // 
             // trackBarTiempo
             // 
-            trackBarTiempo.Location = new Point(453, 611);
+            trackBarTiempo.Anchor = AnchorStyles.Bottom;
+            trackBarTiempo.Location = new Point(233, 517);
             trackBarTiempo.Maximum = 100;
             trackBarTiempo.Name = "trackBarTiempo";
             trackBarTiempo.Size = new Size(456, 45);
@@ -501,10 +513,11 @@
             // 
             // labelTiempoFinal
             // 
+            labelTiempoFinal.Anchor = AnchorStyles.Bottom;
             labelTiempoFinal.AutoSize = true;
             labelTiempoFinal.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             labelTiempoFinal.ForeColor = SystemColors.ControlLightLight;
-            labelTiempoFinal.Location = new Point(915, 600);
+            labelTiempoFinal.Location = new Point(695, 506);
             labelTiempoFinal.Name = "labelTiempoFinal";
             labelTiempoFinal.Size = new Size(158, 47);
             labelTiempoFinal.TabIndex = 37;
@@ -512,10 +525,11 @@
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Bottom;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             label3.ForeColor = SystemColors.ControlLightLight;
-            label3.Location = new Point(323, 598);
+            label3.Location = new Point(103, 504);
             label3.Name = "label3";
             label3.Size = new Size(29, 47);
             label3.TabIndex = 38;
@@ -523,10 +537,11 @@
             // 
             // label4
             // 
+            label4.Anchor = AnchorStyles.Bottom;
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             label4.ForeColor = SystemColors.ControlLightLight;
-            label4.Location = new Point(372, 599);
+            label4.Location = new Point(152, 503);
             label4.Name = "label4";
             label4.Size = new Size(29, 47);
             label4.TabIndex = 39;
@@ -534,9 +549,10 @@
             // 
             // pictureBox6
             // 
+            pictureBox6.Anchor = AnchorStyles.Bottom;
             pictureBox6.Image = Properties.Resources.botonRecargar;
             pictureBox6.InitialImage = (Image)resources.GetObject("pictureBox6.InitialImage");
-            pictureBox6.Location = new Point(495, 662);
+            pictureBox6.Location = new Point(275, 568);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(44, 43);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -549,7 +565,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(1281, 731);
+            ClientSize = new Size(985, 731);
             Controls.Add(pictureBox6);
             Controls.Add(label1);
             Controls.Add(labelTiempoFinal);

@@ -82,7 +82,7 @@
             labelDCR.BackColor = Color.Transparent;
             labelDCR.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelDCR.ForeColor = Color.FromArgb(255, 192, 255);
-            labelDCR.Location = new Point(14, 196);
+            labelDCR.Location = new Point(14, 221);
             labelDCR.Margin = new Padding(2, 0, 2, 0);
             labelDCR.Name = "labelDCR";
             labelDCR.Size = new Size(72, 19);
@@ -146,8 +146,8 @@
             labelReservedExpFiedl.AutoSize = true;
             labelReservedExpFiedl.BackColor = Color.Transparent;
             labelReservedExpFiedl.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            labelReservedExpFiedl.ForeColor = Color.FromArgb(192, 255, 255);
-            labelReservedExpFiedl.Location = new Point(463, 74);
+            labelReservedExpFiedl.ForeColor = Color.FromArgb(255, 192, 192);
+            labelReservedExpFiedl.Location = new Point(165, 245);
             labelReservedExpFiedl.Margin = new Padding(2, 0, 2, 0);
             labelReservedExpFiedl.Name = "labelReservedExpFiedl";
             labelReservedExpFiedl.Size = new Size(70, 19);
@@ -159,8 +159,8 @@
             labelOther.AutoSize = true;
             labelOther.BackColor = Color.Transparent;
             labelOther.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelOther.ForeColor = Color.FromArgb(192, 255, 255);
-            labelOther.Location = new Point(463, 49);
+            labelOther.ForeColor = Color.FromArgb(255, 192, 192);
+            labelOther.Location = new Point(165, 220);
             labelOther.Margin = new Padding(2, 0, 2, 0);
             labelOther.Name = "labelOther";
             labelOther.Size = new Size(61, 21);
@@ -173,7 +173,7 @@
             labelCL.BackColor = Color.Transparent;
             labelCL.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelCL.ForeColor = Color.FromArgb(255, 192, 255);
-            labelCL.Location = new Point(14, 313);
+            labelCL.Location = new Point(14, 338);
             labelCL.Margin = new Padding(2, 0, 2, 0);
             labelCL.Name = "labelCL";
             labelCL.Size = new Size(60, 19);
@@ -186,7 +186,7 @@
             labelTST.BackColor = Color.Transparent;
             labelTST.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelTST.ForeColor = Color.FromArgb(255, 192, 255);
-            labelTST.Location = new Point(14, 268);
+            labelTST.Location = new Point(14, 293);
             labelTST.Margin = new Padding(2, 0, 2, 0);
             labelTST.Name = "labelTST";
             labelTST.Size = new Size(68, 19);
@@ -199,7 +199,7 @@
             labelSAA.BackColor = Color.Transparent;
             labelSAA.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelSAA.ForeColor = Color.FromArgb(255, 192, 255);
-            labelSAA.Location = new Point(15, 291);
+            labelSAA.Location = new Point(15, 316);
             labelSAA.Margin = new Padding(2, 0, 2, 0);
             labelSAA.Name = "labelSAA";
             labelSAA.Size = new Size(72, 19);
@@ -212,7 +212,7 @@
             labelSIM.BackColor = Color.Transparent;
             labelSIM.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelSIM.ForeColor = Color.FromArgb(255, 192, 255);
-            labelSIM.Location = new Point(14, 243);
+            labelSIM.Location = new Point(14, 268);
             labelSIM.Margin = new Padding(2, 0, 2, 0);
             labelSIM.Name = "labelSIM";
             labelSIM.Size = new Size(69, 19);
@@ -226,7 +226,7 @@
             labelGBS.BackColor = Color.Transparent;
             labelGBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelGBS.ForeColor = Color.FromArgb(255, 192, 255);
-            labelGBS.Location = new Point(14, 220);
+            labelGBS.Location = new Point(14, 245);
             labelGBS.Margin = new Padding(2, 0, 2, 0);
             labelGBS.Name = "labelGBS";
             labelGBS.Size = new Size(71, 19);
@@ -240,7 +240,7 @@
             labelRCF.BackColor = Color.Transparent;
             labelRCF.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelRCF.ForeColor = Color.FromArgb(255, 192, 255);
-            labelRCF.Location = new Point(13, 450);
+            labelRCF.Location = new Point(165, 172);
             labelRCF.Margin = new Padding(2, 0, 2, 0);
             labelRCF.Name = "labelRCF";
             labelRCF.Size = new Size(69, 19);
@@ -253,7 +253,7 @@
             labelCPR.BackColor = Color.Transparent;
             labelCPR.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelCPR.ForeColor = Color.FromArgb(255, 192, 255);
-            labelCPR.Location = new Point(13, 406);
+            labelCPR.Location = new Point(165, 128);
             labelCPR.Margin = new Padding(2, 0, 2, 0);
             labelCPR.Name = "labelCPR";
             labelCPR.Size = new Size(71, 19);
@@ -266,7 +266,7 @@
             labelLDPJ.BackColor = Color.Transparent;
             labelLDPJ.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelLDPJ.ForeColor = Color.FromArgb(255, 192, 255);
-            labelLDPJ.Location = new Point(13, 428);
+            labelLDPJ.Location = new Point(165, 150);
             labelLDPJ.Margin = new Padding(2, 0, 2, 0);
             labelLDPJ.Name = "labelLDPJ";
             labelLDPJ.Size = new Size(75, 19);
@@ -279,7 +279,7 @@
             labelNOGO.BackColor = Color.Transparent;
             labelNOGO.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelNOGO.ForeColor = Color.FromArgb(255, 192, 255);
-            labelNOGO.Location = new Point(12, 382);
+            labelNOGO.Location = new Point(164, 104);
             labelNOGO.Margin = new Padding(2, 0, 2, 0);
             labelNOGO.Name = "labelNOGO";
             labelNOGO.Size = new Size(87, 19);
@@ -292,7 +292,7 @@
             labelIPC.BackColor = Color.Transparent;
             labelIPC.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelIPC.ForeColor = Color.FromArgb(255, 192, 255);
-            labelIPC.Location = new Point(12, 359);
+            labelIPC.Location = new Point(164, 81);
             labelIPC.Margin = new Padding(2, 0, 2, 0);
             labelIPC.Name = "labelIPC";
             labelIPC.Size = new Size(66, 19);
@@ -304,7 +304,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(854, 494);
+            ClientSize = new Size(302, 391);
             Controls.Add(labelRCF);
             Controls.Add(labelCPR);
             Controls.Add(labelLDPJ);
