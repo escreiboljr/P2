@@ -153,6 +153,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botonRecargar {
+            get {
+                object obj = ResourceManager.GetObject("botonRecargar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonReproducir {
             get {
                 object obj = ResourceManager.GetObject("botonReproducir", resourceCulture);

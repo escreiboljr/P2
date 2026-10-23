@@ -65,7 +65,6 @@
             pictureBox5 = new PictureBox();
             labelTituloAsterix = new Label();
             timerClick = new System.Windows.Forms.Timer(components);
-            labelAvanzarHora = new Label();
             textBoxHora = new TextBox();
             textBoxSegundo = new TextBox();
             textBoxMinuto = new TextBox();
@@ -73,6 +72,9 @@
             labelVelocidad = new Label();
             trackBarTiempo = new TrackBar();
             labelTiempoFinal = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            pictureBox6 = new PictureBox();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -82,6 +84,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTiempo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -90,7 +93,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, filtrarToolStripMenuItem, verToolStripMenuItem, ayudaToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1402, 29);
+            menuStrip1.Size = new Size(1281, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -194,7 +197,7 @@
             // 
             // buttonPlay
             // 
-            buttonPlay.Location = new Point(41, 49);
+            buttonPlay.Location = new Point(101, 32);
             buttonPlay.Name = "buttonPlay";
             buttonPlay.Size = new Size(21, 23);
             buttonPlay.TabIndex = 1;
@@ -205,7 +208,7 @@
             // 
             // buttonStop
             // 
-            buttonStop.Location = new Point(68, 49);
+            buttonStop.Location = new Point(128, 32);
             buttonStop.Name = "buttonStop";
             buttonStop.Size = new Size(14, 23);
             buttonStop.TabIndex = 2;
@@ -219,16 +222,17 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ControlLightLight;
-            label1.Location = new Point(59, 184);
+            label1.Location = new Point(371, 29);
             label1.Name = "label1";
             label1.Size = new Size(158, 47);
             label1.TabIndex = 3;
             label1.Text = "00:00:00";
+            label1.Visible = false;
             // 
             // trackBarVelSimulacion
             // 
             trackBarVelSimulacion.LargeChange = 1;
-            trackBarVelSimulacion.Location = new Point(25, 462);
+            trackBarVelSimulacion.Location = new Point(25, 647);
             trackBarVelSimulacion.Maximum = 8;
             trackBarVelSimulacion.Minimum = 1;
             trackBarVelSimulacion.Name = "trackBarVelSimulacion";
@@ -239,7 +243,7 @@
             // 
             // buttonAvanzar
             // 
-            buttonAvanzar.Location = new Point(88, 49);
+            buttonAvanzar.Location = new Point(148, 32);
             buttonAvanzar.Name = "buttonAvanzar";
             buttonAvanzar.Size = new Size(21, 23);
             buttonAvanzar.TabIndex = 6;
@@ -250,27 +254,28 @@
             // 
             // buttonReset
             // 
-            buttonReset.Location = new Point(47, 593);
+            buttonReset.Location = new Point(256, 32);
             buttonReset.Name = "buttonReset";
-            buttonReset.Size = new Size(87, 23);
+            buttonReset.Size = new Size(16, 23);
             buttonReset.TabIndex = 7;
             buttonReset.Text = "Reset";
             buttonReset.UseVisualStyleBackColor = true;
+            buttonReset.Visible = false;
             buttonReset.Click += buttonReset_Click;
             // 
             // dataGridAviones
             // 
             dataGridAviones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridAviones.Location = new Point(310, 49);
+            dataGridAviones.Location = new Point(297, 49);
             dataGridAviones.Name = "dataGridAviones";
             dataGridAviones.RowHeadersWidth = 62;
-            dataGridAviones.Size = new Size(1069, 623);
+            dataGridAviones.Size = new Size(962, 536);
             dataGridAviones.TabIndex = 8;
             dataGridAviones.Visible = false;
             // 
             // buttonDataGrid
             // 
-            buttonDataGrid.Location = new Point(122, 49);
+            buttonDataGrid.Location = new Point(175, 32);
             buttonDataGrid.Name = "buttonDataGrid";
             buttonDataGrid.Size = new Size(75, 23);
             buttonDataGrid.TabIndex = 9;
@@ -287,7 +292,7 @@
             gMapControl1.GrayScaleMode = false;
             gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             gMapControl1.LevelsKeepInMemory = 5;
-            gMapControl1.Location = new Point(310, 49);
+            gMapControl1.Location = new Point(25, 49);
             gMapControl1.MarkersEnabled = true;
             gMapControl1.MaxZoom = 2;
             gMapControl1.MinZoom = 2;
@@ -301,7 +306,7 @@
             gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             gMapControl1.SelectedAreaFillColor = Color.FromArgb(33, 65, 105, 225);
             gMapControl1.ShowTileGridLines = false;
-            gMapControl1.Size = new Size(1069, 623);
+            gMapControl1.Size = new Size(1234, 536);
             gMapControl1.TabIndex = 10;
             gMapControl1.Zoom = 0D;
             // 
@@ -310,7 +315,7 @@
             labelTituloVelocidadReproduccion.AutoSize = true;
             labelTituloVelocidadReproduccion.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelTituloVelocidadReproduccion.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVelocidadReproduccion.Location = new Point(12, 429);
+            labelTituloVelocidadReproduccion.Location = new Point(12, 614);
             labelTituloVelocidadReproduccion.Name = "labelTituloVelocidadReproduccion";
             labelTituloVelocidadReproduccion.Size = new Size(270, 30);
             labelTituloVelocidadReproduccion.TabIndex = 15;
@@ -322,7 +327,7 @@
             labelTituloHora.BackColor = Color.Transparent;
             labelTituloHora.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelTituloHora.ForeColor = SystemColors.ControlLightLight;
-            labelTituloHora.Location = new Point(68, 152);
+            labelTituloHora.Location = new Point(295, 646);
             labelTituloHora.Name = "labelTituloHora";
             labelTituloHora.Size = new Size(147, 32);
             labelTituloHora.TabIndex = 16;
@@ -332,7 +337,7 @@
             // 
             pictureBox1.Image = Properties.Resources.botonReproducir;
             pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new Point(112, 279);
+            pictureBox1.Location = new Point(673, 662);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(44, 43);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -344,7 +349,7 @@
             // 
             pictureBox2.Image = Properties.Resources.botonAvanzar;
             pictureBox2.InitialImage = (Image)resources.GetObject("pictureBox2.InitialImage");
-            pictureBox2.Location = new Point(173, 279);
+            pictureBox2.Location = new Point(765, 662);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(44, 43);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -356,7 +361,7 @@
             // 
             pictureBox3.Image = Properties.Resources.botonRetroceder;
             pictureBox3.InitialImage = (Image)resources.GetObject("pictureBox3.InitialImage");
-            pictureBox3.Location = new Point(51, 279);
+            pictureBox3.Location = new Point(575, 662);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(44, 43);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -370,7 +375,7 @@
             labelTituloVerde.AutoSize = true;
             labelTituloVerde.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             labelTituloVerde.ForeColor = SystemColors.ControlLightLight;
-            labelTituloVerde.Location = new Point(553, 685);
+            labelTituloVerde.Location = new Point(902, 675);
             labelTituloVerde.Name = "labelTituloVerde";
             labelTituloVerde.Size = new Size(68, 25);
             labelTituloVerde.TabIndex = 20;
@@ -382,7 +387,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             label2.ForeColor = SystemColors.ControlLightLight;
-            label2.Location = new Point(1054, 685);
+            label2.Location = new Point(1020, 675);
             label2.Name = "label2";
             label2.Size = new Size(62, 25);
             label2.TabIndex = 21;
@@ -393,7 +398,7 @@
             pictureBox4.Anchor = AnchorStyles.Bottom;
             pictureBox4.Image = Properties.Resources.large_green_square_1f7e9;
             pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
-            pictureBox4.Location = new Point(516, 685);
+            pictureBox4.Location = new Point(868, 675);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(28, 28);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -405,7 +410,7 @@
             pictureBox5.Anchor = AnchorStyles.Bottom;
             pictureBox5.Image = Properties.Resources.images;
             pictureBox5.InitialImage = (Image)resources.GetObject("pictureBox5.InitialImage");
-            pictureBox5.Location = new Point(1017, 686);
+            pictureBox5.Location = new Point(983, 676);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(29, 28);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -417,57 +422,60 @@
             labelTituloAsterix.AutoSize = true;
             labelTituloAsterix.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTituloAsterix.ForeColor = Color.Turquoise;
-            labelTituloAsterix.Location = new Point(60, 75);
+            labelTituloAsterix.Location = new Point(1107, 675);
             labelTituloAsterix.Name = "labelTituloAsterix";
             labelTituloAsterix.Size = new Size(162, 47);
             labelTituloAsterix.TabIndex = 26;
             labelTituloAsterix.Text = "ASTERIX";
             // 
-            // labelAvanzarHora
-            // 
-            labelAvanzarHora.AutoSize = true;
-            labelAvanzarHora.ForeColor = SystemColors.ControlLightLight;
-            labelAvanzarHora.Location = new Point(20, 562);
-            labelAvanzarHora.Name = "labelAvanzarHora";
-            labelAvanzarHora.Size = new Size(114, 15);
-            labelAvanzarHora.TabIndex = 29;
-            labelAvanzarHora.Text = " Simular desde hora:";
-            // 
             // textBoxHora
             // 
-            textBoxHora.Location = new Point(157, 562);
+            textBoxHora.BackColor = Color.FromArgb(18, 28, 45);
+            textBoxHora.BorderStyle = BorderStyle.None;
+            textBoxHora.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
+            textBoxHora.ForeColor = SystemColors.ControlLightLight;
+            textBoxHora.Location = new Point(290, 600);
             textBoxHora.Name = "textBoxHora";
-            textBoxHora.Size = new Size(29, 23);
+            textBoxHora.Size = new Size(42, 47);
             textBoxHora.TabIndex = 30;
-            textBoxHora.Text = "hh";
+            textBoxHora.Text = "00";
             textBoxHora.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxSegundo
             // 
-            textBoxSegundo.Location = new Point(217, 562);
+            textBoxSegundo.BackColor = Color.FromArgb(18, 28, 45);
+            textBoxSegundo.BorderStyle = BorderStyle.None;
+            textBoxSegundo.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
+            textBoxSegundo.ForeColor = SystemColors.ControlLightLight;
+            textBoxSegundo.Location = new Point(388, 600);
             textBoxSegundo.Name = "textBoxSegundo";
-            textBoxSegundo.Size = new Size(27, 23);
+            textBoxSegundo.Size = new Size(42, 47);
             textBoxSegundo.TabIndex = 31;
-            textBoxSegundo.Text = "ss";
+            textBoxSegundo.Text = "00";
             textBoxSegundo.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxMinuto
             // 
-            textBoxMinuto.Location = new Point(188, 562);
+            textBoxMinuto.BackColor = Color.FromArgb(18, 28, 45);
+            textBoxMinuto.BorderStyle = BorderStyle.None;
+            textBoxMinuto.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
+            textBoxMinuto.ForeColor = SystemColors.ControlLightLight;
+            textBoxMinuto.Location = new Point(339, 600);
             textBoxMinuto.Name = "textBoxMinuto";
-            textBoxMinuto.Size = new Size(27, 23);
+            textBoxMinuto.Size = new Size(42, 47);
             textBoxMinuto.TabIndex = 32;
-            textBoxMinuto.Text = "mm";
+            textBoxMinuto.Text = "00";
             textBoxMinuto.TextAlign = HorizontalAlignment.Center;
             // 
             // buttonSimularDesdeHora
             // 
-            buttonSimularDesdeHora.Location = new Point(157, 593);
+            buttonSimularDesdeHora.Location = new Point(278, 32);
             buttonSimularDesdeHora.Name = "buttonSimularDesdeHora";
             buttonSimularDesdeHora.Size = new Size(87, 23);
             buttonSimularDesdeHora.TabIndex = 33;
             buttonSimularDesdeHora.Text = "Simular";
             buttonSimularDesdeHora.UseVisualStyleBackColor = true;
+            buttonSimularDesdeHora.Visible = false;
             buttonSimularDesdeHora.Click += buttonSimularDesdeHora_Click;
             // 
             // labelVelocidad
@@ -475,7 +483,7 @@
             labelVelocidad.AutoSize = true;
             labelVelocidad.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
             labelVelocidad.ForeColor = SystemColors.ControlLightLight;
-            labelVelocidad.Location = new Point(121, 495);
+            labelVelocidad.Location = new Point(121, 680);
             labelVelocidad.Name = "labelVelocidad";
             labelVelocidad.Size = new Size(32, 30);
             labelVelocidad.TabIndex = 35;
@@ -484,30 +492,66 @@
             // 
             // trackBarTiempo
             // 
-            trackBarTiempo.Location = new Point(30, 363);
+            trackBarTiempo.Location = new Point(453, 611);
             trackBarTiempo.Maximum = 100;
             trackBarTiempo.Name = "trackBarTiempo";
-            trackBarTiempo.Size = new Size(235, 45);
+            trackBarTiempo.Size = new Size(456, 45);
             trackBarTiempo.TabIndex = 36;
             trackBarTiempo.MouseUp += trackBarTiempo_MouseUp;
             // 
             // labelTiempoFinal
             // 
             labelTiempoFinal.AutoSize = true;
-            labelTiempoFinal.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTiempoFinal.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
             labelTiempoFinal.ForeColor = SystemColors.ControlLightLight;
-            labelTiempoFinal.Location = new Point(203, 394);
+            labelTiempoFinal.Location = new Point(915, 600);
             labelTiempoFinal.Name = "labelTiempoFinal";
-            labelTiempoFinal.Size = new Size(88, 25);
+            labelTiempoFinal.Size = new Size(158, 47);
             labelTiempoFinal.TabIndex = 37;
             labelTiempoFinal.Text = "00:00:00";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
+            label3.ForeColor = SystemColors.ControlLightLight;
+            label3.Location = new Point(323, 598);
+            label3.Name = "label3";
+            label3.Size = new Size(29, 47);
+            label3.TabIndex = 38;
+            label3.Text = ":";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold);
+            label4.ForeColor = SystemColors.ControlLightLight;
+            label4.Location = new Point(372, 599);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 47);
+            label4.TabIndex = 39;
+            label4.Text = ":";
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = Properties.Resources.botonRecargar;
+            pictureBox6.InitialImage = (Image)resources.GetObject("pictureBox6.InitialImage");
+            pictureBox6.Location = new Point(495, 662);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(44, 43);
+            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox6.TabIndex = 40;
+            pictureBox6.TabStop = false;
+            pictureBox6.Click += buttonReset_Click;
             // 
             // MenuSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(1402, 731);
+            ClientSize = new Size(1281, 731);
+            Controls.Add(pictureBox6);
+            Controls.Add(label1);
             Controls.Add(labelTiempoFinal);
             Controls.Add(trackBarTiempo);
             Controls.Add(labelVelocidad);
@@ -515,7 +559,6 @@
             Controls.Add(textBoxMinuto);
             Controls.Add(textBoxSegundo);
             Controls.Add(textBoxHora);
-            Controls.Add(labelAvanzarHora);
             Controls.Add(labelTituloAsterix);
             Controls.Add(pictureBox5);
             Controls.Add(pictureBox4);
@@ -532,10 +575,11 @@
             Controls.Add(buttonReset);
             Controls.Add(buttonAvanzar);
             Controls.Add(trackBarVelSimulacion);
-            Controls.Add(label1);
             Controls.Add(buttonStop);
             Controls.Add(buttonPlay);
             Controls.Add(menuStrip1);
+            Controls.Add(label3);
+            Controls.Add(label4);
             MainMenuStrip = menuStrip1;
             Name = "MenuSimulacion";
             SizeGripStyle = SizeGripStyle.Hide;
@@ -551,6 +595,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTiempo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -585,7 +630,6 @@
         private Label labelTituloAsterix;
         private ToolStripMenuItem guardarEnCSVToolStripMenuItem;
         private System.Windows.Forms.Timer timerClick;
-        private Label labelAvanzarHora;
         private TextBox textBoxHora;
         private TextBox textBoxSegundo;
         private TextBox textBoxMinuto;
@@ -601,5 +645,8 @@
         private Label labelVelocidad;
         private TrackBar trackBarTiempo;
         private Label labelTiempoFinal;
+        private Label label3;
+        private Label label4;
+        private PictureBox pictureBox6;
     }
 }

@@ -50,8 +50,8 @@ namespace GUI_ASTERIX
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
             LeerDatos prueba = new LeerDatos();
 
-            AjustarMapa();
-            this.Resize += (sender, e) => AjustarMapa();
+            //AjustarMapa();
+            //this.Resize += (sender, e) => AjustarMapa();
 
             barraTiempoNueva = new BarraTiempoPersonalizada();
 
@@ -87,6 +87,9 @@ namespace GUI_ASTERIX
                     timerSimulacion.Start();
                 }
             };
+            textBoxHora.KeyDown += HoraTextBox_KeyDown;
+            textBoxMinuto.KeyDown += HoraTextBox_KeyDown;
+            textBoxSegundo.KeyDown += HoraTextBox_KeyDown;
         }
 
 
@@ -172,6 +175,7 @@ namespace GUI_ASTERIX
             barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
+            ActualizarHoraTextBox();
             ActualizarAviones();
             EliminarAvionesInactivos();
             ActualizarDataGrid();
@@ -652,6 +656,7 @@ namespace GUI_ASTERIX
 
                 TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
                 label1.Text = hora.ToString(@"hh\:mm\:ss");
+                ActualizarHoraTextBox();
 
                 TimeSpan duracion = TimeSpan.FromSeconds(
                     tiempoFinSimulacion - tiempoInicioSimulacion
@@ -690,6 +695,7 @@ namespace GUI_ASTERIX
     TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
     label1.Text = hora.ToString(@"hh\:mm\:ss");
 
+
     // Actualizar los mensajes visibles de los últimos 10 segundos
     ActualizarMensajesActuales();
 
@@ -725,6 +731,7 @@ namespace GUI_ASTERIX
 
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
+            ActualizarHoraTextBox();
 
             ActualizarAviones();
             ActualizarDataGrid();
@@ -833,6 +840,7 @@ namespace GUI_ASTERIX
 
                     TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
                     label1.Text = hora.ToString(@"hh\:mm\:ss");
+                    ActualizarHoraTextBox();
 
                     // Actualizar todo con los datos nuevos
                     ActualizarAviones();
@@ -1125,6 +1133,7 @@ namespace GUI_ASTERIX
                 // Actualizamos hora
                 TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
                 label1.Text = hora.ToString(@"hh\:mm\:ss");
+                ActualizarHoraTextBox();
 
                 ActualizarDataGrid();
                 ActualizarMapa();
@@ -1717,6 +1726,7 @@ namespace GUI_ASTERIX
 
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
             label1.Text = hora.ToString(@"hh\:mm\:ss");
+            ActualizarHoraTextBox();
 
             ActualizarMensajesActuales();
 
@@ -1741,14 +1751,13 @@ namespace GUI_ASTERIX
         private void buttonSimularDesdeHora_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(textBoxHora.Text, out int horas) ||
-        !int.TryParse(textBoxMinuto.Text, out int minutos) ||
-        !int.TryParse(textBoxSegundo.Text, out int segundos))
+                !int.TryParse(textBoxMinuto.Text, out int minutos) ||
+                !int.TryParse(textBoxSegundo.Text, out int segundos))
             {
                 MessageBox.Show("Introduce valores numéricos válidos.");
                 return;
             }
 
-            // Comprobar que la hora sea válida
             if (horas < 0 || horas > 23 ||
                 minutos < 0 || minutos > 59 ||
                 segundos < 0 || segundos > 59)
@@ -1763,44 +1772,43 @@ namespace GUI_ASTERIX
                 return;
             }
 
-            // Detener la simulación
-            timerSimulacion.Stop();
-            Reproduciendo = false;
+            double nuevoTiempo = horas * 3600 + minutos * 60 + segundos;
 
-            // Limpiar el estado anterior
-            AvionesActuales.Clear();
-            MensajesActuales.Clear();
+            if (nuevoTiempo < tiempoInicioSimulacion ||
+                nuevoTiempo > tiempoFinSimulacion)
+            {
+                MessageBox.Show("La hora está fuera del intervalo de la simulación.");
+                return;
+            }
 
-            historialAviones.Clear();
-            historialTiempo.Clear();
+            bool estabaReproduciendo = Reproduciendo;
 
-            avionesTrayectoriaSeleccionados.Clear();
+            // Actualizar la barra de reproducción
+            trackBarTiempo.Value = Math.Max(
+                trackBarTiempo.Minimum,
+                Math.Min(
+                    trackBarTiempo.Maximum,
+                    (int)(nuevoTiempo - tiempoInicioSimulacion)
+                )
+            );
 
-            capaAviones.Markers.Clear();
-            capaTrayectorias.Routes.Clear();
+            barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
 
-            dataGridAviones.Rows.Clear();
+            // Aprovechar el método existente para actualizar mapa y datos
+            trackBarTiempo_Scroll(sender, EventArgs.Empty);
 
-            // Convertir la hora a segundos
-            TiempoActual = horas * 3600 + minutos * 60 + segundos;
+            // Mostrar la hora introducida
+            textBoxHora.Text = horas.ToString("00");
+            textBoxMinuto.Text = minutos.ToString("00");
+            textBoxSegundo.Text = segundos.ToString("00");
 
-            // Actualizar la hora mostrada
-            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-            label1.Text = hora.ToString(@"hh\:mm\:ss");
-
-            // Mostrar los aviones de ese instante
-            ActualizarAviones();
-            EliminarAvionesInactivos();
-
-            ActualizarDataGrid();
-            ActualizarMapa();
-            MostrarTrayectorias();
-
-            ActualizarHeatmapDinamico(true);
-
-            // Dejar la simulación pausada
-            pictureBox1.Image =
-                Properties.Resources.botonReproducir;
+            // Mantener la reproducción si estaba activa
+            if (estabaReproduciendo)
+            {
+                Reproduciendo = true;
+                pictureBox1.Image = Properties.Resources.botonPausa;
+                timerSimulacion.Start();
+            }
         }
 
         private void mostrarDatosEnCeldasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2277,6 +2285,31 @@ namespace GUI_ASTERIX
                 Reproduciendo = true;
                 pictureBox1.Image = Properties.Resources.botonPausa;
                 timerSimulacion.Start();
+            }
+        }
+        private void ActualizarHoraTextBox()
+        {
+            // No sobrescribir la hora mientras el usuario la está editando
+            if (textBoxHora.Focused ||
+                textBoxMinuto.Focused ||
+                textBoxSegundo.Focused)
+            {
+                return;
+            }
+
+            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+
+            textBoxHora.Text = ((int)hora.TotalHours).ToString("00");
+            textBoxMinuto.Text = hora.Minutes.ToString("00");
+            textBoxSegundo.Text = hora.Seconds.ToString("00");
+        }
+        private void HoraTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                buttonSimularDesdeHora_Click(sender, EventArgs.Empty);
+                this.ActiveControl = null;
             }
         }
     }
