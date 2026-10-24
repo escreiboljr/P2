@@ -1,4 +1,5 @@
-﻿using DatosDecod;
+﻿
+using DatosDecod;
 using DatosDecod21;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Archivos
 {
     public class Filtros
     {
+        // aplicar los filtros seleccionados sobre la lista original de mensajes
         public List<Mensaje> AplicarFiltros(
             List<Mensaje> listaOriginal,
             bool cat48,
@@ -19,16 +21,21 @@ namespace Archivos
             bool filtrarTrayectoria,
             double trayectoriaMin,
             double trayectoriaMax,
-            bool eliminarGround)
+            bool eliminarGround,
+            bool filtrarAltura,
+            double alturaMin,
+            double alturaMax)
         {
             IEnumerable<Mensaje> listaFiltrada = listaOriginal;
 
+            // mantener ambas categorías si están seleccionadas
             if (cat48 && cat21)
             {
                 cat48 = false;
                 cat21 = false;
             }
 
+            // aplicar el filtro de categoría asterix
             if (cat48)
             {
                 listaFiltrada = FiltroCategoria(listaFiltrada, 48);
@@ -39,16 +46,19 @@ namespace Archivos
                 listaFiltrada = FiltroCategoria(listaFiltrada, 21);
             }
 
+            // eliminar los blancos puros
             if (eliminarBlancoPuro)
             {
                 listaFiltrada = FiltrarBlancoPuro(listaFiltrada);
             }
 
+            // eliminar los mensajes de transpondedores fijos
             if (eliminarTransponderFijo)
             {
                 listaFiltrada = FiltrarTransponderFijo(listaFiltrada);
             }
 
+            // filtrar los mensajes según el rumbo de los aviones
             if (filtrarTrayectoria)
             {
                 listaFiltrada = FiltrarTrayectoria(
@@ -56,26 +66,80 @@ namespace Archivos
                     trayectoriaMin,
                     trayectoriaMax);
             }
+
+            // eliminar los aviones detectados en tierra
             if (eliminarGround)
             {
                 listaFiltrada = FiltrarGround(listaFiltrada);
             }
+
+            // filtrar los mensajes según el nivel de vuelo
+            if (filtrarAltura)
+            {
+                listaFiltrada = FiltrarAltura(
+                    listaFiltrada,
+                    alturaMin,
+                    alturaMax);
+            }
+
+            // descartar los mensajes no válidos y devolver la lista filtrada
             listaFiltrada = FiltrarMensajesInvalidos(listaFiltrada);
             return listaFiltrada.ToList();
         }
 
-        private IEnumerable<Mensaje> FiltroCategoria(IEnumerable<Mensaje> listaFiltrada, int cat)  //filtro Categoria ASTERIX
+        // conservar únicamente los mensajes dentro del intervalo de flight levels
+        private IEnumerable<Mensaje> FiltrarAltura(
+            IEnumerable<Mensaje> listaFiltro,
+            double alturaMin,
+            double alturaMax)
+        {
+            return listaFiltro.Where(mensaje =>
+            {
+                double flightLevel = double.NaN;
+
+                // obtener el nivel de vuelo según la categoría del mensaje
+                if (mensaje.categoria == 21)
+                {
+                    TiraDatosDecod021 mensaje21 =
+                        (TiraDatosDecod021)mensaje.tira;
+
+                    flightLevel = mensaje21.FlightLevel;
+                }
+                else if (mensaje.categoria == 48)
+                {
+                    TiraDatosDecod048 mensaje48 =
+                        (TiraDatosDecod048)mensaje.tira;
+
+                    flightLevel = mensaje48.FL.FL;
+                }
+
+                // descartar mensajes sin un nivel de vuelo válido
+                if (double.IsNaN(flightLevel) ||
+                    double.IsInfinity(flightLevel))
+                {
+                    return false;
+                }
+
+                return flightLevel >= alturaMin &&
+                       flightLevel <= alturaMax;
+            });
+        }
+
+        // conservar únicamente los mensajes de la categoría indicada
+        private IEnumerable<Mensaje> FiltroCategoria(
+            IEnumerable<Mensaje> listaFiltrada,
+            int cat)
         {
             return listaFiltrada.Where(x => x.categoria == cat);
         }
 
-        //private IEnumerable<Mensaje> FIltroBlancoPuro()
+        // eliminar los blancos puros conservando las detecciones modo s
         private IEnumerable<Mensaje> FiltrarBlancoPuro(
-    IEnumerable<Mensaje> listaFiltro)
+            IEnumerable<Mensaje> listaFiltro)
         {
             return listaFiltro.Where(mensaje =>
             {
-                // Los mensajes CAT21 no se modifican
+                // mantener todos los mensajes que no sean cat48
                 if (mensaje.categoria != 48)
                 {
                     return true;
@@ -86,28 +150,30 @@ namespace Archivos
 
                 string typ = mensaje48.TargetRep.TYP;
 
-                // Conservar únicamente detecciones Modo S
+                // conservar únicamente las detecciones modo s
                 return typ == "100" ||
                        typ == "101" ||
                        typ == "110" ||
                        typ == "111";
             });
         }
-        private IEnumerable<Mensaje> FiltrarTransponderFijo(IEnumerable<Mensaje> listaFiltro)
+
+        // eliminar los mensajes identificados como transpondedores fijos
+        private IEnumerable<Mensaje> FiltrarTransponderFijo(
+            IEnumerable<Mensaje> listaFiltro)
         {
             return listaFiltro.Where(x => x.TransFijo == false);
         }
-        /*private IEnumerable<Mensaje> FiltrarTrayectoria(IEnumerable<Mensaje> listaFiltro, double trayectoria)
-        {
 
-        }*/
+        // filtrar los mensajes según el rumbo calculado entre posiciones consecutivas
         private IEnumerable<Mensaje> FiltrarTrayectoria(
-IEnumerable<Mensaje> listaFiltro,
-double trayectoriaMin,
-double trayectoriaMax)
+            IEnumerable<Mensaje> listaFiltro,
+            double trayectoriaMin,
+            double trayectoriaMax)
         {
             List<Mensaje> resultado = new List<Mensaje>();
 
+            // guardar la última posición conocida de cada avión
             Dictionary<string, double[]> posicionesAnteriores =
                 new Dictionary<string, double[]>();
 
@@ -117,8 +183,7 @@ double trayectoriaMax)
                 double latitud = double.NaN;
                 double longitud = double.NaN;
 
-
-                // CAT21
+                // obtener la identificación y posición de los mensajes ads-b
                 if (mensaje.categoria == 21)
                 {
                     TiraDatosDecod021 mensaje21 =
@@ -130,8 +195,7 @@ double trayectoriaMax)
                     longitud = mensaje21.PosWGS84HighRes[1];
                 }
 
-
-                // CAT48
+                // obtener la identificación y posición de los mensajes radar
                 else if (mensaje.categoria == 48)
                 {
                     TiraDatosDecod048 mensaje48 =
@@ -143,16 +207,14 @@ double trayectoriaMax)
                     longitud = mensaje48.PositionCorrectedLatLonAlt[1];
                 }
 
-
-                // Si no tenemos una posición válida, no podemos calcular rumbo
+                // descartar los mensajes sin una posición válida
                 if (double.IsNaN(latitud) ||
                     double.IsNaN(longitud))
                 {
                     continue;
                 }
 
-
-                // Si ya conocemos una posición anterior
+                // calcular el rumbo si existe una posición anterior del avión
                 if (posicionesAnteriores.ContainsKey(identificador))
                 {
                     double latAnterior =
@@ -161,14 +223,13 @@ double trayectoriaMax)
                     double lonAnterior =
                         posicionesAnteriores[identificador][1];
 
-
                     double rumbo = CalcularRumbo(
                         latAnterior,
                         lonAnterior,
                         latitud,
                         longitud);
 
-
+                    // conservar el mensaje si el rumbo está dentro del intervalo
                     if (RumboDentroDelRango(
                         rumbo,
                         trayectoriaMin,
@@ -178,19 +239,20 @@ double trayectoriaMax)
                     }
                 }
 
-
-                // Actualizamos la última posición conocida
+                // actualizar la última posición conocida del avión
                 posicionesAnteriores[identificador] =
                     new double[] { latitud, longitud };
             }
 
             return resultado;
         }
+
+        // calcular el rumbo entre dos posiciones geográficas
         private double CalcularRumbo(
-        double lat1,
-        double lon1,
-        double lat2,
-        double lon2)
+            double lat1,
+            double lon1,
+            double lat2,
+            double lon2)
         {
             double lat1Rad = lat1 * Math.PI / 180.0;
             double lat2Rad = lat2 * Math.PI / 180.0;
@@ -211,6 +273,7 @@ double trayectoriaMax)
             double rumbo =
                 Math.Atan2(y, x) * 180.0 / Math.PI;
 
+            // convertir los rumbos negativos al intervalo de 0 a 360 grados
             if (rumbo < 0)
             {
                 rumbo += 360;
@@ -218,10 +281,12 @@ double trayectoriaMax)
 
             return rumbo;
         }
+
+        // comprobar si el rumbo está dentro del intervalo seleccionado
         private bool RumboDentroDelRango(
-        double rumbo,
-        double minimo,
-        double maximo)
+            double rumbo,
+            double minimo,
+            double maximo)
         {
             if (minimo <= maximo)
             {
@@ -230,42 +295,48 @@ double trayectoriaMax)
             }
             else
             {
-                // El intervalo pasa por 0°
+                // permitir intervalos que atraviesan los 0 grados
                 return rumbo >= minimo ||
                        rumbo <= maximo;
             }
         }
-        private IEnumerable<Mensaje> FiltrarGround(IEnumerable<Mensaje> listaFiltro)
+
+        // eliminar las detecciones radar correspondientes a aviones en tierra
+        private IEnumerable<Mensaje> FiltrarGround(
+            IEnumerable<Mensaje> listaFiltro)
         {
             return listaFiltro.Where(mensaje =>
             {
-                // No modificamos los mensajes CAT21
+                // mantener los mensajes que no sean cat48
                 if (mensaje.categoria != 48)
                 {
                     return true;
                 }
 
-                // Obtenemos el mensaje CAT48
                 TiraDatosDecod048 mensaje48 =
                     (TiraDatosDecod048)mensaje.tira;
 
                 int stat = mensaje48.CommACAScapability.STAT;
 
-                // Solo conservamos los aviones en vuelo
+                // conservar únicamente los estados considerados en vuelo
                 return stat == 0 || stat == 2;
             });
         }
+
+        // descartar los tracks radar no confirmados o sin identificar
         private IEnumerable<Mensaje> FiltrarMensajesInvalidos(
-    IEnumerable<Mensaje> listaFiltro)
+            IEnumerable<Mensaje> listaFiltro)
         {
             return listaFiltro.Where(mensaje =>
             {
+                // mantener los mensajes que no sean cat48
                 if (mensaje.categoria != 48)
                     return true;
 
                 TiraDatosDecod048 mensaje48 =
                     (TiraDatosDecod048)mensaje.tira;
 
+                // identificar las detecciones sin dirección ni identificador
                 bool trackSinIdentificar =
                     string.IsNullOrEmpty(mensaje48.AircrftAddrs) &&
                     string.IsNullOrEmpty(mensaje48.AircrftIddent) &&
@@ -275,6 +346,8 @@ double trayectoriaMax)
                        !trackSinIdentificar;
             });
         }
+
+        // preparar los mensajes eliminando únicamente las detecciones no válidas
         public List<Mensaje> PrepararMensajes(List<Mensaje> mensajes)
         {
             return FiltrarMensajesInvalidos(mensajes).ToList();

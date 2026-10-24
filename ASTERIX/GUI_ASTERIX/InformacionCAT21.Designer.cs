@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformacionCAT21));
             labelIdentificador = new Label();
             labelTituloTargetReport = new Label();
             labelDCR = new Label();
@@ -147,7 +148,7 @@
             labelReservedExpFiedl.BackColor = Color.Transparent;
             labelReservedExpFiedl.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelReservedExpFiedl.ForeColor = Color.FromArgb(255, 192, 192);
-            labelReservedExpFiedl.Location = new Point(165, 245);
+            labelReservedExpFiedl.Location = new Point(321, 245);
             labelReservedExpFiedl.Margin = new Padding(2, 0, 2, 0);
             labelReservedExpFiedl.Name = "labelReservedExpFiedl";
             labelReservedExpFiedl.Size = new Size(70, 19);
@@ -160,7 +161,7 @@
             labelOther.BackColor = Color.Transparent;
             labelOther.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             labelOther.ForeColor = Color.FromArgb(255, 192, 192);
-            labelOther.Location = new Point(165, 220);
+            labelOther.Location = new Point(321, 220);
             labelOther.Margin = new Padding(2, 0, 2, 0);
             labelOther.Name = "labelOther";
             labelOther.Size = new Size(61, 21);
@@ -240,7 +241,7 @@
             labelRCF.BackColor = Color.Transparent;
             labelRCF.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelRCF.ForeColor = Color.FromArgb(255, 192, 255);
-            labelRCF.Location = new Point(165, 172);
+            labelRCF.Location = new Point(321, 172);
             labelRCF.Margin = new Padding(2, 0, 2, 0);
             labelRCF.Name = "labelRCF";
             labelRCF.Size = new Size(69, 19);
@@ -253,7 +254,7 @@
             labelCPR.BackColor = Color.Transparent;
             labelCPR.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelCPR.ForeColor = Color.FromArgb(255, 192, 255);
-            labelCPR.Location = new Point(165, 128);
+            labelCPR.Location = new Point(321, 128);
             labelCPR.Margin = new Padding(2, 0, 2, 0);
             labelCPR.Name = "labelCPR";
             labelCPR.Size = new Size(71, 19);
@@ -266,7 +267,7 @@
             labelLDPJ.BackColor = Color.Transparent;
             labelLDPJ.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelLDPJ.ForeColor = Color.FromArgb(255, 192, 255);
-            labelLDPJ.Location = new Point(165, 150);
+            labelLDPJ.Location = new Point(321, 150);
             labelLDPJ.Margin = new Padding(2, 0, 2, 0);
             labelLDPJ.Name = "labelLDPJ";
             labelLDPJ.Size = new Size(75, 19);
@@ -279,7 +280,7 @@
             labelNOGO.BackColor = Color.Transparent;
             labelNOGO.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelNOGO.ForeColor = Color.FromArgb(255, 192, 255);
-            labelNOGO.Location = new Point(164, 104);
+            labelNOGO.Location = new Point(320, 104);
             labelNOGO.Margin = new Padding(2, 0, 2, 0);
             labelNOGO.Name = "labelNOGO";
             labelNOGO.Size = new Size(87, 19);
@@ -292,7 +293,7 @@
             labelIPC.BackColor = Color.Transparent;
             labelIPC.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelIPC.ForeColor = Color.FromArgb(255, 192, 255);
-            labelIPC.Location = new Point(164, 81);
+            labelIPC.Location = new Point(320, 81);
             labelIPC.Margin = new Padding(2, 0, 2, 0);
             labelIPC.Name = "labelIPC";
             labelIPC.Size = new Size(66, 19);
@@ -304,7 +305,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
-            ClientSize = new Size(302, 391);
+            ClientSize = new Size(626, 391);
             Controls.Add(labelRCF);
             Controls.Add(labelCPR);
             Controls.Add(labelLDPJ);
@@ -324,6 +325,7 @@
             Controls.Add(labelARC);
             Controls.Add(labelATP);
             Controls.Add(labelIdentificador);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InformacionCAT21";
             Text = "Información CAT21";
             Load += InformacionCAT21_Load;

@@ -27,7 +27,6 @@ namespace GUI_ASTERIX
         private double tiempoFinSimulacion = 0;
         private List<Mensaje> ListaMensajes = new List<Mensaje>();
         private List<Mensaje> ListaMensajesFiltrados = new List<Mensaje>();
-        //private List<Mensaje> AvionesActuales = new List<Mensaje>();
         private List<AvionSimulacion> AvionesActuales = new List<AvionSimulacion>();
         private List<AvionSimulacion> MensajesActuales = new List<AvionSimulacion>();
         private Stack<List<AvionSimulacion>> historialAviones = new Stack<List<AvionSimulacion>>();
@@ -41,19 +40,18 @@ namespace GUI_ASTERIX
         private const double intervaloHeatmap = 10;
         private bool mostrarHeatmap = false;
         private List<AvionSimulacion> avionesTrayectoriaSeleccionados = new List<AvionSimulacion>();
-        public bool oculto = true;
-        private AvionSimulacion avionClick;
         private bool mostrarTodasTrayectorias = false;
         public MenuSimulacion()
         {
+            // inicializar el formulario y configurar el temporizador y el mapa
             InitializeComponent();
             timerSimulacion.Interval = 1000;
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
-            LeerDatos prueba = new LeerDatos();
 
             AjustarMapa();
             this.Resize += (sender, e) => AjustarMapa();
 
+            // crear la barra personalizada para controlar el tiempo de simulación
             barraTiempoNueva = new BarraTiempoPersonalizada();
 
             barraTiempoNueva.Location = trackBarTiempo.Location;
@@ -66,13 +64,12 @@ namespace GUI_ASTERIX
             barraTiempoNueva.TiempoMaximo = trackBarTiempo.Maximum;
             barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
 
-            // Añadirla al mismo contenedor que la barra original
+            // sustituir visualmente la barra original por la personalizada
             trackBarTiempo.Parent.Controls.Add(barraTiempoNueva);
-
-            // Ocultar la barra antigua
             trackBarTiempo.Visible = false;
-
             barraTiempoNueva.BringToFront();
+
+            // actualizar el tiempo de simulación al soltar la barra
             barraTiempoNueva.ValorConfirmado += (sender, e) =>
             {
                 bool estabaReproduciendo = Reproduciendo;
@@ -88,6 +85,8 @@ namespace GUI_ASTERIX
                     timerSimulacion.Start();
                 }
             };
+
+            // mostrar la hora seleccionada mientras se arrastra la barra
             barraTiempoNueva.ValorCambiado += (sender, e) =>
             {
                 if (!barraTiempoNueva.EstaArrastrando)
@@ -102,10 +101,13 @@ namespace GUI_ASTERIX
                 textBoxMinuto.Text = hora.Minutes.ToString("00");
                 textBoxSegundo.Text = hora.Seconds.ToString("00");
             };
+
+            // permitir introducir manualmente la hora de simulación
             textBoxHora.KeyDown += HoraTextBox_KeyDown;
             textBoxMinuto.KeyDown += HoraTextBox_KeyDown;
             textBoxSegundo.KeyDown += HoraTextBox_KeyDown;
 
+            // crear la barra personalizada para controlar la velocidad
             barraVelocidadNueva = new BarraTiempoPersonalizada();
 
             barraVelocidadNueva.Location = trackBarVelSimulacion.Location;
@@ -119,19 +121,20 @@ namespace GUI_ASTERIX
             barraVelocidadNueva.TiempoMaximo = 8;
             barraVelocidadNueva.TiempoValor = trackBarVelSimulacion.Value;
 
+            // sustituir visualmente la barra de velocidad original
             trackBarVelSimulacion.Parent.Controls.Add(barraVelocidadNueva);
-
             trackBarVelSimulacion.Visible = false;
-
             barraVelocidadNueva.BringToFront();
 
+            // aplicar la velocidad seleccionada al soltar la barra
             barraVelocidadNueva.ValorConfirmado += (sender, e) =>
             {
                 trackBarVelSimulacion.Value = barraVelocidadNueva.TiempoValor;
 
                 trackBarVelSimulacion_Scroll(sender, EventArgs.Empty);
             };
-            // Mientras se arrastra: solo actualizar el texto
+
+            // mostrar el multiplicador de velocidad mientras se mueve la barra
             barraVelocidadNueva.ValorCambiado += (sender, e) =>
             {
                 int valor = barraVelocidadNueva.TiempoValor;
@@ -140,14 +143,7 @@ namespace GUI_ASTERIX
                 labelVelocidad.Text = "x" + velocidad;
             };
 
-            // Al soltar: cambiar realmente la velocidad
-            barraVelocidadNueva.ValorConfirmado += (sender, e) =>
-            {
-                trackBarVelSimulacion.Value = barraVelocidadNueva.TiempoValor;
-                trackBarVelSimulacion_Scroll(sender, EventArgs.Empty);
-            };
-
-
+            // ajustar la tabla de aviones cuando cambia el tamaño o la posición del mapa
             AjustarDataGrid();
 
             gMapControl1.Resize += (sender, e) =>
@@ -169,6 +165,9 @@ namespace GUI_ASTERIX
 
         private void MenuSimulacion_Load(object sender, EventArgs e)
         {
+            pictureBoxContorles.Location = gMapControl1.Location;
+            pictureBoxContorles.Size = gMapControl1.Size;
+
             //-----------parte del datagrid.-------------------------------
             dataGridAviones.Columns.Clear();
 
@@ -208,6 +207,7 @@ namespace GUI_ASTERIX
 
             gMapControl1.SetZoomToFitRect(zona);
 
+            //parte del heatmap
             capaHeatmap = new GMapOverlay("heatmap");
             gMapControl1.Overlays.Add(capaHeatmap);
 
@@ -218,18 +218,6 @@ namespace GUI_ASTERIX
             gMapControl1.Overlays.Add(capaAviones);
         }
 
-        private void buttonPlay_Click(object sender, EventArgs e)
-        {
-            Reproduciendo = true;
-            timerSimulacion.Start();
-        }
-
-        private void buttonStop_Click(object sender, EventArgs e)
-        {
-            Reproduciendo = false;
-            timerSimulacion.Stop();
-        }
-
         private void timerSimulacion_Tick(object sender, EventArgs e)
         {
             AvanzarUnSegundo();
@@ -237,8 +225,11 @@ namespace GUI_ASTERIX
 
         private void AvanzarUnSegundo()
         {
+            // guardar el estado actual para poder retroceder en la simulación
             historialAviones.Push(CopiarAviones());
             historialTiempo.Push(TiempoActual);
+
+            // avanzar un segundo y actualizar la barra de tiempo
             TiempoActual = TiempoActual + 1;
             if (TiempoActual <= tiempoFinSimulacion)
             {
@@ -247,8 +238,11 @@ namespace GUI_ASTERIX
                 );
             }
             barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
+
+            // convertir el tiempo actual a formato de horas, minutos y segundos
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-            label1.Text = hora.ToString(@"hh\:mm\:ss");
+
+            //actualiza todo lo del form
             ActualizarHoraTextBox();
             ActualizarAviones();
             EliminarAvionesInactivos();
@@ -260,6 +254,7 @@ namespace GUI_ASTERIX
 
         private void trackBarVelSimulacion_Scroll(object sender, EventArgs e)
         {
+            //cada posicion es una velocidad diferente
             if (trackBarVelSimulacion.Value == 1)
             {
                 timerSimulacion.Interval = 1000;
@@ -308,8 +303,10 @@ namespace GUI_ASTERIX
             }
         }
 
+
         private void ActualizarAviones()
         {
+            // recorrer los mensajes filtrados de la simulación
             foreach (Mensaje mensaje in ListaMensajesFiltrados)
             {
                 double tiempoMensaje = -1;
@@ -337,6 +334,7 @@ namespace GUI_ASTERIX
                 bool esADSB = false;
                 bool esRadar = false;
 
+                // obtener los datos de los mensajes ads-b
                 if (mensaje.categoria == 21)
                 {
                     TiraDatosDecod021 mensaje21 = (TiraDatosDecod021)mensaje.tira;
@@ -360,7 +358,7 @@ namespace GUI_ASTERIX
                         altitudQNHFt = mensaje21.altitudQNHFt;
                         qnhUtilizado = mensaje21.qnhUtilizado;
 
-                        // Utilizar la altitud corregida cuando esté disponible
+                        // utilizar la altitud corregida si está disponible
                         if (!double.IsNaN(altitudQNHFt))
                         {
                             altitud = altitudQNHFt;
@@ -374,10 +372,12 @@ namespace GUI_ASTERIX
                     esADSB = true;
                 }
 
+                // obtener los datos de los mensajes radar
                 else if (mensaje.categoria == 48)
                 {
-
                     TiraDatosDecod048 mensaje48 = (TiraDatosDecod048)mensaje.tira;
+
+                    // descartar los mensajes radar no confirmados o sin identificar
                     bool trackSinIdentificar = string.IsNullOrEmpty(mensaje48.AircrftAddrs) && string.IsNullOrEmpty(mensaje48.AircrftIddent) && mensaje48.TargetRep.TYP == "001";
 
                     if (mensaje48.TrckStatus.CNF == 1 || trackSinIdentificar)
@@ -390,11 +390,13 @@ namespace GUI_ASTERIX
                         velocidad = mensaje48.TrckVelPolRepr[0];
                         rumbo = mensaje48.TrckVelPolRepr[1];
                     }
+
                     mode3A = mensaje48.mode3.reply;
 
                     tiempoMensaje = mensaje48.TimeOfDay;
 
-                    direccion = mensaje48.AircrftAddrs ?? ""; //comentar esta linea 
+                    // utilizar una cadena vacía si la dirección del avión es nula
+                    direccion = mensaje48.AircrftAddrs ?? "";
                     identificador = mensaje48.AircrftIddent;
                     trackNumber = mensaje48.TrackNum;
 
@@ -410,7 +412,7 @@ namespace GUI_ASTERIX
                         altitudQNHFt = mensaje48.altitudQNHFt;
                         qnhUtilizado = mensaje48.qnhUtilizado;
 
-                        // Usar la altitud corregida cuando esté disponible
+                        // utilizar la altitud corregida si está disponible
                         altitud = !double.IsNaN(altitudQNHFt)
                             ? altitudQNHFt
                             : altitudPresionFt;
@@ -419,10 +421,11 @@ namespace GUI_ASTERIX
                     esRadar = true;
                 }
 
-
+                // procesar únicamente los mensajes correspondientes al segundo actual
                 if (tiempoMensaje >= TiempoActual &&
                     tiempoMensaje < TiempoActual + 1)
                 {
+                    // crear un mensaje visual para representar la detección en el mapa
                     if (!double.IsNaN(latitud) && !double.IsNaN(longitud))
                     {
                         AvionSimulacion mensajeVisual =
@@ -464,6 +467,8 @@ namespace GUI_ASTERIX
 
                         ActualizarMensajeVisual(mensajeVisual);
                     }
+
+                    // buscar si el avión ya existe mediante su dirección o número de track
                     AvionSimulacion avionEncontrado = null;
 
                     foreach (AvionSimulacion avion in AvionesActuales)
@@ -487,7 +492,7 @@ namespace GUI_ASTERIX
                         }
                     }
 
-
+                    // añadir un nuevo avión si todavía no existe en la simulación
                     if (avionEncontrado == null)
                     {
                         AvionSimulacion nuevoAvion = new AvionSimulacion();
@@ -499,12 +504,14 @@ namespace GUI_ASTERIX
 
                         nuevoAvion.latitud = latitud;
                         nuevoAvion.longitud = longitud;
+
                         if (!double.IsNaN(latitud) && !double.IsNaN(longitud))
                         {
                             nuevoAvion.trayectoria.Add(
                             new double[] { latitud, longitud }
                             );
                         }
+
                         nuevoAvion.altitud = altitud;
                         nuevoAvion.flightLevel = flightLevel;
                         nuevoAvion.bps = bps;
@@ -531,24 +538,29 @@ namespace GUI_ASTERIX
                         }
 
                         nuevoAvion.mensajeOriginal = mensaje;
+
                         if (mensaje.categoria == 21)
                             nuevoAvion.ultimoMensajeCAT21 = mensaje;
                         else if (mensaje.categoria == 48)
                             nuevoAvion.ultimoMensajeCAT48 = mensaje;
+
                         AvionesActuales.Add(nuevoAvion);
                     }
 
+                    // actualizar los datos del avión si ya existe
                     else
                     {
                         if (!double.IsNaN(latitud) && !double.IsNaN(longitud))
                         {
                             bool actualizarPosicion = true;
 
+                            // dar prioridad a la posición ads-b frente a la del radar
                             if (esRadar && avionEncontrado.detectadoADSB)
                             {
                                 actualizarPosicion = false;
                             }
 
+                            // actualizar la posición, el rumbo y la trayectoria
                             if (actualizarPosicion &&
                                 !double.IsNaN(latitud) &&
                                 !double.IsNaN(longitud))
@@ -571,6 +583,7 @@ namespace GUI_ASTERIX
                                 );
                             }
 
+                            // actualizar los datos de vuelo disponibles
                             if (!double.IsNaN(altitud))
                             {
                                 avionEncontrado.altitud = altitud;
@@ -580,6 +593,7 @@ namespace GUI_ASTERIX
                             {
                                 avionEncontrado.flightLevel = flightLevel;
                             }
+
                             if (esADSB || esRadar)
                             {
                                 avionEncontrado.bps = bps;
@@ -587,6 +601,7 @@ namespace GUI_ASTERIX
                                 avionEncontrado.altitudQNHFt = altitudQNHFt;
                                 avionEncontrado.qnhUtilizado = qnhUtilizado;
                             }
+
                             if (!double.IsNaN(velocidad))
                             {
                                 avionEncontrado.velocidad = velocidad;
@@ -601,8 +616,11 @@ namespace GUI_ASTERIX
                             {
                                 avionEncontrado.estadoVuelo = estadoVuelo;
                             }
+
+                            // guardar el último mensaje recibido del avión
                             avionEncontrado.ultimoTiempo = tiempoMensaje;
                             avionEncontrado.mensajeOriginal = mensaje;
+
                             if (mensaje.categoria == 21)
                                 avionEncontrado.ultimoMensajeCAT21 = mensaje;
                             else if (mensaje.categoria == 48)
@@ -613,6 +631,7 @@ namespace GUI_ASTERIX
                                 avionEncontrado.identificador = identificador;
                             }
 
+                            // actualizar los sistemas que han detectado el avión
                             if (esADSB)
                             {
                                 avionEncontrado.ultimoTiempoADSB = tiempoMensaje;
@@ -624,6 +643,7 @@ namespace GUI_ASTERIX
                                 avionEncontrado.ultimoTiempoRadar = tiempoMensaje;
                                 avionEncontrado.detectadoRadar = true;
                             }
+
                             if (esRadar && trackNumber != -1)
                             {
                                 avionEncontrado.trackNumber = trackNumber;
@@ -632,7 +652,7 @@ namespace GUI_ASTERIX
                     }
                 }
 
-
+                // desactivar las detecciones que llevan 10 segundos sin actualizarse
                 for (int i = AvionesActuales.Count - 1; i >= 0; i--)
                 {
                     AvionSimulacion avion = AvionesActuales[i];
@@ -651,6 +671,7 @@ namespace GUI_ASTERIX
                 }
             }
         }
+
         private double CalcularRumbo(double lat1, double lon1, double lat2, double lon2)
         {
             double lat1Rad = lat1 * Math.PI / 180.0;
@@ -675,6 +696,7 @@ namespace GUI_ASTERIX
         }
         private void BuscarTiempoInicial()
         {
+            // buscar el primer y último tiempo de los mensajes filtrados
             double primerTiempo = double.MaxValue;
             double ultimoTiempo = double.MinValue;
 
@@ -682,6 +704,7 @@ namespace GUI_ASTERIX
             {
                 double tiempo = double.NaN;
 
+                // obtener el tiempo del mensaje según su categoría
                 if (mensaje.categoria == 21)
                 {
                     TiraDatosDecod021 mensaje21 =
@@ -697,6 +720,7 @@ namespace GUI_ASTERIX
                     tiempo = mensaje48.TimeOfDay;
                 }
 
+                // descartar los tiempos no válidos --> los Nan
                 if (double.IsNaN(tiempo) ||
                     double.IsInfinity(tiempo) ||
                     tiempo < 0)
@@ -704,6 +728,7 @@ namespace GUI_ASTERIX
                     continue;
                 }
 
+                // actualizar los límites de tiempo de la simulación
                 if (tiempo < primerTiempo)
                     primerTiempo = tiempo;
 
@@ -711,6 +736,7 @@ namespace GUI_ASTERIX
                     ultimoTiempo = tiempo;
             }
 
+            // configurar el intervalo de simulación y las barras de tiempo
             if (primerTiempo != double.MaxValue)
             {
                 tiempoInicioSimulacion = Math.Floor(primerTiempo);
@@ -726,60 +752,56 @@ namespace GUI_ASTERIX
                 barraTiempoNueva.TiempoMaximo = trackBarTiempo.Maximum;
                 barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
 
+                // establecer el tiempo inicial y actualizar las horas mostradas
                 TiempoActual = tiempoInicioSimulacion;
 
                 TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-                label1.Text = hora.ToString(@"hh\:mm\:ss");
                 ActualizarHoraTextBox();
 
-                TimeSpan duracion = TimeSpan.FromSeconds(
-                    tiempoFinSimulacion - tiempoInicioSimulacion
-                );
                 TimeSpan horaFinal = TimeSpan.FromSeconds(tiempoFinSimulacion);
 
                 labelTiempoFinal.Text = horaFinal.ToString(@"hh\:mm\:ss");
             }
         }
         private void trackBarTiempo_Scroll(object sender, EventArgs e)
-{
-    if (ListaMensajesFiltrados.Count == 0)
-        return;
+        {
+            if (ListaMensajesFiltrados.Count == 0)
+                return;
 
-    // Pausar la simulación
-    timerSimulacion.Stop();
-    Reproduciendo = false;
-    pictureBox1.Image = Properties.Resources.botonReproducir;
+            // Pausar la simulación
+            timerSimulacion.Stop();
+            Reproduciendo = false;
+            pictureBox1.Image = Properties.Resources.botonReproducir;
 
-    // Limpiar los datos anteriores
-    AvionesActuales.Clear();
-    MensajesActuales.Clear();
+            // Limpiar los datos anteriores
+            AvionesActuales.Clear();
+            MensajesActuales.Clear();
 
-    historialAviones.Clear();
-    historialTiempo.Clear();
+            historialAviones.Clear();
+            historialTiempo.Clear();
 
-    avionesTrayectoriaSeleccionados.Clear();
+            avionesTrayectoriaSeleccionados.Clear();
 
-    capaAviones.Markers.Clear();
-    capaTrayectorias.Routes.Clear();
+            capaAviones.Markers.Clear();
+            capaTrayectorias.Routes.Clear();
 
-    // Obtener el tiempo seleccionado
-    TiempoActual = tiempoInicioSimulacion + trackBarTiempo.Value;
+            // Obtener el tiempo seleccionado
+            TiempoActual = tiempoInicioSimulacion + trackBarTiempo.Value;
 
-    // Actualizar la hora
-    TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-    label1.Text = hora.ToString(@"hh\:mm\:ss");
+            // Actualizar la hora
+            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
 
 
-    // Actualizar los mensajes visibles de los últimos 10 segundos
-    ActualizarMensajesActuales();
+            // Actualizar los mensajes visibles de los últimos 10 segundos
+            ActualizarMensajesActuales();
 
-    // Actualizar la interfaz
-    ActualizarDataGrid();
-    ActualizarMapa();
-    MostrarTrayectorias();
+            // Actualizar la interfaz
+            ActualizarDataGrid();
+            ActualizarMapa();
+            MostrarTrayectorias();
 
-    ActualizarHeatmapDinamico(true);
-}
+            ActualizarHeatmapDinamico(true);
+        }
 
         private void buttonAvanzar_Click(object sender, EventArgs e)
         {
@@ -788,7 +810,9 @@ namespace GUI_ASTERIX
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
+            //limpia todos los vectores y esas cosas
             timerSimulacion.Stop();
+            Reproduciendo = false;
 
             AvionesActuales.Clear();
             MensajesActuales.Clear();
@@ -801,10 +825,10 @@ namespace GUI_ASTERIX
             capaTrayectorias.Routes.Clear();
             avionesTrayectoriaSeleccionados.Clear();
 
+            //busca el inicio de la simulacion 
             BuscarTiempoInicial();
 
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-            label1.Text = hora.ToString(@"hh\:mm\:ss");
             ActualizarHoraTextBox();
 
             ActualizarAviones();
@@ -824,6 +848,7 @@ namespace GUI_ASTERIX
 
         private async void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // abrir el explorador para seleccionar un archivo asterix
             using (OpenFileDialog explorador = new OpenFileDialog())
             {
                 explorador.Title = "Seleccionar archivo ASTERIX";
@@ -833,9 +858,9 @@ namespace GUI_ASTERIX
 
                 try
                 {
-
                     List<Mensaje> nuevosMensajes;
 
+                    // leer y decodificar el archivo mostrando el progreso de carga
                     using (FormCargando cargando = new FormCargando())
                     {
                         cargando.Show(this);
@@ -865,20 +890,21 @@ namespace GUI_ASTERIX
                         }
                     }
 
+                    // comprobar que el archivo contiene mensajes válidos
                     if (nuevosMensajes == null || nuevosMensajes.Count == 0)
                     {
                         MessageBox.Show("El archivo no contiene mensajes válidos.");
                         return;
                     }
 
-                    // Detener la simulación anterior
+                    // detener la simulación anterior
                     timerSimulacion.Stop();
                     Reproduciendo = false;
 
                     pictureBox1.Image =
                         Properties.Resources.botonReproducir;
 
-                    // Borrar todos los datos anteriores
+                    // eliminar los datos de la simulación anterior
                     AvionesActuales.Clear();
                     MensajesActuales.Clear();
 
@@ -892,39 +918,28 @@ namespace GUI_ASTERIX
                     capaAviones.Markers.Clear();
                     capaTrayectorias.Routes.Clear();
 
-                    // Asignar exclusivamente los mensajes del nuevo archivo
-                    // Guardar todos los mensajes originales
+                    // guardar los nuevos mensajes y aplicar los filtros
                     RestablecerFiltros();
                     ListaMensajes = nuevosMensajes;
 
-                    // Preparar los mensajes válidos para simulación y CSV
                     Filtros gestorFiltros = new Filtros();
 
                     ListaMensajesFiltrados =
                         gestorFiltros.PrepararMensajes(ListaMensajes);
 
+                    // preparar los datos del mapa de calor
                     InvalidarHeatmap();
 
                     PrepararPuntosHeatmap();
 
-                    int cat21 = ListaMensajesFiltrados.Count(m => m.categoria == 21);
-                    int cat48 = ListaMensajesFiltrados.Count(m => m.categoria == 48);
-
-                    MessageBox.Show(
-                        "Archivo: " + explorador.FileName +
-                        "\nCAT21: " + cat21 +
-                        "\nCAT48: " + cat48
-                    );
-
-                    // Reiniciar el tiempo al comienzo del nuevo archivo
+                    // reiniciar el tiempo al comienzo del nuevo archivo
                     TiempoActual = 0;
                     BuscarTiempoInicial();
 
                     TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-                    label1.Text = hora.ToString(@"hh\:mm\:ss");
                     ActualizarHoraTextBox();
 
-                    // Actualizar todo con los datos nuevos
+                    // actualizar la simulación y los elementos visuales
                     ActualizarAviones();
                     ActualizarDataGrid();
                     ActualizarMapa();
@@ -939,6 +954,7 @@ namespace GUI_ASTERIX
                 }
                 catch (Exception ex)
                 {
+                    // mostrar un mensaje si se produce un error durante la carga
                     MessageBox.Show(
                         "Error al cargar el archivo:\n" + ex.Message
                     );
@@ -975,14 +991,9 @@ namespace GUI_ASTERIX
             }
         }
 
-        private void buttonDataGrid_Click(object sender, EventArgs e)
-        {
-            dataGridAviones.BringToFront();
-            dataGridAviones.Visible = !dataGridAviones.Visible;
-
-        }
         private void ActualizarMapa()
         {
+            // eliminar los marcadores anteriores del mapa
             capaAviones.Markers.Clear();
 
             foreach (AvionSimulacion mensaje in MensajesActuales)
@@ -995,6 +1006,8 @@ namespace GUI_ASTERIX
                             mensaje.latitud,
                             mensaje.longitud
                         );
+
+                    // buscar el avión correspondiente para obtener sus datos actualizados
                     AvionSimulacion avionReal = null;
 
                     foreach (AvionSimulacion avion in AvionesActuales)
@@ -1019,6 +1032,8 @@ namespace GUI_ASTERIX
                             }
                         }
                     }
+
+                    // asignar el color del marcador según el sistema de detección
                     Color colorAvion;
 
                     if (mensaje.detectadoRadar)
@@ -1030,7 +1045,7 @@ namespace GUI_ASTERIX
                         colorAvion = Color.Green;
                     }
 
-
+                    // obtener el rumbo del avión para orientar el marcador
                     double rumbo = mensaje.rumbo;
 
                     if (avionReal != null && !double.IsNaN(avionReal.rumbo))
@@ -1043,20 +1058,24 @@ namespace GUI_ASTERIX
                         rumbo = 0;
                     }
 
-
+                    // crear el marcador del avión con su posición, rumbo y color
                     MarcadorAvion marcador =
                         new MarcadorAvion(
                             posicion,
                             rumbo,
                             colorAvion
                         );
+
                     marcador.Tag = mensaje;
+
+                    // preparar la información que aparece al pasar el ratón sobre el avión
                     string fl = "N/A";
 
                     if (!double.IsNaN(mensaje.flightLevel))
                     {
                         fl = mensaje.flightLevel.ToString();
                     }
+
                     string sistema = "";
 
                     if (mensaje.detectadoRadar)
@@ -1067,6 +1086,7 @@ namespace GUI_ASTERIX
                     {
                         sistema = "ADS-B";
                     }
+
                     marcador.ToolTipText =
                         "\n" +
                         mensaje.identificador +
@@ -1078,27 +1098,16 @@ namespace GUI_ASTERIX
                     marcador.ToolTipMode =
                         MarkerTooltipMode.OnMouseOver;
 
+                    // añadir el marcador a la capa de aviones
                     capaAviones.Markers.Add(marcador);
                 }
             }
-            gMapControl1.Refresh();
+
+            // refrescar el mapa para mostrar los marcadores actualizados
             gMapControl1.Refresh();
         }
-        private string ObtenerSistema(AvionSimulacion avion)
-        {
-            if (avion.detectadoRadar && avion.detectadoADSB)
-                return "Radar + ADS-B";
 
-            if (avion.detectadoRadar)
-                return "Radar";
-
-            if (avion.detectadoADSB)
-                return "ADS-B";
-
-            return "";
-        }
-
-        private void GMapControl1_OnMarkerClick(GMapMarker item,MouseEventArgs e)
+        private void GMapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
             AvionSimulacion mensaje = item.Tag as AvionSimulacion;
 
@@ -1153,7 +1162,7 @@ namespace GUI_ASTERIX
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)   //boton de reproducir/pausar
         {
             if (Reproduciendo == false)
             {
@@ -1168,7 +1177,7 @@ namespace GUI_ASTERIX
                 pictureBox1.Image = Properties.Resources.botonReproducir;
             }
         }
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pictureBox2_Click(object sender, EventArgs e)   //boton de avanzar un segundo
         {
             AvanzarUnSegundo();
         }
@@ -1184,7 +1193,7 @@ namespace GUI_ASTERIX
             return copia;
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void pictureBox3_Click(object sender, EventArgs e)      //boton de retroceder
         {
             if (historialAviones.Count > 0)
             {
@@ -1214,7 +1223,6 @@ namespace GUI_ASTERIX
 
                 // Actualizamos hora
                 TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-                label1.Text = hora.ToString(@"hh\:mm\:ss");
                 ActualizarHoraTextBox();
 
                 ActualizarDataGrid();
@@ -1226,7 +1234,10 @@ namespace GUI_ASTERIX
         }
         private void ActualizarMensajesActuales()
         {
+            // limpiar los mensajes visuales anteriores
             MensajesActuales.Clear();
+
+            // recorrer los mensajes filtrados y obtener sus datos
             foreach (Mensaje mensaje in ListaMensajesFiltrados)
             {
                 double tiempoMensaje = -1;
@@ -1253,6 +1264,7 @@ namespace GUI_ASTERIX
                 double velocidad = double.NaN;
                 string mode3A = "";
 
+                // obtener los datos de los mensajes ads-b
                 if (mensaje.categoria == 21)
                 {
                     TiraDatosDecod021 mensaje21 =
@@ -1279,6 +1291,7 @@ namespace GUI_ASTERIX
                     altitud = !double.IsNaN(mensaje21.altitudQNHFt)
                                  ? mensaje21.altitudQNHFt
                                  : mensaje21.altitudPresionFt;
+
                     bps = mensaje21.BPS;
                     altitudPresionFt = mensaje21.altitudPresionFt;
                     altitudQNHFt = mensaje21.altitudQNHFt;
@@ -1289,6 +1302,7 @@ namespace GUI_ASTERIX
                     mode3A = mensaje21.Mode3ACode;
                 }
 
+                // obtener los datos de los mensajes radar y descartar los no válidos
                 else if (mensaje.categoria == 48)
                 {
                     TiraDatosDecod048 mensaje48 =
@@ -1347,7 +1361,7 @@ namespace GUI_ASTERIX
                     mode3A = mensaje48.mode3.reply;
                 }
 
-
+                // seleccionar los mensajes recibidos durante los últimos 10 segundos
                 if (tiempoMensaje <= TiempoActual &&
                     tiempoMensaje > TiempoActual - 10)
                 {
@@ -1357,6 +1371,7 @@ namespace GUI_ASTERIX
                         continue;
                     }
 
+                    // crear el objeto visual con los datos del mensaje
                     AvionSimulacion mensajeVisual =
                         new AvionSimulacion();
 
@@ -1401,6 +1416,8 @@ namespace GUI_ASTERIX
                     ActualizarMensajeVisual(mensajeVisual);
                 }
             }
+
+            // calcular el rumbo de los aviones que no tienen uno disponible
             foreach (AvionSimulacion avion in MensajesActuales)
             {
                 if (!double.IsNaN(avion.rumbo))
@@ -1410,6 +1427,7 @@ namespace GUI_ASTERIX
                 double latitudAnterior = double.NaN;
                 double longitudAnterior = double.NaN;
 
+                // buscar la posición anterior más reciente del mismo avión
                 foreach (Mensaje mensaje in ListaMensajesFiltrados)
                 {
                     double tiempo;
@@ -1455,6 +1473,7 @@ namespace GUI_ASTERIX
                     longitudAnterior = longitud;
                 }
 
+                // calcular el rumbo a partir de las dos posiciones del avión
                 if (!double.IsNaN(latitudAnterior))
                 {
                     avion.rumbo = CalcularRumbo(
@@ -1466,23 +1485,23 @@ namespace GUI_ASTERIX
                 }
             }
         }
+
         private void ActualizarMensajeVisual(AvionSimulacion nuevoMensaje)
         {
+            // buscar un mensaje anterior del mismo avión y sistema de detección
             AvionSimulacion mensajeAnterior = null;
 
             foreach (AvionSimulacion mensaje in MensajesActuales)
             {
                 bool mismoAvion = false;
 
-                // Si tenemos dirección válida, identificamos por dirección
+                // identificar el avión por su dirección o número de track
                 if (!string.IsNullOrEmpty(nuevoMensaje.direccion) &&
                     nuevoMensaje.direccion != "-1")
                 {
                     mismoAvion =
                         mensaje.direccion == nuevoMensaje.direccion;
                 }
-
-                // Si no hay dirección, usamos Track Number
                 else if (nuevoMensaje.trackNumber != -1)
                 {
                     mismoAvion =
@@ -1491,23 +1510,18 @@ namespace GUI_ASTERIX
                         mensaje.trackNumber == nuevoMensaje.trackNumber;
                 }
 
-
                 if (!mismoAvion)
                 {
                     continue;
                 }
 
-
-                // Además de ser el mismo avión,
-                // tiene que ser el mismo SISTEMA
-
+                // comprobar que ambos mensajes pertenecen al mismo sistema
                 bool mismoSistema =
                     (mensaje.detectadoADSB &&
                      nuevoMensaje.detectadoADSB)
                     ||
                     (mensaje.detectadoRadar &&
                      nuevoMensaje.detectadoRadar);
-
 
                 if (mismoSistema)
                 {
@@ -1516,9 +1530,7 @@ namespace GUI_ASTERIX
                 }
             }
 
-
-            // Si ya existía un mensaje de ese avión y sistema,
-            // sustituimos el antiguo
+            // actualizar el mensaje anterior con los nuevos datos disponibles
             if (mensajeAnterior != null)
             {
                 mensajeAnterior.direccion = nuevoMensaje.direccion;
@@ -1539,6 +1551,7 @@ namespace GUI_ASTERIX
                 {
                     mensajeAnterior.flightLevel = nuevoMensaje.flightLevel;
                 }
+
                 if (nuevoMensaje.detectadoADSB || nuevoMensaje.detectadoRadar)
                 {
                     mensajeAnterior.bps = nuevoMensaje.bps;
@@ -1546,10 +1559,12 @@ namespace GUI_ASTERIX
                     mensajeAnterior.altitudQNHFt = nuevoMensaje.altitudQNHFt;
                     mensajeAnterior.qnhUtilizado = nuevoMensaje.qnhUtilizado;
                 }
+
                 if (!double.IsNaN(nuevoMensaje.velocidad))
                 {
                     mensajeAnterior.velocidad = nuevoMensaje.velocidad;
                 }
+
                 if (!double.IsNaN(nuevoMensaje.rumbo))
                 {
                     mensajeAnterior.rumbo = nuevoMensaje.rumbo;
@@ -1560,6 +1575,7 @@ namespace GUI_ASTERIX
                     mensajeAnterior.mode3A = nuevoMensaje.mode3A;
                 }
 
+                // actualizar el tiempo y el sistema de detección
                 mensajeAnterior.ultimoTiempo = nuevoMensaje.ultimoTiempo;
 
                 mensajeAnterior.detectadoADSB = nuevoMensaje.detectadoADSB;
@@ -1579,6 +1595,7 @@ namespace GUI_ASTERIX
             }
             else
             {
+                // añadir el mensaje si no existe otro del mismo avión y sistema
                 MensajesActuales.Add(nuevoMensaje);
             }
         }
@@ -1606,7 +1623,8 @@ namespace GUI_ASTERIX
 
         private bool filtroAltura = false;
         private double filtroAlturaMin = 0;
-        private double filtroAlturaMax = 999;
+        private double filtroAlturaMax = 600;
+
         private void aplicarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormFiltro ventana = new FormFiltro(
@@ -1617,7 +1635,10 @@ namespace GUI_ASTERIX
                 filtroCat48,
                 filtroTrayectoria,
                 filtroTrayectoriaMin,
-                filtroTrayectoriaMax
+                filtroTrayectoriaMax,
+                filtroAltura,
+                filtroAlturaMin,
+                filtroAlturaMax
             );
 
             if (ventana.ShowDialog() == DialogResult.OK)
@@ -1634,6 +1655,11 @@ namespace GUI_ASTERIX
                 filtroTrayectoriaMin = ventana.trayectoriaMin;
                 filtroTrayectoriaMax = ventana.trayectoriaMax;
 
+                // guardar los valores del filtro de nivel de vuelo
+                filtroAltura = ventana.FiltrarAltura;
+                filtroAlturaMin = ventana.AlturaMin;
+                filtroAlturaMax = ventana.AlturaMax;
+
                 // Aplicar filtros
                 Filtros gestorFiltros = new Filtros();
 
@@ -1646,7 +1672,10 @@ namespace GUI_ASTERIX
                     filtroTrayectoria,
                     filtroTrayectoriaMin,
                     filtroTrayectoriaMax,
-                    filtroGround
+                    filtroGround,
+                    filtroAltura,
+                    filtroAlturaMin,
+                    filtroAlturaMax
                 );
 
                 ReconstruirAvionesFiltrados();
@@ -1706,22 +1735,18 @@ namespace GUI_ASTERIX
 
         private void guardarEnCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // configurar el explorador para guardar el archivo csv
             SaveFileDialog guardar = new SaveFileDialog();
 
             guardar.Filter = "Archivo CSV (*.csv)|*.csv";
             guardar.DefaultExt = "csv";
             guardar.FileName = "ASTERIX.csv";
 
+            // exportar los mensajes filtrados al archivo seleccionado
             if (guardar.ShowDialog() == DialogResult.OK)
             {
                 int cat21 = ListaMensajesFiltrados.Count(m => m.categoria == 21);
                 int cat48 = ListaMensajesFiltrados.Count(m => m.categoria == 48);
-                /*
-                MessageBox.Show(
-                    "Mensajes que se van a exportar:\n" +
-                    "CAT21: " + cat21 + "\n" +
-                    "CAT48: " + cat48
-                ); */
 
                 ExportarCSV exportador = new ExportarCSV();
 
@@ -1733,13 +1758,16 @@ namespace GUI_ASTERIX
                 MessageBox.Show("CSV guardado correctamente");
             }
         }
+
         private AvionSimulacion BuscarAvionSeleccionado(AvionSimulacion avionAnterior)
         {
+            // comprobar que el avión seleccionado existe
             if (avionAnterior == null)
             {
                 return null;
             }
 
+            // buscar el avión en la lista actual mediante su dirección o número de track
             foreach (AvionSimulacion avion in AvionesActuales)
             {
                 if (!string.IsNullOrEmpty(avionAnterior.direccion) &&
@@ -1760,12 +1788,16 @@ namespace GUI_ASTERIX
                 }
             }
 
+            // devolver null si el avión ya no se encuentra en la simulación
             return null;
         }
+
         private void MostrarTrayectorias()
         {
+            // eliminar las trayectorias anteriores del mapa
             capaTrayectorias.Routes.Clear();
 
+            // seleccionar todos los aviones o únicamente los seleccionados
             List<AvionSimulacion> avionesMostrar = mostrarTodasTrayectorias
                 ? AvionesActuales
                 : avionesTrayectoriaSeleccionados;
@@ -1777,6 +1809,7 @@ namespace GUI_ASTERIX
                     continue;
                 }
 
+                // convertir las posiciones del avión en puntos del mapa
                 List<PointLatLng> puntos = new List<PointLatLng>();
 
                 foreach (double[] punto in avion.trayectoria)
@@ -1784,6 +1817,7 @@ namespace GUI_ASTERIX
                     puntos.Add(new PointLatLng(punto[0], punto[1]));
                 }
 
+                // crear la trayectoria del avión y dibujarla en azul
                 GMapRoute ruta = new GMapRoute(
                     puntos,
                     "Trayectoria " + avion.identificador
@@ -1794,8 +1828,10 @@ namespace GUI_ASTERIX
                 capaTrayectorias.Routes.Add(ruta);
             }
 
+            // actualizar el mapa para mostrar las trayectorias
             gMapControl1.Refresh();
         }
+
         private void ReconstruirAvionesFiltrados()
         {
             double tiempoOriginal = TiempoActual;
@@ -1830,7 +1866,6 @@ namespace GUI_ASTERIX
             );
 
             TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-            label1.Text = hora.ToString(@"hh\:mm\:ss");
             ActualizarHoraTextBox();
 
             ActualizarMensajesActuales();
@@ -1855,6 +1890,7 @@ namespace GUI_ASTERIX
 
         private void buttonSimularDesdeHora_Click(object sender, EventArgs e)
         {
+            //posibles errores al poner la hora
             if (!int.TryParse(textBoxHora.Text, out int horas) ||
                 !int.TryParse(textBoxMinuto.Text, out int minutos) ||
                 !int.TryParse(textBoxSegundo.Text, out int segundos))
@@ -1962,17 +1998,17 @@ namespace GUI_ASTERIX
 
         private void CalcularHeatmapCompleto()
         {
+            // eliminar los datos anteriores del mapa de calor
             capaHeatmap.Markers.Clear();
 
-            // Tamaño aproximado de las celdas:
-            // 0,005 grados de latitud equivale a unos 555 metros.
+            // definir el tamaño de las celdas del mapa de calor
             const double tamanoCelda = 0.0005;
 
-            // Cada celda guarda los identificadores de las aeronaves
-            // que han pasado por ella.
+            // guardar los aviones distintos que han pasado por cada celda
             Dictionary<(int, int), HashSet<string>> densidades =
                 new Dictionary<(int, int), HashSet<string>>();
 
+            // recorrer los mensajes filtrados y obtener sus posiciones
             foreach (Mensaje mensaje in ListaMensajesFiltrados)
             {
                 double latitud;
@@ -2001,6 +2037,7 @@ namespace GUI_ASTERIX
                     TiraDatosDecod048 datos =
                         (TiraDatosDecod048)mensaje.tira;
 
+                    // descartar los mensajes radar no confirmados o sin identificar
                     bool trackSinIdentificar =
                         string.IsNullOrEmpty(datos.AircrftAddrs) &&
                         string.IsNullOrEmpty(datos.AircrftIddent) &&
@@ -2026,35 +2063,41 @@ namespace GUI_ASTERIX
                     continue;
                 }
 
+                // descartar las posiciones no válidas o sin identificación
                 if (double.IsNaN(latitud) ||
                     double.IsNaN(longitud) ||
                     double.IsInfinity(latitud) ||
                     double.IsInfinity(longitud))
                     continue;
 
-                // Ignorar posiciones sin identificación fiable.
                 if (string.IsNullOrWhiteSpace(identificadorAvion))
                     continue;
 
+                // calcular la celda correspondiente a la posición del avión
                 int fila = (int)Math.Floor(latitud / tamanoCelda);
                 int columna = (int)Math.Floor(longitud / tamanoCelda);
 
                 var clave = (fila, columna);
 
+                // crear la celda si todavía no existe
                 if (!densidades.TryGetValue(clave, out HashSet<string> aviones))
                 {
                     aviones = new HashSet<string>();
                     densidades.Add(clave, aviones);
                 }
 
+                // registrar el avión sin contar varias veces el mismo en una celda
                 aviones.Add(identificadorAvion);
             }
+
+            // dibujar el mapa de calor con las densidades calculadas
             DibujarHeatmap(densidades);
         }
 
         private void DibujarHeatmap(
-            Dictionary<(int, int), HashSet<string>> densidades)
+    Dictionary<(int, int), HashSet<string>> densidades)
         {
+            // eliminar las celdas anteriores del mapa de calor
             capaHeatmap.Markers.Clear();
 
             if (densidades.Count == 0)
@@ -2063,6 +2106,7 @@ namespace GUI_ASTERIX
                 return;
             }
 
+            // suavizar las densidades y obtener el valor máximo
             Dictionary<(int, int), double> densidadesSuavizadas =
                 SuavizarHeatmap(densidades);
 
@@ -2072,11 +2116,13 @@ namespace GUI_ASTERIX
             {
                 double cantidad = celda.Value;
 
+                // calcular la intensidad de cada celda mediante una escala logarítmica
                 double intensidad = Math.Log(1.0 + cantidad) /
                                    Math.Log(1.0 + maximo);
 
                 Color color;
 
+                // asignar un color según la intensidad del tráfico aéreo
                 if (intensidad < 0.33)
                 {
                     double t = intensidad / 0.33;
@@ -2099,9 +2145,11 @@ namespace GUI_ASTERIX
                         160, 255, (int)(120 * (1 - t)), 0);
                 }
 
+                // calcular los límites geográficos de la celda
                 double latMin = celda.Key.Item1 * tamanoCeldaHeatmap;
                 double lonMin = celda.Key.Item2 * tamanoCeldaHeatmap;
 
+                // crear la celda coloreada y añadirla al mapa
                 CeldaHeatmap marcador = new CeldaHeatmap(
                     latMin,
                     latMin + tamanoCeldaHeatmap,
@@ -2113,6 +2161,7 @@ namespace GUI_ASTERIX
                 capaHeatmap.Markers.Add(marcador);
             }
 
+            // actualizar el mapa para mostrar el mapa de calor
             gMapControl1.Refresh();
         }
 
@@ -2128,11 +2177,13 @@ namespace GUI_ASTERIX
         }
 
         private Dictionary<(int, int), double> SuavizarHeatmap(
-            Dictionary<(int, int), HashSet<string>> densidades)
+    Dictionary<(int, int), HashSet<string>> densidades)
         {
+            // crear el diccionario donde se guardarán las densidades suavizadas
             Dictionary<(int, int), double> suavizadas =
                 new Dictionary<(int, int), double>();
 
+            // definir el radio y la intensidad del suavizado gaussiano
             int radio = 4;
             double sigma = 2.5;
 
@@ -2144,6 +2195,7 @@ namespace GUI_ASTERIX
                 double suma = 0;
                 double sumaPesos = 0;
 
+                // recorrer las celdas vecinas y calcular sus pesos según la distancia
                 for (int i = -radio; i <= radio; i++)
                 {
                     for (int j = -radio; j <= radio; j++)
@@ -2156,6 +2208,7 @@ namespace GUI_ASTERIX
 
                         var vecino = (fila + i, columna + j);
 
+                        // sumar la densidad de los vecinos aplicando el peso gaussiano
                         if (densidades.TryGetValue(
                             vecino, out HashSet<string> aviones))
                         {
@@ -2166,6 +2219,7 @@ namespace GUI_ASTERIX
                     }
                 }
 
+                // calcular y guardar la densidad suavizada de la celda
                 suavizadas[celda.Key] = suma / sumaPesos;
             }
 
@@ -2206,8 +2260,10 @@ namespace GUI_ASTERIX
 
         private void PrepararPuntosHeatmap()
         {
+            // eliminar los puntos anteriores del mapa de calor
             puntosHeatmap.Clear();
 
+            // recorrer los mensajes filtrados y obtener sus datos
             foreach (Mensaje mensaje in ListaMensajesFiltrados)
             {
                 double tiempo;
@@ -2215,6 +2271,7 @@ namespace GUI_ASTERIX
                 double longitud;
                 string identificador;
 
+                // obtener los datos de los mensajes ads-b
                 if (mensaje.categoria == 21)
                 {
                     TiraDatosDecod021 datos =
@@ -2233,6 +2290,8 @@ namespace GUI_ASTERIX
                     if (string.IsNullOrWhiteSpace(identificador))
                         identificador = datos.TargetIdentification;
                 }
+
+                // obtener los datos de los mensajes radar y descartar los no válidos
                 else if (mensaje.categoria == 48)
                 {
                     TiraDatosDecod048 datos =
@@ -2264,6 +2323,7 @@ namespace GUI_ASTERIX
                     continue;
                 }
 
+                // descartar los mensajes con tiempos, posiciones o identificadores no válidos
                 if (double.IsNaN(tiempo) ||
                     double.IsInfinity(tiempo) ||
                     tiempo < 0 ||
@@ -2276,6 +2336,7 @@ namespace GUI_ASTERIX
                     continue;
                 }
 
+                // guardar los puntos válidos para generar el mapa de calor
                 puntosHeatmap.Add(new PuntoHeatmap
                 {
                     tiempo = tiempo,
@@ -2285,9 +2346,11 @@ namespace GUI_ASTERIX
                 });
             }
 
+            // ordenar los puntos cronológicamente
             puntosHeatmap.Sort((a, b) =>
                 a.tiempo.CompareTo(b.tiempo));
 
+            // reiniciar los datos del mapa de calor dinámico
             densidadesDinamicas.Clear();
             siguientePuntoHeatmap = 0;
             ultimoTiempoHeatmap = -1;
@@ -2416,6 +2479,32 @@ namespace GUI_ASTERIX
                 buttonSimularDesdeHora_Click(sender, EventArgs.Empty);
                 this.ActiveControl = null;
             }
+        }
+
+        public bool controles = false;
+        private void moToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (controles == false)
+            {
+                pictureBoxContorles.BringToFront();
+                pictureBoxContorles.Visible = true;
+                controles = true;
+                moToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                pictureBoxContorles.Visible = false;
+                controles = false;
+                moToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private void pictureBoxContorles_Click(object sender, EventArgs e)
+        {
+            controles = false;
+            pictureBoxContorles.Visible = false;
+            moToolStripMenuItem.Checked = false;
         }
     }
 }

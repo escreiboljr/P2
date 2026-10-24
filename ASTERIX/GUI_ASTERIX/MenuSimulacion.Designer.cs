@@ -44,15 +44,10 @@
             mostrarHeatmapCompletoToolStripMenuItem = new ToolStripMenuItem();
             mostrarHeatmapDinamicoToolStripMenuItem = new ToolStripMenuItem();
             ayudaToolStripMenuItem = new ToolStripMenuItem();
+            moToolStripMenuItem = new ToolStripMenuItem();
             timerSimulacion = new System.Windows.Forms.Timer(components);
-            buttonPlay = new Button();
-            buttonStop = new Button();
-            label1 = new Label();
             trackBarVelSimulacion = new TrackBar();
-            buttonAvanzar = new Button();
-            buttonReset = new Button();
             dataGridAviones = new DataGridView();
-            buttonDataGrid = new Button();
             gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             labelTituloVelocidadReproduccion = new Label();
             labelTituloHora = new Label();
@@ -68,13 +63,14 @@
             textBoxHora = new TextBox();
             textBoxSegundo = new TextBox();
             textBoxMinuto = new TextBox();
-            buttonSimularDesdeHora = new Button();
             labelVelocidad = new Label();
             trackBarTiempo = new TrackBar();
             labelTiempoFinal = new Label();
             label3 = new Label();
             label4 = new Label();
             pictureBox6 = new PictureBox();
+            pictureBoxContorles = new PictureBox();
+            pictureBox7 = new PictureBox();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -85,6 +81,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTiempo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxContorles).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -186,48 +184,22 @@
             // 
             // ayudaToolStripMenuItem
             // 
+            ayudaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { moToolStripMenuItem });
             ayudaToolStripMenuItem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
             ayudaToolStripMenuItem.Size = new Size(66, 25);
             ayudaToolStripMenuItem.Text = "Ayuda";
             // 
+            // moToolStripMenuItem
+            // 
+            moToolStripMenuItem.Name = "moToolStripMenuItem";
+            moToolStripMenuItem.Size = new Size(271, 26);
+            moToolStripMenuItem.Text = "Mostrar controles del mapa";
+            moToolStripMenuItem.Click += moToolStripMenuItem_Click;
+            // 
             // timerSimulacion
             // 
             timerSimulacion.Tick += timerSimulacion_Tick;
-            // 
-            // buttonPlay
-            // 
-            buttonPlay.Location = new Point(101, 32);
-            buttonPlay.Name = "buttonPlay";
-            buttonPlay.Size = new Size(21, 23);
-            buttonPlay.TabIndex = 1;
-            buttonPlay.Text = "Play";
-            buttonPlay.UseVisualStyleBackColor = true;
-            buttonPlay.Visible = false;
-            buttonPlay.Click += buttonPlay_Click;
-            // 
-            // buttonStop
-            // 
-            buttonStop.Location = new Point(128, 32);
-            buttonStop.Name = "buttonStop";
-            buttonStop.Size = new Size(14, 23);
-            buttonStop.TabIndex = 2;
-            buttonStop.Text = "Stop";
-            buttonStop.UseVisualStyleBackColor = true;
-            buttonStop.Visible = false;
-            buttonStop.Click += buttonStop_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.ControlLightLight;
-            label1.Location = new Point(371, 29);
-            label1.Name = "label1";
-            label1.Size = new Size(158, 47);
-            label1.TabIndex = 3;
-            label1.Text = "00:00:00";
-            label1.Visible = false;
             // 
             // trackBarVelSimulacion
             // 
@@ -242,28 +214,6 @@
             trackBarVelSimulacion.Value = 1;
             trackBarVelSimulacion.Scroll += trackBarVelSimulacion_Scroll;
             // 
-            // buttonAvanzar
-            // 
-            buttonAvanzar.Location = new Point(148, 32);
-            buttonAvanzar.Name = "buttonAvanzar";
-            buttonAvanzar.Size = new Size(21, 23);
-            buttonAvanzar.TabIndex = 6;
-            buttonAvanzar.Text = "Avanzar";
-            buttonAvanzar.UseVisualStyleBackColor = true;
-            buttonAvanzar.Visible = false;
-            buttonAvanzar.Click += buttonAvanzar_Click;
-            // 
-            // buttonReset
-            // 
-            buttonReset.Location = new Point(256, 32);
-            buttonReset.Name = "buttonReset";
-            buttonReset.Size = new Size(16, 23);
-            buttonReset.TabIndex = 7;
-            buttonReset.Text = "Reset";
-            buttonReset.UseVisualStyleBackColor = true;
-            buttonReset.Visible = false;
-            buttonReset.Click += buttonReset_Click;
-            // 
             // dataGridAviones
             // 
             dataGridAviones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -273,17 +223,6 @@
             dataGridAviones.Size = new Size(927, 445);
             dataGridAviones.TabIndex = 8;
             dataGridAviones.Visible = false;
-            // 
-            // buttonDataGrid
-            // 
-            buttonDataGrid.Location = new Point(175, 32);
-            buttonDataGrid.Name = "buttonDataGrid";
-            buttonDataGrid.Size = new Size(75, 23);
-            buttonDataGrid.TabIndex = 9;
-            buttonDataGrid.Text = "Mostrar Tabla";
-            buttonDataGrid.UseVisualStyleBackColor = true;
-            buttonDataGrid.Visible = false;
-            buttonDataGrid.Click += buttonDataGrid_Click;
             // 
             // gMapControl1
             // 
@@ -477,17 +416,6 @@
             textBoxMinuto.Text = "00";
             textBoxMinuto.TextAlign = HorizontalAlignment.Center;
             // 
-            // buttonSimularDesdeHora
-            // 
-            buttonSimularDesdeHora.Location = new Point(278, 32);
-            buttonSimularDesdeHora.Name = "buttonSimularDesdeHora";
-            buttonSimularDesdeHora.Size = new Size(87, 23);
-            buttonSimularDesdeHora.TabIndex = 33;
-            buttonSimularDesdeHora.Text = "Simular";
-            buttonSimularDesdeHora.UseVisualStyleBackColor = true;
-            buttonSimularDesdeHora.Visible = false;
-            buttonSimularDesdeHora.Click += buttonSimularDesdeHora_Click;
-            // 
             // labelVelocidad
             // 
             labelVelocidad.Anchor = AnchorStyles.Bottom;
@@ -560,18 +488,41 @@
             pictureBox6.TabStop = false;
             pictureBox6.Click += buttonReset_Click;
             // 
+            // pictureBoxContorles
+            // 
+            pictureBoxContorles.Image = Properties.Resources.guiaControles;
+            pictureBoxContorles.Location = new Point(25, 49);
+            pictureBoxContorles.Name = "pictureBoxContorles";
+            pictureBoxContorles.Size = new Size(927, 445);
+            pictureBoxContorles.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxContorles.TabIndex = 41;
+            pictureBoxContorles.TabStop = false;
+            pictureBoxContorles.Visible = false;
+            pictureBoxContorles.Click += pictureBoxContorles_Click;
+            // 
+            // pictureBox7
+            // 
+            pictureBox7.Anchor = AnchorStyles.Bottom;
+            pictureBox7.Image = Properties.Resources.IconoAsterix;
+            pictureBox7.InitialImage = (Image)resources.GetObject("pictureBox7.InitialImage");
+            pictureBox7.Location = new Point(783, 679);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new Size(29, 28);
+            pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox7.TabIndex = 42;
+            pictureBox7.TabStop = false;
+            // 
             // MenuSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
             ClientSize = new Size(985, 731);
+            Controls.Add(pictureBox7);
             Controls.Add(pictureBox6);
-            Controls.Add(label1);
             Controls.Add(labelTiempoFinal);
             Controls.Add(trackBarTiempo);
             Controls.Add(labelVelocidad);
-            Controls.Add(buttonSimularDesdeHora);
             Controls.Add(textBoxMinuto);
             Controls.Add(textBoxSegundo);
             Controls.Add(textBoxHora);
@@ -585,17 +536,14 @@
             Controls.Add(pictureBox1);
             Controls.Add(labelTituloHora);
             Controls.Add(labelTituloVelocidadReproduccion);
-            Controls.Add(gMapControl1);
-            Controls.Add(buttonDataGrid);
-            Controls.Add(dataGridAviones);
-            Controls.Add(buttonReset);
-            Controls.Add(buttonAvanzar);
             Controls.Add(trackBarVelSimulacion);
-            Controls.Add(buttonStop);
-            Controls.Add(buttonPlay);
             Controls.Add(menuStrip1);
             Controls.Add(label3);
             Controls.Add(label4);
+            Controls.Add(gMapControl1);
+            Controls.Add(dataGridAviones);
+            Controls.Add(pictureBoxContorles);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "MenuSimulacion";
             SizeGripStyle = SizeGripStyle.Hide;
@@ -612,6 +560,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTiempo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxContorles).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -623,14 +573,8 @@
         private ToolStripMenuItem cargaDatosrToolStripMenuItem;
         private ToolStripMenuItem filtrarToolStripMenuItem;
         private System.Windows.Forms.Timer timerSimulacion;
-        private Button buttonPlay;
-        private Button buttonStop;
-        private Label label1;
         private TrackBar trackBarVelSimulacion;
-        private Button buttonAvanzar;
-        private Button buttonReset;
         private DataGridView dataGridAviones;
-        private Button buttonDataGrid;
         private GMap.NET.WindowsForms.GMapControl gMapControl1;
         private Label labelTituloVelocidadReproduccion;
         private Label labelTituloHora;
@@ -649,7 +593,6 @@
         private TextBox textBoxHora;
         private TextBox textBoxSegundo;
         private TextBox textBoxMinuto;
-        private Button buttonSimularDesdeHora;
         private ToolStripMenuItem verToolStripMenuItem;
         private ToolStripMenuItem mostrarDatosEnCeldasToolStripMenuItem;
         private ToolStripMenuItem trayectoriasToolStripMenuItem;
@@ -664,5 +607,8 @@
         private Label label3;
         private Label label4;
         private PictureBox pictureBox6;
+        private ToolStripMenuItem moToolStripMenuItem;
+        private PictureBox pictureBoxContorles;
+        private PictureBox pictureBox7;
     }
 }

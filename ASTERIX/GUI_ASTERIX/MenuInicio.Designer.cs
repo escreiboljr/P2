@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuInicio));
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBoxFondo = new PictureBox();
@@ -43,7 +44,7 @@
             pictureBox1.BackgroundImage = Properties.Resources.botonMenuSimulacion;
             pictureBox1.BackgroundImageLayout = ImageLayout.None;
             pictureBox1.Image = Properties.Resources.botonMenuSimulacion;
-            pictureBox1.Location = new Point(236, 132);
+            pictureBox1.Location = new Point(234, 132);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(277, 97);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -58,7 +59,7 @@
             pictureBox2.BackgroundImage = Properties.Resources.botonTourPrograma;
             pictureBox2.BackgroundImageLayout = ImageLayout.None;
             pictureBox2.Image = Properties.Resources.botonTourPrograma;
-            pictureBox2.Location = new Point(236, 235);
+            pictureBox2.Location = new Point(234, 235);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(277, 97);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -88,8 +89,9 @@
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(pictureBoxFondo);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MenuInicio";
-            Text = "MenuInicio";
+            Text = "Inicio";
             Load += MenuInicio_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFiltro));
             labelTituloCat = new Label();
             labelTitBlancoPuro = new Label();
             labelTitTransFijo = new Label();
@@ -232,6 +233,7 @@
             Controls.Add(labelTitBlancoPuro);
             Controls.Add(labelTituloCat);
             ForeColor = SystemColors.ControlLightLight;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormFiltro";
             Text = "Filtros";
             ((System.ComponentModel.ISupportInitialize)pictureBoxSlideButtonBlancoPuro).EndInit();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +11,7 @@ namespace GUI_ASTERIX
 {
     public partial class FormFiltro : Form
     {
+        // variables que almacenan el estado de los filtros
         bool blancoPuro;
         bool TransFijo;
         bool Ground;
@@ -17,7 +19,11 @@ namespace GUI_ASTERIX
         bool cat21;
         double TrayectoriaMin;
         double TrayectoriaMax;
+        bool filtrarAltura;
+        double alturaMin;
+        double alturaMax;
 
+        // propiedades para consultar los filtros seleccionados desde otros formularios
         public bool BlancoPuro
         {
             get { return blancoPuro; }
@@ -39,13 +45,38 @@ namespace GUI_ASTERIX
             get { return cat21; }
         }
         public double trayectoriaMin
-        { get { return TrayectoriaMin; } }
+        {
+            get { return TrayectoriaMin; }
+        }
         public double trayectoriaMax
-        { get { return TrayectoriaMax; } }
+        {
+            get { return TrayectoriaMax; }
+        }
+
         bool filtrarTrayectoria { get; set; }
+
         public bool FiltrarTrayectoria
-        { get { return  filtrarTrayectoria; }  }
-        public FormFiltro(bool blancoPuro,bool transFijo,bool ground,bool cat21,bool cat48,bool filtrarTrayectoria,double trayectoriaMin,double trayectoriaMax)
+        {
+            get { return filtrarTrayectoria; }
+        }
+
+        public bool FiltrarAltura
+        {
+            get { return filtrarAltura; }
+        }
+
+        public double AlturaMin
+        {
+            get { return alturaMin; }
+        }
+
+        public double AlturaMax
+        {
+            get { return alturaMax; }
+        }
+
+        // inicializar el formulario con los filtros establecidos anteriormente
+        public FormFiltro(bool blancoPuro, bool transFijo, bool ground, bool cat21, bool cat48, bool filtrarTrayectoria, double trayectoriaMin, double trayectoriaMax, bool filtrarAltura, double alturaMin, double alturaMax)
         {
             InitializeComponent();
 
@@ -57,10 +88,14 @@ namespace GUI_ASTERIX
             this.filtrarTrayectoria = filtrarTrayectoria;
             this.TrayectoriaMin = trayectoriaMin;
             this.TrayectoriaMax = trayectoriaMax;
+            this.filtrarAltura = filtrarAltura;
+            this.alturaMin = alturaMin;
+            this.alturaMax = alturaMax;
 
             ActualizarControles();
         }
 
+        // activar o desactivar el filtro de blanco puro
         private void pictureBoxSlideButtonBlancoPuro_Click(object sender, EventArgs e)
         {
             if (blancoPuro == false)
@@ -75,12 +110,13 @@ namespace GUI_ASTERIX
             }
         }
 
-
+        // actualizar los controles al cargar el formulario
         private void FormFiltro_Load(object sender, EventArgs e)
         {
             ActualizarControles();
         }
 
+        // activar o desactivar el filtro de transpondedor fijo
         private void pictureBoxSlideButtonTransFijo_Click(object sender, EventArgs e)
         {
             if (TransFijo == false)
@@ -95,6 +131,7 @@ namespace GUI_ASTERIX
             }
         }
 
+        // activar o desactivar el filtro de aviones en tierra
         private void pictureBoxSlideButtonGround_Click(object sender, EventArgs e)
         {
             Ground = !Ground;
@@ -111,16 +148,13 @@ namespace GUI_ASTERIX
             }
         }
 
+        // comprobar los valores introducidos y aplicar los filtros seleccionados
         private void buttonAplciarCambios_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-    "Ground: " + Ground +
-    "\nCAT21: " + cat21 +
-    "\nCAT48: " + cat48
-);
             cat48 = checkBoxCat48.Checked;
             cat21 = checkBoxCat21.Checked;
 
+            // validar el intervalo de trayectoria entre 0 y 360 grados
             if (!string.IsNullOrWhiteSpace(textBox1.Text) &&
                 !string.IsNullOrWhiteSpace(textBoxTrayectoriaMax.Text))
             {
@@ -150,33 +184,64 @@ namespace GUI_ASTERIX
             {
                 filtrarTrayectoria = false;
             }
+            // comprobar y aplicar el filtro de nivel de vuelo
+            if (!string.IsNullOrWhiteSpace(textBoxAltitudMin.Text) &&
+                !string.IsNullOrWhiteSpace(textBoxAltitudMax.Text))
+            {
+                if (double.TryParse(textBoxAltitudMin.Text, out double min) &&
+                    double.TryParse(textBoxAltitudMax.Text, out double max))
+                {
+                    if (min >= 0 && max <= 600 && min <= max)
+                    {
+                        alturaMin = min;
+                        alturaMax = max;
+                        filtrarAltura = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Introduce un rango de flight levels válido entre 0 y 600.");
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Introduce valores válidos para los flight levels.");
+                    return;
+                }
+            }
+            else
+            {
+                filtrarAltura = false;
+            }
 
+            // confirmar los cambios y cerrar el formulario
             DialogResult = DialogResult.OK;
             Close();
         }
 
+        // actualizar los controles visuales según el estado de los filtros
         private void ActualizarControles()
         {
-            // Categorías
+            // actualizar las categorías seleccionadas
             checkBoxCat21.Checked = cat21;
             checkBoxCat48.Checked = cat48;
 
-            // Blanco puro
+            // actualizar el filtro de blanco puro
             pictureBoxSlideButtonBlancoPuro.Image = blancoPuro
                 ? Properties.Resources.sliderActivado
                 : Properties.Resources.sliderApagado;
 
-            // Transpondedor fijo
+            // actualizar el filtro de transpondedor fijo
             pictureBoxSlideButtonTransFijo.Image = TransFijo
                 ? Properties.Resources.sliderActivado
                 : Properties.Resources.sliderApagado;
 
-            // Ground
+            // actualizar el filtro de aviones en tierra
             pictureBoxSlideButtonGround.Image = Ground
                 ? Properties.Resources.sliderActivado
                 : Properties.Resources.sliderApagado;
 
-            // Trayectoria
+            // mostrar el intervalo de trayectoria si el filtro está activado
             if (filtrarTrayectoria)
             {
                 textBox1.Text = TrayectoriaMin.ToString();
@@ -187,8 +252,17 @@ namespace GUI_ASTERIX
                 textBox1.Text = "";
                 textBoxTrayectoriaMax.Text = "";
             }
+            // mostrar los límites del filtro de nivel de vuelo
+            if (filtrarAltura)
+            {
+                textBoxAltitudMin.Text = alturaMin.ToString();
+                textBoxAltitudMax.Text = alturaMax.ToString();
+            }
+            else
+            {
+                textBoxAltitudMin.Text = "";
+                textBoxAltitudMax.Text = "";
+            }
         }
-
-
     }
 }

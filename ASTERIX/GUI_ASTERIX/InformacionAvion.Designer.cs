@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformacionAvion));
             labelIdentificador = new Label();
             labelFL = new Label();
             timerActualizar = new System.Windows.Forms.Timer(components);
@@ -340,6 +341,7 @@
             Controls.Add(labelFL);
             Controls.Add(labelIdentificador);
             ForeColor = Color.WhiteSmoke;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InformacionAvion";
             Text = "Información del avión";
             Load += InformacionAvion_Load;

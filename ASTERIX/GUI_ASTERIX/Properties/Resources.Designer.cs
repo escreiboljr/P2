@@ -213,6 +213,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap guiaControles {
+            get {
+                object obj = ResourceManager.GetObject("guiaControles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente {
             get {
                 object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente", resourceCulture);
@@ -236,6 +246,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente2 {
             get {
                 object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconoAsterix {
+            get {
+                object obj = ResourceManager.GetObject("IconoAsterix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
