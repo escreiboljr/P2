@@ -1158,7 +1158,7 @@ namespace GUI_ASTERIX
                 ventana.categoriaSeleccionada =
                     mensaje.detectadoRadar ? 48 : 21;
 
-                ventana.Show();
+                ventana.Show(this);
             }
         }
 
