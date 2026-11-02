@@ -19,7 +19,7 @@ namespace GUI_ASTERIX
 
         private void MenuTutorial_Load(object sender, EventArgs e)
         {
-
+            ActualizarTutorial();
         }
 
         private void buttonAvanzar_Click(object sender, EventArgs e)
@@ -42,62 +42,43 @@ namespace GUI_ASTERIX
             textBoxContador.Text = contador.ToString();
             if (contador == 1)
             {
-                /*labelTitulo1.Visible = true;
-                labelTitulo2.Visible = true;
-                labelTitulo3.Visible = true;
-                pictureBox1.Image = Properties.Resources.MenuSimulacion; */
+                pictureBox1.Image = Properties.Resources.Tutorial_de_la_interfaz_principal_ASTERIX;
             }
             if (contador == 2)
             {
-                /*
-                labelTitulo1.Visible = false;
-                labelTitulo2.Visible = false;
-                labelTitulo3.Visible = false;
-                pictureBox1.Image = Properties.Resources.RecuadroHoraControlesSim; */
+                pictureBox1.Image = Properties.Resources.Tutorial_del_menú_Archivo_en_ASTERIX;
             }
             if (contador == 3)
             {
-                pictureBox1.Image = Properties.Resources.RecuadroVelocidadSim;
+                pictureBox1.Image = Properties.Resources.Tutorial_del_menú_Filtrar_ASTERIX;
             }
             if (contador == 4)
             {
-                pictureBox1.Image = Properties.Resources.RecuadroSimdesdeHora;
+                pictureBox1.Image = Properties.Resources.Tutorial_del_Menú_Ver_de_ASTERIX;
             }
             if (contador == 5)
             {
-                pictureBox1.Image = Properties.Resources.RecuadroReset;
+                pictureBox1.Image = Properties.Resources.Guía_Heatmap_de_ASTERIX;
             }
             if (contador == 6)
             {
-                pictureBox1.Image = Properties.Resources.RecuadroMapa;
+                pictureBox1.Image = Properties.Resources.Tutorial_del_menú_Ayuda_en_ASTERIX;
             }
             if (contador == 7)
             {
-                pictureBox1.Image = Properties.Resources.MapaConControles;
+                pictureBox1.Image = Properties.Resources.Guía_visual_de_controles_del_mapa_Asterix;
             }
             if (contador == 8)
             {
-                pictureBox1.Image = Properties.Resources.RecuadroAdsbRadar;
+                pictureBox1.Image = Properties.Resources.Tutorial__Ventana_de_filtros_neon;
             }
             if (contador == 9)
             {
-                pictureBox1.Image = Properties.Resources.MenuSimArchivos;
+                pictureBox1.Image = Properties.Resources.Tutorial__Ventana_de_información_del_avión;
             }
-            if (contador == 10)
+            if (contador > 9)
             {
-                pictureBox1.Image = Properties.Resources.MenuSimFiltro;
-            }
-            if (contador == 11)
-            {
-                pictureBox1.Image = Properties.Resources.MenuFiltro;
-            }
-            if (contador == 12)
-            {
-                pictureBox1.Image = Properties.Resources.MenuSimVer;
-            }
-            if (contador == 13)
-            {
-                pictureBox1.Image = Properties.Resources.MenuSimHeatmap;
+                contador = 9;
             }
         }
     }

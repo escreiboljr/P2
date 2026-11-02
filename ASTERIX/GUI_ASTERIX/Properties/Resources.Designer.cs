@@ -123,6 +123,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botonAntes {
+            get {
+                object obj = ResourceManager.GetObject("botonAntes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonAvanzar {
             get {
                 object obj = ResourceManager.GetObject("botonAvanzar", resourceCulture);
@@ -176,6 +186,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap botonRetroceder {
             get {
                 object obj = ResourceManager.GetObject("botonRetroceder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap botonSiguiente {
+            get {
+                object obj = ResourceManager.GetObject("botonSiguiente", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -246,6 +266,36 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap filtros {
             get {
                 object obj = ResourceManager.GetObject("filtros", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Guía_Heatmap_de_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Guía Heatmap de ASTERIX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Guía_visual_de_controles_del_mapa_Asterix {
+            get {
+                object obj = ResourceManager.GetObject("Guía visual de controles del mapa Asterix", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Guía_visual_de_controles_del_mapa_Asterix1 {
+            get {
+                object obj = ResourceManager.GetObject("Guía visual de controles del mapa Asterix1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -636,6 +686,76 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap trayectorias {
             get {
                 object obj = ResourceManager.GetObject("trayectorias", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial__Ventana_de_filtros_neon {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial_ Ventana de filtros neon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial__Ventana_de_información_del_avión {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial_ Ventana de información del avión", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial_de_la_interfaz_principal_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial de la interfaz principal ASTERIX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial_del_menú_Archivo_en_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial del menú Archivo en ASTERIX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial_del_menú_Ayuda_en_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial del menú Ayuda en ASTERIX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial_del_menú_Filtrar_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial del menú Filtrar ASTERIX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tutorial_del_Menú_Ver_de_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Tutorial del Menú Ver de ASTERIX", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

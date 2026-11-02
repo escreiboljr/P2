@@ -118,178 +118,214 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MenuFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecuadroReset" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecuadroReset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonReproducir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonReproducir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="guiaControles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\guiaControles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icono de pausa blanco sobre transparente" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono de pausa blanco sobre transparente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Elegante llave curva en melocotón1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Elegante llave curva en melocotón1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonRecargar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonRecargar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="5ee10cd8-d76b-424f-b639-5d1ddb340126" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\5ee10cd8-d76b-424f-b639-5d1ddb340126.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonPausa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonPausa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuSimHeatmap" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuSimHeatmap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="large-green-circle_1f7e2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\large-green-circle_1f7e2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuSimArchivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuSimArchivos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconoCargarArchivoTransparente" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconoCargarArchivoTransparente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="large-blue-square_1f7e6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\large-blue-square_1f7e6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonRetroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonRetroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecuadroMapa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecuadroMapa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="25650" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\25650.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Imagen de ChatGPT 1 oct 2026, 17_56_52-2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_56_52-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecuadroSimdesdeHora" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecuadroSimdesdeHora.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Botón azul brillante con icono de documento" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Botón azul brillante con icono de documento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Imagen de ChatGPT 1 oct 2026, 17_56_53-3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_56_53-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="asterix_radar_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\asterix_radar_fondo.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Imagen de ChatGPT 1 oct 2026, 17_54_09" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_54_09.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="datosDataGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\datosDataGrid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pausebutton_113576" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pausebutton_113576.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonAvanzar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonAvanzar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sliderApagado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sliderApagado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sliderActivado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sliderActivado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="large-green-circle_1f7e21" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\large-green-circle_1f7e21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecuadroHoraControlesSim" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecuadroHoraControlesSim.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuSimulacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuSimulacion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="5ee10cd8-d76b-424f-b639-5d1ddb3401261" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\5ee10cd8-d76b-424f-b639-5d1ddb3401261.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="retroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\retroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\images.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuSimVer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuSimVer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonTourPrograma" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonTourPrograma.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="playbutton_113628" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\playbutton_113628.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuSimFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuSimFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="heatmapTot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\heatmapTot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconoCargarArchivo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconoCargarArchivo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecuadroAdsbRadar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecuadroAdsbRadar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="avion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\avion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botonMenuSimulacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonMenuSimulacion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="large-green-square_1f7e9" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\large-green-square_1f7e9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="heatmapDin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\heatmapDin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="limpiarFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\limpiarFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MapaConControles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MapaConControles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="contorlesMapa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\contorlesMapa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trayectorias" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\trayectorias.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icono de pausa blanco sobre transparente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono de pausa blanco sobre transparente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconoCsv" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconoCsv.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="filtros" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\filtros.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="retroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuSimFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuSimFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sliderActivado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sliderActivado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="datosDataGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\datosDataGrid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tutorial del menú Archivo en ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial del menú Archivo en ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iconoCargarArchivo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconoCargarArchivo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonAvanzar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonAvanzar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonAntes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonAntes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonMenuSimulacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonMenuSimulacion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Imagen de ChatGPT 1 oct 2026, 17_54_09" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_54_09.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="large-green-circle_1f7e2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\large-green-circle_1f7e2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="25650" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\25650.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="RecuadroVelocidadSim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RecuadroVelocidadSim.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Icono de pausa blanco sobre transparente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono de pausa blanco sobre transparente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Tutorial del menú Filtrar ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial del menú Filtrar ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IconoAsterix" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IconoAsterix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Tutorial de la interfaz principal ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial de la interfaz principal ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Elegante llave curva en melocotón" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Elegante llave curva en melocotón.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="iconoCargarArchivoTransparente" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconoCargarArchivoTransparente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Imagen de ChatGPT 1 oct 2026, 17_56_53-3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_56_53-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonTourPrograma" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonTourPrograma.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="contorlesMapaTrans" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\contorlesMapaTrans.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="limpiarFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\limpiarFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="heatmapDin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\heatmapDin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icono de pausa blanco sobre transparente" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono de pausa blanco sobre transparente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="hetmap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hetmap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="contorlesMapaTrans" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\contorlesMapaTrans.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\images.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonRecargar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonRecargar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecuadroReset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecuadroReset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuSimVer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuSimVer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconoAsterix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IconoAsterix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pausebutton_113576" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pausebutton_113576.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5ee10cd8-d76b-424f-b639-5d1ddb340126" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5ee10cd8-d76b-424f-b639-5d1ddb340126.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tutorial_ Ventana de filtros neon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial_ Ventana de filtros neon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tutorial del menú Ayuda en ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial del menú Ayuda en ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playbutton_113628" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\playbutton_113628.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuSimHeatmap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuSimHeatmap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonRetroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonRetroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="avion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\avion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Guía visual de controles del mapa Asterix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Guía visual de controles del mapa Asterix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="heatmapTot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\heatmapTot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iconoCsv" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconoCsv.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icono de pausa blanco sobre transparente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono de pausa blanco sobre transparente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="large-blue-square_1f7e6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\large-blue-square_1f7e6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuSimulacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuSimulacion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tutorial del Menú Ver de ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial del Menú Ver de ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecuadroAdsbRadar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecuadroAdsbRadar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecuadroMapa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecuadroMapa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MapaConControles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MapaConControles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Botón azul brillante con icono de documento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Botón azul brillante con icono de documento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Elegante llave curva en melocotón1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Elegante llave curva en melocotón1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecuadroHoraControlesSim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecuadroHoraControlesSim.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5ee10cd8-d76b-424f-b639-5d1ddb3401261" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5ee10cd8-d76b-424f-b639-5d1ddb3401261.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sliderApagado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sliderApagado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecuadroSimdesdeHora" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecuadroSimdesdeHora.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Imagen de ChatGPT 1 oct 2026, 17_56_52-2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Imagen de ChatGPT 1 oct 2026, 17_56_52-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonPausa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonPausa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="contorlesMapa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\contorlesMapa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icono de pausa blanco sobre transparente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono de pausa blanco sobre transparente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Guía visual de controles del mapa Asterix1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Guía visual de controles del mapa Asterix1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Elegante llave curva en melocotón" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Elegante llave curva en melocotón.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="large-green-circle_1f7e21" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\large-green-circle_1f7e21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Guía Heatmap de ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Guía Heatmap de ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="guiaControles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\guiaControles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonReproducir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonReproducir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuSimArchivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuSimArchivos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="large-green-square_1f7e9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\large-green-square_1f7e9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trayectorias" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trayectorias.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tutorial_ Ventana de información del avión" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial_ Ventana de información del avión.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonSiguiente" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonSiguiente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
