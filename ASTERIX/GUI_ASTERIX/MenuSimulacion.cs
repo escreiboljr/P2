@@ -155,6 +155,27 @@ namespace GUI_ASTERIX
             {
                 AjustarDataGrid();
             };
+            // aplicar el diseño personalizado al menú
+            
+            // aplicar el diseño personalizado
+            menuStrip1.Renderer = new ColoresMenu();
+
+            // colores de la barra superior
+            menuStrip1.BackColor = Color.FromArgb(16, 27, 45);
+            menuStrip1.ForeColor = Color.White;
+
+            // configurar los elementos principales y desplegables
+            foreach (ToolStripMenuItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.White;
+
+                foreach (ToolStripItem subItem in item.DropDownItems)
+                {
+                    subItem.ForeColor = Color.White;
+                }
+
+            }
+
         }
 
         private void AjustarDataGrid()
@@ -846,26 +867,32 @@ namespace GUI_ASTERIX
             ActualizarHeatmapDinamico(true);
         }
 
+
         private async void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // abrir el explorador para seleccionar un archivo asterix
+            // abrir el explorador para seleccionar uno o varios archivos asterix
             using (OpenFileDialog explorador = new OpenFileDialog())
             {
-                explorador.Title = "Seleccionar archivo ASTERIX";
+                explorador.Multiselect = true;
+                explorador.Title = "Seleccionar archivos ASTERIX";
 
                 if (explorador.ShowDialog() != DialogResult.OK)
                     return;
+
+                // guardar las rutas de los archivos seleccionados
+                string[] archivos = explorador.FileNames;
 
                 try
                 {
                     List<Mensaje> nuevosMensajes;
 
-                    // leer y decodificar el archivo mostrando el progreso de carga
+                    // leer y decodificar los archivos mostrando el progreso de carga
                     using (FormCargando cargando = new FormCargando())
                     {
                         cargando.Show(this);
                         cargando.ActualizarProgreso(0);
 
+                        // actualizar la barra de progreso
                         IProgress<int> progreso = new Progress<int>(porcentaje =>
                         {
                             if (!cargando.IsDisposed)
@@ -878,8 +905,10 @@ namespace GUI_ASTERIX
                             {
                                 LeerDatos lector = new LeerDatos();
 
-                                return lector.DatosProcesados(
-                                    explorador.FileName,
+                                // combinar los archivos eliminando los solapamientos
+                                // y decodificar los mensajes resultantes
+                                return lector.DatosProcesadosMultiples(
+                                    archivos,
                                     progreso
                                 );
                             });
@@ -890,10 +919,12 @@ namespace GUI_ASTERIX
                         }
                     }
 
-                    // comprobar que el archivo contiene mensajes válidos
+                    // comprobar que los archivos contienen mensajes válidos
                     if (nuevosMensajes == null || nuevosMensajes.Count == 0)
                     {
-                        MessageBox.Show("El archivo no contiene mensajes válidos.");
+                        MessageBox.Show(
+                            "Los archivos seleccionados no contienen mensajes válidos."
+                        );
                         return;
                     }
 
@@ -918,8 +949,9 @@ namespace GUI_ASTERIX
                     capaAviones.Markers.Clear();
                     capaTrayectorias.Routes.Clear();
 
-                    // guardar los nuevos mensajes y aplicar los filtros
+                    // guardar los nuevos mensajes y restablecer los filtros
                     RestablecerFiltros();
+
                     ListaMensajes = nuevosMensajes;
 
                     Filtros gestorFiltros = new Filtros();
@@ -929,10 +961,9 @@ namespace GUI_ASTERIX
 
                     // preparar los datos del mapa de calor
                     InvalidarHeatmap();
-
                     PrepararPuntosHeatmap();
 
-                    // reiniciar el tiempo al comienzo del nuevo archivo
+                    // reiniciar el tiempo al comienzo de los archivos
                     TiempoActual = 0;
                     BuscarTiempoInicial();
 
@@ -948,19 +979,21 @@ namespace GUI_ASTERIX
                     ActualizarHeatmapDinamico(true);
 
                     MessageBox.Show(
-                        "Archivo cargado correctamente.\n" +
-                        "Mensajes: " + ListaMensajes.Count
+                        "Archivos cargados correctamente.\n\n" +
+                        "Archivos seleccionados: " + archivos.Length + "\n" +
+                        "Mensajes cargados: " + ListaMensajes.Count
                     );
                 }
                 catch (Exception ex)
                 {
                     // mostrar un mensaje si se produce un error durante la carga
                     MessageBox.Show(
-                        "Error al cargar el archivo:\n" + ex.Message
+                        "Error al cargar los archivos:\n" + ex.Message
                     );
                 }
             }
         }
+
         private void ActualizarDataGrid()
         {
             dataGridAviones.Rows.Clear();
@@ -1662,6 +1695,7 @@ namespace GUI_ASTERIX
 
                 // Aplicar filtros
                 Filtros gestorFiltros = new Filtros();
+                //MessageBox.Show("1 - antes de aplicar filtros");
 
                 ListaMensajesFiltrados = gestorFiltros.AplicarFiltros(
                     ListaMensajes,
@@ -1678,11 +1712,20 @@ namespace GUI_ASTERIX
                     filtroAlturaMax
                 );
 
+                //MessageBox.Show("2 - filtros aplicados");
+
                 ReconstruirAvionesFiltrados();
+
+                //MessageBox.Show("3 - aviones reconstruidos");
+
                 InvalidarHeatmap();
+
+                //MessageBox.Show("4 - heatmap invalidado");
 
                 PrepararPuntosHeatmap();
                 ActualizarHeatmapDinamico(true);
+
+                //MessageBox.Show("5 - terminado");
             }
         }
 
@@ -1849,7 +1892,15 @@ namespace GUI_ASTERIX
             double tiempoInicial = tiempoInicioSimulacion;
 
             // Reconstruir desde el inicio hasta el instante actual
-            for (double tiempo = tiempoInicial; tiempo <= tiempoOriginal; tiempo++)
+            // reconstruir únicamente los últimos 10 segundos de simulación
+            double tiempoInicioReconstruccion = Math.Max(
+                tiempoInicial,
+                tiempoOriginal - 10
+            );
+
+            for (double tiempo = tiempoInicioReconstruccion;
+                 tiempo <= tiempoOriginal;
+                 tiempo++)
             {
                 TiempoActual = tiempo;
                 ActualizarAviones();

@@ -105,6 +105,7 @@
             // 
             // cargaDatosrToolStripMenuItem
             // 
+            cargaDatosrToolStripMenuItem.Image = Properties.Resources.iconoCargarArchivoTransparente;
             cargaDatosrToolStripMenuItem.Name = "cargaDatosrToolStripMenuItem";
             cargaDatosrToolStripMenuItem.Size = new Size(191, 26);
             cargaDatosrToolStripMenuItem.Text = "Cargar datos";
@@ -112,6 +113,7 @@
             // 
             // guardarEnCSVToolStripMenuItem
             // 
+            guardarEnCSVToolStripMenuItem.Image = Properties.Resources.iconoCsv;
             guardarEnCSVToolStripMenuItem.Name = "guardarEnCSVToolStripMenuItem";
             guardarEnCSVToolStripMenuItem.Size = new Size(191, 26);
             guardarEnCSVToolStripMenuItem.Text = "Guardar en CSV";
@@ -127,6 +129,7 @@
             // 
             // aplicarToolStripMenuItem
             // 
+            aplicarToolStripMenuItem.Image = Properties.Resources.filtros;
             aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
             aplicarToolStripMenuItem.Size = new Size(172, 26);
             aplicarToolStripMenuItem.Text = "Aplicar filtros";
@@ -134,6 +137,7 @@
             // 
             // limpiarToolStripMenuItem
             // 
+            limpiarToolStripMenuItem.Image = Properties.Resources.limpiarFiltro;
             limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
             limpiarToolStripMenuItem.Size = new Size(172, 26);
             limpiarToolStripMenuItem.Text = "Limpiar";
@@ -149,27 +153,31 @@
             // 
             // mostrarDatosEnCeldasToolStripMenuItem
             // 
+            mostrarDatosEnCeldasToolStripMenuItem.Image = Properties.Resources.datosDataGrid;
             mostrarDatosEnCeldasToolStripMenuItem.Name = "mostrarDatosEnCeldasToolStripMenuItem";
-            mostrarDatosEnCeldasToolStripMenuItem.Size = new Size(254, 26);
+            mostrarDatosEnCeldasToolStripMenuItem.Size = new Size(262, 30);
             mostrarDatosEnCeldasToolStripMenuItem.Text = "Mostar aviones en celdas";
             mostrarDatosEnCeldasToolStripMenuItem.Click += mostrarDatosEnCeldasToolStripMenuItem_Click;
             // 
             // trayectoriasToolStripMenuItem
             // 
+            trayectoriasToolStripMenuItem.Image = Properties.Resources.trayectorias;
             trayectoriasToolStripMenuItem.Name = "trayectoriasToolStripMenuItem";
-            trayectoriasToolStripMenuItem.Size = new Size(254, 26);
+            trayectoriasToolStripMenuItem.Size = new Size(262, 30);
             trayectoriasToolStripMenuItem.Text = "Trayectorias";
             trayectoriasToolStripMenuItem.Click += trayectoriasToolStripMenuItem_Click;
             // 
             // heatmapToolStripMenuItem
             // 
             heatmapToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mostrarHeatmapCompletoToolStripMenuItem, mostrarHeatmapDinamicoToolStripMenuItem });
+            heatmapToolStripMenuItem.Image = Properties.Resources.hetmap;
             heatmapToolStripMenuItem.Name = "heatmapToolStripMenuItem";
-            heatmapToolStripMenuItem.Size = new Size(254, 26);
+            heatmapToolStripMenuItem.Size = new Size(262, 30);
             heatmapToolStripMenuItem.Text = "Heatmap";
             // 
             // mostrarHeatmapCompletoToolStripMenuItem
             // 
+            mostrarHeatmapCompletoToolStripMenuItem.Image = Properties.Resources.heatmapTot;
             mostrarHeatmapCompletoToolStripMenuItem.Name = "mostrarHeatmapCompletoToolStripMenuItem";
             mostrarHeatmapCompletoToolStripMenuItem.Size = new Size(269, 26);
             mostrarHeatmapCompletoToolStripMenuItem.Text = "Mostrar heatmap completo";
@@ -177,6 +185,7 @@
             // 
             // mostrarHeatmapDinamicoToolStripMenuItem
             // 
+            mostrarHeatmapDinamicoToolStripMenuItem.Image = Properties.Resources.heatmapDin;
             mostrarHeatmapDinamicoToolStripMenuItem.Name = "mostrarHeatmapDinamicoToolStripMenuItem";
             mostrarHeatmapDinamicoToolStripMenuItem.Size = new Size(269, 26);
             mostrarHeatmapDinamicoToolStripMenuItem.Text = "Mostrar heatmap dinamico";
@@ -192,8 +201,9 @@
             // 
             // moToolStripMenuItem
             // 
+            moToolStripMenuItem.Image = Properties.Resources.contorlesMapaTrans;
             moToolStripMenuItem.Name = "moToolStripMenuItem";
-            moToolStripMenuItem.Size = new Size(271, 26);
+            moToolStripMenuItem.Size = new Size(279, 30);
             moToolStripMenuItem.Text = "Mostrar controles del mapa";
             moToolStripMenuItem.Click += moToolStripMenuItem_Click;
             // 

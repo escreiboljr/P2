@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             pictureBox1 = new PictureBox();
-            labelTitulo2 = new Label();
-            labelTitulo1 = new Label();
-            labelTitulo3 = new Label();
             buttonAtras = new Button();
             buttonAvanzar = new Button();
             textBoxContador = new TextBox();
@@ -49,36 +46,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            // 
-            // labelTitulo2
-            // 
-            labelTitulo2.AutoSize = true;
-            labelTitulo2.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelTitulo2.Location = new Point(495, 377);
-            labelTitulo2.Name = "labelTitulo2";
-            labelTitulo2.Size = new Size(542, 30);
-            labelTitulo2.TabIndex = 1;
-            labelTitulo2.Text = "se puede cargar mensajes, ver datos de la simulacion y ";
-            // 
-            // labelTitulo1
-            // 
-            labelTitulo1.AutoSize = true;
-            labelTitulo1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelTitulo1.Location = new Point(495, 347);
-            labelTitulo1.Name = "labelTitulo1";
-            labelTitulo1.Size = new Size(545, 30);
-            labelTitulo1.TabIndex = 2;
-            labelTitulo1.Text = "Este es el menu principal de simulacion ASTERIX, donde";
-            // 
-            // labelTitulo3
-            // 
-            labelTitulo3.AutoSize = true;
-            labelTitulo3.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold);
-            labelTitulo3.Location = new Point(495, 407);
-            labelTitulo3.Name = "labelTitulo3";
-            labelTitulo3.Size = new Size(362, 30);
-            labelTitulo3.TabIndex = 3;
-            labelTitulo3.Text = "la posicion de los diferentes aviones.";
             // 
             // buttonAtras
             // 
@@ -131,9 +98,6 @@
             Controls.Add(textBoxContador);
             Controls.Add(buttonAvanzar);
             Controls.Add(buttonAtras);
-            Controls.Add(labelTitulo3);
-            Controls.Add(labelTitulo1);
-            Controls.Add(labelTitulo2);
             Controls.Add(pictureBox1);
             Name = "MenuTutorial";
             Text = "MenuTutorial";
@@ -146,9 +110,6 @@
         #endregion
 
         private PictureBox pictureBox1;
-        private Label labelTitulo2;
-        private Label labelTitulo1;
-        private Label labelTitulo3;
         private Button buttonAtras;
         private Button buttonAvanzar;
         private TextBox textBoxContador;

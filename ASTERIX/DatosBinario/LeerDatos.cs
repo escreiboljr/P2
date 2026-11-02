@@ -59,7 +59,7 @@ namespace Archvios
         }
 
         private void ProcesarMensajes(Queue<byte> cola, List<Mensaje> listaTiras)
-    {
+        {
         while (true)
         {
             // ¿Hay al menos CAT + LEN?
@@ -134,7 +134,241 @@ namespace Archvios
                     }
                 }
             }
-    }
+        }
+
+
+        // leer varios archivos asterix y eliminar los solapamientos antes de decodificar
+        public List<Mensaje> DatosProcesadosMultiples(
+            string[] archivos,
+            IProgress<int> progreso = null)
+        {
+            if (archivos == null || archivos.Length == 0)
+                return new List<Mensaje>();
+
+            // extraer los mensajes originales de cada archivo
+            List<List<byte[]>> listas = new List<List<byte[]>>();
+
+            for (int i = 0; i < archivos.Length; i++)
+            {
+                List<byte[]> mensajes = LeerMensajesOriginales(archivos[i]);
+                listas.Add(mensajes);
+
+                progreso?.Report((int)((i + 1) * 40.0 / archivos.Length));
+            }
+
+            // unir las capturas detectando las secuencias repetidas
+            List<byte[]> mensajesUnidos = new List<byte[]>(listas[0]);
+
+            for (int i = 1; i < listas.Count; i++)
+            {
+                mensajesUnidos = UnirSecuencias(mensajesUnidos, listas[i]);
+            }
+
+            progreso?.Report(50);
+
+            // reiniciar los datos auxiliares del decodificador
+            ultimosBPS.Clear();
+            ultimosTiemposBPS.Clear();
+            bpsCandidatos.Clear();
+            repeticionesBPS.Clear();
+            ultimosQNH.Clear();
+
+            List<Mensaje> resultado = new List<Mensaje>();
+            Queue<byte> cola = new Queue<byte>();
+
+            // decodificar una sola vez los mensajes combinados
+            for (int i = 0; i < mensajesUnidos.Count; i++)
+            {
+                byte[] mensaje = mensajesUnidos[i];
+
+                foreach (byte dato in mensaje)
+                    cola.Enqueue(dato);
+
+                ProcesarMensajes(cola, resultado);
+
+                if (i % 1000 == 0)
+                {
+                    progreso?.Report(
+                        50 + (int)((i + 1) * 50.0 / mensajesUnidos.Count)
+                    );
+                }
+            }
+
+            progreso?.Report(100);
+
+            return resultado;
+        }
+
+
+        // extraer los mensajes asterix completos sin decodificarlos
+        private List<byte[]> LeerMensajesOriginales(string ruta)
+        {
+            List<byte[]> mensajes = new List<byte[]>();
+
+            using (FileStream fs = new FileStream(
+                ruta, FileMode.Open, FileAccess.Read))
+            {
+                while (fs.Position < fs.Length)
+                {
+                    byte[] cabecera = new byte[3];
+
+                    int leidos = fs.Read(cabecera, 0, 3);
+
+                    if (leidos == 0)
+                        break;
+
+                    if (leidos != 3)
+                        throw new InvalidDataException(
+                            "Cabecera ASTERIX incompleta: " + ruta);
+
+                    int longitud = (cabecera[1] << 8) | cabecera[2];
+
+                    if (longitud < 3 || longitud - 3 > fs.Length - fs.Position)
+                        throw new InvalidDataException(
+                            "Longitud ASTERIX no válida: " + ruta);
+
+                    byte[] mensaje = new byte[longitud];
+
+                    Array.Copy(cabecera, mensaje, 3);
+
+                    int posicion = 3;
+
+                    while (posicion < longitud)
+                    {
+                        int cantidad = fs.Read(
+                            mensaje, posicion, longitud - posicion);
+
+                        if (cantidad == 0)
+                            throw new EndOfStreamException();
+
+                        posicion += cantidad;
+                    }
+
+                    mensajes.Add(mensaje);
+                }
+            }
+
+            return mensajes;
+        }
+
+
+        // combinar dos secuencias sin repetir su parte solapada
+        private List<byte[]> UnirSecuencias(
+            List<byte[]> primera,
+            List<byte[]> segunda)
+        {
+            if (primera.Count == 0)
+                return new List<byte[]>(segunda);
+
+            if (segunda.Count == 0)
+                return primera;
+
+            // calcular las claves de los mensajes originales
+            string[] clavesPrimera = primera
+                .Select(m => Convert.ToBase64String(m))
+                .ToArray();
+
+            string[] clavesSegunda = segunda
+                .Select(m => Convert.ToBase64String(m))
+                .ToArray();
+
+            // comprobar si la segunda captura ya está incluida en la primera
+            int posicion = BuscarSecuencia(clavesPrimera, clavesSegunda);
+
+            if (posicion >= 0)
+                return primera;
+
+            // comprobar si la primera captura está incluida en la segunda
+            posicion = BuscarSecuencia(clavesSegunda, clavesPrimera);
+
+            if (posicion >= 0)
+                return new List<byte[]>(segunda);
+
+            // buscar el solapamiento entre el final de la primera
+            // y el principio de la segunda
+            int solapamiento = CalcularSolapamiento(
+                clavesPrimera, clavesSegunda);
+
+            List<byte[]> resultado = new List<byte[]>(primera);
+
+            resultado.AddRange(segunda.Skip(solapamiento));
+
+            return resultado;
+        }
+
+
+        // buscar una secuencia completa dentro de otra mediante kmp
+        private int BuscarSecuencia(string[] texto, string[] patron)
+        {
+            if (patron.Length == 0)
+                return 0;
+
+            int[] prefijos = CalcularPrefijos(patron);
+            int j = 0;
+
+            for (int i = 0; i < texto.Length; i++)
+            {
+                while (j > 0 && texto[i] != patron[j])
+                    j = prefijos[j - 1];
+
+                if (texto[i] == patron[j])
+                    j++;
+
+                if (j == patron.Length)
+                    return i - j + 1;
+            }
+
+            return -1;
+        }
+
+
+        // calcular cuántos mensajes finales coinciden con el inicio de otra captura
+        private int CalcularSolapamiento(
+            string[] primera,
+            string[] segunda)
+        {
+            if (segunda.Length == 0)
+                return 0;
+
+            int[] prefijos = CalcularPrefijos(segunda);
+            int j = 0;
+
+            foreach (string clave in primera)
+            {
+                while (j > 0 &&
+                       (j == segunda.Length || clave != segunda[j]))
+                {
+                    j = prefijos[j - 1];
+                }
+
+                if (j < segunda.Length && clave == segunda[j])
+                    j++;
+            }
+
+            return j;
+        }
+
+
+        // preparar la tabla de prefijos para comparar secuencias eficientemente
+        private int[] CalcularPrefijos(string[] patron)
+        {
+            int[] prefijos = new int[patron.Length];
+            int j = 0;
+
+            for (int i = 1; i < patron.Length; i++)
+            {
+                while (j > 0 && patron[i] != patron[j])
+                    j = prefijos[j - 1];
+
+                if (patron[i] == patron[j])
+                    j++;
+
+                prefijos[i] = j;
+            }
+
+            return prefijos;
+        }
+
 
         private void SkipUnknownFRN(Queue<byte> q)
         {

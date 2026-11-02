@@ -42,17 +42,18 @@ namespace GUI_ASTERIX
             textBoxContador.Text = contador.ToString();
             if (contador == 1)
             {
-                labelTitulo1.Visible = true;
+                /*labelTitulo1.Visible = true;
                 labelTitulo2.Visible = true;
                 labelTitulo3.Visible = true;
-                pictureBox1.Image = Properties.Resources.MenuSimulacion;
+                pictureBox1.Image = Properties.Resources.MenuSimulacion; */
             }
             if (contador == 2)
             {
+                /*
                 labelTitulo1.Visible = false;
                 labelTitulo2.Visible = false;
                 labelTitulo3.Visible = false;
-                pictureBox1.Image = Properties.Resources.RecuadroHoraControlesSim;
+                pictureBox1.Image = Properties.Resources.RecuadroHoraControlesSim; */
             }
             if (contador == 3)
             {

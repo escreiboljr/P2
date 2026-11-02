@@ -176,7 +176,7 @@
             // buttonAplciarCambios
             // 
             buttonAplciarCambios.ForeColor = Color.Black;
-            buttonAplciarCambios.Location = new Point(86, 379);
+            buttonAplciarCambios.Location = new Point(164, 371);
             buttonAplciarCambios.Name = "buttonAplciarCambios";
             buttonAplciarCambios.Size = new Size(121, 23);
             buttonAplciarCambios.TabIndex = 14;

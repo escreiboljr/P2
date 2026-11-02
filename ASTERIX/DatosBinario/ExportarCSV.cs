@@ -20,7 +20,7 @@ namespace Archivos
                 if (mensaje.categoria == 21)
                     hayCAT21 = true;
 
-                if (mensaje.categoria == 48)
+                if (mensaje.categoria == 48);
                     hayCAT48 = true;
             }
 

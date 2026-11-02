@@ -193,6 +193,36 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap contorlesMapa {
+            get {
+                object obj = ResourceManager.GetObject("contorlesMapa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap contorlesMapaTrans {
+            get {
+                object obj = ResourceManager.GetObject("contorlesMapaTrans", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap datosDataGrid {
+            get {
+                object obj = ResourceManager.GetObject("datosDataGrid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Elegante_llave_curva_en_melocotón {
             get {
                 object obj = ResourceManager.GetObject("Elegante llave curva en melocotón", resourceCulture);
@@ -213,9 +243,49 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap filtros {
+            get {
+                object obj = ResourceManager.GetObject("filtros", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap guiaControles {
             get {
                 object obj = ResourceManager.GetObject("guiaControles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap heatmapDin {
+            get {
+                object obj = ResourceManager.GetObject("heatmapDin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap heatmapTot {
+            get {
+                object obj = ResourceManager.GetObject("heatmapTot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap hetmap {
+            get {
+                object obj = ResourceManager.GetObject("hetmap", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +326,36 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap IconoAsterix {
             get {
                 object obj = ResourceManager.GetObject("IconoAsterix", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconoCargarArchivo {
+            get {
+                object obj = ResourceManager.GetObject("iconoCargarArchivo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconoCargarArchivoTransparente {
+            get {
+                object obj = ResourceManager.GetObject("iconoCargarArchivoTransparente", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconoCsv {
+            get {
+                object obj = ResourceManager.GetObject("iconoCsv", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -336,6 +436,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap large_green_square_1f7e9 {
             get {
                 object obj = ResourceManager.GetObject("large-green-square_1f7e9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap limpiarFiltro {
+            get {
+                object obj = ResourceManager.GetObject("limpiarFiltro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -516,6 +626,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap sliderApagado {
             get {
                 object obj = ResourceManager.GetObject("sliderApagado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap trayectorias {
+            get {
+                object obj = ResourceManager.GetObject("trayectorias", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
