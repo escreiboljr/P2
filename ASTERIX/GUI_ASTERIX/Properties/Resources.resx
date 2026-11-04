@@ -124,6 +124,9 @@
   <data name="filtros" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\filtros.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Tutorial_ Ventana de información del avión" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial_ Ventana de información del avión.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="retroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\retroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -132,6 +135,9 @@
   </data>
   <data name="sliderActivado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sliderActivado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonSiguiente" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonSiguiente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="datosDataGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\datosDataGrid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -304,9 +310,6 @@
   <data name="large-green-circle_1f7e21" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\large-green-circle_1f7e21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Guía Heatmap de ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Guía Heatmap de ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="guiaControles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\guiaControles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -322,10 +325,10 @@
   <data name="trayectorias" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\trayectorias.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Tutorial_ Ventana de información del avión" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tutorial_ Ventana de información del avión.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Guía Heatmap de ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Guía Heatmap de ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="botonSiguiente" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonSiguiente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Botón neón de aplicar filtros" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Botón neón de aplicar filtros.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

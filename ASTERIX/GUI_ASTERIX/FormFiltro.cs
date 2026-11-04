@@ -264,5 +264,10 @@ namespace GUI_ASTERIX
                 textBoxAltitudMax.Text = "";
             }
         }
+
+        private void checkBoxCat21_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

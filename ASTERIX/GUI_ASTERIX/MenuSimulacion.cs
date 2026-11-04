@@ -15,6 +15,8 @@ using System.Diagnostics;
 using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace GUI_ASTERIX
 {
@@ -41,6 +43,7 @@ namespace GUI_ASTERIX
         private bool mostrarHeatmap = false;
         private List<AvionSimulacion> avionesTrayectoriaSeleccionados = new List<AvionSimulacion>();
         private bool mostrarTodasTrayectorias = false;
+        private ScrollBarASTERIX barraDataGrid;
         public MenuSimulacion()
         {
             // inicializar el formulario y configurar el temporizador y el mapa
@@ -176,6 +179,8 @@ namespace GUI_ASTERIX
 
             }
 
+            ConfigurarScrollBarDataGrid();
+            EstiloDataGrid.PersonalizarDataGrid(dataGridAviones);
         }
 
         private void AjustarDataGrid()
@@ -784,17 +789,22 @@ namespace GUI_ASTERIX
                 labelTiempoFinal.Text = horaFinal.ToString(@"hh\:mm\:ss");
             }
         }
+
         private void trackBarTiempo_Scroll(object sender, EventArgs e)
         {
             if (ListaMensajesFiltrados.Count == 0)
                 return;
 
-            // Pausar la simulación
+            // pausar la simulación
             timerSimulacion.Stop();
             Reproduciendo = false;
             pictureBox1.Image = Properties.Resources.botonReproducir;
 
-            // Limpiar los datos anteriores
+            // obtener el tiempo seleccionado
+            double tiempoSeleccionado =
+                tiempoInicioSimulacion + trackBarTiempo.Value;
+
+            // limpiar los datos anteriores
             AvionesActuales.Clear();
             MensajesActuales.Clear();
 
@@ -806,23 +816,42 @@ namespace GUI_ASTERIX
             capaAviones.Markers.Clear();
             capaTrayectorias.Routes.Clear();
 
-            // Obtener el tiempo seleccionado
-            TiempoActual = tiempoInicioSimulacion + trackBarTiempo.Value;
+            // reconstruir los aviones de los últimos 10 segundos
+            double tiempoInicial = Math.Max(
+                tiempoInicioSimulacion,
+                Math.Floor(tiempoSeleccionado) - 10
+            );
 
-            // Actualizar la hora
-            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+            for (double tiempo = tiempoInicial;
+                 tiempo <= tiempoSeleccionado;
+                 tiempo++)
+            {
+                TiempoActual = tiempo;
 
+                ActualizarAviones();
+                EliminarAvionesInactivos();
+            }
 
-            // Actualizar los mensajes visibles de los últimos 10 segundos
+            // recuperar el tiempo seleccionado
+            TiempoActual = tiempoSeleccionado;
+
+            // eliminar los aviones que ya no están activos
+            EliminarAvionesInactivos();
+
+            // actualizar los mensajes visibles
             ActualizarMensajesActuales();
 
-            // Actualizar la interfaz
+            // actualizar la hora
+            ActualizarHoraTextBox();
+
+            // actualizar la interfaz inmediatamente
             ActualizarDataGrid();
             ActualizarMapa();
             MostrarTrayectorias();
 
             ActualizarHeatmapDinamico(true);
         }
+
 
         private void buttonAvanzar_Click(object sender, EventArgs e)
         {
@@ -996,6 +1025,7 @@ namespace GUI_ASTERIX
 
         private void ActualizarDataGrid()
         {
+            int primeraFila = dataGridAviones.FirstDisplayedScrollingRowIndex;
             dataGridAviones.Rows.Clear();
 
             foreach (AvionSimulacion avion in AvionesActuales)
@@ -1022,6 +1052,23 @@ namespace GUI_ASTERIX
                     avion.ultimoTiempo
                 );
             }
+            // restaurar la posición del datagrid
+            if (dataGridAviones.Rows.Count > 0 && primeraFila >= 0)
+            {
+                int indice = Math.Min(primeraFila, dataGridAviones.Rows.Count - 1);
+
+                try
+                {
+                    dataGridAviones.FirstDisplayedScrollingRowIndex = indice;
+                }
+                catch (InvalidOperationException)
+                {
+                    // ignorar si la fila no puede mostrarse
+                }
+            }
+
+            barraDataGrid?.Actualizar();
+            barraDataGrid?.Actualizar();
         }
 
         private void ActualizarMapa()
@@ -2007,6 +2054,13 @@ namespace GUI_ASTERIX
         {
             dataGridAviones.BringToFront();
             dataGridAviones.Visible = !dataGridAviones.Visible;
+            // actualizar la barra después de mostrar la tabla
+            if (dataGridAviones.Visible)
+            {
+                barraDataGrid.BringToFront();
+            }
+
+            barraDataGrid.Actualizar();
             mostrarDatosEnCeldasToolStripMenuItem.Checked = dataGridAviones.Visible;
         }
 
@@ -2557,5 +2611,52 @@ namespace GUI_ASTERIX
             pictureBoxContorles.Visible = false;
             moToolStripMenuItem.Checked = false;
         }
+
+        private void ConfigurarScrollBarDataGrid()
+        {
+            // crear la barra personalizada
+            barraDataGrid = new ScrollBarASTERIX();
+
+            // colocarla junto al borde derecho del datagrid
+            barraDataGrid.Parent = dataGridAviones.Parent;
+
+            barraDataGrid.Height = dataGridAviones.Height;
+            barraDataGrid.Left = dataGridAviones.Right - barraDataGrid.Width;
+            barraDataGrid.Top = dataGridAviones.Top;
+
+            barraDataGrid.Anchor = AnchorStyles.Top |
+                                   AnchorStyles.Bottom |
+                                   AnchorStyles.Right;
+
+            // vincular la barra con la tabla
+            barraDataGrid.Vincular(dataGridAviones);
+            // actualizar la barra cuando se muestre u oculte el datagrid
+            dataGridAviones.VisibleChanged += (sender, e) =>
+            {
+                barraDataGrid.Actualizar();
+            };
+            barraDataGrid.BringToFront();
+
+            // mantener su posición si cambia el tamaño de la tabla
+            dataGridAviones.SizeChanged += (sender, e) =>
+            {
+                barraDataGrid.Left =
+                    dataGridAviones.Right - barraDataGrid.Width;
+
+                barraDataGrid.Top = dataGridAviones.Top;
+                barraDataGrid.Height = dataGridAviones.Height;
+
+                barraDataGrid.Actualizar();
+            };
+
+            dataGridAviones.LocationChanged += (sender, e) =>
+            {
+                barraDataGrid.Left =
+                    dataGridAviones.Right - barraDataGrid.Width;
+
+                barraDataGrid.Top = dataGridAviones.Top;
+            };
+        }
+
     }
 }

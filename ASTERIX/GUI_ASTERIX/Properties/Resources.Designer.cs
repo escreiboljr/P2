@@ -123,6 +123,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Botón_neón_de_aplicar_filtros {
+            get {
+                object obj = ResourceManager.GetObject("Botón neón de aplicar filtros", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonAntes {
             get {
                 object obj = ResourceManager.GetObject("botonAntes", resourceCulture);
