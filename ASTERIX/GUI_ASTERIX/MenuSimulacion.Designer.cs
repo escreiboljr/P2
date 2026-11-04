@@ -45,6 +45,7 @@
             mostrarHeatmapDinamicoToolStripMenuItem = new ToolStripMenuItem();
             ayudaToolStripMenuItem = new ToolStripMenuItem();
             moToolStripMenuItem = new ToolStripMenuItem();
+            guiaToolStripMenuItem = new ToolStripMenuItem();
             timerSimulacion = new System.Windows.Forms.Timer(components);
             trackBarVelSimulacion = new TrackBar();
             dataGridAviones = new DataGridView();
@@ -155,7 +156,7 @@
             // 
             mostrarDatosEnCeldasToolStripMenuItem.Image = Properties.Resources.datosDataGrid;
             mostrarDatosEnCeldasToolStripMenuItem.Name = "mostrarDatosEnCeldasToolStripMenuItem";
-            mostrarDatosEnCeldasToolStripMenuItem.Size = new Size(262, 30);
+            mostrarDatosEnCeldasToolStripMenuItem.Size = new Size(254, 26);
             mostrarDatosEnCeldasToolStripMenuItem.Text = "Mostar aviones en celdas";
             mostrarDatosEnCeldasToolStripMenuItem.Click += mostrarDatosEnCeldasToolStripMenuItem_Click;
             // 
@@ -163,7 +164,7 @@
             // 
             trayectoriasToolStripMenuItem.Image = Properties.Resources.trayectorias;
             trayectoriasToolStripMenuItem.Name = "trayectoriasToolStripMenuItem";
-            trayectoriasToolStripMenuItem.Size = new Size(262, 30);
+            trayectoriasToolStripMenuItem.Size = new Size(254, 26);
             trayectoriasToolStripMenuItem.Text = "Trayectorias";
             trayectoriasToolStripMenuItem.Click += trayectoriasToolStripMenuItem_Click;
             // 
@@ -172,7 +173,7 @@
             heatmapToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mostrarHeatmapCompletoToolStripMenuItem, mostrarHeatmapDinamicoToolStripMenuItem });
             heatmapToolStripMenuItem.Image = Properties.Resources.hetmap;
             heatmapToolStripMenuItem.Name = "heatmapToolStripMenuItem";
-            heatmapToolStripMenuItem.Size = new Size(262, 30);
+            heatmapToolStripMenuItem.Size = new Size(254, 26);
             heatmapToolStripMenuItem.Text = "Heatmap";
             // 
             // mostrarHeatmapCompletoToolStripMenuItem
@@ -193,7 +194,7 @@
             // 
             // ayudaToolStripMenuItem
             // 
-            ayudaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { moToolStripMenuItem });
+            ayudaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { moToolStripMenuItem, guiaToolStripMenuItem });
             ayudaToolStripMenuItem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
             ayudaToolStripMenuItem.Size = new Size(66, 25);
@@ -203,9 +204,17 @@
             // 
             moToolStripMenuItem.Image = Properties.Resources.contorlesMapaTrans;
             moToolStripMenuItem.Name = "moToolStripMenuItem";
-            moToolStripMenuItem.Size = new Size(279, 30);
+            moToolStripMenuItem.Size = new Size(271, 26);
             moToolStripMenuItem.Text = "Mostrar controles del mapa";
             moToolStripMenuItem.Click += moToolStripMenuItem_Click;
+            // 
+            // guiaToolStripMenuItem
+            // 
+            guiaToolStripMenuItem.Image = Properties.Resources.Círculo_de_neón_con_interrogación;
+            guiaToolStripMenuItem.Name = "guiaToolStripMenuItem";
+            guiaToolStripMenuItem.Size = new Size(271, 26);
+            guiaToolStripMenuItem.Text = "Guia";
+            guiaToolStripMenuItem.Click += guiaToolStripMenuItem_Click;
             // 
             // timerSimulacion
             // 
@@ -620,5 +629,6 @@
         private ToolStripMenuItem moToolStripMenuItem;
         private PictureBox pictureBoxContorles;
         private PictureBox pictureBox7;
+        private ToolStripMenuItem guiaToolStripMenuItem;
     }
 }

@@ -93,6 +93,47 @@ namespace GUI_ASTERIX
             this.alturaMax = alturaMax;
 
             ActualizarControles();
+
+            FondoTransparente(
+        pictureBox2,
+        pictureBox5,
+        labelTituloCat
+    );
+
+            Point posicionCAT21 = pictureBox2.PointToClient(
+    checkBoxCat21.PointToScreen(Point.Empty));
+
+            checkBoxCat21.Parent = pictureBox2;
+            checkBoxCat21.Location = posicionCAT21;
+            checkBoxCat21.BackColor = Color.Transparent;
+            checkBoxCat21.UseVisualStyleBackColor = false;
+            checkBoxCat21.BringToFront();
+
+            Point posicionCAT48 = pictureBox2.PointToClient(
+    checkBoxCat48.PointToScreen(Point.Empty));
+
+            checkBoxCat48.Parent = pictureBox2;
+            checkBoxCat48.Location = posicionCAT48;
+            checkBoxCat48.BackColor = Color.Transparent;
+            checkBoxCat48.UseVisualStyleBackColor = false;
+            checkBoxCat48.BringToFront();
+
+            checkBoxCat21.Location = new Point(259, 65);
+            checkBoxCat48.Location = new Point(151, 65);
+
+
+            FondoTransparente(
+        pictureBox3,
+        pictureBox6,
+        pictureBoxSlideButtonBlancoPuro,pictureBoxSlideButtonGround,pictureBoxSlideButtonTransFijo,
+        labelTitBlancoPuro,labelTitGround, labelTitTransFijo,label1
+    );
+
+            FondoTransparente(
+       pictureBox4,
+       pictureBox7,
+       labelTitTrayAeronav,labelTituloAltitud,label2
+   );
         }
 
         // activar o desactivar el filtro de blanco puro
@@ -268,6 +309,42 @@ namespace GUI_ASTERIX
         private void checkBoxCat21_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void FormFiltro_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FondoTransparente(Control recuadro, params Control[] controles)
+        {
+            foreach (Control control in controles)
+            {
+                // guardar la posición antes de cambiar el padre
+                Point posicion = recuadro.PointToClient(
+                    control.PointToScreen(Point.Empty)
+                );
+
+                // cambiar el padre del control
+                control.Parent = recuadro;
+
+                // restaurar la posición respecto al recuadro
+                control.Location = posicion;
+
+                // configurar el fondo transparente
+                control.BackColor = Color.Transparent;
+
+                // configuración específica de los checkbox
+                if (control is CheckBox checkBox)
+                {
+                    checkBox.AutoSize = true;
+                    checkBox.UseVisualStyleBackColor = false;
+                }
+
+                // mostrar el control por encima del recuadro
+                control.Visible = true;
+                control.BringToFront();
+            }
         }
     }
 }

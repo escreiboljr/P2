@@ -159,7 +159,7 @@ namespace GUI_ASTERIX
                 AjustarDataGrid();
             };
             // aplicar el diseño personalizado al menú
-            
+
             // aplicar el diseño personalizado
             menuStrip1.Renderer = new ColoresMenu();
 
@@ -1006,13 +1006,8 @@ namespace GUI_ASTERIX
                     MostrarTrayectorias();
 
                     ActualizarHeatmapDinamico(true);
-
-                    MessageBox.Show(
-                        "Archivos cargados correctamente.\n\n" +
-                        "Archivos seleccionados: " + archivos.Length + "\n" +
-                        "Mensajes cargados: " + ListaMensajes.Count
-                    );
                 }
+                
                 catch (Exception ex)
                 {
                     // mostrar un mensaje si se produce un error durante la carga
@@ -2658,5 +2653,10 @@ namespace GUI_ASTERIX
             };
         }
 
+        private void guiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form guia = new MenuTutorial();
+            guia.Show();
+        }
     }
 }

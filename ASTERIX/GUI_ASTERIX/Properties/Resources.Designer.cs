@@ -113,6 +113,36 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Avión_neón_en_mira_de_radar {
+            get {
+                object obj = ResourceManager.GetObject("Avión neón en mira de radar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Banner_de_Radar_Aéreo_Categoría_ASTERIX {
+            get {
+                object obj = ResourceManager.GetObject("Banner de Radar Aéreo Categoría ASTERIX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Banner_de_Radar_Aéreo_Categoría_ASTERIX1 {
+            get {
+                object obj = ResourceManager.GetObject("Banner de Radar Aéreo Categoría ASTERIX1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Botón_azul_brillante_con_icono_de_documento {
             get {
                 object obj = ResourceManager.GetObject("Botón azul brillante con icono de documento", resourceCulture);
@@ -216,6 +246,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap botonTourPrograma {
             get {
                 object obj = ResourceManager.GetObject("botonTourPrograma", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Círculo_de_neón_con_interrogación {
+            get {
+                object obj = ResourceManager.GetObject("Círculo de neón con interrogación", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -353,6 +393,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Icono_de_controles_deslizantes_turquesa {
+            get {
+                object obj = ResourceManager.GetObject("Icono de controles deslizantes turquesa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente {
             get {
                 object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente", resourceCulture);
@@ -376,6 +426,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap Icono_de_pausa_blanco_sobre_transparente2 {
             get {
                 object obj = ResourceManager.GetObject("Icono de pausa blanco sobre transparente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Icono_de_radar_cian_brillante {
+            get {
+                object obj = ResourceManager.GetObject("Icono de radar cian brillante", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -606,6 +666,16 @@ namespace GUI_ASTERIX.Properties {
         internal static System.Drawing.Bitmap RecuadroAdsbRadar {
             get {
                 object obj = ResourceManager.GetObject("RecuadroAdsbRadar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap recuadroazul {
+            get {
+                object obj = ResourceManager.GetObject("recuadroazul", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
