@@ -31,8 +31,7 @@ namespace GUI_ASTERIX
         private List<Mensaje> ListaMensajesFiltrados = new List<Mensaje>();
         private List<AvionSimulacion> AvionesActuales = new List<AvionSimulacion>();
         private List<AvionSimulacion> MensajesActuales = new List<AvionSimulacion>();
-        private Stack<List<AvionSimulacion>> historialAviones = new Stack<List<AvionSimulacion>>();
-        private Stack<double> historialTiempo = new Stack<double>();
+
         private bool Reproduciendo = false;
         private GMapOverlay capaAviones;
         private GMapOverlay capaTrayectorias;
@@ -248,12 +247,83 @@ namespace GUI_ASTERIX
         {
             AvanzarUnSegundo();
         }
+        private void ReconstruirAvionesFiltrados()
+        {
+            ReconstruirAviones(TiempoActual);
+        }
 
+        private void ReconstruirAviones(double tiempoSeleccionado)
+        {
+            // Guardar las trayectorias seleccionadas
+            List<string> clavesSeleccionadas = new List<string>();
+
+            foreach (AvionSimulacion avion in avionesTrayectoriaSeleccionados)
+            {
+                clavesSeleccionadas.Add(ObtenerClaveAvion(avion));
+            }
+
+            // Limpiar el estado actual
+            AvionesActuales.Clear();
+            MensajesActuales.Clear();
+
+            capaAviones.Markers.Clear();
+            capaTrayectorias.Routes.Clear();
+
+            avionesTrayectoriaSeleccionados.Clear();
+
+            // Reconstruir los últimos 10 segundos
+            double tiempoInicial = Math.Max(
+                tiempoInicioSimulacion,
+                Math.Floor(tiempoSeleccionado) - 10
+            );
+
+            for (double tiempo = tiempoInicial;
+                 tiempo <= tiempoSeleccionado;
+                 tiempo++)
+            {
+                TiempoActual = tiempo;
+
+                ActualizarAviones();
+                EliminarAvionesInactivos();
+            }
+
+            // Recuperar el instante solicitado
+            TiempoActual = tiempoSeleccionado;
+
+            EliminarAvionesInactivos();
+
+            // Reconstruir los mensajes visibles
+            ActualizarMensajesActuales();
+
+            // Recuperar las trayectorias seleccionadas
+            foreach (AvionSimulacion avion in AvionesActuales)
+            {
+                if (clavesSeleccionadas.Contains(ObtenerClaveAvion(avion)))
+                {
+                    avionesTrayectoriaSeleccionados.Add(avion);
+                }
+            }
+
+            // Actualizar la barra de tiempo
+            trackBarTiempo.Value = Math.Max(
+                trackBarTiempo.Minimum,
+                Math.Min(
+                    trackBarTiempo.Maximum,
+                    (int)(TiempoActual - tiempoInicioSimulacion)
+                )
+            );
+
+            barraTiempoNueva.TiempoValor = trackBarTiempo.Value;
+
+            // Actualizar la interfaz
+            ActualizarHoraTextBox();
+            ActualizarDataGrid();
+            ActualizarMapa();
+            MostrarTrayectorias();
+        }
         private void AvanzarUnSegundo()
         {
             // guardar el estado actual para poder retroceder en la simulación
-            historialAviones.Push(CopiarAviones());
-            historialTiempo.Push(TiempoActual);
 
             // avanzar un segundo y actualizar la barra de tiempo
             TiempoActual = TiempoActual + 1;
@@ -808,9 +878,6 @@ namespace GUI_ASTERIX
             AvionesActuales.Clear();
             MensajesActuales.Clear();
 
-            historialAviones.Clear();
-            historialTiempo.Clear();
-
             avionesTrayectoriaSeleccionados.Clear();
 
             capaAviones.Markers.Clear();
@@ -868,9 +935,6 @@ namespace GUI_ASTERIX
             MensajesActuales.Clear();
 
             dataGridAviones.Rows.Clear();
-
-            historialAviones.Clear();
-            historialTiempo.Clear();
 
             capaTrayectorias.Routes.Clear();
             avionesTrayectoriaSeleccionados.Clear();
@@ -967,9 +1031,6 @@ namespace GUI_ASTERIX
                     // eliminar los datos de la simulación anterior
                     AvionesActuales.Clear();
                     MensajesActuales.Clear();
-
-                    historialAviones.Clear();
-                    historialTiempo.Clear();
 
                     avionesTrayectoriaSeleccionados.Clear();
 
@@ -1256,56 +1317,24 @@ namespace GUI_ASTERIX
         {
             AvanzarUnSegundo();
         }
-        private List<AvionSimulacion> CopiarAviones()
+
+        private void pictureBox3_Click(object sender, EventArgs e)
         {
-            List<AvionSimulacion> copia = new List<AvionSimulacion>();
+            if (ListaMensajesFiltrados.Count == 0)
+                return;
 
-            foreach (AvionSimulacion avion in AvionesActuales)
-            {
-                copia.Add(avion.Copiar());
-            }
+            // No retroceder antes del inicio
+            if (TiempoActual <= tiempoInicioSimulacion)
+                return;
 
-            return copia;
-        }
+            // Retroceder un segundo
+            double nuevoTiempo = TiempoActual - 1;
 
-        private void pictureBox3_Click(object sender, EventArgs e)      //boton de retroceder
-        {
-            if (historialAviones.Count > 0)
-            {
-                // Guardamos qué aviones tenían la trayectoria seleccionada
-                List<string> clavesSeleccionadas = new List<string>();
+            // Reconstruir los aviones en ese instante
+            ReconstruirAviones(nuevoTiempo);
 
-                foreach (AvionSimulacion avion in avionesTrayectoriaSeleccionados)
-                {
-                    clavesSeleccionadas.Add(ObtenerClaveAvion(avion));
-                }
-
-                // Recuperamos estado anterior
-                AvionesActuales = historialAviones.Pop();
-                TiempoActual = historialTiempo.Pop();
-                ActualizarMensajesActuales();
-
-                // Reconstruimos la lista de seleccionados
-                avionesTrayectoriaSeleccionados.Clear();
-
-                foreach (AvionSimulacion avion in AvionesActuales)
-                {
-                    if (clavesSeleccionadas.Contains(ObtenerClaveAvion(avion)))
-                    {
-                        avionesTrayectoriaSeleccionados.Add(avion);
-                    }
-                }
-
-                // Actualizamos hora
-                TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-                ActualizarHoraTextBox();
-
-                ActualizarDataGrid();
-                ActualizarMapa();
-                MostrarTrayectorias();
-
-                ActualizarHeatmapDinamico(true);
-            }
+            // Actualizar el mapa de calor
+            ActualizarHeatmapDinamico(true);
         }
         private void ActualizarMensajesActuales()
         {
@@ -1907,57 +1936,6 @@ namespace GUI_ASTERIX
 
             // actualizar el mapa para mostrar las trayectorias
             gMapControl1.Refresh();
-        }
-
-        private void ReconstruirAvionesFiltrados()
-        {
-            double tiempoOriginal = TiempoActual;
-
-            AvionesActuales.Clear();
-            MensajesActuales.Clear();
-
-            historialAviones.Clear();
-            historialTiempo.Clear();
-
-            capaAviones.Markers.Clear();
-            capaTrayectorias.Routes.Clear();
-            avionesTrayectoriaSeleccionados.Clear();
-
-            double tiempoInicial = tiempoInicioSimulacion;
-
-            // Reconstruir desde el inicio hasta el instante actual
-            // reconstruir únicamente los últimos 10 segundos de simulación
-            double tiempoInicioReconstruccion = Math.Max(
-                tiempoInicial,
-                tiempoOriginal - 10
-            );
-
-            for (double tiempo = tiempoInicioReconstruccion;
-                 tiempo <= tiempoOriginal;
-                 tiempo++)
-            {
-                TiempoActual = tiempo;
-                ActualizarAviones();
-                EliminarAvionesInactivos();
-            }
-
-            // Recuperar el tiempo en el que estaba la simulación
-            // Recuperar el tiempo seleccionado
-            TiempoActual = tiempoOriginal;
-
-            // Actualizar la posición de la barra
-            trackBarTiempo.Value = (int)(
-                TiempoActual - tiempoInicioSimulacion
-            );
-
-            TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-            ActualizarHoraTextBox();
-
-            ActualizarMensajesActuales();
-
-            ActualizarDataGrid();
-            ActualizarMapa();
-            MostrarTrayectorias();
         }
 
         private void EliminarAvionesInactivos()
