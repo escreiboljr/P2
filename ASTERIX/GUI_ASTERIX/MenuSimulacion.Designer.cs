@@ -72,6 +72,15 @@
             pictureBox6 = new PictureBox();
             pictureBoxContorles = new PictureBox();
             pictureBox7 = new PictureBox();
+            panelLeyendaHeatmap = new Panel();
+            labelHeatmap100 = new Label();
+            labelHeatmap75 = new Label();
+            labelHeatmap50 = new Label();
+            labelHeatmap25 = new Label();
+            labelHeatmap0 = new Label();
+            pictureBoxEscalaHeatmap = new PictureBox();
+            labelDensTraf = new Label();
+            labeldensidad = new Label();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarVelSimulacion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridAviones).BeginInit();
@@ -84,6 +93,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxContorles).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            panelLeyendaHeatmap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxEscalaHeatmap).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -531,12 +542,112 @@
             pictureBox7.TabIndex = 42;
             pictureBox7.TabStop = false;
             // 
+            // panelLeyendaHeatmap
+            // 
+            panelLeyendaHeatmap.Controls.Add(labeldensidad);
+            panelLeyendaHeatmap.Controls.Add(labelHeatmap100);
+            panelLeyendaHeatmap.Controls.Add(labelHeatmap75);
+            panelLeyendaHeatmap.Controls.Add(labelHeatmap50);
+            panelLeyendaHeatmap.Controls.Add(labelHeatmap25);
+            panelLeyendaHeatmap.Controls.Add(labelHeatmap0);
+            panelLeyendaHeatmap.Controls.Add(pictureBoxEscalaHeatmap);
+            panelLeyendaHeatmap.Controls.Add(labelDensTraf);
+            panelLeyendaHeatmap.Location = new Point(339, 394);
+            panelLeyendaHeatmap.Name = "panelLeyendaHeatmap";
+            panelLeyendaHeatmap.Size = new Size(260, 100);
+            panelLeyendaHeatmap.TabIndex = 43;
+            // 
+            // labelHeatmap100
+            // 
+            labelHeatmap100.AutoSize = true;
+            labelHeatmap100.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelHeatmap100.ForeColor = Color.White;
+            labelHeatmap100.Location = new Point(223, 59);
+            labelHeatmap100.Name = "labelHeatmap100";
+            labelHeatmap100.Size = new Size(37, 15);
+            labelHeatmap100.TabIndex = 6;
+            labelHeatmap100.Text = "H100";
+            // 
+            // labelHeatmap75
+            // 
+            labelHeatmap75.AutoSize = true;
+            labelHeatmap75.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelHeatmap75.ForeColor = Color.White;
+            labelHeatmap75.Location = new Point(177, 59);
+            labelHeatmap75.Name = "labelHeatmap75";
+            labelHeatmap75.Size = new Size(30, 15);
+            labelHeatmap75.TabIndex = 5;
+            labelHeatmap75.Text = "H75";
+            // 
+            // labelHeatmap50
+            // 
+            labelHeatmap50.AutoSize = true;
+            labelHeatmap50.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelHeatmap50.ForeColor = Color.White;
+            labelHeatmap50.Location = new Point(114, 59);
+            labelHeatmap50.Name = "labelHeatmap50";
+            labelHeatmap50.Size = new Size(30, 15);
+            labelHeatmap50.TabIndex = 4;
+            labelHeatmap50.Text = "H50";
+            // 
+            // labelHeatmap25
+            // 
+            labelHeatmap25.AutoSize = true;
+            labelHeatmap25.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelHeatmap25.ForeColor = Color.White;
+            labelHeatmap25.Location = new Point(55, 59);
+            labelHeatmap25.Name = "labelHeatmap25";
+            labelHeatmap25.Size = new Size(30, 15);
+            labelHeatmap25.TabIndex = 3;
+            labelHeatmap25.Text = "H25";
+            // 
+            // labelHeatmap0
+            // 
+            labelHeatmap0.AutoSize = true;
+            labelHeatmap0.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelHeatmap0.ForeColor = Color.White;
+            labelHeatmap0.Location = new Point(0, 59);
+            labelHeatmap0.Name = "labelHeatmap0";
+            labelHeatmap0.Size = new Size(23, 15);
+            labelHeatmap0.TabIndex = 2;
+            labelHeatmap0.Text = "H0";
+            // 
+            // pictureBoxEscalaHeatmap
+            // 
+            pictureBoxEscalaHeatmap.Location = new Point(15, 38);
+            pictureBoxEscalaHeatmap.Name = "pictureBoxEscalaHeatmap";
+            pictureBoxEscalaHeatmap.Size = new Size(230, 18);
+            pictureBoxEscalaHeatmap.TabIndex = 1;
+            pictureBoxEscalaHeatmap.TabStop = false;
+            // 
+            // labelDensTraf
+            // 
+            labelDensTraf.AutoSize = true;
+            labelDensTraf.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelDensTraf.ForeColor = Color.White;
+            labelDensTraf.Location = new Point(73, 10);
+            labelDensTraf.Name = "labelDensTraf";
+            labelDensTraf.Size = new Size(115, 15);
+            labelDensTraf.TabIndex = 0;
+            labelDensTraf.Text = "Densidad de trafico";
+            // 
+            // labeldensidad
+            // 
+            labeldensidad.AutoSize = true;
+            labeldensidad.ForeColor = Color.White;
+            labeldensidad.Location = new Point(77, 78);
+            labeldensidad.Name = "labeldensidad";
+            labeldensidad.Size = new Size(104, 15);
+            labeldensidad.TabIndex = 7;
+            labeldensidad.Text = "Aviones/cuadrado";
+            // 
             // MenuSimulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 28, 45);
             ClientSize = new Size(985, 731);
+            Controls.Add(panelLeyendaHeatmap);
             Controls.Add(pictureBox7);
             Controls.Add(pictureBox6);
             Controls.Add(labelTiempoFinal);
@@ -581,6 +692,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxContorles).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            panelLeyendaHeatmap.ResumeLayout(false);
+            panelLeyendaHeatmap.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxEscalaHeatmap).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -630,5 +744,14 @@
         private PictureBox pictureBoxContorles;
         private PictureBox pictureBox7;
         private ToolStripMenuItem guiaToolStripMenuItem;
+        private Panel panelLeyendaHeatmap;
+        private PictureBox pictureBoxEscalaHeatmap;
+        private Label labelDensTraf;
+        private Label labelHeatmap0;
+        private Label labelHeatmap100;
+        private Label labelHeatmap75;
+        private Label labelHeatmap50;
+        private Label labelHeatmap25;
+        private Label labeldensidad;
     }
 }

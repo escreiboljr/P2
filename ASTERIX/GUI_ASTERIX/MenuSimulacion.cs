@@ -47,6 +47,10 @@ namespace GUI_ASTERIX
         {
             // inicializar el formulario y configurar el temporizador y el mapa
             InitializeComponent();
+
+            CrearEscalaHeatmap();
+            panelLeyendaHeatmap.Visible = false;
+
             timerSimulacion.Interval = 1000;
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
 
@@ -2063,6 +2067,8 @@ namespace GUI_ASTERIX
             }
             capaHeatmap.IsVisibile = mostrarHeatmap;
             gMapControl1.Refresh();
+
+            ActualizarLeyendaHeatmap();
         }
 
 
@@ -2167,32 +2173,33 @@ namespace GUI_ASTERIX
         private void DibujarHeatmap(
     Dictionary<(int, int), HashSet<string>> densidades)
         {
-            // eliminar las celdas anteriores del mapa de calor
             capaHeatmap.Markers.Clear();
 
             if (densidades.Count == 0)
             {
+                ActualizarNumerosLeyenda(0);
                 gMapControl1.Refresh();
                 return;
             }
 
-            // suavizar las densidades y obtener el valor máximo
-            Dictionary<(int, int), double> densidadesSuavizadas =
-                SuavizarHeatmap(densidades);
+            // Máximo real de aviones distintos en una celda
+            int maximo = densidades.Values.Max(aviones => aviones.Count);
 
-            double maximo = densidadesSuavizadas.Values.Max();
+            ActualizarNumerosLeyenda(maximo);
 
-            foreach (var celda in densidadesSuavizadas)
+            foreach (var celda in densidades)
             {
-                double cantidad = celda.Value;
+                int cantidad = celda.Value.Count;
 
-                // calcular la intensidad de cada celda mediante una escala logarítmica
-                double intensidad = Math.Log(1.0 + cantidad) /
-                                   Math.Log(1.0 + maximo);
+                if (cantidad == 0)
+                    continue;
+
+                double intensidad = maximo > 1
+                    ? (double)(cantidad - 1) / (maximo - 1)
+                    : 0;
 
                 Color color;
 
-                // asignar un color según la intensidad del tráfico aéreo
                 if (intensidad < 0.33)
                 {
                     double t = intensidad / 0.33;
@@ -2215,11 +2222,9 @@ namespace GUI_ASTERIX
                         160, 255, (int)(120 * (1 - t)), 0);
                 }
 
-                // calcular los límites geográficos de la celda
                 double latMin = celda.Key.Item1 * tamanoCeldaHeatmap;
                 double lonMin = celda.Key.Item2 * tamanoCeldaHeatmap;
 
-                // crear la celda coloreada y añadirla al mapa
                 CeldaHeatmap marcador = new CeldaHeatmap(
                     latMin,
                     latMin + tamanoCeldaHeatmap,
@@ -2231,7 +2236,6 @@ namespace GUI_ASTERIX
                 capaHeatmap.Markers.Add(marcador);
             }
 
-            // actualizar el mapa para mostrar el mapa de calor
             gMapControl1.Refresh();
         }
 
@@ -2312,6 +2316,7 @@ namespace GUI_ASTERIX
             DibujarHeatmap(densidadesDinamicas);
 
             ultimoTiempoHeatmap = TiempoActual;
+            ActualizarLeyendaHeatmap();
         }
 
 
@@ -2507,6 +2512,8 @@ namespace GUI_ASTERIX
 
             gMapControl1.Height =
                 this.ClientSize.Height - gMapControl1.Top - margenInferior;
+
+            PosicionarLeyendaHeatmap();
         }
 
         private void trackBarTiempo_MouseUp(object sender, MouseEventArgs e)
@@ -2627,6 +2634,106 @@ namespace GUI_ASTERIX
         {
             Form guia = new MenuTutorial();
             guia.Show();
+        }
+
+        private void PosicionarLeyendaHeatmap()
+        {
+            panelLeyendaHeatmap.Location = new Point(
+                gMapControl1.Right - panelLeyendaHeatmap.Width - 15,
+                gMapControl1.Bottom - panelLeyendaHeatmap.Height - 15
+            );
+
+            panelLeyendaHeatmap.BringToFront();
+        }
+
+        private void CrearEscalaHeatmap()
+        {
+            Bitmap imagen = new Bitmap(
+                pictureBoxEscalaHeatmap.Width,
+                pictureBoxEscalaHeatmap.Height
+            );
+
+            using (Graphics g = Graphics.FromImage(imagen))
+            {
+                for (int x = 0; x < imagen.Width; x++)
+                {
+                    double intensidad = (double)x / (imagen.Width - 1);
+
+                    Color color;
+
+                    if (intensidad < 0.33)
+                    {
+                        double t = intensidad / 0.33;
+
+                        color = Color.FromArgb(
+                            (int)(255 * t), 220, 0);
+                    }
+                    else if (intensidad < 0.66)
+                    {
+                        double t = (intensidad - 0.33) / 0.33;
+
+                        color = Color.FromArgb(
+                            255, (int)(220 - 100 * t), 0);
+                    }
+                    else
+                    {
+                        double t = (intensidad - 0.66) / 0.34;
+
+                        color = Color.FromArgb(
+                            255, (int)(120 * (1 - t)), 0);
+                    }
+
+                    using (Pen lapiz = new Pen(color))
+                    {
+                        g.DrawLine(
+                            lapiz,
+                            x, 0,
+                            x, imagen.Height
+                        );
+                    }
+                }
+            }
+
+            Image imagenAnterior = pictureBoxEscalaHeatmap.Image;
+            pictureBoxEscalaHeatmap.Image = imagen;
+            imagenAnterior?.Dispose();
+        }
+
+        private void ActualizarLeyendaHeatmap()
+        {
+            panelLeyendaHeatmap.Visible =
+                mostrarHeatmap || mostrarHeatmapDinamico;
+
+            if (panelLeyendaHeatmap.Visible)
+            {
+                PosicionarLeyendaHeatmap();
+            }
+        }
+
+        private void ActualizarNumerosLeyenda(int maximo)
+        {
+            if (maximo == 0)
+            {
+                labelHeatmap0.Text = "0";
+                labelHeatmap25.Text = "0";
+                labelHeatmap50.Text = "0";
+                labelHeatmap75.Text = "0";
+                labelHeatmap100.Text = "0";
+                return;
+            }
+
+            labelHeatmap0.Text = "1";
+
+            labelHeatmap25.Text =
+                (1 + (int)Math.Round((maximo - 1) * 0.25)).ToString();
+
+            labelHeatmap50.Text =
+                (1 + (int)Math.Round((maximo - 1) * 0.50)).ToString();
+
+            labelHeatmap75.Text =
+                (1 + (int)Math.Round((maximo - 1) * 0.75)).ToString();
+
+            labelHeatmap100.Text = maximo.ToString();
         }
     }
 }
