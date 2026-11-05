@@ -1773,29 +1773,21 @@ namespace GUI_ASTERIX
 
         private void limpiarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Restablecer los filtros
             RestablecerFiltros();
 
             Filtros gestorFiltros = new Filtros();
 
             ListaMensajesFiltrados =
                 gestorFiltros.PrepararMensajes(ListaMensajes);
-            InvalidarHeatmap();
 
+            // Reconstruir los aviones en el tiempo actual
+            ReconstruirAvionesFiltrados();
+
+            // Actualizar el mapa de calor
+            InvalidarHeatmap();
             PrepararPuntosHeatmap();
             ActualizarHeatmapDinamico(true);
-
-            AvionesActuales.Clear();
-            MensajesActuales.Clear();
-
-            historialAviones.Clear();
-            historialTiempo.Clear();
-
-            capaTrayectorias.Routes.Clear();
-            avionesTrayectoriaSeleccionados.Clear();
-
-            ActualizarAviones();
-            ActualizarDataGrid();
-            ActualizarMapa();
 
             gMapControl1.Refresh();
         }

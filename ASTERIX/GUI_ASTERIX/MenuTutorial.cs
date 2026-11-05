@@ -15,6 +15,7 @@ namespace GUI_ASTERIX
         public MenuTutorial()
         {
             InitializeComponent();
+            this.Shown += (s, e) => this.ActiveControl = null;
         }
 
         private void MenuTutorial_Load(object sender, EventArgs e)
@@ -80,6 +81,11 @@ namespace GUI_ASTERIX
             {
                 contador = 9;
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

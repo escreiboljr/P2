@@ -79,6 +79,7 @@ namespace GUI_ASTERIX
         public FormFiltro(bool blancoPuro, bool transFijo, bool ground, bool cat21, bool cat48, bool filtrarTrayectoria, double trayectoriaMin, double trayectoriaMax, bool filtrarAltura, double alturaMin, double alturaMax)
         {
             InitializeComponent();
+            this.Shown += (s, e) => this.ActiveControl = null;
 
             this.blancoPuro = blancoPuro;
             this.TransFijo = transFijo;
