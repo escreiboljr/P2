@@ -227,32 +227,49 @@ namespace GUI_ASTERIX
                 filtrarTrayectoria = false;
             }
             // comprobar y aplicar el filtro de nivel de vuelo
-            if (!string.IsNullOrWhiteSpace(textBoxAltitudMin.Text) &&
+            // Comprobar y aplicar el filtro de nivel de vuelo
+            if (!string.IsNullOrWhiteSpace(textBoxAltitudMin.Text) ||
                 !string.IsNullOrWhiteSpace(textBoxAltitudMax.Text))
             {
-                if (double.TryParse(textBoxAltitudMin.Text, out double min) &&
-                    double.TryParse(textBoxAltitudMax.Text, out double max))
+                // Valores por defecto si alguno de los campos está vacío
+                double min = -999;
+                double max = 999;
+
+                // Comprobar el mínimo si se ha introducido
+                if (!string.IsNullOrWhiteSpace(textBoxAltitudMin.Text))
                 {
-                    if (min >= 0 && max <= 600 && min <= max)
+                    if (!double.TryParse(textBoxAltitudMin.Text, out min))
                     {
-                        alturaMin = min;
-                        alturaMax = max;
-                        filtrarAltura = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Introduce un rango de flight levels válido entre 0 y 600.");
+                        MessageBox.Show("Introduce un valor mínimo válido.");
                         return;
                     }
                 }
-                else
+
+                // Comprobar el máximo si se ha introducido
+                if (!string.IsNullOrWhiteSpace(textBoxAltitudMax.Text))
                 {
-                    MessageBox.Show("Introduce valores válidos para los flight levels.");
+                    if (!double.TryParse(textBoxAltitudMax.Text, out max))
+                    {
+                        MessageBox.Show("Introduce un valor máximo válido.");
+                        return;
+                    }
+                }
+
+                // Comprobar que el mínimo no sea superior al máximo
+                if (min > max)
+                {
+                    MessageBox.Show("El nivel de vuelo mínimo no puede ser superior al máximo.");
                     return;
                 }
+
+                // Guardar los valores y activar el filtro
+                alturaMin = min;
+                alturaMax = max;
+                filtrarAltura = true;
             }
             else
             {
+                // Si ambos campos están vacíos, desactivar el filtro
                 filtrarAltura = false;
             }
 
@@ -297,8 +314,13 @@ namespace GUI_ASTERIX
             // mostrar los límites del filtro de nivel de vuelo
             if (filtrarAltura)
             {
-                textBoxAltitudMin.Text = alturaMin.ToString();
-                textBoxAltitudMax.Text = alturaMax.ToString();
+                textBoxAltitudMin.Text = alturaMin == -999
+                     ? ""
+                     : alturaMin.ToString();
+
+                textBoxAltitudMax.Text = alturaMax == 999
+                    ? ""
+                    : alturaMax.ToString();
             }
             else
             {

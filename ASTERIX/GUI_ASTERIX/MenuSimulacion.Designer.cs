@@ -119,7 +119,7 @@
             // 
             cargaDatosrToolStripMenuItem.Image = Properties.Resources.iconoCargarArchivoTransparente;
             cargaDatosrToolStripMenuItem.Name = "cargaDatosrToolStripMenuItem";
-            cargaDatosrToolStripMenuItem.Size = new Size(191, 26);
+            cargaDatosrToolStripMenuItem.Size = new Size(199, 30);
             cargaDatosrToolStripMenuItem.Text = "Cargar datos";
             cargaDatosrToolStripMenuItem.Click += cargaDatosrToolStripMenuItem_Click;
             // 
@@ -127,7 +127,7 @@
             // 
             guardarEnCSVToolStripMenuItem.Image = Properties.Resources.iconoCsv;
             guardarEnCSVToolStripMenuItem.Name = "guardarEnCSVToolStripMenuItem";
-            guardarEnCSVToolStripMenuItem.Size = new Size(191, 26);
+            guardarEnCSVToolStripMenuItem.Size = new Size(199, 30);
             guardarEnCSVToolStripMenuItem.Text = "Guardar en CSV";
             guardarEnCSVToolStripMenuItem.Click += guardarEnCSVToolStripMenuItem_Click;
             // 
@@ -143,7 +143,7 @@
             // 
             aplicarToolStripMenuItem.Image = Properties.Resources.filtros;
             aplicarToolStripMenuItem.Name = "aplicarToolStripMenuItem";
-            aplicarToolStripMenuItem.Size = new Size(172, 26);
+            aplicarToolStripMenuItem.Size = new Size(188, 30);
             aplicarToolStripMenuItem.Text = "Aplicar filtros";
             aplicarToolStripMenuItem.Click += aplicarToolStripMenuItem_Click;
             // 
@@ -151,7 +151,7 @@
             // 
             limpiarToolStripMenuItem.Image = Properties.Resources.limpiarFiltro;
             limpiarToolStripMenuItem.Name = "limpiarToolStripMenuItem";
-            limpiarToolStripMenuItem.Size = new Size(172, 26);
+            limpiarToolStripMenuItem.Size = new Size(188, 30);
             limpiarToolStripMenuItem.Text = "Limpiar";
             limpiarToolStripMenuItem.Click += limpiarToolStripMenuItem_Click;
             // 

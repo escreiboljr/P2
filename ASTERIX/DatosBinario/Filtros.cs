@@ -1,5 +1,4 @@
-﻿
-using DatosDecod;
+﻿using DatosDecod;
 using DatosDecod21;
 using System;
 using System.Collections.Generic;
@@ -28,23 +27,23 @@ namespace Archivos
         {
             IEnumerable<Mensaje> listaFiltrada = listaOriginal;
 
-            // mantener ambas categorías si están seleccionadas
-            if (cat48 && cat21)
+            // aplicar el filtro de categoría ASTERIX
+            if (!cat48 && !cat21)
             {
-                cat48 = false;
-                cat21 = false;
+                // Si ambas categorías están desactivadas, eliminar todos los mensajes
+                listaFiltrada = Enumerable.Empty<Mensaje>();
             }
-
-            // aplicar el filtro de categoría asterix
-            if (cat48)
+            else if (cat48 && !cat21)
             {
+                // Mostrar únicamente CAT48
                 listaFiltrada = FiltroCategoria(listaFiltrada, 48);
             }
-
-            if (cat21)
+            else if (cat21 && !cat48)
             {
+                // Mostrar únicamente CAT21
                 listaFiltrada = FiltroCategoria(listaFiltrada, 21);
             }
+            // Si ambas están activadas, mantener todos los mensajes
 
             // eliminar los blancos puros
             if (eliminarBlancoPuro)
