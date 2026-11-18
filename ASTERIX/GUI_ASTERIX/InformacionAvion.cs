@@ -20,7 +20,6 @@ namespace GUI_ASTERIX
         {
             InitializeComponent();
             timerActualizar.Interval = 500;
-            timerActualizar.Tick += timerActualizar_Tick;
             timerActualizar.Start();
         }
 

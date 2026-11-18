@@ -71,7 +71,7 @@ namespace GUI_ASTERIX
             }
             if (contador == 8)
             {
-                pictureBox1.Image = Properties.Resources.Tutorial__Ventana_de_filtros_neon;
+                pictureBox1.Image = Properties.Resources._72eb203a_9fb4_4497_ae75_621985a0b02b;
             }
             if (contador == 9)
             {

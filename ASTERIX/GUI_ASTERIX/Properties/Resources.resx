@@ -118,17 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="asterix_radar_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\asterix_radar_fondo.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="filtros" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\filtros.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Tutorial_ Ventana de información del avión" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tutorial_ Ventana de información del avión.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="retroceder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\retroceder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuSimFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MenuSimFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="sliderActivado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sliderActivado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -289,6 +286,9 @@
   <data name="sliderApagado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sliderApagado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Círculo de neón con interrogación" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Círculo de neón con interrogación.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Icono de radar cian brillante" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icono de radar cian brillante.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -310,8 +310,8 @@
   <data name="contorlesMapa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\contorlesMapa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Icono de pausa blanco sobre transparente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono de pausa blanco sobre transparente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MenuSimFiltro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuSimFiltro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Guía visual de controles del mapa Asterix1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Guía visual de controles del mapa Asterix1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -321,6 +321,9 @@
   </data>
   <data name="large-green-circle_1f7e21" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\large-green-circle_1f7e21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icono de pausa blanco sobre transparente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono de pausa blanco sobre transparente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Guía Heatmap de ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Guía Heatmap de ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -343,13 +346,13 @@
   <data name="trayectorias" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\trayectorias.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="asterix_radar_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\asterix_radar_fondo.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Tutorial_ Ventana de información del avión" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tutorial_ Ventana de información del avión.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Banner de Radar Aéreo Categoría ASTERIX" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Banner de Radar Aéreo Categoría ASTERIX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Círculo de neón con interrogación" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Círculo de neón con interrogación.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="72eb203a-9fb4-4497-ae75-621985a0b02b" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\72eb203a-9fb4-4497-ae75-621985a0b02b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

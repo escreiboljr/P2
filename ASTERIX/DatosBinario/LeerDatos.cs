@@ -221,6 +221,14 @@ namespace Archvios
                         throw new InvalidDataException(
                             "Cabecera ASTERIX incompleta: " + ruta);
 
+                    // Comprobar que la categoría sea válida
+                    if (cabecera[0] != 21 && cabecera[0] != 48)
+                    {
+                        throw new InvalidDataException(
+                            "El archivo seleccionado no contiene mensajes ASTERIX CAT21 o CAT48."
+                        );
+                    }
+
                     int longitud = (cabecera[1] << 8) | cabecera[2];
 
                     if (longitud < 3 || longitud - 3 > fs.Length - fs.Position)

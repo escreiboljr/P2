@@ -93,6 +93,16 @@ namespace GUI_ASTERIX.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _72eb203a_9fb4_4497_ae75_621985a0b02b {
+            get {
+                object obj = ResourceManager.GetObject("72eb203a-9fb4-4497-ae75-621985a0b02b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap asterix_radar_fondo {
             get {
                 object obj = ResourceManager.GetObject("asterix_radar_fondo", resourceCulture);

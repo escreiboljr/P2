@@ -327,10 +327,21 @@ namespace GUI_ASTERIX
         }
         private void AvanzarUnSegundo()
         {
-            // guardar el estado actual para poder retroceder en la simulación
+            // Avanzar un segundo sin superar el tiempo final
+            TiempoActual = Math.Min(TiempoActual + 1, tiempoFinSimulacion);
 
-            // avanzar un segundo y actualizar la barra de tiempo
-            TiempoActual = TiempoActual + 1;
+            // Si hemos llegado al final, pausar la simulación
+            if (TiempoActual >= tiempoFinSimulacion)
+            {
+                TiempoActual = tiempoFinSimulacion;
+
+                timerSimulacion.Stop();
+                Reproduciendo = false;
+
+                pictureBox1.Image =
+                    Properties.Resources.botonReproducir;
+            }
+
             if (TiempoActual <= tiempoFinSimulacion)
             {
                 trackBarTiempo.Value = (int)(
@@ -967,120 +978,168 @@ namespace GUI_ASTERIX
 
         private async void cargaDatosrToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // abrir el explorador para seleccionar uno o varios archivos asterix
-            using (OpenFileDialog explorador = new OpenFileDialog())
+            try
             {
-                explorador.Multiselect = true;
-                explorador.Title = "Seleccionar archivos ASTERIX";
-
-                if (explorador.ShowDialog() != DialogResult.OK)
-                    return;
-
-                // guardar las rutas de los archivos seleccionados
-                string[] archivos = explorador.FileNames;
-
-                try
+                // abrir el explorador para seleccionar uno o varios archivos asterix
+                using (OpenFileDialog explorador = new OpenFileDialog())
                 {
-                    List<Mensaje> nuevosMensajes;
+                    explorador.Multiselect = true;
+                    explorador.Title = "Seleccionar archivos ASTERIX";
 
-                    // leer y decodificar los archivos mostrando el progreso de carga
-                    using (FormCargando cargando = new FormCargando())
-                    {
-                        cargando.Show(this);
-                        cargando.ActualizarProgreso(0);
-
-                        // actualizar la barra de progreso
-                        IProgress<int> progreso = new Progress<int>(porcentaje =>
-                        {
-                            if (!cargando.IsDisposed)
-                                cargando.ActualizarProgreso(porcentaje);
-                        });
-
-                        try
-                        {
-                            nuevosMensajes = await Task.Run(() =>
-                            {
-                                LeerDatos lector = new LeerDatos();
-
-                                // combinar los archivos eliminando los solapamientos
-                                // y decodificar los mensajes resultantes
-                                return lector.DatosProcesadosMultiples(
-                                    archivos,
-                                    progreso
-                                );
-                            });
-                        }
-                        finally
-                        {
-                            cargando.Close();
-                        }
-                    }
-
-                    // comprobar que los archivos contienen mensajes válidos
-                    if (nuevosMensajes == null || nuevosMensajes.Count == 0)
-                    {
-                        MessageBox.Show(
-                            "Los archivos seleccionados no contienen mensajes válidos."
-                        );
+                    if (explorador.ShowDialog() != DialogResult.OK)
                         return;
+
+                    // guardar las rutas de los archivos seleccionados
+                    // Guardar las rutas de los archivos seleccionados
+                    string[] archivos = explorador.FileNames;
+
+                    try
+                    {
+                        // Comprobar que todos los archivos tengan una cabecera ASTERIX válida
+                        foreach (string archivo in archivos)
+                        {
+                            using (FileStream fs = new FileStream(
+                                archivo, FileMode.Open, FileAccess.Read))
+                            {
+                                byte[] cabecera = new byte[3];
+
+                                int leidos = fs.Read(cabecera, 0, 3);
+
+                                // Archivo demasiado pequeño
+                                if (leidos < 3)
+                                {
+                                    MessageBox.Show(
+                                        "El archivo seleccionado está vacío o no contiene datos ASTERIX válidos:\n" +
+                                        Path.GetFileName(archivo)
+                                    );
+
+                                    return;
+                                }
+
+                                int categoria = cabecera[0];
+                                int longitud = (cabecera[1] << 8) | cabecera[2];
+
+                                // Comprobar categoría y longitud
+                                if ((categoria != 21 && categoria != 48) ||
+                                    longitud < 3 ||
+                                    longitud > fs.Length)
+                                {
+                                    MessageBox.Show(
+                                        "El archivo seleccionado no es un archivo ASTERIX CAT21/CAT48 válido:\n" +
+                                        Path.GetFileName(archivo),
+                                        "Archivo no válido",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning
+                                    );
+
+                                    return;
+                                }
+                            }
+                        }
+
+                        List<Mensaje> nuevosMensajes;
+
+                        // leer y decodificar los archivos mostrando el progreso de carga
+                        using (FormCargando cargando = new FormCargando())
+                        {
+                            cargando.Show(this);
+                            cargando.ActualizarProgreso(0);
+
+                            // actualizar la barra de progreso
+                            IProgress<int> progreso = new Progress<int>(porcentaje =>
+                            {
+                                if (!cargando.IsDisposed)
+                                    cargando.ActualizarProgreso(porcentaje);
+                            });
+
+                            try
+                            {
+                                nuevosMensajes = await Task.Run(() =>
+                                {
+                                    LeerDatos lector = new LeerDatos();
+
+                                    // combinar los archivos eliminando los solapamientos
+                                    // y decodificar los mensajes resultantes
+                                    return lector.DatosProcesadosMultiples(
+                                        archivos,
+                                        progreso
+                                    );
+                                });
+                            }
+                            finally
+                            {
+                                cargando.Close();
+                            }
+                        }
+
+                        // comprobar que los archivos contienen mensajes válidos
+                        if (nuevosMensajes == null || nuevosMensajes.Count == 0)
+                        {
+                            MessageBox.Show(
+                                "Los archivos seleccionados no contienen mensajes válidos."
+                            );
+                            return;
+                        }
+
+                        // detener la simulación anterior
+                        timerSimulacion.Stop();
+                        Reproduciendo = false;
+
+                        pictureBox1.Image =
+                            Properties.Resources.botonReproducir;
+
+                        // eliminar los datos de la simulación anterior
+                        AvionesActuales.Clear();
+                        MensajesActuales.Clear();
+
+                        avionesTrayectoriaSeleccionados.Clear();
+
+                        dataGridAviones.Rows.Clear();
+
+                        capaAviones.Markers.Clear();
+                        capaTrayectorias.Routes.Clear();
+
+                        // guardar los nuevos mensajes y restablecer los filtros
+                        RestablecerFiltros();
+
+                        ListaMensajes = nuevosMensajes;
+
+                        Filtros gestorFiltros = new Filtros();
+
+                        ListaMensajesFiltrados =
+                            gestorFiltros.PrepararMensajes(ListaMensajes);
+
+                        // preparar los datos del mapa de calor
+                        InvalidarHeatmap();
+                        PrepararPuntosHeatmap();
+
+                        // reiniciar el tiempo al comienzo de los archivos
+                        TiempoActual = 0;
+                        BuscarTiempoInicial();
+
+                        TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
+                        ActualizarHoraTextBox();
+
+                        // actualizar la simulación y los elementos visuales
+                        ActualizarAviones();
+                        ActualizarDataGrid();
+                        ActualizarMapa();
+                        MostrarTrayectorias();
+
+                        ActualizarHeatmapDinamico(true);
                     }
 
-                    // detener la simulación anterior
-                    timerSimulacion.Stop();
-                    Reproduciendo = false;
-
-                    pictureBox1.Image =
-                        Properties.Resources.botonReproducir;
-
-                    // eliminar los datos de la simulación anterior
-                    AvionesActuales.Clear();
-                    MensajesActuales.Clear();
-
-                    avionesTrayectoriaSeleccionados.Clear();
-
-                    dataGridAviones.Rows.Clear();
-
-                    capaAviones.Markers.Clear();
-                    capaTrayectorias.Routes.Clear();
-
-                    // guardar los nuevos mensajes y restablecer los filtros
-                    RestablecerFiltros();
-
-                    ListaMensajes = nuevosMensajes;
-
-                    Filtros gestorFiltros = new Filtros();
-
-                    ListaMensajesFiltrados =
-                        gestorFiltros.PrepararMensajes(ListaMensajes);
-
-                    // preparar los datos del mapa de calor
-                    InvalidarHeatmap();
-                    PrepararPuntosHeatmap();
-
-                    // reiniciar el tiempo al comienzo de los archivos
-                    TiempoActual = 0;
-                    BuscarTiempoInicial();
-
-                    TimeSpan hora = TimeSpan.FromSeconds(TiempoActual);
-                    ActualizarHoraTextBox();
-
-                    // actualizar la simulación y los elementos visuales
-                    ActualizarAviones();
-                    ActualizarDataGrid();
-                    ActualizarMapa();
-                    MostrarTrayectorias();
-
-                    ActualizarHeatmapDinamico(true);
-                }
-                
-                catch (Exception ex)
-                {
-                    // mostrar un mensaje si se produce un error durante la carga
-                    MessageBox.Show(
-                        "Error al cargar los archivos:\n" + ex.Message
-                    );
+                    catch (Exception ex)
+                    {
+                        // mostrar un mensaje si se produce un error durante la carga
+                        MessageBox.Show(
+                            "Error al cargar los archivos:\n" + ex.Message
+                        );
+                    }
                 }
             }
+            catch (Exception ex)
+            { MessageBox.Show("Error al cargar los archivos:\n" + ex.Message); }
         }
 
         private void ActualizarDataGrid()
@@ -1304,6 +1363,10 @@ namespace GUI_ASTERIX
 
         private void pictureBox1_Click(object sender, EventArgs e)   //boton de reproducir/pausar
         {
+            if (TiempoActual >= tiempoFinSimulacion)
+            {
+                return;
+            }
             if (Reproduciendo == false)
             {
                 Reproduciendo = true;

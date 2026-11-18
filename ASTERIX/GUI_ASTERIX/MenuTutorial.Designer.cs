@@ -41,7 +41,7 @@
             // pictureBox1
             // 
             pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox1.Image = Properties.Resources.Guía_visual_de_controles_del_mapa_Asterix1;
+            pictureBox1.Image = Properties.Resources._72eb203a_9fb4_4497_ae75_621985a0b02b;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(981, 763);
