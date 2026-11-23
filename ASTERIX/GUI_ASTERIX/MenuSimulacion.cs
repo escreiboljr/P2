@@ -1187,7 +1187,6 @@ namespace GUI_ASTERIX
             }
 
             barraDataGrid?.Actualizar();
-            barraDataGrid?.Actualizar();
         }
 
         private void ActualizarMapa()
