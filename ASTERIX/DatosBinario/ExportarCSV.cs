@@ -10,6 +10,29 @@ namespace Archivos
 {
     public class ExportarCSV
     {
+        private const string columnasBDS =
+            // BDS 4.0
+            "BDS40_MCP;" +
+            "BDS40_FMS;" +
+            "BDS40_Baro;" +
+            "BDS40_VNAV;" +
+            "BDS40_AltHold;" +
+            "BDS40_App;" +
+
+            // BDS 5.0
+            "BDS50_Roll;" +
+            "BDS50_Track;" +
+            "BDS50_GroundSpeed;" +
+            "BDS50_TrackRate;" +
+            "BDS50_TrueAirspeed;" +
+
+            // BDS 6.0
+            "BDS60_Heading;" +
+            "BDS60_IAS;" +
+            "BDS60_Mach;" +
+            "BDS60_BaroRate;" +
+            "BDS60_InertialVS";
+
         public void Exportar(List<Mensaje> mensajes, string ruta)
         {
             bool hayCAT21 = false;
@@ -20,8 +43,11 @@ namespace Archivos
                 if (mensaje.categoria == 21)
                     hayCAT21 = true;
 
-                if (mensaje.categoria == 48);
+                if (mensaje.categoria == 48)
                     hayCAT48 = true;
+
+                if (hayCAT21 && hayCAT48)
+                    break;
             }
 
             if (hayCAT21 && !hayCAT48)
@@ -79,7 +105,11 @@ namespace Archivos
                     "CNF;RAD;DOU;MAH;CDM;TRE;GHO;SUP;TCC;" +
 
                     // COMM / ACAS
-                    "COM;STAT;SI;MSSC;ARC;AIC;B1A;B1B"
+                    "COM;STAT;SI;MSSC;ARC;AIC;B1A;B1B;" +
+
+                    // BDS 4.0, 5.0 y 6.0
+                    columnasBDS
+                    
                 );
 
                 foreach (Mensaje mensaje in mensajes)
@@ -173,24 +203,30 @@ namespace Archivos
 
                         (m.tieneTrackVelocity ? Valor(m.TrckVelPolRepr[1]) : "-") + ";" +
 
-                        Valor(m.TrckStatus.CNF) + ";" +
+                        // TRACK STATUS
+                        TextoCNF(m.TrckStatus.CNF) + ";" +
                         TextoRAD(m.TrckStatus.RAD) + ";" +
-                        Valor(m.TrckStatus.DOU) + ";" +
-                        Valor(m.TrckStatus.MAH) + ";" +
-                        Valor(m.TrckStatus.CDM) + ";" +
-                        Valor(m.TrckStatus.TRE) + ";" +
-                        Valor(m.TrckStatus.GHO) + ";" +
-                        Valor(m.TrckStatus.SUP) + ";" +
-                        Valor(m.TrckStatus.TCC) + ";" +
+                        TextoDOU(m.TrckStatus.DOU) + ";" +
+                        TextoMAH(m.TrckStatus.MAH) + ";" +
+                        TextoCDM(m.TrckStatus.CDM) + ";" +
+                        TextoTRE(m.TrckStatus.TRE) + ";" +
+                        TextoGHO(m.TrckStatus.GHO) + ";" +
+                        TextoSUP(m.TrckStatus.SUP) + ";" +
+                        TextoTCC(m.TrckStatus.TCC) + ";" +
 
-                        Valor(m.CommACAScapability.COM) + ";" +
-                        Valor(m.CommACAScapability.STAT) + ";" +
-                        Valor(m.CommACAScapability.SI) + ";" +
-                        Valor(m.CommACAScapability.MSSC) + ";" +
-                        Valor(m.CommACAScapability.ARC) + ";" +
-                        Valor(m.CommACAScapability.AIC) + ";" +
+                        // COMM / ACAS
+                        TextoCOM(m.CommACAScapability.COM) + ";" +
+                        TextoSTAT(m.CommACAScapability.STAT) + ";" +
+                        TextoSI(m.CommACAScapability.SI) + ";" +
+                        TextoMSSC(m.CommACAScapability.MSSC) + ";" +
+                        TextoARC(m.CommACAScapability.ARC) + ";" +
+                        TextoAIC(m.CommACAScapability.AIC) + ";" +
                         Valor(m.CommACAScapability.B1A) + ";" +
-                        Valor(m.CommACAScapability.B1B)
+                        Valor(m.CommACAScapability.B1B) + ";" +
+
+                        // BDS 4.0, 5.0 y 6.0
+                        ValorBDS(m)
+
                     );
                 }
             }
@@ -410,33 +446,8 @@ namespace Archivos
                     "B1A;" +
                     "B1B;" +
 
-
-                    // CAT48 - BDS 4,0
-
-                    "BDS40_MCP;" +
-                    "BDS40_FMS;" +
-                    "BDS40_Baro;" +
-                    "BDS40_VNAV;" +
-                    "BDS40_AltHold;" +
-                    "BDS40_App;" +
-
-
-                    // CAT48 - BDS 5,0
-
-                    "BDS50_Roll;" +
-                    "BDS50_Track;" +
-                    "BDS50_GroundSpeed;" +
-                    "BDS50_TrackRate;" +
-                    "BDS50_TrueAirspeed;" +
-
-
-                    // CAT48 - BDS 6,0
-
-                    "BDS60_Heading;" +
-                    "BDS60_IAS;" +
-                    "BDS60_Mach;" +
-                    "BDS60_BaroRate;" +
-                    "BDS60_InertialVS"
+                    // CAT48 - BDS 4.0, 5.0 y 6.0
+                    columnasBDS
                 );
 
 
@@ -659,20 +670,8 @@ namespace Archivos
                             Valor(m.CommACAScapability.B1A) + ";" +
                             Valor(m.CommACAScapability.B1B) + ";" +
 
-
-                            // BDS 4,0
-
-                            ValorBDS40(m) + ";" +
-
-
-                            // BDS 5,0
-
-                            ValorBDS50(m) + ";" +
-
-
-                            // BDS 6,0
-
-                            ValorBDS60(m)
+                            // BDS 4.0, 5.0 y 6.0
+                            ValorBDS(m)
                         );
                     }
                 }
@@ -1117,6 +1116,13 @@ namespace Archivos
                 Valor(bds.BaroRate),
                 Valor(bds.InertialVS)
             });
+        }
+
+        private string ValorBDS(TiraDatosDecod048 m)
+        {
+            return ValorBDS40(m) + ";" +
+                   ValorBDS50(m) + ";" +
+                   ValorBDS60(m);
         }
 
         public string TextoCNF(int cnf)
