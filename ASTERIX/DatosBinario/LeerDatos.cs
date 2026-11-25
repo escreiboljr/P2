@@ -87,7 +87,7 @@ namespace Archvios
             if (categoria == 48)
             {
                 var tira48 = DecodificarCAT048(colaMensaje);
-                    if (tira48.PositionCorrectedLatLonAlt[0] > 40.99 &&
+                    if (tira48.PositionCorrectedLatLonAlt[0] > 40.9 &&
                         tira48.PositionCorrectedLatLonAlt[0] < 41.7 &&
                         tira48.PositionCorrectedLatLonAlt[1] > 1.5 &&
                         tira48.PositionCorrectedLatLonAlt[1] < 2.6)
