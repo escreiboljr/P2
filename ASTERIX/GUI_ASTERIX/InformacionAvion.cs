@@ -50,8 +50,17 @@ namespace GUI_ASTERIX
                     ? "Longitud: " + avion.longitud.ToString("0.0000")
                     : "Longitud: N/A";
 
-                labelAltitud.Text = !double.IsNaN(avion.altitud)
-                    ? "Altitud: " + avion.altitud.ToString("0.##")
+                string referenciaAltitud =
+                     double.IsFinite(avion.qnhUtilizado) &&
+                     double.IsFinite(avion.altitudQNHFt)
+                         ? " (ref. QNH/BPS)"
+                         : " (presión)";
+
+                labelAltitud.Text = double.IsFinite(avion.altitud)
+                    ? "Altitud: " +
+                      avion.altitud.ToString("0.##") +
+                      " ft" +
+                      referenciaAltitud
                     : "Altitud: N/A";
 
                 // VUELO

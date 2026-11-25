@@ -695,22 +695,19 @@ namespace GUI_ASTERIX
                             }
 
                             // actualizar los datos de vuelo disponibles
-                            if (!double.IsNaN(altitud))
+                            if (double.IsFinite(altitud))
                             {
                                 avionEncontrado.altitud = altitud;
+
+                                avionEncontrado.bps = bps;
+                                avionEncontrado.altitudPresionFt = altitudPresionFt;
+                                avionEncontrado.altitudQNHFt = altitudQNHFt;
+                                avionEncontrado.qnhUtilizado = qnhUtilizado;
                             }
 
                             if (!double.IsNaN(flightLevel))
                             {
                                 avionEncontrado.flightLevel = flightLevel;
-                            }
-
-                            if (esADSB || esRadar)
-                            {
-                                avionEncontrado.bps = bps;
-                                avionEncontrado.altitudPresionFt = altitudPresionFt;
-                                avionEncontrado.altitudQNHFt = altitudQNHFt;
-                                avionEncontrado.qnhUtilizado = qnhUtilizado;
                             }
 
                             if (!double.IsNaN(velocidad))
@@ -1712,22 +1709,25 @@ namespace GUI_ASTERIX
 
                 mensajeAnterior.mensajeOriginal = nuevoMensaje.mensajeOriginal;
 
-                if (!double.IsNaN(nuevoMensaje.altitud))
+                if (double.IsFinite(nuevoMensaje.altitud))
                 {
                     mensajeAnterior.altitud = nuevoMensaje.altitud;
+
+                    mensajeAnterior.bps = nuevoMensaje.bps;
+
+                    mensajeAnterior.altitudPresionFt =
+                        nuevoMensaje.altitudPresionFt;
+
+                    mensajeAnterior.altitudQNHFt =
+                        nuevoMensaje.altitudQNHFt;
+
+                    mensajeAnterior.qnhUtilizado =
+                        nuevoMensaje.qnhUtilizado;
                 }
 
                 if (!double.IsNaN(nuevoMensaje.flightLevel))
                 {
                     mensajeAnterior.flightLevel = nuevoMensaje.flightLevel;
-                }
-
-                if (nuevoMensaje.detectadoADSB || nuevoMensaje.detectadoRadar)
-                {
-                    mensajeAnterior.bps = nuevoMensaje.bps;
-                    mensajeAnterior.altitudPresionFt = nuevoMensaje.altitudPresionFt;
-                    mensajeAnterior.altitudQNHFt = nuevoMensaje.altitudQNHFt;
-                    mensajeAnterior.qnhUtilizado = nuevoMensaje.qnhUtilizado;
                 }
 
                 if (!double.IsNaN(nuevoMensaje.velocidad))
