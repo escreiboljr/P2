@@ -125,7 +125,7 @@ namespace Archivos
 
                         Valor(m.DataSourceID[0]) + ";" +
                         Valor(m.DataSourceID[1]) + ";" +
-                        Valor(m.TimeOfDay) + ";" +
+                        FormatearHora(m.TimeOfDay) + ";" +
 
                         TextoTYP(m.TargetRep.TYP) + ";" +
                         TextoSIM(m.TargetRep.SIM) + ";" +
@@ -272,7 +272,7 @@ namespace Archivos
                         Valor(m.DataSourceID[0]) + ";" +
                         Valor(m.DataSourceID[1]) + ";" +
 
-                        Valor(m.TimeReceptionPosition) + ";" +
+                        FormatearHora(m.TimeReceptionPosition) + ";" +
                         Valor(m.TargetAddress) + ";" +
                         Valor(m.TargetIdentification) + ";" +
                         Valor(m.Mode3ACode) + ";" +
@@ -466,7 +466,7 @@ namespace Archivos
                             "21;" +
                             Valor(m.DataSourceID[0]) + ";" +
                             Valor(m.DataSourceID[1]) + ";" +
-                            Valor(m.TimeReceptionPosition) + ";" +
+                            FormatearHora(m.TimeReceptionPosition) + ";" +
                             Valor(m.TargetAddress) + ";" +
                             Valor(m.TargetIdentification) + ";" +
                             Valor(m.Mode3ACode) + ";" +
@@ -548,7 +548,7 @@ namespace Archivos
                             "48;" +
                             Valor(m.DataSourceID[0]) + ";" +
                             Valor(m.DataSourceID[1]) + ";" +
-                            Valor(m.TimeOfDay) + ";" +
+                            FormatearHora(m.TimeOfDay) + ";" +
                             Valor(m.AircrftAddrs) + ";" +
                             Valor(m.AircrftIddent) + ";" +
                             Valor(m.mode3.reply) + ";" +
@@ -1278,6 +1278,17 @@ namespace Archivos
                 default: return "-";
             }
         }
+        public string FormatearHora(double segundos)
+        {
+            if (!double.IsFinite(segundos) ||
+                segundos < 0 ||
+                segundos >= 86400)
+            {
+                return "-";
+            }
 
+            return TimeSpan.FromSeconds(Math.Floor(segundos))
+                .ToString(@"hh\:mm\:ss");
+        }
     }
 }
