@@ -158,16 +158,12 @@ namespace Archivos
                         Valor(m.altitudPresionFt) + ";" +
 
                         // Altitud corregida por QNH, solo si realmente se aplica
-                        Valor(
-                            !double.IsNaN(m.qnhUtilizado) &&
-                            m.altitudPresionFt < 6000
-                                ? m.altitudQNHFt
-                                : double.NaN
-                        ) + ";" +
+                        // El decodificador ya determina si corresponde corregir.
+                        Valor(m.altitudQNHFt) + ";" +
 
                         // Altitud finalmente utilizada (pies)
                         Valor(
-                            !double.IsNaN(m.altitudQNHFt)
+                            double.IsFinite(m.altitudQNHFt)
                                 ? m.altitudQNHFt
                                 : m.altitudPresionFt
                         ) + ";" +
@@ -560,16 +556,12 @@ namespace Archivos
                             Valor(m.altitudPresionFt) + ";" +
 
                             // Altitud corregida por QNH (ft)
-                            Valor(
-                                !double.IsNaN(m.qnhUtilizado) &&
-                                m.altitudPresionFt < 6000
-                                    ? m.altitudQNHFt
-                                    : double.NaN
-                            ) + ";" +
+                            // El decodificador ya determina si corresponde corregir.
+                            Valor(m.altitudQNHFt) + ";" +
 
                             // Altitud utilizada (ft)
                             Valor(
-                                !double.IsNaN(m.altitudQNHFt)
+                                double.IsFinite(m.altitudQNHFt)
                                     ? m.altitudQNHFt
                                     : m.altitudPresionFt
                             ) + ";" +
