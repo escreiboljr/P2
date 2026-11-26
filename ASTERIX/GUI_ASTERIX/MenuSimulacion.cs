@@ -54,8 +54,27 @@ namespace GUI_ASTERIX
             timerSimulacion.Interval = 1000;
             gMapControl1.OnMarkerClick += GMapControl1_OnMarkerClick;
 
-            AjustarMapa();
-            this.Resize += (sender, e) => AjustarMapa();
+            // Ajustar cuando la ventana ya está mostrada y escalada.
+            this.Shown += (sender, e) =>
+            {
+                AjustarMapa();
+            };
+
+            // Esperar a que se hayan recolocado los controles
+            // antes de calcular el espacio disponible.
+            this.Resize += (sender, e) =>
+            {
+                if (IsHandleCreated && !IsDisposed)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (!IsDisposed)
+                        {
+                            AjustarMapa();
+                        }
+                    }));
+                }
+            };
 
             // crear la barra personalizada para controlar el tiempo de simulación
             barraTiempoNueva = new BarraTiempoPersonalizada();
@@ -2564,16 +2583,65 @@ namespace GUI_ASTERIX
 
             gMapControl1.Refresh();
         }
-        private void AjustarMapa()
+            private void AjustarMapa()
         {
-            int margenDerecho = 25;
-            int margenInferior = 230;
+            if (IsDisposed ||
+                WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
 
-            gMapControl1.Width =
-                this.ClientSize.Width - gMapControl1.Left - margenDerecho;
+            // Márgenes adaptados a la escala de pantalla.
+            double escala = DeviceDpi / 96.0;
 
-            gMapControl1.Height =
-                this.ClientSize.Height - gMapControl1.Top - margenInferior;
+            int margenDerecho =
+                (int)Math.Round(25 * escala);
+
+            int separacionInferior =
+                (int)Math.Round(12 * escala);
+
+            // Localizar el comienzo de la zona de controles.
+            int limiteInferior = Math.Min(
+                textBoxHora.Top,
+                Math.Min(
+                    textBoxMinuto.Top,
+                    Math.Min(
+                        textBoxSegundo.Top,
+                        Math.Min(
+                            label3.Top,
+                            Math.Min(
+                                label4.Top,
+                                Math.Min(
+                                    trackBarTiempo.Top,
+                                    labelTiempoFinal.Top))))));
+
+            if (barraTiempoNueva != null)
+            {
+                limiteInferior = Math.Min(
+                    limiteInferior,
+                    barraTiempoNueva.Top);
+            }
+
+            int ancho = Math.Max(
+                1,
+                ClientSize.Width -
+                gMapControl1.Left -
+                margenDerecho);
+
+            int alto = Math.Max(
+                1,
+                limiteInferior -
+                separacionInferior -
+                gMapControl1.Top);
+
+            // Mantener el mapa por encima de los controles.
+            gMapControl1.Size = new Size(ancho, alto);
+
+            // Mantener alineadas la tabla y la ayuda.
+            AjustarDataGrid();
+
+            pictureBoxContorles.Bounds =
+                gMapControl1.Bounds;
 
             PosicionarLeyendaHeatmap();
         }
